@@ -1,0 +1,81 @@
+[
+  {
+    "name": "list_capabilities",
+    "description": "Discover supported charts, limits, input modes and static output formats.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false,
+      "required": []
+    }
+  },
+  {
+    "name": "get_chart_schema",
+    "description": "Read the canonical chart schema, optionally narrowed to one input mode.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": ["intent", "echarts"]
+        }
+      },
+      "additionalProperties": false,
+      "required": []
+    }
+  },
+  {
+    "name": "validate_chart",
+    "description": "Validate chart shape, data semantics and supported capabilities without rendering.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "object",
+          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+        }
+      },
+      "additionalProperties": false,
+      "required": ["document"]
+    }
+  },
+  {
+    "name": "compile_chart",
+    "description": "Compile a chart into an ECharts render plan with semantic diagnostics.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "object",
+          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+        }
+      },
+      "additionalProperties": false,
+      "required": ["document"]
+    }
+  },
+  {
+    "name": "render_chart",
+    "description": "Render a static SVG; MCP returns a temporary resource link, not an interactive chart.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "document": {
+          "type": "object",
+          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4096
+        }
+      },
+      "additionalProperties": false,
+      "required": ["document"]
+    }
+  }
+]

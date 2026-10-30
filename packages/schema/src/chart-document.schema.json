@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chartnexus.dev/schemas/chart-document/0.1",
+  "title": "ChartDocument",
+  "description": "Experimental ChartNexus document; no network resolution is performed.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "enum": ["bar", "line", "pie", "scatter"]
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "enum": ["ordinal", "quantitative"]
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "enum": ["ordinal", "quantitative"]
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "series": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "stack": {
+              "type": "boolean"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.1"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "echarts"
+        },
+        "option": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "option"]
+    }
+  ]
+}

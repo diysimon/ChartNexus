@@ -1,0 +1,26 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "packages/schema"
+    },
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/runtime"
+    },
+    {
+      "path": "packages/render"
+    },
+    {
+      "path": "packages/agent"
+    },
+    {
+      "path": "packages/cli"
+    },
+    {
+      "path": "packages/mcp"
+    }
+  ]
+}

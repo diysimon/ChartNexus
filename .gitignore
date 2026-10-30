@@ -1,0 +1,77 @@
+# OS metadata / 系统文件
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Local settings and agent state / 本机设置与 Agent 状态
+/.local/
+/.codex/
+/.agents/
+/.claude/
+/.cursor/
+/.idea/
+/.vscode/
+/.aws/
+/.ssh/
+*.local
+*.local.*
+
+# Secrets (keep sanitized examples) / 密钥（保留脱敏示例）
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.template
+.npmrc.local
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Dependencies and caches / 依赖与缓存
+node_modules/
+.pnpm-store/
+.npm/
+.cache/
+.turbo/
+.vite/
+.eslintcache
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Build and test outputs / 构建与测试产物
+dist/
+build/
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+**/.vitepress/cache/
+**/.vitepress/dist/
+
+# Local runtime artifacts / 本地运行产物
+/artifacts/
+/outputs/
+/tmp/
+/temp/
+/logs/
+*.log
+*.pid
+*.pid.lock
+*.tgz
+
+# Editor temporary files / 编辑器临时文件
+*~
+*.swp
+*.swo
+*.orig
+
+# Keep source, bilingual docs, schemas, fixtures and lockfiles tracked.
+# 保留源码、双语文档、Schema、测试样例和锁文件；私人文件放入 .local/。

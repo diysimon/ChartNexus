@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "0.1",
+  "license": "Apache-2.0",
+  "provenance": "Project-authored synthetic data; not production data or a training benchmark.",
+  "examples": [
+    {
+      "id": "bar",
+      "path": "bar.json",
+      "expected": "success"
+    },
+    {
+      "id": "unknown-field",
+      "path": "unknown-field.json",
+      "expectedCode": "UNKNOWN_FIELD",
+      "repair": {
+        "path": "/chart/encoding/y/field",
+        "value": "revenue"
+      }
+    }
+  ]
+}

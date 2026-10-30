@@ -1,0 +1,231 @@
+{
+  "version": "0.1",
+  "updated": "2026-10-30",
+  "status": "documentation-baseline",
+  "documents": [
+    {
+      "id": "project-charter",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/project-charter.md",
+      "en": "docs/en/project-charter.md"
+    },
+    {
+      "id": "architecture",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/architecture.md",
+      "en": "docs/en/architecture.md"
+    },
+    {
+      "id": "coding-standards",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/coding-standards.md",
+      "en": "docs/en/coding-standards.md"
+    },
+    {
+      "id": "contracts",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/contracts.md",
+      "en": "docs/en/contracts.md"
+    },
+    {
+      "id": "spec-workflow",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/spec-workflow.md",
+      "en": "docs/en/spec-workflow.md"
+    },
+    {
+      "id": "initialization",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/initialization.md",
+      "en": "docs/en/initialization.md"
+    },
+    {
+      "id": "pipelines",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/pipelines.md",
+      "en": "docs/en/pipelines.md"
+    },
+    {
+      "id": "testing-evaluation",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/testing-evaluation.md",
+      "en": "docs/en/testing-evaluation.md"
+    },
+    {
+      "id": "model-resources",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/model-resources.md",
+      "en": "docs/en/model-resources.md"
+    },
+    {
+      "id": "documentation-governance",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/documentation-governance.md",
+      "en": "docs/en/documentation-governance.md"
+    },
+    {
+      "id": "security-reliability",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/security-reliability.md",
+      "en": "docs/en/security-reliability.md"
+    },
+    {
+      "id": "roadmap",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/roadmap.md",
+      "en": "docs/en/roadmap.md"
+    },
+    {
+      "id": "sources-decisions",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "docs/zh-CN/sources-decisions.md",
+      "en": "docs/en/sources-decisions.md"
+    },
+    {
+      "id": "template-feature-spec",
+      "version": "0.1",
+      "status": "template",
+      "zh-CN": "templates/zh-CN/feature-spec.md",
+      "en": "templates/en/feature-spec.md"
+    },
+    {
+      "id": "template-tasks",
+      "version": "0.1",
+      "status": "template",
+      "zh-CN": "templates/zh-CN/tasks.md",
+      "en": "templates/en/tasks.md"
+    },
+    {
+      "id": "template-rfc",
+      "version": "0.1",
+      "status": "template",
+      "zh-CN": "templates/zh-CN/rfc.md",
+      "en": "templates/en/rfc.md"
+    },
+    {
+      "id": "template-pull-request",
+      "version": "0.1",
+      "status": "template",
+      "zh-CN": "templates/zh-CN/pull-request.md",
+      "en": "templates/en/pull-request.md"
+    },
+    {
+      "id": "template-release-checklist",
+      "version": "0.1",
+      "status": "template",
+      "zh-CN": "templates/zh-CN/release-checklist.md",
+      "en": "templates/en/release-checklist.md"
+    },
+    {
+      "id": "readme",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "README.zh-CN.md",
+      "en": "README.md"
+    },
+    {
+      "id": "agents",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "AGENTS.zh-CN.md",
+      "en": "AGENTS.md"
+    },
+    {
+      "id": "contributing",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "CONTRIBUTING.zh-CN.md",
+      "en": "CONTRIBUTING.md"
+    },
+    {
+      "id": "security",
+      "version": "0.1",
+      "status": "implementation-baseline",
+      "zh-CN": "SECURITY.zh-CN.md",
+      "en": "SECURITY.md"
+    },
+    {
+      "id": "development",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/development.md",
+      "zh-CN": "docs/zh-CN/development.md"
+    },
+    {
+      "id": "rfc-0001-input-contract",
+      "version": "0.1",
+      "status": "experimental-design",
+      "en": "rfcs/0001-input-contract.md",
+      "zh-CN": "rfcs/0001-input-contract.zh-CN.md"
+    },
+    {
+      "id": "rfc-0002-runtime-state",
+      "version": "0.1",
+      "status": "experimental-design",
+      "en": "rfcs/0002-runtime-state.md",
+      "zh-CN": "rfcs/0002-runtime-state.zh-CN.md"
+    },
+    {
+      "id": "rfc-0003-adapter-boundaries",
+      "version": "0.1",
+      "status": "experimental-design",
+      "en": "rfcs/0003-adapter-boundaries.md",
+      "zh-CN": "rfcs/0003-adapter-boundaries.zh-CN.md"
+    },
+    {
+      "id": "spec-0001-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0001-core-foundation/spec.md",
+      "zh-CN": "specs/0001-core-foundation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0001-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0001-core-foundation/tasks.md",
+      "zh-CN": "specs/0001-core-foundation/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0002-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0002-agent-entrypoints/spec.md",
+      "zh-CN": "specs/0002-agent-entrypoints/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0002-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0002-agent-entrypoints/tasks.md",
+      "zh-CN": "specs/0002-agent-entrypoints/tasks.zh-CN.md"
+    },
+    {
+      "id": "agent-integration",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/agent-integration.md",
+      "zh-CN": "docs/zh-CN/agent-integration.md"
+    },
+    {
+      "id": "rfc-0004-agent-tools",
+      "version": "0.1",
+      "status": "experimental-design",
+      "en": "rfcs/0004-agent-tools.md",
+      "zh-CN": "rfcs/0004-agent-tools.zh-CN.md"
+    }
+  ]
+}

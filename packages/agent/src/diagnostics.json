@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "0.1",
+  "license": "Apache-2.0",
+  "entries": [
+    {
+      "code": "UNKNOWN_FIELD",
+      "en": "Choose a field declared in data.fields; do not invent data.",
+      "zh-CN": "使用 data.fields 已声明字段，不编造数据。"
+    },
+    {
+      "code": "INVALID_ENCODING",
+      "en": "Use ordinal x for bar/line/pie and quantitative x for scatter; y is quantitative.",
+      "zh-CN": "柱状/折线/饼图 x 为 ordinal，散点 x 为 quantitative，y 为 quantitative。"
+    },
+    {
+      "code": "AMBIGUOUS_DATA",
+      "en": "Aggregate explicitly upstream or split series; duplicate categories are not auto-summed.",
+      "zh-CN": "在上游显式聚合或拆分系列，重复分类不会自动求和。"
+    },
+    {
+      "code": "REVISION_CONFLICT",
+      "en": "Refresh host data metadata and request the exact registered revision.",
+      "zh-CN": "刷新宿主数据元信息，使用精确注册版本。"
+    },
+    {
+      "code": "DATA_NOT_FOUND",
+      "en": "Use inline data or ask the host to register the data reference.",
+      "zh-CN": "使用内联数据或由宿主注册引用。"
+    },
+    {
+      "code": "UNSUPPORTED_CAPABILITY",
+      "en": "Read capabilities and use a supported declarative feature.",
+      "zh-CN": "读取能力清单，使用受支持声明式能力。"
+    },
+    {
+      "code": "RENDER_TIMEOUT",
+      "en": "Reduce chart complexity before retrying.",
+      "zh-CN": "降低图表复杂度后重试。"
+    },
+    {
+      "code": "BUSY",
+      "en": "Wait for an active render to finish before retrying.",
+      "zh-CN": "等待当前渲染结束后重试。"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "chartnexus-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": "^22.14.0 || ^24.0.0"
+  },
+  "scripts": {
+    "generate": "node scripts/generate.mjs",
+    "generate:check": "node scripts/generate.mjs --check",
+    "build": "tsc -b",
+    "dev": "pnpm build && vite examples/playground --host 127.0.0.1",
+    "build:demo": "pnpm build && vite build examples/playground",
+    "typecheck": "tsc -b --pretty false && tsc -p tsconfig.tooling.json",
+    "test": "pnpm build && vitest run",
+    "test:browser": "pnpm build && playwright test",
+    "docs:check": "node scripts/check-docs.mjs",
+    "format": "prettier --write packages scripts tests examples resources .github package.json pnpm-workspace.yaml tsconfig.json playwright.config.ts vitest.config.ts tsconfig.base.json tsconfig.tooling.json eslint.config.mjs",
+    "format:check": "prettier --check packages scripts tests examples resources .github package.json pnpm-workspace.yaml tsconfig.json playwright.config.ts vitest.config.ts tsconfig.base.json tsconfig.tooling.json eslint.config.mjs",
+    "check": "pnpm generate:check && pnpm docs:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build:demo",
+    "demo:svg": "pnpm build && node scripts/render-example.mjs",
+    "lint": "eslint packages tests examples --ignore-pattern \"**/generated.ts\"",
+    "cli": "node packages/cli/dist/main.js",
+    "mcp": "node packages/mcp/dist/main.js"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vitest": "5.0.1",
+    "vite": "8.3.5",
+    "@playwright/test": "1.64.1",
+    "prettier": "3.8.1",
+    "json-schema-to-typescript": "15.0.4",
+    "@types/node": "22.19.11",
+    "echarts": "6.1.0",
+    "eslint": "10.13.0",
+    "typescript-eslint": "8.72.1",
+    "@modelcontextprotocol/sdk": "1.32.2"
+  },
+  "dependencies": {
+    "@chartnexus/schema": "workspace:*",
+    "@chartnexus/core": "workspace:*",
+    "@chartnexus/runtime": "workspace:*",
+    "@chartnexus/render": "workspace:*",
+    "@chartnexus/agent": "workspace:*",
+    "@chartnexus/cli": "workspace:*",
+    "@chartnexus/mcp": "workspace:*"
+  }
+}

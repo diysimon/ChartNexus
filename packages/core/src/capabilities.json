@@ -1,0 +1,16 @@
+{
+  "id": "basic-0.1",
+  "schemaVersion": "0.1",
+  "status": "experimental",
+  "charts": ["bar", "line", "pie", "scatter"],
+  "modes": ["intent", "echarts"],
+  "outputs": ["browser", "svg"],
+  "limits": {
+    "bytes": 1048576,
+    "depth": 32,
+    "rows": 10000,
+    "series": 50,
+    "points": 50000,
+    "dimension": 4096
+  }
+}

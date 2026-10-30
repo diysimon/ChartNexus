@@ -1,0 +1,22 @@
+{
+  "name": "@chartnexus/agent",
+  "version": "0.0.1-alpha.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@chartnexus/schema": "workspace:*",
+    "@chartnexus/core": "workspace:*",
+    "@chartnexus/render": "workspace:*",
+    "ajv": "8.20.0"
+  }
+}

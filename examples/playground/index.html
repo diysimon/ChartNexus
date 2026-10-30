@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ChartNexus · Developer Playground</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div>
+          <span class="tag">CHARTNEXUS / EXPERIMENTAL 0.1</span>
+          <h1>从图表意图，到 ECharts。</h1>
+          <p>原生 option 与 intent 共用校验、编译和渲染。无需模型密钥。</p>
+        </div>
+        <span class="badge">LOCAL · ECharts 6.1</span>
+      </header>
+      <section class="toolbar">
+        <label
+          >示例
+          <select id="example">
+            <option value="bar">柱状图 / Bar</option>
+            <option value="line">折线图 / Line</option>
+            <option value="pie">饼图 / Pie</option>
+            <option value="scatter">散点图 / Scatter</option>
+            <option value="group">分组堆叠 / Grouped</option>
+            <option value="native">原生配置 / Native</option>
+          </select></label
+        ><button id="render">校验并渲染 / Render</button
+        ><button id="dispose" class="secondary">销毁 / Dispose</button
+        ><button id="mount" class="secondary">重新挂载 / Mount</button>
+      </section>
+      <section class="workspace">
+        <article>
+          <div class="panel-title">01 / ChartDocument</div>
+          <textarea
+            id="source"
+            aria-label="ChartDocument"
+            spellcheck="false"
+          ></textarea>
+        </article>
+        <article>
+          <div class="panel-title">
+            02 / ECharts preview <span id="revision">revision 0</span>
+          </div>
+          <div id="chart"></div>
+          <pre id="status" role="status"></pre>
+        </article>
+      </section>
+      <section class="output">
+        <article>
+          <div class="panel-title">03 / Compiled option</div>
+          <pre id="compiled"></pre>
+        </article>
+        <article>
+          <div class="panel-title">04 / Selection event</div>
+          <pre id="event">
+点击图表中的数据项查看事件。
+Click a data point to inspect its event.</pre
+          >
+        </article>
+      </section>
+      <footer>
+        Experimental local foundation · No model calls · No protocol
+        compatibility claims
+      </footer>
+    </main>
+    <script type="module" src="/main.ts"></script>
+  </body>
+</html>

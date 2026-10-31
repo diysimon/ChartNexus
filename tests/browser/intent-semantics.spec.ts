@@ -130,13 +130,13 @@ test('empty and literal group labels toggle independently', async ({
       );
     });
   expect(await barCounts()).toEqual([1, 1, 1]);
-  await legend.filter({ hasText: /^\(empty\) \[2\]$/ }).click({ force: true });
+  await legend.filter({ hasText: /^\(empty\) \[2\]$/ }).click();
   await page.mouse.move(0, 0);
   await expect.poll(barCounts).toEqual([0, 1, 1]);
-  await legend.filter({ hasText: /^\(empty\)$/ }).click({ force: true });
+  await legend.filter({ hasText: /^\(empty\)$/ }).click();
   await page.mouse.move(0, 0);
   await expect.poll(barCounts).toEqual([0, 1, 0]);
-  await legend.filter({ hasText: /^\(empty\) \[2\]$/ }).click({ force: true });
+  await legend.filter({ hasText: /^\(empty\) \[2\]$/ }).click();
   await page.mouse.move(0, 0);
   await expect.poll(barCounts).toEqual([1, 1, 0]);
 });

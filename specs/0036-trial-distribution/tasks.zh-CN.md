@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.1"
+version: "0.2"
 status: verifying
 updated: 2026-10-31
 language: zh-CN
@@ -38,3 +38,7 @@ M4 当前为 **verifying，尚未 done**。实现和本地分发门禁已完成�
 ## Corpus audit correction
 
 [题库复核](corpus-audit.json)发现部分语义家族与公开样例重叠，因此不接受当前集为独立留出证据。当前运行仍是有用的私有开发基线，保留所有失败；AC16 除完成/审查当前结果外，还需重新建立家族分离的题库并全新评测。冻结标签仅作为历史来源，不代表验收。
+
+## 远端 CI 排查
+
+首次 SSH 推送（`1eb69c6`）触发 [CI 41206228999](https://github.com/diysimon/ChartNexus/actions/runs/41206228999)：单元测试230/231、浏览器44/45通过，隔离消费者缺少 Rolldown 的 Linux 原生依赖。将包含七次子进程的 CLI 用例拆为独立计时的用例，不延长超时；图例点击采用 Playwright 稳定性与命中检查，取消 force，并保留失败轨迹与截图。冻结工作区的内容缓存并不保证新消费者离线解析所需的注册表元数据齐备；远端消费者改为在线解析经审核的固定版本，且先验证 Vite 导入。已有完整缓存的本地离线演练仍保留。须由后续 CI 验证修复，不豁免失败。

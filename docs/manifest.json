@@ -670,7 +670,7 @@
     },
     {
       "id": "spec-0036-tasks",
-      "version": "0.1",
+      "version": "0.2",
       "status": "verifying",
       "en": "specs/0036-trial-distribution/tasks.md",
       "zh-CN": "specs/0036-trial-distribution/tasks.zh-CN.md"

@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.1"
+version: "0.2"
 status: verifying
 updated: 2026-10-31
 language: en
@@ -38,3 +38,7 @@ Reproduction and private run locations are in the [guide](../../docs/en/trial-di
 ## Corpus audit correction
 
 The [corpus audit](corpus-audit.json) rejects the current set as independent held-out evidence because some semantic families overlap public examples. It remains a useful private development run, with all failures retained. AC16 requires a new family-separated corpus and fresh evaluation, in addition to finishing/reviewing current baseline results. Frozen labels are preserved as provenance, not treated as validation.
+
+## Remote CI investigation
+
+The first SSH push (`1eb69c6`) ran [CI 41206228999](https://github.com/diysimon/ChartNexus/actions/runs/41206228999): 230/231 unit tests and44/45 browser tests passed, while installed consumers lacked Rolldown's Linux native binding. Split the seven-process CLI cases into independently timed cases without extending timeouts. Let legend clicks use Playwright stability/hit-target checks instead of force, and retain failed traces/screenshots. A frozen workspace store does not guarantee complete registry metadata for a fresh offline consumer; remote consumers now resolve reviewed, pinned versions online and explicitly import Vite before browser checks. Local warmed-cache offline rehearsal remains available. Follow-up CI must confirm these changes; no failure is waived.

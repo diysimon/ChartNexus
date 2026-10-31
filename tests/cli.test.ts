@@ -26,35 +26,51 @@ describe('CLI child process', () => {
     );
     expect(run(['--help']).status).toBe(0);
   });
-  test('selects schema versions explicitly and rejects incompatible modes', () => {
-    expect(run(['schema']).json.value.$id).toBe(
-      'https://chartnexus.dev/schemas/chart-document/0.1',
-    );
-    expect(
-      run(['schema', '--schema-version', '0.2', '--mode', 'intent']).json.value
-        .$id,
-    ).toBe('https://chartnexus.dev/schemas/chart-document/0.2');
-    expect(
-      run(['schema', '--schema-version', '0.2', '--mode', 'echarts']),
-    ).toMatchObject({
-      status: 1,
-      json: { ok: false, diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }] },
-    });
-    expect(
-      run(['schema', '--schema-version', '0.3', '--chart-type', 'bar']),
-    ).toMatchObject({
-      status: 0,
-      json: {
-        ok: true,
-        value: { properties: { schemaVersion: { const: '0.3' } } },
+  test.each([
+    {
+      args: ['schema'],
+      expected: {
+        json: {
+          value: { $id: 'https://chartnexus.dev/schemas/chart-document/0.1' },
+        },
       },
-    });
-    expect(run(['schema', '--schema-version', '0.4']).status).toBe(2);
-    expect(run(['capabilities', '--schema-version', '0.2']).status).toBe(2);
-    expect(
-      run(['schema', '--schema-version', '0.1', '--schema-version', '0.2'])
-        .status,
-    ).toBe(2);
+    },
+    {
+      args: ['schema', '--schema-version', '0.2', '--mode', 'intent'],
+      expected: {
+        json: {
+          value: { $id: 'https://chartnexus.dev/schemas/chart-document/0.2' },
+        },
+      },
+    },
+    {
+      args: ['schema', '--schema-version', '0.2', '--mode', 'echarts'],
+      expected: {
+        status: 1,
+        json: { ok: false, diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }] },
+      },
+    },
+    {
+      args: ['schema', '--schema-version', '0.3', '--chart-type', 'bar'],
+      expected: {
+        status: 0,
+        json: {
+          ok: true,
+          value: { properties: { schemaVersion: { const: '0.3' } } },
+        },
+      },
+    },
+    { args: ['schema', '--schema-version', '0.4'], expected: { status: 2 } },
+    {
+      args: ['capabilities', '--schema-version', '0.2'],
+      expected: { status: 2 },
+    },
+    {
+      args: ['schema', '--schema-version', '0.1', '--schema-version', '0.2'],
+      expected: { status: 2 },
+    },
+  ])('selects/rejects schema arguments: $args', ({ args, expected }) => {
+    expect(run(args)).toMatchObject(expected);
   });
   test('validates file input and compiles stdin', () => {
     expect(run(['validate', 'resources/recipes/bar.json']).json).toMatchObject({
@@ -65,24 +81,37 @@ describe('CLI child process', () => {
     expect(compiled.stderr).toBe('');
     expect(compiled.json.value.option.series[0].type).toBe('bar');
   });
-  test('reports input, semantic, usage and IO failures with stable exit codes', () => {
-    expect(run(['validate'], '{').json.diagnostics[0].code).toBe(
-      'INVALID_JSON',
-    );
-    expect(
-      run(['validate', 'resources/recipes/unknown-field.json']).status,
-    ).toBe(1);
-    expect(run(['validate'], ' '.repeat(1_048_577)).status).toBe(1);
-    expect(run(['render', '--unknown', 'x']).status).toBe(2);
-    expect(
-      run(['schema', '--mode', 'intent', '--mode', 'echarts']).status,
-    ).toBe(2);
-    expect(run(['schema', 'unexpected']).status).toBe(2);
-    expect(
-      run(['validate', 'missing-chartnexus-file.json']).json.diagnostics[0]
-        .code,
-    ).toBe('IO_ERROR');
-  });
+  test.each([
+    {
+      args: ['validate'],
+      input: '{',
+      expected: { json: { diagnostics: [{ code: 'INVALID_JSON' }] } },
+    },
+    {
+      args: ['validate', 'resources/recipes/unknown-field.json'],
+      expected: { status: 1 },
+    },
+    {
+      args: ['validate'],
+      input: ' '.repeat(1_048_577),
+      expected: { status: 1 },
+    },
+    { args: ['render', '--unknown', 'x'], expected: { status: 2 } },
+    {
+      args: ['schema', '--mode', 'intent', '--mode', 'echarts'],
+      expected: { status: 2 },
+    },
+    { args: ['schema', 'unexpected'], expected: { status: 2 } },
+    {
+      args: ['validate', 'missing-chartnexus-file.json'],
+      expected: { json: { diagnostics: [{ code: 'IO_ERROR' }] } },
+    },
+  ])(
+    'reports failure with stable exit codes: $args',
+    ({ args, input, expected }) => {
+      expect(run(args, input)).toMatchObject(expected);
+    },
+  );
   test('renders SVG only to an explicitly requested new path and refuses overwrite', () => {
     const directory = mkdtempSync(join(tmpdir(), 'chartnexus-cli-'));
     const output = join(directory, 'chart.svg');

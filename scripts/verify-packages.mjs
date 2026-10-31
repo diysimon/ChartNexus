@@ -165,10 +165,23 @@ const installArgs = [
   resolve(process.env.CHARTNEXUS_STORE ?? join(root, '.local/pnpm-store')),
 ];
 if (process.argv.includes('--offline')) installArgs.push('--offline');
+// A frozen workspace install populates package contents, but a clean consumer
+// also needs registry manifests to resolve optional platform packages. CI uses
+// online resolution with the reviewed version overrides; --offline is only for
+// an already warmed metadata cache.
 const log = [];
 try {
   log.push(run('pnpm', installArgs, consumer));
   log.push(run(process.execPath, ['consumer.mjs'], consumer));
+  // Fail before Playwright starts if the consumer's bundler/native optional
+  // dependencies are absent. Resolution happens wholly inside the consumer.
+  log.push(
+    run(
+      process.execPath,
+      ['--input-type=module', '-e', "await import('vite')"],
+      consumer,
+    ),
+  );
   // Type exports are resolved only from installed declarations under NodeNext.
   await writeFile(
     join(consumer, 'consumer.ts'),
@@ -208,6 +221,9 @@ try {
     artifacts,
     browser: process.argv.includes('--browser') ? 'pass' : 'not-run',
     nodeModulesIsolated: true,
+    installMode: process.argv.includes('--offline')
+      ? 'offline-warm-cache'
+      : 'registry-pinned-versions',
   };
   await writeFile(
     join(output, `node-${process.versions.node}.json`),

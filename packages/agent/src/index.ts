@@ -6,6 +6,8 @@ import {
   nativeStrictCapabilities,
   validateNativeStrict,
   compileChart,
+  compileChatChart,
+  type ChatPresentationSettings,
   inspectJson,
 } from '@chartnexus/core';
 import {
@@ -111,6 +113,18 @@ export function createAgentService(
           ),
         };
       }
+      const chatPresentation = input.chatPresentation as
+        | ChatPresentationSettings
+        | undefined;
+      if (
+        chatPresentation !== undefined &&
+        input.nativeValidation !== undefined
+      )
+        return failure(
+          'INVALID_ARGUMENTS',
+          '/chatPresentation',
+          'Chat presentation cannot be combined with native validation.',
+        );
       if (name === 'render_chart') {
         const width = typeof input.width === 'number' ? input.width : 800;
         const height = typeof input.height === 'number' ? input.height : 480;
@@ -120,6 +134,7 @@ export function createAgentService(
           height,
           registry,
           signal,
+          chatPresentation,
         );
         return result.ok
           ? {
@@ -140,7 +155,14 @@ export function createAgentService(
         const strict = validateNativeStrict(input.document);
         if (!strict.ok) return strict;
       }
-      const result = compileChart(input.document, registry);
+      const chat =
+        chatPresentation === undefined
+          ? undefined
+          : compileChatChart(input.document, chatPresentation, registry);
+      if (chat && !chat.ok) return chat;
+      const result = chat
+        ? { ok: true as const, value: chat.value.plan }
+        : compileChart(input.document, registry);
       if (!result.ok) return result;
       if (name === 'validate_chart')
         return {
@@ -150,6 +172,7 @@ export function createAgentService(
             chartId: result.value.chartId,
             profile: result.value.profile,
             dataRevision: result.value.dataRevision,
+            ...(chat ? { chatAdjustments: chat.value.adjustments } : {}),
             validation:
               input.nativeValidation === 'strict-basic-0.1'
                 ? 'native-strict-basic-0.1'
@@ -167,7 +190,12 @@ export function createAgentService(
           '',
           'Compiled output exceeds the 4 MiB budget.',
         );
-      return result;
+      return chat
+        ? {
+            ok: true,
+            value: { ...result.value, chatAdjustments: chat.value.adjustments },
+          }
+        : result;
     },
   };
 }

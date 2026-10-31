@@ -2,7 +2,7 @@
   "id": "basic-0.2",
   "schemaVersion": "0.2",
   "status": "experimental",
-  "charts": ["bar", "line", "pie", "scatter", "combo", "funnel"],
+  "charts": ["bar", "line", "pie", "scatter", "combo", "funnel", "heatmap"],
   "modes": ["intent"],
   "variants": {
     "bar": ["horizontal"],
@@ -88,5 +88,31 @@
     "y": "nonnegative",
     "order": "input unless explicitly sorted",
     "conversionRate": "not inferred"
+  },
+  "heatmap": {
+    "x": "ordinal",
+    "y": "ordinal",
+    "value": "quantitative",
+    "range": "explicit",
+    "missing": "null is not rendered",
+    "duplicates": "rejected",
+    "sorting": false,
+    "aggregation": false
+  },
+  "chatPresentation": {
+    "status": "experimental",
+    "hostOptIn": true,
+    "detailLevels": [
+      "minimal",
+      "simple",
+      "standard",
+      "detailed",
+      "comprehensive"
+    ],
+    "themes": ["light", "dark"],
+    "backgrounds": ["transparent", "theme"],
+    "defaultLevel": "standard",
+    "defaultTheme": "light",
+    "defaultBackground": "transparent"
   }
 }

@@ -40,6 +40,28 @@
         "nativeValidation": {
           "enum": ["strict-basic-0.1"],
           "description": "Optional strict native subset; only for 0.1 echarts documents. No silent fallback."
+        },
+        "chatPresentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ]
+            },
+            "background": {
+              "enum": ["transparent", "theme"]
+            }
+          },
+          "description": "Host-selected chat profile; omit to preserve default rendering. Applies only to 0.2 intent."
         }
       },
       "additionalProperties": false,
@@ -55,6 +77,28 @@
         "document": {
           "type": "object",
           "description": "ChartDocument 0.1 or experimental 0.2 intent. Read the corresponding schema resource. No executable code."
+        },
+        "chatPresentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ]
+            },
+            "background": {
+              "enum": ["transparent", "theme"]
+            }
+          },
+          "description": "Host-selected chat profile; omit to preserve default rendering. Applies only to 0.2 intent."
         }
       },
       "additionalProperties": false,
@@ -80,6 +124,28 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 4096
+        },
+        "chatPresentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ]
+            },
+            "background": {
+              "enum": ["transparent", "theme"]
+            }
+          },
+          "description": "Host-selected chat profile; omit to preserve default rendering. Applies only to 0.2 intent."
         }
       },
       "additionalProperties": false,

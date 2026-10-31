@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ChartNexus · 聊天图表</title>
+    <link rel="stylesheet" href="/chat.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header>
+        <h1>聊天图表预览</h1>
+        <p>在不同聊天界面中查看图表的样式和可读性</p>
+      </header>
+      <section class="controls" aria-label="展示设置">
+        <label
+          >界面<select id="theme">
+            <option value="light">浅色</option>
+            <option value="dark">深色</option>
+          </select></label
+        ><label
+          >展示详略<select id="level">
+            <option value="minimal">极简</option>
+            <option value="simple">简洁</option>
+            <option value="standard" selected>标准</option>
+            <option value="detailed">详细</option>
+            <option value="comprehensive">完整</option>
+          </select></label
+        ><label
+          >图表背景<select id="background">
+            <option value="transparent">透明</option>
+            <option value="theme">主题背景</option>
+          </select></label
+        ><label
+          >消息宽度<select id="width">
+            <option value="wide">宽卡片</option>
+            <option value="narrow">窄气泡</option>
+          </select></label
+        ><label
+          >图表示例<select id="chart-type">
+            <option value="bar">柱状图</option>
+            <option value="combo">柱线组合</option>
+            <option value="funnel">漏斗图</option>
+            <option value="heatmap">热力图</option>
+          </select></label
+        >
+      </section>
+      <section id="conversation" class="conversation" data-theme="light">
+        <div class="user-message">请把这些数据画成图表。</div>
+        <div id="answer" class="answer">
+          <div class="avatar">C</div>
+          <div class="bubble">
+            <p class="lead">根据提供的数据，图表如下：</p>
+            <div
+              id="chat-chart"
+              class="chart"
+              role="img"
+              aria-describedby="chart-summary"
+            ></div>
+            <p id="chart-summary" class="summary"></p>
+            <p id="adjustments" class="summary" role="status"></p>
+            <div class="actions"><button id="download">下载 SVG</button></div>
+          </div>
+        </div>
+      </section>
+      <pre id="chart-status" class="sr-only" role="status"></pre>
+    </main>
+    <script type="module" src="/chat.ts"></script>
+  </body>
+</html>

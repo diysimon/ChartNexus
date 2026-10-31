@@ -75,6 +75,36 @@ describe('experimental 0.2 intent profile', () => {
     });
     expect(renderSvg(donut).ok).toBe(true);
   });
+  test('provides schema-owned expected constant and enum values for repair', () => {
+    const doc = base();
+    expect(
+      compileChart({
+        ...doc,
+        presentation: { theme: { id: 'light', version: 1 } },
+      }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: expect.arrayContaining([
+        expect.objectContaining({
+          code: 'INVALID_SCHEMA',
+          path: '/presentation/theme/version',
+          message: 'Expected "1".',
+        }),
+      ]),
+    });
+    expect(
+      compileChart({ ...doc, presentation: { detailLevel: 'verbose' } }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: [
+        {
+          code: 'INVALID_SCHEMA',
+          path: '/presentation/detailLevel',
+          message: expect.stringContaining('comprehensive'),
+        },
+      ],
+    });
+  });
   test('rejects invalid combinations, unknown themes, versions and native mode', () => {
     const doc = base();
     for (const input of [

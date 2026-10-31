@@ -1,5 +1,10 @@
 import * as echarts from 'echarts';
-import { compileChart, limits } from '@chartnexus/core';
+import {
+  compileChart,
+  compileChatChart,
+  limits,
+  type ChatPresentationSettings,
+} from '@chartnexus/core';
 import {
   failure,
   type AggregatePoint,
@@ -32,6 +37,9 @@ const owners = new WeakSet<HTMLElement>();
 export function mountChart(
   container: HTMLElement,
   onSelect?: (event: SelectionEvent) => void,
+  options: {
+    chatPresentation?: ChatPresentationSettings;
+  } = {},
 ): Result<ChartRuntime> {
   if (owners.has(container) || echarts.getInstanceByDom(container))
     return failure(
@@ -106,7 +114,14 @@ export function mountChart(
       update(input, registry) {
         if (disposed)
           return failure('DISPOSED', '', 'Chart runtime is disposed.');
-        const result = compileChart(input, registry);
+        const chat =
+          options.chatPresentation === undefined
+            ? undefined
+            : compileChatChart(input, options.chatPresentation, registry);
+        if (chat && !chat.ok) return chat;
+        const result = chat
+          ? { ok: true as const, value: chat.value.plan }
+          : compileChart(input, registry);
         if (!result.ok) return result;
         if (previous && previous.chartId !== result.value.chartId)
           return failure(
@@ -175,3 +190,5 @@ export function mountChart(
 
 export { createUpdateController } from './update-controller.js';
 export type { UpdateController, UpdateReceipt } from './update-controller.js';
+
+export type { ChatPresentationSettings } from '@chartnexus/core';

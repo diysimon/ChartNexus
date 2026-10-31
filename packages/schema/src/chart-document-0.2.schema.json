@@ -87,7 +87,15 @@
       "additionalProperties": false,
       "properties": {
         "type": {
-          "enum": ["bar", "line", "pie", "scatter", "combo", "funnel"]
+          "enum": [
+            "bar",
+            "line",
+            "pie",
+            "scatter",
+            "combo",
+            "funnel",
+            "heatmap"
+          ]
         },
         "encoding": {
           "type": "object",
@@ -289,6 +297,24 @@
             }
           },
           "required": ["field"]
+        },
+        "heatmap": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "required": ["field", "min", "max"]
         }
       },
       "required": ["type", "encoding"]
@@ -305,7 +331,8 @@
               "enum": ["light", "dark"]
             },
             "version": {
-              "const": "1"
+              "const": "1",
+              "type": "string"
             }
           },
           "required": ["id", "version"]
@@ -332,6 +359,16 @@
             }
           },
           "required": ["show"]
+        },
+        "detailLevel": {
+          "enum": [
+            "minimal",
+            "simple",
+            "standard",
+            "detailed",
+            "comprehensive"
+          ],
+          "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
         }
       }
     }

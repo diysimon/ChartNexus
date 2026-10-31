@@ -35,3 +35,9 @@ For experimental 0.2 intent charts, use `presentation.dataLabels.show` and `pres
 For 0.2 line time instants use `temporalKind: "instant"` and full ISO strings with `Z` or an explicit numeric offset. Do not omit offsets or invent one. Category sorting compares actual instants; different strings for the same instant are rejected. Display is UTC.
 
 For 0.2 intent, retrieve `chartnexus://recipes/combo/0.2` and `chartnexus://recipes/funnel/0.2` for supported combination and funnel examples. A combo uses a bar and line with distinct fields; shared axes require matching units or both unspecified, while an explicitly requested right axis requires units on both. Never infer conversion rates for funnels or silently convert values.
+
+For 0.2 categorical heatmaps, read `chartnexus://recipes/heatmap/0.2`. Supply distinct x, y and numeric color fields plus explicit min/max from the data or user; do not invent a range, fill missing cells with zero, or implicitly aggregate duplicates.
+
+The host may enable the 0.2 chat profile through `chatPresentation`; a user-requested detail level can be expressed as `presentation.detailLevel` (`minimal`, `simple`, `standard`, `detailed`, `comprehensive`). Host theme, background and level settings take precedence. Without host opt-in the document level does not change rendering. Never remove required legend or alter data for visual simplicity. See [chat profile](chat-presentation.md).
+
+For 0.2 chat charts, read `chartnexus://recipes/chat-bar/0.2` for a valid row-based example and `chartnexus://recipes/funnel/0.2` for a different chart type. Use the user's actual rows and values; examples are not task answers. Theme version is the string `"1"`; omit optional transforms unless requested.

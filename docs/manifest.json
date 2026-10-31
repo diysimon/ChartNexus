@@ -506,6 +506,27 @@
       "status": "implemented",
       "en": "specs/0026-dual-axis/spec.md",
       "zh-CN": "specs/0026-dual-axis/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0027-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0027-heatmap/spec.md",
+      "zh-CN": "specs/0027-heatmap/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0028-spec",
+      "version": "0.1",
+      "status": "implementing",
+      "en": "specs/0028-chat-presentation/spec.md",
+      "zh-CN": "specs/0028-chat-presentation/spec.zh-CN.md"
+    },
+    {
+      "id": "chat-presentation",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/chat-presentation.md",
+      "zh-CN": "docs/zh-CN/chat-presentation.md"
     }
   ]
 }

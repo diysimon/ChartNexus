@@ -35,3 +35,9 @@ ChartNexus 将受限的 JSON 图表文档编译为 Apache ECharts。先读取 `c
 0.2 折线图时间点使用 `temporalKind: "instant"`，输入完整的带 `Z` 或数字偏移的 ISO 字符串。不要省略或编造偏移。分类排序按实际时间比较，同一时间点的不同字符串会被拒绝；显示为 UTC。
 
 0.2 intent 可读取 `chartnexus://recipes/combo/0.2` 与 `chartnexus://recipes/funnel/0.2` 了解受支持的组合图和漏斗图。组合图使用两个不同字段，默认共享轴要求单位相同或均不声明；显式右轴要求双方均声明单位。不要为漏斗图推断转化率，也不要静默换算数值。
+
+生成 0.2 分类热力图前读取 `chartnexus://recipes/heatmap/0.2`。提供不同的 x、y 和数值颜色字段，以及数据或用户明确给出的 min/max；不要编造范围、把缺失格填成零或隐式聚合重复值。
+
+宿主可通过 `chatPresentation` 启用 0.2 聊天展示 profile；用户要求的详略可写入 `presentation.detailLevel`（`minimal`、`simple`、`standard`、`detailed`、`comprehensive`）。宿主的主题、背景和档位设置优先；未启用 profile 时文档档位不改变渲染。不要为了简洁删减必要图例或数据。详见[聊天展示](chat-presentation.md)。
+
+0.2 聊天图表可先读取 `chartnexus://recipes/chat-bar/0.2` 了解正确的逐行数据结构，再读取 `chartnexus://recipes/funnel/0.2` 了解另一种图表。使用用户实际数据和数值，示例不是任务答案。主题版本是字符串 `"1"`；用户未要求时不要添加可选变换。

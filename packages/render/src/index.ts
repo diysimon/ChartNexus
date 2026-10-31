@@ -1,12 +1,22 @@
 import { Buffer } from 'node:buffer';
 import * as echarts from 'echarts';
-import { compileChart, limits } from '@chartnexus/core';
+import {
+  compileChart,
+  compileChatChart,
+  limits,
+  type ChatPresentationSettings,
+} from '@chartnexus/core';
 import { failure, type DataRegistry, type Result } from '@chartnexus/schema';
 
 /** Static SVG only; rendering has no browser interaction or arbitrary callbacks. */
 export function renderSvg(
   input: unknown,
-  settings: { width?: number; height?: number; registry?: DataRegistry } = {},
+  settings: {
+    width?: number;
+    height?: number;
+    registry?: DataRegistry;
+    chatPresentation?: ChatPresentationSettings;
+  } = {},
 ): Result<string> {
   const width = settings.width ?? 800,
     height = settings.height ?? 480;
@@ -20,7 +30,14 @@ export function renderSvg(
       '',
       'Dimensions must be integers in 1..4096.',
     );
-  const compiled = compileChart(input, settings.registry);
+  const chat =
+    settings.chatPresentation === undefined
+      ? undefined
+      : compileChatChart(input, settings.chatPresentation, settings.registry);
+  if (chat && !chat.ok) return chat;
+  const compiled = chat
+    ? { ok: true as const, value: chat.value.plan }
+    : compileChart(input, settings.registry);
   if (!compiled.ok) return compiled;
   let chart: echarts.ECharts | undefined;
   try {

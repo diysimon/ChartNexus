@@ -72,3 +72,7 @@ SDK 客户端测试启动真实进程，完成协商、工具/资源发现、错
 通过 `chartnexus://resources/index/0.1` 发现双语模型入口及 `chartnexus://evaluation/tasks/0.1` 公开合成开发任务集。参见[模型入口](model-entry.md)和[评测基线](evaluation-baseline.md)；参考样例自检不代表真实模型表现。
 
 [本地模型与 MCP 试运行](local-model-pilot.md)记录了真实本地模型通过官方 SDK 客户端调用本服务；这不是桌面客户端验证证据。
+
+## 可选聊天输出
+
+MCP 的 `validate_chart`、`compile_chart` 和 `render_chart` 接受可选 `chatPresentation`，可设置 `theme`、`detailLevel` 和 `background`。它须由宿主启用，仅用于 0.2 intent；设置和文档都省略时默认透明、浅色、标准档。校验/编译结果包含调整码；渲染仅返回 SVG 资源，如需调整信息可先编译。文档的 `presentation.detailLevel` 是建议，不是修改宿主设置的指令。详见[聊天展示](chat-presentation.md)。

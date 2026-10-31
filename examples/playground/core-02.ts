@@ -235,4 +235,33 @@ document.querySelector('#dual')!.addEventListener('click', () => {
     ? `VALID ${result.value.revision}`
     : JSON.stringify(result.diagnostics);
 });
+document.querySelector('#heatmap')!.addEventListener('click', () => {
+  selection.textContent = '';
+  const result = runtime.update({
+    ...base,
+    data: {
+      kind: 'inline',
+      fields: ['day', 'region', 'orders'],
+      rows: [
+        { day: 'Mon', region: 'East', orders: 4 },
+        { day: 'Tue', region: 'West', orders: null },
+        { day: 'Tue', region: 'East', orders: 0 },
+        { day: 'Mon', region: 'West', orders: 10 },
+      ],
+    },
+    chart: {
+      type: 'heatmap',
+      title: 'Orders',
+      encoding: {
+        x: { field: 'day', type: 'ordinal' },
+        y: { field: 'region', type: 'ordinal' },
+      },
+      heatmap: { field: 'orders', min: 0, max: 10 },
+    },
+    presentation: { theme: { id: 'light', version: '1' } },
+  });
+  status.textContent = result.ok
+    ? `VALID ${result.value.revision}`
+    : JSON.stringify(result.diagnostics);
+});
 show({ type: 'bar', orientation: 'horizontal' }, 'light');

@@ -7,8 +7,18 @@ import { createCosuiChart } from '@chartnexus/adapter-cosui';
 import type { UpdateReceipt } from '@chartnexus/runtime';
 import type { Diagnostic } from '@chartnexus/schema';
 
+const chatMode = new URLSearchParams(location.search).get('chat') === 'dark';
+const chatOption = chatMode
+  ? {
+      chatPresentation: {
+        theme: 'dark' as const,
+        detailLevel: 'standard' as const,
+        background: 'transparent' as const,
+      },
+    }
+  : {};
 const documentFor = (name: string) => ({
-  schemaVersion: '0.1',
+  schemaVersion: chatMode ? '0.2' : '0.1',
   id: 'ordered',
   mode: 'intent',
   data: {
@@ -42,6 +52,7 @@ const library = createLibrary({
   components: [
     createOpenUIChart({
       orderedUpdates: true,
+      ...chatOption,
       onUpdateReceipt: (value) => openReceipt(value),
       onDiagnostics: (value) => openDiagnostic(value),
     }),
@@ -149,6 +160,7 @@ function initCos() {
   const diagnostics = document.querySelector<HTMLElement>('#cos-diagnostics')!;
   const Chart = createCosuiChart({
     orderedUpdates: true,
+    ...chatOption,
     onUpdateReceipt: (value) => {
       receipt.textContent = JSON.stringify(value);
     },

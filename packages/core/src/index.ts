@@ -2,6 +2,7 @@ import capabilityManifest from './capabilities.json' with { type: 'json' };
 import capability02Manifest from './capabilities-0.2.json' with { type: 'json' };
 import nativeStrictManifest from './native-strict-capabilities.json' with { type: 'json' };
 import { Ajv2020 } from 'ajv/dist/2020.js';
+import type { ErrorObject } from 'ajv';
 import {
   chartDocumentSchema,
   chartDocument02Schema,
@@ -9,6 +10,7 @@ import {
   type AggregatePoint,
   failure,
   type ChartDocument,
+  type Diagnostic,
   type DataRegistry,
   type DataTable,
   type JsonValue,
@@ -25,6 +27,22 @@ const validate02 = ajv.compile<ChartDocument02>(chartDocument02Schema);
 export const capabilities = Object.freeze(capabilityManifest);
 export const capabilities02 = Object.freeze(capability02Manifest);
 export const nativeStrictCapabilities = Object.freeze(nativeStrictManifest);
+
+/** Include schema-owned constant/enum values to make model repair actionable. */
+function schema02Diagnostic(error: ErrorObject): Diagnostic {
+  let message = error.message ?? 'Invalid document.';
+  if (error.keyword === 'const' && Object.hasOwn(error.params, 'allowedValue'))
+    message = `Expected ${JSON.stringify(error.params.allowedValue)}.`;
+  if (error.keyword === 'enum' && Array.isArray(error.params.allowedValues))
+    message = `Expected one of ${JSON.stringify(error.params.allowedValues)}.`;
+  return {
+    code: 'INVALID_SCHEMA',
+    severity: 'error',
+    path: error.instancePath,
+    message,
+    recoverable: true,
+  };
+}
 
 function validateChart01(input: unknown): Result<ChartDocument> {
   const json = inspectJson(input);
@@ -318,13 +336,9 @@ export function validateChart(
   if (!validate02(safe.value))
     return {
       ok: false,
-      diagnostics: (validate02.errors ?? []).slice(0, 12).map((e) => ({
-        code: 'INVALID_SCHEMA',
-        severity: 'error' as const,
-        path: e.instancePath,
-        message: e.message ?? 'Invalid document.',
-        recoverable: true,
-      })),
+      diagnostics: (validate02.errors ?? [])
+        .slice(0, 12)
+        .map(schema02Diagnostic),
     };
   return { ok: true, value: safe.value };
 }
@@ -397,15 +411,193 @@ export function compileChart(
   if (!validate02(safe.value))
     return {
       ok: false,
-      diagnostics: (validate02.errors ?? []).slice(0, 12).map((e) => ({
-        code: 'INVALID_SCHEMA',
-        severity: 'error' as const,
-        path: e.instancePath,
-        message: e.message ?? 'Invalid document.',
-        recoverable: true,
-      })),
+      diagnostics: (validate02.errors ?? [])
+        .slice(0, 12)
+        .map(schema02Diagnostic),
     };
   const doc = safe.value;
+  if (doc.chart.type === 'heatmap') {
+    const chart = doc.chart;
+    const heatmap = chart.heatmap;
+    if (
+      !heatmap ||
+      chart.encoding.x.type !== 'ordinal' ||
+      chart.encoding.y.type !== 'ordinal' ||
+      chart.encoding.x.temporalKind !== undefined ||
+      chart.encoding.y.unit !== undefined ||
+      chart.encoding.series !== undefined ||
+      chart.secondary !== undefined ||
+      chart.sort !== undefined ||
+      chart.aggregate !== undefined ||
+      chart.stack !== undefined ||
+      chart.orientation !== undefined ||
+      chart.area !== undefined ||
+      chart.donut !== undefined ||
+      doc.presentation?.legend !== undefined ||
+      doc.presentation?.dataLabels !== undefined
+    )
+      return failure(
+        'UNSUPPORTED_CAPABILITY',
+        '/chart',
+        'Heatmap requires two categorical axes and a color field; grouping, transforms and label/legend overrides are not supported.',
+      );
+    const xField = chart.encoding.x.field,
+      yField = chart.encoding.y.field,
+      valueField = heatmap.field;
+    if (new Set([xField, yField, valueField]).size !== 3)
+      return failure(
+        'INVALID_ENCODING',
+        '/chart/heatmap/field',
+        'Heatmap requires three distinct fields.',
+      );
+    if (
+      !(heatmap.min < heatmap.max) ||
+      !Number.isFinite(heatmap.max - heatmap.min)
+    )
+      return failure(
+        'INVALID_DATA',
+        '/chart/heatmap',
+        'Heatmap color range must be finite with min less than max.',
+      );
+    let table: unknown = doc.data;
+    let revision = 'inline';
+    if (doc.data.kind === 'reference') {
+      const entry = Object.hasOwn(registry, doc.data.id)
+        ? registry[doc.data.id]
+        : undefined;
+      if (!entry)
+        return failure(
+          'DATA_NOT_FOUND',
+          '/data/id',
+          'Data reference is not registered by the host.',
+        );
+      if (entry.revision !== doc.data.revision)
+        return failure(
+          'REVISION_CONFLICT',
+          '/data/revision',
+          'Registered data revision differs from requested revision.',
+        );
+      table = entry.table;
+      revision = entry.revision;
+    }
+    const checked = checkTable(table);
+    if (!checked.ok) return checked;
+    if (
+      ![xField, yField, valueField].every((field) =>
+        checked.value.fields.includes(field),
+      )
+    )
+      return failure(
+        'UNKNOWN_FIELD',
+        '/chart/heatmap',
+        'Heatmap fields must be declared in the data.',
+      );
+    const xs: string[] = [],
+      ys: string[] = [],
+      points: JsonValue[] = [],
+      rowIndices: number[] = [];
+    const xIndex = new Map<string, number>(),
+      yIndex = new Map<string, number>(),
+      pairs = new Set<string>();
+    for (const [index, row] of checked.value.rows.entries()) {
+      const xv = row[xField],
+        yv = row[yField],
+        value = row[valueField];
+      if (
+        typeof xv !== 'string' ||
+        typeof yv !== 'string' ||
+        (value !== null && typeof value !== 'number')
+      )
+        return failure(
+          'INVALID_DATA',
+          `/data/rows/${index}`,
+          'Heatmap categories must be strings and values numeric or null.',
+        );
+      const key = JSON.stringify([xv, yv]);
+      if (pairs.has(key))
+        return failure(
+          'AMBIGUOUS_DATA',
+          `/data/rows/${index}`,
+          'Duplicate heatmap cell requires explicit upstream aggregation.',
+        );
+      pairs.add(key);
+      if (!xIndex.has(xv)) {
+        xIndex.set(xv, xs.length);
+        xs.push(xv);
+      }
+      if (!yIndex.has(yv)) {
+        yIndex.set(yv, ys.length);
+        ys.push(yv);
+      }
+      if (value !== null) {
+        if (
+          typeof value !== 'number' ||
+          value < heatmap.min ||
+          value > heatmap.max
+        )
+          return failure(
+            'INVALID_DATA',
+            `/data/rows/${index}`,
+            'Heatmap values must be within the declared range.',
+          );
+        points.push([xIndex.get(xv)!, yIndex.get(yv)!, value]);
+        rowIndices.push(index);
+      }
+    }
+    const template = compileChart({
+      schemaVersion: '0.2',
+      id: doc.id,
+      mode: 'intent',
+      data: { kind: 'inline', fields: ['x', 'y'], rows: [] },
+      chart: {
+        type: 'scatter',
+        ...(chart.title !== undefined ? { title: chart.title } : {}),
+        encoding: {
+          x: { field: 'x', type: 'quantitative' },
+          y: { field: 'y', type: 'quantitative' },
+        },
+      },
+      ...(doc.presentation ? { presentation: doc.presentation } : {}),
+    });
+    if (!template.ok) return template;
+    const option = template.value.option;
+    const xAxis = record(option.xAxis) ? option.xAxis : {};
+    const yAxis = record(option.yAxis) ? option.yAxis : {};
+    option.xAxis = { ...xAxis, type: 'category', name: xField, data: xs };
+    option.yAxis = { ...yAxis, type: 'category', name: yField, data: ys };
+    option.series = [
+      { id: 'series:heatmap', name: valueField, type: 'heatmap', data: points },
+    ];
+    option.legend = { show: false };
+    option.grid = { ...(record(option.grid) ? option.grid : {}), bottom: 95 };
+    option.visualMap = {
+      type: 'continuous',
+      min: heatmap.min,
+      max: heatmap.max,
+      orient: 'horizontal',
+      left: 'center',
+      bottom: 0,
+      calculable: false,
+      inRange: { color: ['#e0f2fe', '#0369a1', '#082f49'] },
+      ...(doc.presentation?.theme?.id === 'dark'
+        ? { textStyle: { color: '#f3f4f6' } }
+        : {}),
+    };
+    return {
+      ok: true,
+      value: {
+        ...template.value,
+        dataRevision: revision,
+        rowIndices: [rowIndices],
+      },
+    };
+  }
+  if (doc.chart.heatmap !== undefined)
+    return failure(
+      'UNSUPPORTED_CAPABILITY',
+      '/chart/heatmap',
+      'Heatmap settings require a heatmap chart.',
+    );
   if (doc.chart.type === 'funnel') {
     if (
       doc.chart.donut !== undefined ||
@@ -551,9 +743,11 @@ export function compileChart(
     aggregate,
     encoding,
     secondary: _secondary,
+    heatmap: _heatmap,
     ...chartOptions
   } = doc.chart;
   void _secondary;
+  void _heatmap;
   const { unit, ...y } = encoding.y;
   const { temporalKind, ...x } = encoding.x;
   const temporal = x.type === 'temporal';
@@ -999,3 +1193,8 @@ export function compileChart(
 }
 
 export { validateNativeStrict } from './native-strict.js';
+export { compileChatChart } from './chat-presentation.js';
+export type {
+  ChatPresentationSettings,
+  ChatRenderPlan,
+} from './chat-presentation.js';

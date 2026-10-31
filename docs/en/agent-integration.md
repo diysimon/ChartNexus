@@ -72,3 +72,7 @@ The SDK client test launches an actual server process, negotiates, lists tools/r
 Read `chartnexus://resources/index/0.1` to discover the bilingual model entry and `chartnexus://evaluation/tasks/0.1` public synthetic development corpus. See [model entry](model-entry.md) and [evaluation baseline](evaluation-baseline.md); reference fixture checks do not establish live-model performance.
 
 [Local model and MCP pilot](local-model-pilot.md) records a real local model calling this server via the official SDK client; it is not desktop-client evidence.
+
+## Optional chat output
+
+MCP `validate_chart`, `compile_chart` and `render_chart` accept `chatPresentation` with optional `theme`, `detailLevel`, and `background` fields. It is host opt-in, applies only to 0.2 intent, and defaults to transparent/light/standard when absent in settings and document. Validation/compilation include adjustment codes; rendering returns an SVG resource, so inspect adjustments through compile first if needed. `presentation.detailLevel` is a document suggestion, not an instruction to change host settings. See [chat presentation](chat-presentation.md).

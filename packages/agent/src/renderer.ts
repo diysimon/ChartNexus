@@ -1,4 +1,5 @@
 import { Worker } from 'node:worker_threads';
+import type { ChatPresentationSettings } from '@chartnexus/core';
 import { failure, type DataRegistry, type Result } from '@chartnexus/schema';
 
 export function createRenderer(
@@ -22,6 +23,7 @@ export function createRenderer(
     height: number,
     registry: DataRegistry,
     signal?: AbortSignal,
+    chatPresentation?: ChatPresentationSettings,
   ): Promise<Result<string>> {
     if (signal?.aborted)
       return failure('CANCELLED', '', 'Rendering was cancelled.');
@@ -79,7 +81,13 @@ export function createRenderer(
           return;
         }
         try {
-          current.postMessage({ document, width, height, registry });
+          current.postMessage({
+            document,
+            width,
+            height,
+            registry,
+            chatPresentation,
+          });
         } catch {
           finish(
             failure(

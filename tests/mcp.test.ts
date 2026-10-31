@@ -63,7 +63,7 @@ describe('real MCP stdio connection', () => {
           diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }],
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(16);
+      expect((await client.listResources()).resources).toHaveLength(18);
       const index = await client.readResource({
         uri: 'chartnexus://resources/index/0.1',
       });
@@ -85,7 +85,7 @@ describe('real MCP stdio connection', () => {
         .trimEnd()
         .split('\n')
         .map((line: string) => JSON.parse(line));
-      expect(records).toHaveLength(16);
+      expect(records).toHaveLength(20);
       expect(
         records.find(
           (item: { id: string }) => item.id === 'native-strict-schema',
@@ -109,6 +109,7 @@ describe('real MCP stdio connection', () => {
       expect(JSON.parse(cap.text)).toMatchObject({
         combo: { axes: ['shared', 'right'] },
         funnel: { conversionRate: 'not inferred' },
+        heatmap: { range: 'explicit', aggregation: false },
         temporal: { kinds: ['date', 'instant'] },
         units: { kinds: ['currency', 'percent', 'unit'] },
         presentation: {
@@ -130,6 +131,8 @@ describe('real MCP stdio connection', () => {
       for (const uri of [
         'chartnexus://recipes/combo/0.2',
         'chartnexus://recipes/funnel/0.2',
+        'chartnexus://recipes/heatmap/0.2',
+        'chartnexus://recipes/chat-bar/0.2',
       ]) {
         const recipeResource = await client.readResource({ uri });
         const value = recipeResource.contents[0];
@@ -212,6 +215,26 @@ describe('real MCP stdio connection', () => {
         },
       });
       expect(rejectedStrict.isError).toBe(true);
+      const styled = await client.callTool({
+        name: 'compile_chart',
+        arguments: {
+          document: {
+            ...recipe,
+            schemaVersion: '0.2',
+            presentation: { detailLevel: 'detailed' },
+          },
+          chatPresentation: { theme: 'dark', background: 'transparent' },
+        },
+      });
+      expect(styled.structuredContent).toMatchObject({
+        ok: true,
+        value: {
+          option: {
+            backgroundColor: 'transparent',
+            series: [{ label: { show: true } }],
+          },
+        },
+      });
       const nativeValidation = await client.callTool({
         name: 'validate_chart',
         arguments: {
@@ -274,7 +297,32 @@ describe('real MCP stdio connection', () => {
           sha256: createHash('sha256').update(first.text).digest('hex'),
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(17);
+      expect((await client.listResources()).resources).toHaveLength(19);
+      const chatSvgResult = await client.callTool({
+        name: 'render_chart',
+        arguments: {
+          document: {
+            ...recipe,
+            schemaVersion: '0.2',
+            presentation: { detailLevel: 'detailed' },
+          },
+          chatPresentation: { theme: 'dark', background: 'transparent' },
+        },
+      });
+      if (!Array.isArray(chatSvgResult.content))
+        throw new Error('Expected MCP content array.');
+      const chatLink = chatSvgResult.content.find(
+        (item) => item.type === 'resource_link',
+      );
+      if (!chatLink || typeof chatLink.uri !== 'string')
+        throw new Error('Expected chat SVG resource link.');
+      const chatSvg = (await client.readResource({ uri: chatLink.uri }))
+        .contents[0];
+      if (!chatSvg || !('text' in chatSvg))
+        throw new Error('Expected chat SVG text.');
+      expect(chatSvg.text).toContain('fill="none"');
+      expect(chatSvg.text).toContain('#f3f4f6');
+
       await expect(
         client.readResource({ uri: 'file:///etc/passwd' }),
       ).rejects.toThrow();

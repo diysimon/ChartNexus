@@ -92,5 +92,24 @@ test('0.2 variants and themes render in the browser', async ({ page }) => {
   await expect(page.locator('#chart')).toContainText('sales (USD)');
   await expect(page.locator('#chart')).toContainText('growth (ratio)');
   await expect(page.locator('#chart svg')).toHaveCount(1);
+  await page.click('#heatmap');
+  await expect(page.locator('#status')).toHaveText('VALID 14');
+  await expect(page.locator('#chart')).toContainText('East');
+  await expect(page.locator('#chart')).toContainText('Mon');
+  const heatPaths = page.locator('#chart svg path');
+  for (let i = 0; i < (await heatPaths.count()); i++) {
+    const path = heatPaths.nth(i);
+    const fill = await path.getAttribute('fill');
+    if (fill && fill !== 'none' && fill !== '#fff') {
+      await path.click({ force: true });
+      if (await page.locator('#selection').textContent()) break;
+    }
+  }
+  await expect(page.locator('#selection')).not.toHaveText('');
+  const heatSelection = JSON.parse(
+    (await page.locator('#selection').textContent())!,
+  );
+  expect(heatSelection.identity).toBe('position');
+  expect(heatSelection.rowIndex).toBe([0, 2, 3][heatSelection.dataIndex]);
   expect(errors).toEqual([]);
 });

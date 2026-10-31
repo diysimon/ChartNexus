@@ -8,6 +8,7 @@ import {
   type UpdateReceipt,
   type ChartRuntime,
   type SelectionEvent,
+  type ChatPresentationSettings,
 } from '@chartnexus/runtime';
 import {
   failure,
@@ -17,6 +18,7 @@ import {
 
 export interface OpenUIChartOptions {
   registry?: DataRegistry;
+  chatPresentation?: ChatPresentationSettings;
   orderedUpdates?: boolean;
   onUpdateReceipt?: (receipt: UpdateReceipt) => void;
   onSelect?: (event: SelectionEvent) => void;
@@ -60,8 +62,12 @@ function Chart({
   const streaming = useIsStreaming();
   useEffect(() => {
     if (!container.current) return;
-    const result = mountChart(container.current, (event) =>
-      optionsRef.current.onSelect?.(event),
+    const result = mountChart(
+      container.current,
+      (event) => optionsRef.current.onSelect?.(event),
+      optionsRef.current.chatPresentation
+        ? { chatPresentation: optionsRef.current.chatPresentation }
+        : {},
     );
     if (result.ok) {
       runtime.current = result.value;

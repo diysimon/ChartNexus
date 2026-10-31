@@ -90,6 +90,58 @@ describe('agent tools', () => {
       value: { oneOf: [{ properties: { mode: { const: 'echarts' } } }] },
     });
   });
+  test('explicit chat presentation works through agent compile and SVG render', async () => {
+    const service = createAgentService();
+    const document = {
+      ...recipe,
+      schemaVersion: '0.2',
+      presentation: { detailLevel: 'detailed' },
+    };
+    const chatPresentation = { theme: 'dark', background: 'transparent' };
+    const compiled = await service.execute('compile_chart', {
+      document,
+      chatPresentation,
+    });
+    expect(compiled).toMatchObject({
+      ok: true,
+      value: {
+        option: {
+          backgroundColor: 'transparent',
+          series: [{ label: { show: true } }],
+        },
+        chatAdjustments: [],
+      },
+    });
+    const rendered = await service.execute('render_chart', {
+      document,
+      chatPresentation,
+    });
+    expect(rendered).toMatchObject({
+      ok: true,
+      value: {
+        mimeType: 'image/svg+xml',
+        svg: expect.stringContaining('fill="none"'),
+      },
+    });
+    expect(
+      await service.execute('compile_chart', {
+        document: recipe,
+        chatPresentation,
+      }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }],
+    });
+    expect(
+      await service.execute('compile_chart', {
+        document,
+        chatPresentation: { theme: 'auto' },
+      }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: [{ code: 'INVALID_ARGUMENTS' }],
+    });
+  });
   test('validates semantic errors and returns compact validation', async () => {
     const service = createAgentService();
     expect(

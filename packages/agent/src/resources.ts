@@ -9,8 +9,10 @@ import {
   nativeStrictBasicSchema,
 } from '@chartnexus/schema';
 import recipe from './recipes/bar.json' with { type: 'json' };
+import chatBarRecipe from './recipes/chat-bar.json' with { type: 'json' };
 import comboRecipe from './recipes/combo.json' with { type: 'json' };
 import funnelRecipe from './recipes/funnel.json' with { type: 'json' };
+import heatmapRecipe from './recipes/heatmap.json' with { type: 'json' };
 import invalidRecipe from './recipes/unknown-field.json' with { type: 'json' };
 import diagnostics from './diagnostics.json' with { type: 'json' };
 import modelIndex from './model-index.json' with { type: 'json' };
@@ -20,6 +22,18 @@ import modelEntryEn from './model-entry-en.json' with { type: 'json' };
 import modelEntryZh from './model-entry-zh-CN.json' with { type: 'json' };
 
 export const resources = [
+  {
+    uri: 'chartnexus://recipes/chat-bar/0.2',
+    name: 'Synthetic chat bar',
+    mimeType: 'application/json',
+    value: chatBarRecipe,
+  },
+  {
+    uri: 'chartnexus://recipes/heatmap/0.2',
+    name: 'Synthetic sparse heatmap',
+    mimeType: 'application/json',
+    value: heatmapRecipe,
+  },
   {
     uri: 'chartnexus://recipes/combo/0.2',
     name: 'Synthetic single-axis combo',

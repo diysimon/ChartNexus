@@ -67,3 +67,7 @@ A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.
 ### OpenUI 和 COSUI JSON 顺序更新 profile
 
 创建 `createOpenUIChart` 或 `createCosuiChart` 时设置 `orderedUpdates: true`。OpenUI 的 `document` 参数是 JSON 编码的 operation 字符串；COSUI JSON 的 `document` 属性直接传入 operation 对象。宿主必须在异步工作开始前捕获当前图表版本、提供唯一操作 ID，并通过 `onUpdateReceipt` 跟踪版本；COSUI 同时触发 `chart-receipt`。这是 ChartNexus 宿主扩展，并非协议定义的版本或事件。OpenUI 的 renderer 报告流式状态期间仍会推迟提交。未完成、过期及失败操作不会更新图表；已成功操作的重复投递返回已有回执。缓冲、取消和发布时机由宿主负责。参见[组合示例](../../examples/playground/ordered-protocols.ts)。COSUI Marklang 不使用此 profile。
+
+### GenUI 宿主中的聊天展示
+
+`createA2uiChart`、`createOpenUIChart` 和 `createCosuiChart` 接受可选、由宿主持有的 `chatPresentation` 设置，并使用 runtime 相同的 0.2 intent 聊天 profile；不传时保持原行为。A2UI、OpenUI 和 COSUI JSON 已在本机验证深色透明设置与顺序更新。实验性 Marklang 适配器暂不接受此设置。主题不会自动追踪宿主；宿主需要管理设置并触发更新或重新挂载。详见[聊天展示指南](chat-presentation.md)。

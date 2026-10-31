@@ -29,7 +29,7 @@ const output02 = new URL(
   '../packages/schema/src/generated-0.2.ts',
   import.meta.url,
 );
-const code02 = await compile(
+const rawCode02 = await compile(
   JSON.parse(await readFile(path02, 'utf8')),
   'ChartDocument02',
   {
@@ -38,6 +38,10 @@ const code02 = await compile(
     style: { singleQuote: true },
   },
 );
+const code02 = await format(rawCode02, {
+  parser: 'typescript',
+  singleQuote: true,
+});
 if (process.argv.includes('--check')) {
   if ((await readFile(output02, 'utf8')) !== code02)
     throw new Error('Generated 0.2 schema types differ; run pnpm generate.');
@@ -46,8 +50,10 @@ if (process.argv.includes('--check')) {
 // Package copies are derived from repository resources, never maintained twice.
 for (const relative of [
   'recipes/bar.json',
+  'recipes/chat-bar.json',
   'recipes/combo.json',
   'recipes/funnel.json',
+  'recipes/heatmap.json',
   'recipes/unknown-field.json',
   'diagnostics.json',
   'evaluation/tasks.json',
@@ -70,6 +76,34 @@ for (const relative of [
 
 // A compact, versioned retrieval inventory references canonical source bytes.
 const entries = [
+  [
+    'chat-bar-recipe-0.2',
+    'en',
+    'Synthetic chat bar chart',
+    'resources/recipes/chat-bar.json',
+    'chartnexus://recipes/chat-bar/0.2',
+  ],
+  [
+    'chat-presentation-0.2',
+    'en',
+    'Chat presentation profile',
+    'docs/en/chat-presentation.md',
+    null,
+  ],
+  [
+    'chat-presentation-0.2',
+    'zh-CN',
+    '聊天展示 profile',
+    'docs/zh-CN/chat-presentation.md',
+    null,
+  ],
+  [
+    'heatmap-recipe-0.2',
+    'en',
+    'Synthetic sparse heatmap',
+    'resources/recipes/heatmap.json',
+    'chartnexus://recipes/heatmap/0.2',
+  ],
   [
     'combo-recipe-0.2',
     'en',

@@ -122,3 +122,7 @@ MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2"` 和 `mode`。
 `chart.type: "combo"` 用同一分类 x 和数据行创建 `encoding.y` 的柱状系列及 `chart.secondary.field` 的折线系列。共享轴（默认或 `secondary.axis: "shared"`）要求两个指标声明相同单位或都不声明；不声明时由宿主确认量纲相容。显式指定 `secondary.axis: "right"` 时，两个指标均须声明单位，允许不同单位但不换算数值。双轴可能因刻度不同夸大关系，需要谨慎解读。当前不支持系列分组、聚合、按值排序、时间 x、横向或面积变体。参见[组合图示例](../../resources/recipes/combo.json)。
 
 `chart.type: "funnel"` 使用分类 x 和非负数值 y；除非显式使用受支持的排序，否则保留输入顺序。不推断转化率或隐式排序。不支持分组、单位、环形/面积/横向变体。参见[漏斗图示例](../../resources/recipes/funnel.json)。两种 profile 均为实验性，渲染成功不代表选图或视觉质量已验证。
+
+### 0.2 分类热力图
+
+使用 `chart.type: "heatmap"`，为 x/y 指定 ordinal 字符串字段，并用 `chart.heatmap: { "field": "orders", "min": 0, "max": 10 }` 指定不同的数值字段。范围须显式且上下限不同；非 null 值超出范围会被拒绝。null 不生成可绘制格，零仍是零；即使其中一行是 null，重复 x/y 组合仍会拒绝，稀疏格不会被填造。分类按首次出现顺序排列；点击可见格返回原始行索引。首个 profile 不支持排序、分组、聚合、单位或标签/图例覆盖，使用固定颜色范围。参见[示例](../../resources/recipes/heatmap.json)与 [Spec](../../specs/0027-heatmap/spec.zh-CN.md)。

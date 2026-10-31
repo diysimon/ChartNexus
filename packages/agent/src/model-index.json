@@ -5,6 +5,58 @@
   "license": "Apache-2.0",
   "entries": [
     {
+      "id": "chat-bar-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic chat bar chart",
+      "summary": "Synthetic chat bar chart",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/chat-bar.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/chat-bar/0.2",
+      "contentHash": "sha256:b8605eda1ff4ebe37b8a892f9a406a671f033e022f33061e67bead542c33a29c"
+    },
+    {
+      "id": "chat-presentation-0.2",
+      "language": "en",
+      "title": "Chat presentation profile",
+      "summary": "Chat presentation profile",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "docs/en/chat-presentation.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:ea7654037e66a77015b8d0ef40a9df166be5f1f951e5cafd9a6690200211168f"
+    },
+    {
+      "id": "chat-presentation-0.2",
+      "language": "zh-CN",
+      "title": "聊天展示 profile",
+      "summary": "聊天展示 profile",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "docs/zh-CN/chat-presentation.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:ce35462f5084c51a57e873fa1b8d50d5f486c8e84b0d9dce544c58f0f2ba1755"
+    },
+    {
+      "id": "heatmap-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic sparse heatmap",
+      "summary": "Synthetic sparse heatmap",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/heatmap.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/heatmap/0.2",
+      "contentHash": "sha256:1b0699c6635f6dff3119ccd32743452044c22227bed1c887bec9c26090851e50"
+    },
+    {
       "id": "combo-recipe-0.2",
       "language": "en",
       "title": "Synthetic single-axis bar-line combo",
@@ -67,7 +119,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://schema/chart-document/0.2",
-      "contentHash": "sha256:e71c0e98038594544b5f53c03b999d610d8994114f921147caf4aa0d29360103"
+      "contentHash": "sha256:cb76472f33cffaa02327b644ffbf7d5bbff76f6c30fa3f228abf526a0d1be903"
     },
     {
       "id": "capabilities-0.2",
@@ -80,7 +132,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://capabilities/basic-0.2",
-      "contentHash": "sha256:671cd402e27f7e91f5bef69370d9b94caa2f4f9d4a00273ad8aa88166baece33"
+      "contentHash": "sha256:501c3f2294807d363d4c93c086e7b886c0828e1d6ab26f6ce9e692b66fc44f6b"
     },
     {
       "id": "chart-document",
@@ -158,7 +210,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/en/0.1",
-      "contentHash": "sha256:3d716664d6f7398445350bb93820f2f0917b658cdaae37e59a1cd4a86f6d63d6"
+      "contentHash": "sha256:eb68763b5bc537222d826aa77f3891d9ea4ff8103027e4fed161cb84523197cb"
     },
     {
       "id": "model-entry",
@@ -171,7 +223,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/zh-CN/0.1",
-      "contentHash": "sha256:c9217ccaf2dce8ddd561f53575e8b2fb0475c1070fa9b5be462db4680c2a9c40"
+      "contentHash": "sha256:58da90a393402dede753dcb5b8108ad1c3b09b0d19c7b723e7f542baec7c00b6"
     },
     {
       "id": "evaluation-baseline",

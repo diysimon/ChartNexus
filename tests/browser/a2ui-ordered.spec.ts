@@ -54,3 +54,19 @@ test('decoded ReadableStream publishes only completed JSON and recovers after ca
   await expect(chart).toContainText('Streamed');
   await expect(page.locator('#receipt')).toContainText('"revision":2');
 });
+
+test('A2UI host can opt into the dark transparent chat profile', async ({
+  page,
+}) => {
+  await page.goto('/a2ui-ordered.html?chat=dark');
+  await expect(page.locator('#receipt')).toContainText('"revision":1');
+  await expect(page.locator('#ordered-chart svg')).toHaveCount(1);
+  await expect(page.locator('#ordered-chart svg')).toContainText('Initial');
+  const svg = await page.locator('#ordered-chart svg').innerHTML();
+  expect(svg).toContain('#f3f4f6');
+  expect(svg).not.toContain('fill="#111827"');
+  await page.click('#newer');
+  await expect(page.locator('#ordered-chart')).toContainText('Newer');
+  await page.click('#stale');
+  await expect(page.locator('#diagnostics')).toContainText('REVISION_CONFLICT');
+});

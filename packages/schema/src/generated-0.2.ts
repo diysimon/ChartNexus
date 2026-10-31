@@ -28,7 +28,7 @@ export interface ChartDocument02 {
         revision: string;
       };
   chart: {
-    type: 'bar' | 'line' | 'pie' | 'scatter' | 'combo' | 'funnel';
+    type: 'bar' | 'line' | 'pie' | 'scatter' | 'combo' | 'funnel' | 'heatmap';
     encoding: {
       x: {
         field: string;
@@ -86,6 +86,11 @@ export interface ChartDocument02 {
           };
       axis?: 'shared' | 'right';
     };
+    heatmap?: {
+      field: string;
+      min: number;
+      max: number;
+    };
   };
   presentation?: {
     theme?: {
@@ -99,5 +104,14 @@ export interface ChartDocument02 {
       show: boolean;
       position?: 'top' | 'bottom';
     };
+    /**
+     * Display intent applied only when the host opts into the chat presentation profile; host policy may override it.
+     */
+    detailLevel?:
+      | 'minimal'
+      | 'simple'
+      | 'standard'
+      | 'detailed'
+      | 'comprehensive';
   };
 }

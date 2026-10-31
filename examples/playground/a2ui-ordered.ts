@@ -10,8 +10,9 @@ import {
 import type { UpdateReceipt } from '@chartnexus/runtime';
 import type { Diagnostic } from '@chartnexus/schema';
 
+const chatMode = new URLSearchParams(location.search).get('chat') === 'dark';
 const documentFor = (label: string) => ({
-  schemaVersion: '0.1',
+  schemaVersion: chatMode ? '0.2' : '0.1',
   id: 'ordered-demo',
   mode: 'intent',
   data: {
@@ -31,6 +32,15 @@ let receiptHandler: (receipt: UpdateReceipt) => void = () => {};
 let diagnosticHandler: (diagnostics: Diagnostic[]) => void = () => {};
 const chart = createA2uiChart({
   orderedUpdates: true,
+  ...(chatMode
+    ? {
+        chatPresentation: {
+          theme: 'dark' as const,
+          detailLevel: 'standard' as const,
+          background: 'transparent' as const,
+        },
+      }
+    : {}),
   onUpdateReceipt: (receipt) => receiptHandler(receipt),
   onDiagnostics: (items) => diagnosticHandler(items),
 });

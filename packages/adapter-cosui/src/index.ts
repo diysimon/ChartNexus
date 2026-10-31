@@ -6,11 +6,13 @@ import {
   type UpdateReceipt,
   type ChartRuntime,
   type SelectionEvent,
+  type ChatPresentationSettings,
 } from '@chartnexus/runtime';
 import type { DataRegistry, Diagnostic } from '@chartnexus/schema';
 
 export interface CosuiOptions {
   registry?: DataRegistry;
+  chatPresentation?: ChatPresentationSettings;
   orderedUpdates?: boolean;
   onUpdateReceipt?: (receipt: UpdateReceipt) => void;
   onSelect?: (event: SelectionEvent) => void;
@@ -26,10 +28,16 @@ export function createCosuiChart(options: CosuiOptions = {}) {
     controller: UpdateController | undefined;
     attached() {
       if (!(this.el instanceof HTMLElement)) return;
-      const result = mountChart(this.el, (event) => {
-        this.fire('chart-select', event);
-        options.onSelect?.(event);
-      });
+      const result = mountChart(
+        this.el,
+        (event) => {
+          this.fire('chart-select', event);
+          options.onSelect?.(event);
+        },
+        options.chatPresentation
+          ? { chatPresentation: options.chatPresentation }
+          : {},
+      );
       if (!result.ok) {
         options.onDiagnostics?.(result.diagnostics);
         this.fire('chart-diagnostics', result.diagnostics);

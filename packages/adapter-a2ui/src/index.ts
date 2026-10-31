@@ -9,6 +9,7 @@ import {
   type UpdateReceipt,
   type ChartRuntime,
   type SelectionEvent,
+  type ChatPresentationSettings,
 } from '@chartnexus/runtime';
 import {
   failure,
@@ -18,6 +19,7 @@ import {
 
 export interface A2uiChartOptions {
   registry?: DataRegistry;
+  chatPresentation?: ChatPresentationSettings;
   /** Opt into ChartNexus operation envelopes in the document binding. */
   orderedUpdates?: boolean;
   onUpdateReceipt?: (receipt: UpdateReceipt) => void;
@@ -52,8 +54,12 @@ function Chart({
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
   useEffect(() => {
     if (!container.current) return;
-    const result = mountChart(container.current, (event) =>
-      options.onSelect?.(event),
+    const result = mountChart(
+      container.current,
+      (event) => options.onSelect?.(event),
+      options.chatPresentation
+        ? { chatPresentation: options.chatPresentation }
+        : {},
     );
     if (result.ok) {
       runtime.current = result.value;

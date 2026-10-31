@@ -232,6 +232,7 @@ const complete = models.every((m) => m.pending === 0);
 const report = {
   status: complete ? 'complete' : 'in-progress',
   generated: new Date().toISOString(),
+  reporterHash: fingerprint(await readFile(import.meta.filename, 'utf8')),
   mode: freeze.mode,
   scoring: semantic
     ? {

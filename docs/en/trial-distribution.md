@@ -1,8 +1,8 @@
 ---
 doc_id: trial-distribution
-version: "0.3"
+version: "0.4"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 # M4 trial and distribution
@@ -37,6 +37,12 @@ node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-
 ```
 
 Private corpus/raw logs stay ignored in the maintainer checkout. Other users supply independently authored corpora. `freeze.json`, `status.json`, `summary.json` and per-model JSONL support audit/resume. Changed source, corpus, prompt, model, Ollama or settings refuse resume; semantic rescoring also refuses source/corpus drift. Aggregate export excludes prompts, rows, expected values and model text. Exception text is mapped to stable categories because JSON parse errors can embed private response excerpts. Diagnostic code and JSON-pointer matches are reported separately without relaxing exact correctness. Live models are not called on every PR; no scheduled run is configured.
+
+## Interpretation limits
+
+This is a zero-shot schema-plus-diagnostics baseline: no recipe retrieval, RAG examples, few-shot demonstrations or provider-enforced JSON Schema is injected. JSON mode is requested, with the projected schema supplied as text. It measures this particular entry design on host-catalog compositions, not universal model ability, ordinary inline-chart success or every model/host combination.
+
+The nine diagnosis tasks do not explicitly prescribe JSON Pointer notation in their request/system text. Early completed models select the correct error code but use dotted paths; repair feedback supplies the actual pointer, yet can also induce an unwanted repaired chart. Keep all exact-match failures and separately report code/path agreement. Treat this subset as an exploratory contract-following probe, not clean evidence that a model cannot diagnose a revision conflict. Production should return the validator's structured diagnostic directly; it already computes the authoritative path. Do not tune prompts on this set and advertise the next run as an untouched holdout.
 
 ## Installed distributions
 

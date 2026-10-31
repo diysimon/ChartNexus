@@ -1,6 +1,6 @@
 {
   "version": "0.1",
-  "updated": "2026-10-31",
+  "updated": "2026-11-01",
   "status": "documentation-baseline",
   "documents": [
     {
@@ -677,7 +677,7 @@
     },
     {
       "id": "trial-distribution",
-      "version": "0.3",
+      "version": "0.4",
       "status": "experimental",
       "en": "docs/en/trial-distribution.md",
       "zh-CN": "docs/zh-CN/trial-distribution.md"

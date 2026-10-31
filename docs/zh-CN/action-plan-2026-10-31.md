@@ -1,8 +1,8 @@
 ---
 doc_id: action-plan-2026-10-31
-version: "0.2"
-status: implementing
-updated: 2026-10-31
+version: "0.3"
+status: done
+updated: 2026-11-01
 language: zh-CN
 ---
 # 详细行动计划与验收门禁
@@ -11,7 +11,7 @@ language: zh-CN
 
 ## 范围、状态和执行方式
 
-依据[审视报告](project-review-2026-10-31.md)和 [RFC 技术设计](technical-design-2026-10-31.md)，覆盖原九项工作及雷达、节点连线树、桑基、地图。**M0–M3（A01–A15）已在本地完成，M4 仍待完成**；审视基线为 147 测试和 18 浏览器测试，M0 验证为 176 测试和 21 浏览器测试。M1/M2 通过 207 项单元/集成测试、33 项浏览器测试，并取得一次真实本地 Ollama 流式及取消冒烟证据。M3 通过 230 项单元/集成及 44 项浏览器测试，本轮未新增真实模型基准结果。[审视 Spec](../../specs/0030-project-review/spec.zh-CN.md)只验收审视文档本身，[0029](../../specs/0029-quality-expansion/spec.zh-CN.md)继续作为未完成范围总表。
+依据[审视报告](project-review-2026-10-31.md)和 [RFC 技术设计](technical-design-2026-10-31.md)，覆盖原九项工作及雷达、节点连线树、桑基、地图。**M0–M4（A01–A18）已完成工程与评测验收，模型仍为实验状态**；审视基线为 147 测试和 18 浏览器测试，M0 验证为 176 测试和 21 浏览器测试。M1/M2 通过 207 项单元/集成测试、33 项浏览器测试，并取得一次真实本地 Ollama 流式及取消冒烟证据。M3 通过 230 项单元/集成及 44 项浏览器测试，本轮未新增真实模型基准结果。[审视 Spec](../../specs/0030-project-review/spec.zh-CN.md)只验收审视文档本身，[0029](../../specs/0029-quality-expansion/spec.zh-CN.md)作为已完成范围总表。
 
 每次只推进一个可审阅纵向任务：明确 Spec/AC → 实现及同步资源 → 定向测试 → 相关全量门禁 → 更新证据。常规选择由执行者按 RFC 决定，不反复让维护者确认；协议破坏性变更按 RFC/版本规则记录。保持本地可运行预览。不自动提交、推送、发布或创建外部 Issue；那些是独立动作。
 
@@ -48,9 +48,9 @@ language: zh-CN
 | A13 | tree 的 ID/parent 表、环检查、展开状态及导出 | A09/A12 | AC13：孤儿/环/多根/深度超限拒绝；重复 label 可用；折叠不删数据；节点选择身份稳定；完整/概览导出明确 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
 | A14 | sankey 的 nodes/links、拓扑/权值/身份 | A09/A13 | AC14：有向环、自环、未知端点、负值、重复边拒绝；零边表格保留；不推断守恒；节点/边事件及 SVG 正确 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
 | A15 | map 可信 registry、GeoJSON 限制、区域映射与 worker | A04/A07/A09/A14 | AC15：自制两区域 Browser/SVG 一致；缺资源/版本错误/未知区/重复区拒绝；多版本不串图；不联网；注册容量和 worker 预算可测 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
-| A16 | 分离 dev/heldout、按任务族评分、真实模型/Agent 基线 | 骨架在 M1；最终依赖 A11–A15 | AC16：隐藏答案不在模型资源；初次/修复结果分离；输入数据 hash 与渲染数值核对；失败保留；版本与设置冻结 | 经审查的替代留出集运行中；旧开发语料独立性被拒绝 |
-| A17 | 全包 pack/install、模块体积与性能；package manifests、scripts | 可早探测；最终依赖 A11–A15 | AC17：Node22/24 干净安装不依赖 workspace，public exports/worker/CLI/MCP/adapter 可运行；资源/许可齐全；典型/边界性能报告 | 本地和Linux CI通过，见SPEC-0036 |
-| A18 | CI 门禁、迁移说明、支持矩阵、文档与演示收口 | A16/A17 | AC18：每项 supported 可链接到版本及证据；CI 必需任务实际通过；新文档/资源生成一致；无已知未处置 P1 后才进入 beta 候选 | 远端CI在7345f34通过，最终报告版本待复验 |
+| A16 | 分离 dev/heldout、按任务族评分、真实模型/Agent 基线 | 骨架在 M1；最终依赖 A11–A15 | AC16：隐藏答案不在模型资源；初次/修复结果分离；输入数据 hash 与渲染数值核对；失败保留；版本与设置冻结 | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.zh-CN.md) |
+| A17 | 全包 pack/install、模块体积与性能；package manifests、scripts | 可早探测；最终依赖 A11–A15 | AC17：Node22/24 干净安装不依赖 workspace，public exports/worker/CLI/MCP/adapter 可运行；资源/许可齐全；典型/边界性能报告 | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.zh-CN.md) |
+| A18 | CI 门禁、迁移说明、支持矩阵、文档与演示收口 | A16/A17 | AC18：每项 supported 可链接到版本及证据；CI 必需任务实际通过；新文档/资源生成一致；无已知未处置 P1 后才进入 beta 候选 | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.zh-CN.md) |
 
 A04 的三种数据族是“普通表（含层级父子字段）”“nodes/links 图数据”“普通表加可信地图资产引用”，不是三套任意 JSON 引擎。A13/A14/A15 顺序是风险控制，不意味着必须互相复用不适合的数据语义。
 
@@ -93,6 +93,6 @@ A04 的三种数据族是“普通表（含层级父子字段）”“nodes/link
 
 这些 PR 是拟议拆分，不代表已经创建或要求现在发布。完成一个任务后更新本表的结果与证据位置；只有所有必需 AC 有实证，才关闭 0029。不能用继续增加文档或小改动替代核心任务完成。
 
-## M4 检查点
+## M4 最终验收
 
-A01–A15保持本地验收。A17已通过本地和Linux CI的Node22/24隔离安装，各45项浏览器测试；A18实现通过提交7345f34的全部远端门禁。A16旧语料的家族隔离失败已保留记录，替代宿主目录语料在模型请求前完成[审查](../../specs/0036-trial-distribution/holdout-audit-v2.json)，正在执行4模型×3轮，共720轮。详见[M4任务/证据](../../specs/0036-trial-distribution/tasks.zh-CN.md)。用户已授权提交及SSH推送；最终评测和报告版本CI完成前，M4及0029仍未关闭，不进行npm发布。
+[M4任务与证据](../../specs/0036-trial-distribution/tasks.zh-CN.md)记录720轮冻结真实模型评测、全部失败、11包Node22/24隔离安装、性能/体积预算、原生标注回归修复及全量SVG重放。251项单元/集成测试、46项浏览器测试和远端必需CI通过。A01–A18及0029已关闭；四个参测模型仍低于建议95%目标，不声称beta资格。用户授权的提交与SSH推送已执行，未发布npm。诊断提示歧义和零样本入口质量作为下一轮实验输入，不能在同一留出集调参后声称新的独立成绩。

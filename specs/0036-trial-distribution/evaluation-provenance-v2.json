@@ -120,10 +120,55 @@
   ],
   "taskCount": 60,
   "created": "2026-10-31T13:32:30.865Z",
-  "status": "frozen-run-in-progress",
+  "status": "complete-experimental",
   "audit": "holdout-audit-v2.json",
   "scope": "Project-authored host-catalog composition holdout from public evaluation tasks/teaching recipes; same author and reviewer; not external audit.",
   "privateCorpus": ".local/m4-holdout-v2/corpus.json",
   "privateOutput": "outputs/m4-holdout-v2",
-  "scoring": "Frozen strict-v1 raw scores retained; reporting-only reference-keyfield-equivalence-v1 correction separately disclosed."
+  "scoring": "Frozen strict-v1 raw scores retained; reporting-only reference-keyfield-equivalence-v1 correction separately disclosed.",
+  "finished": "2026-10-31T18:30:35.947Z",
+  "completedRounds": 720,
+  "environmentAfter": {
+    "status": "pass",
+    "checked": "2026-10-31T18:31:39.287Z",
+    "ollama": {
+      "version": "0.40.6"
+    },
+    "modelDigestsUnchanged": [
+      {
+        "name": "qwen3.5:9b",
+        "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7"
+      },
+      {
+        "name": "mistral:latest",
+        "digest": "6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf"
+      },
+      {
+        "name": "qwen3.5:27b",
+        "digest": "7653528ba5cba4dd8e19da24aaddc7f4d0b5ecd93571c0825dfd4137958ec06e"
+      },
+      {
+        "name": "goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest",
+        "digest": "cf62f31c7147c87e67f2bab1859ce482335862f3a67d94c53ad286c57b88351e"
+      }
+    ]
+  },
+  "aggregate": "evaluation-summary-v2.json",
+  "integrity": "evaluation-integrity-v2.json",
+  "renderReplay": "render-replay.json",
+  "sourceQualification": "The frozen HEAD predates the then-uncommitted M4 implementation. sourceHash, including built artifacts, is authoritative; those runtime sources were subsequently committed in 1eb69c6. Native marker registration changed only after all720 rounds completed; exact replay records the final source hash.",
+  "reproduction": {
+    "status": "pass",
+    "snapshotCommit": "91f8f66c134e26dfa81c5aa6d0ceebef42911fa4",
+    "aggregateIdenticalExceptTimestamp": true,
+    "commit": "91f8f66c134e26dfa81c5aa6d0ceebef42911fa4",
+    "runtimeJsReproduced": true,
+    "sourceFiles": 259,
+    "restoredArtifact": {
+      "file": "packages/runtime/dist/input-contract.d.ts",
+      "expected": "5fce1c4558326544b55da2cdab9650c1c03618efca7b5941e392ce8e0f4533c9",
+      "rebuilt": "14315cf07b9499ea95a90c2bf9a213a3d9af2e4c85482c84e0833de13ef40ce5",
+      "reason": "equivalent declaration union ordering; restored original bytes"
+    }
+  }
 }

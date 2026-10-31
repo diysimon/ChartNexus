@@ -1,8 +1,8 @@
 ---
 doc_id: spec-0029-spec
-version: "0.1"
-status: implementing
-updated: 2026-10-31
+version: "0.2"
+status: done
+updated: 2026-11-01
 language: zh-CN
 ---
 # 可靠性与图表扩展
@@ -17,16 +17,16 @@ language: zh-CN
 ## 验收与依赖
 | 工作 | 验收证据 | 状态 |
 | --- | --- | --- |
-| 聊天布局自适应 | 长标签、图例、宽窄容器及尺寸变化经验证且数据不变 | 未执行 |
-| 主题与无障碍 | 指定背景对比、键盘和文本替代经检查，记录限制 | 未执行 |
-| 交互状态 | 兼容更新保留明确规定的状态，不兼容变化安全重置 | 未执行 |
-| 独立评测 | 隐藏任务、可复现评分及真实模型结果，避免答案泄漏 | 未执行 |
-| 真实流式输出 | 真实模型传输、取消、截断、错误和并发经测试 | 未执行 |
-| 模型使用质量 | 基于证据改进 Schema、示例和有限修复并与基线比较 | 未执行 |
-| 协议 | 版本矩阵、契约和真实宿主证据；评估 Marklang 聊天 profile | 未执行 |
-| 分发 | 打包后在干净外部项目安装验证，核查许可证 | 未执行 |
-| 稳定性与文档 | 版本、迁移和双语文档与证据一致 | 进行中 |
-| 新图表 | 雷达、树图、桑基图和地图分别具备契约、Schema、编译器、资源、测试及浏览器/SVG 证据 | 未执行 |
+| 聊天布局自适应 | 长标签、图例、宽窄容器及尺寸变化经验证且数据不变 | pass — [evidence](../0034-chat-host-quality/tasks.zh-CN.md) |
+| 主题与无障碍 | 指定背景对比、键盘和文本替代经检查，记录限制 | pass — [evidence](../0034-chat-host-quality/tasks.zh-CN.md) |
+| 交互状态 | 兼容更新保留明确规定的状态，不兼容变化安全重置 | pass — [evidence](../0034-chat-host-quality/tasks.zh-CN.md) |
+| 独立评测 | 隐藏任务、可复现评分及真实模型结果，避免答案泄漏 | pass — [evidence](../0036-trial-distribution/tasks.zh-CN.md) |
+| 真实流式输出 | 真实模型传输、取消、截断、错误和并发经测试 | pass — [evidence](../0034-chat-host-quality/tasks.zh-CN.md) |
+| 模型使用质量 | 基于证据改进 Schema、示例和有限修复并与基线比较 | pass — [evidence](../0036-trial-distribution/tasks.zh-CN.md) |
+| 协议 | 版本矩阵、契约和真实宿主证据；评估 Marklang 聊天 profile | pass — [evidence](../0034-chat-host-quality/tasks.zh-CN.md) |
+| 分发 | 打包后在干净外部项目安装验证，核查许可证 | pass — [evidence](../0036-trial-distribution/tasks.zh-CN.md) |
+| 稳定性与文档 | 版本、迁移和双语文档与证据一致 | pass — [evidence](../0033-contracts-core/tasks.zh-CN.md) |
+| 新图表 | 雷达、树图、桑基图和地图分别具备契约、Schema、编译器、资源、测试及浏览器/SVG 证据 | pass — [evidence](../0035-chart-expansion/tasks.zh-CN.md) |
 
 自适应展示和质量规则先于图表扩展；契约先于实现。真实模型、宿主、设备和安装证据与模拟分别记录，不宣称兼容所有模型或协议。
 
@@ -42,14 +42,18 @@ language: zh-CN
 
 [审视报告](../../docs/zh-CN/project-review-2026-10-31.md)、[技术 RFC](../../docs/zh-CN/technical-design-2026-10-31.md)及[行动计划](../../docs/zh-CN/action-plan-2026-10-31.md)细化本范围。本规格保持 implementing；0030 仅表示审视完成，不表示本规格功能完成。
 
-## M1/M2 检查点
+## M1/M2 检查点 （历史）
 
 M0–M2 现已在本地完成。[M1 证据](../0033-contracts-core/tasks.zh-CN.md)覆盖版本契约和核心提取；[M2 证据](../0034-chat-host-quality/tasks.zh-CN.md)覆盖尺寸、可访问入口、生命周期、图例状态、流式和固定宿主 profile。四类新渲染器、最终独立评测、分发/性能及远端 CI 仍待完成，本总规格尚未完成。
 
-## M3 检查点
+## M3 检查点 （历史）
 
 A12–A15 已完成，见 [M3 证据](../0035-chart-expansion/tasks.zh-CN.md)。十一种实验性0.3 intent 类型已有本地编译/浏览器/SVG覆盖；地图需要宿主资产。A16/A17/A18 最终工作未完成，总规格继续保持 implementing。
 
-## M4 checkpoint
+## M4 检查点 （历史）
 
 [M4 证据](../0036-trial-distribution/tasks.zh-CN.md)：A17 本地安装/性能检查通过；A16 完整模型运行与 A18 远端 CI 仍未关闭，本总表继续 implementing。
+
+## 最终验收 / 2026-11-01
+
+此前各检查点记录当时状态。M0–M4及A01–A18已完成，当前以本表和[M4最终证据](../0036-trial-distribution/tasks.zh-CN.md)为准：720轮真实本地模型评测、11包Node22/24隔离安装、251项单元/集成测试、每套46项浏览器测试及远端CI均有记录。原生标注模块遗漏已修复，并重放全部原来渲染成功的评测候选。模型正确率未达建议95%目标，保持实验状态；完成本计划不表示生产资格、全模型/宿主认证或npm发布。

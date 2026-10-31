@@ -3,7 +3,7 @@
   "platform": "darwin",
   "arch": "arm64",
   "cpu": "Apple M4 Pro",
-  "created": "2026-10-31T13:06:10.060Z",
+  "created": "2026-10-31T18:38:18.202Z",
   "inputFingerprint": "c91f223c58f6a1e0d3473c3a1d952a422b4053d8f0d97fd03ad1bb695916b172",
   "bundles": [
     {
@@ -21,50 +21,50 @@
     {
       "name": "runtime",
       "includePeers": false,
-      "rawBytes": 166749,
-      "gzipBytes": 35368
+      "rawBytes": 166842,
+      "gzipBytes": 35398
     },
     {
       "name": "runtime",
       "includePeers": true,
-      "rawBytes": 1336643,
-      "gzipBytes": 362314
+      "rawBytes": 1370076,
+      "gzipBytes": 370788
     },
     {
       "name": "adapter-openui",
       "includePeers": false,
-      "rawBytes": 165156,
-      "gzipBytes": 34891
+      "rawBytes": 165248,
+      "gzipBytes": 34915
     },
     {
       "name": "adapter-openui",
       "includePeers": true,
-      "rawBytes": 2349191,
-      "gzipBytes": 620194
+      "rawBytes": 2382616,
+      "gzipBytes": 628789
     },
     {
       "name": "adapter-a2ui",
       "includePeers": false,
-      "rawBytes": 166613,
-      "gzipBytes": 35359
+      "rawBytes": 166705,
+      "gzipBytes": 35402
     },
     {
       "name": "adapter-a2ui",
       "includePeers": true,
-      "rawBytes": 1587561,
-      "gzipBytes": 420913
+      "rawBytes": 1620972,
+      "gzipBytes": 429388
     },
     {
       "name": "adapter-cosui",
       "includePeers": false,
-      "rawBytes": 164187,
-      "gzipBytes": 34581
+      "rawBytes": 164278,
+      "gzipBytes": 34610
     },
     {
       "name": "adapter-cosui",
       "includePeers": true,
-      "rawBytes": 1570715,
-      "gzipBytes": 418736
+      "rawBytes": 1604141,
+      "gzipBytes": 427252
     }
   ],
   "measurements": [
@@ -72,49 +72,49 @@
       "rows": 100,
       "compile": {
         "samples": 20,
-        "medianMs": 1.409125000000131,
-        "p95Ms": 1.7202919999999722,
-        "maxMs": 2.054249999999911
+        "medianMs": 1.415416999999934,
+        "p95Ms": 1.631708000000117,
+        "maxMs": 2.0951249999998254
       },
       "svg": {
         "samples": 10,
-        "medianMs": 6.055166000000099,
-        "p95Ms": 7.725083000000041,
-        "maxMs": 7.725083000000041
+        "medianMs": 6.245333000000073,
+        "p95Ms": 8.728000000000065,
+        "maxMs": 8.728000000000065
       },
-      "heapAfterDisposalDelta": 2783800
+      "heapAfterDisposalDelta": 2789896
     },
     {
       "rows": 1000,
       "compile": {
         "samples": 20,
-        "medianMs": 12.997292000000016,
-        "p95Ms": 14.027874999999995,
-        "maxMs": 14.174166999999898
+        "medianMs": 12.557790999999952,
+        "p95Ms": 13.504707999999937,
+        "maxMs": 13.659374999999955
       },
       "svg": {
         "samples": 10,
-        "medianMs": 24.334208000000217,
-        "p95Ms": 30.85183300000017,
-        "maxMs": 30.85183300000017
+        "medianMs": 22.65820800000006,
+        "p95Ms": 26.725209000000177,
+        "maxMs": 26.725209000000177
       },
-      "heapAfterDisposalDelta": 955952
+      "heapAfterDisposalDelta": 989776
     },
     {
       "rows": 10000,
       "compile": {
         "samples": 20,
-        "medianMs": 135.0345000000002,
-        "p95Ms": 139.82116700000006,
-        "maxMs": 161.01449999999932
+        "medianMs": 120.45600000000013,
+        "p95Ms": 125.22245800000019,
+        "maxMs": 125.70862500000021
       },
       "svg": {
         "samples": 10,
-        "medianMs": 208.9956660000007,
-        "p95Ms": 215.96937499999967,
-        "maxMs": 215.96937499999967
+        "medianMs": 194.60091600000032,
+        "p95Ms": 199.24941599999966,
+        "maxMs": 199.24941599999966
       },
-      "heapAfterDisposalDelta": 690560
+      "heapAfterDisposalDelta": 664136
     }
   ],
   "boundaries": [
@@ -122,79 +122,78 @@
       "name": "radar-6-items-8-indicators",
       "compile": {
         "samples": 10,
-        "medianMs": 0.4610000000002401,
-        "p95Ms": 0.5722919999998339,
-        "maxMs": 0.5722919999998339
+        "medianMs": 0.3921249999993961,
+        "p95Ms": 0.4587499999997817,
+        "maxMs": 0.4587499999997817
       },
       "svg": {
         "samples": 10,
-        "medianMs": 3.6123749999997017,
-        "p95Ms": 4.435958000000028,
-        "maxMs": 4.435958000000028
+        "medianMs": 2.986624999999549,
+        "p95Ms": 3.869625000000269,
+        "maxMs": 3.869625000000269
       }
     },
     {
       "name": "tree-1000-nodes",
       "compile": {
         "samples": 10,
-        "medianMs": 17.605916999998954,
-        "p95Ms": 18.534832999999708,
-        "maxMs": 18.534832999999708
+        "medianMs": 16.072833000000173,
+        "p95Ms": 17.122583000000304,
+        "maxMs": 17.122583000000304
       },
       "svg": {
         "samples": 10,
-        "medianMs": 21.967583999999988,
-        "p95Ms": 23.263417000000118,
-        "maxMs": 23.263417000000118
+        "medianMs": 19.74870800000008,
+        "p95Ms": 21.414332999999715,
+        "maxMs": 21.414332999999715
       }
     },
     {
       "name": "sankey-200-nodes-1000-links",
       "compile": {
         "samples": 10,
-        "medianMs": 6.729999999999563,
-        "p95Ms": 7.198707999999897,
-        "maxMs": 7.198707999999897
+        "medianMs": 6.072500000000218,
+        "p95Ms": 6.232167000000118,
+        "maxMs": 6.232167000000118
       },
       "svg": {
         "samples": 10,
-        "medianMs": 30.741125000000466,
-        "p95Ms": 34.75362500000119,
-        "maxMs": 34.75362500000119
+        "medianMs": 27.34416600000077,
+        "p95Ms": 31.05829199999971,
+        "maxMs": 31.05829199999971
       }
     },
     {
       "name": "map-1000-regions",
       "compile": {
         "samples": 10,
-        "medianMs": 12.97070800000074,
-        "p95Ms": 26.675916999998663,
-        "maxMs": 26.675916999998663
+        "medianMs": 11.771708000000217,
+        "p95Ms": 22.34729199999856,
+        "maxMs": 22.34729199999856
       },
       "svg": {
         "samples": 10,
-        "medianMs": 54.702792000000045,
-        "p95Ms": 60.56949999999961,
-        "maxMs": 60.56949999999961
+        "medianMs": 51.130708999999115,
+        "p95Ms": 56.3487499999992,
+        "maxMs": 56.3487499999992
       }
     },
     {
       "name": "native-50-series-50000-points",
       "compile": {
         "samples": 10,
-        "medianMs": 25.461042000000816,
-        "p95Ms": 34.50254099999984,
-        "maxMs": 34.50254099999984
+        "medianMs": 23.26104200000009,
+        "p95Ms": 28.799999999999272,
+        "maxMs": 28.799999999999272
       },
       "svg": {
         "samples": 10,
-        "medianMs": 81.97887499999888,
-        "p95Ms": 87.9328749999986,
-        "maxMs": 87.9328749999986
+        "medianMs": 70.07745799999975,
+        "p95Ms": 82.964750000001,
+        "maxMs": 82.964750000001
       }
     }
   ],
   "gcExposed": true,
-  "note": "SDK all-export ESM minified bundles; includePeers includes host libraries; otherwise all third-party imports external. Heap delta is observational, not a leak proof. Same-machine ratios only.",
-  "measurementConditions": "Local observations; a local Ollama run was active during the final timing capture. Not an uncontended SLA or timing-regression acceptance."
+  "note": "SDK all-export ESM minified bundles; includePeers includes host libraries; otherwise all third-party imports external. Heap delta is observational, not a leak proof. Same-machine ratios only."
 }

@@ -1,8 +1,8 @@
 ---
 doc_id: development
-version: "0.2"
+version: "0.3"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 
@@ -10,7 +10,7 @@ language: zh-CN
 
 [Other language](../en/development.md)
 
-这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；已有少量本地模型试验和有界的会话内 operation 去重；已实现 0.3 稳定行键与兼容图例状态保留。独立评测和更广泛的宿主验证仍待完成。
+这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；已有少量本地模型试验和有界的会话内 operation 去重；已实现 0.3 稳定行键与兼容图例状态保留。720轮本地评测及隔离Node22/24包/宿主演练已完成；参测模型仍保持实验状态，更广泛宿主/设备尚未验证。
 
 ## 运行
 使用 Node 22.22.3（基线）或受支持的 Node 24 运行时，pnpm 11.25.0。在项目根目录执行：
@@ -32,9 +32,11 @@ pnpm test:browser
 - `@chartnexus/runtime`：`mountChart(container, onSelect?)` 返回包含 update/resize/dispose/getRevision 的 Result。一个运行时拥有一个容器和图表 ID。
 - `@chartnexus/render`：`renderSvg(document, { width?, height?, registry? })` 返回静态 SVG 或诊断。
 
-所有包均为私有 workspace；名字不代表 npm 已发布或 scope 已取得。当前使用完整 ECharts 包，模块化体积优化后续处理。
+所有包均为私有 workspace；名字不代表 npm 已发布或 scope 已取得。共享 ECharts 桥接层显式注册支持的模块以及 SVG/ARIA 组件，见 [M4 分发与性能](trial-distribution.md)。
 
-## 当前契约
+## 0.1 基线契约
+当前 intent 还包括 0.2 和 0.3 分支，见[契约与迁移](contracts-03.md)。本节说明仍保留的 0.1 基线。
+
 Schema 版本 0.1，原生 echarts 或语义 intent 模式。intent 使用字段列表/对象行内联数据，或要求精确 revision 的宿主数据引用。x/y/series 显式映射。柱状/折线/饼图使用字符串分类，散点使用数值坐标。y 为数值或 null，饼图要求非负数。支持分组柱状/折线/散点，不支持分组饼图。同系列重复分类报错，空数据生成空 series。
 
 缺失字段必须显式表示为 null。不做隐式转换、聚合、时间解析、联网解析或任意变换。引用来自可信的同步宿主 registry；原生模式目前仅使用 option 内联 dataset/data。原生 option 校验为有限检查，不是完整 ECharts Schema。
@@ -47,7 +49,7 @@ Schema 版本 0.1，原生 echarts 或语义 intent 模式。intent 使用字段
 完整更新使用 notMerge，删除系列不会留下旧数据。校验失败保留上一图表和 revision。渲染失败尝试恢复；恢复失败提示重新挂载。选择事件包含位置或聚合身份、图表 revision、数据 revision；0.3 可提供稳定行键，原生模式没有行映射。ResizeObserver 处理尺寸变化，dispose 清理监听和实例。兼容 chat/0.3 图例状态会保留，缩放状态保留不支持。
 
 ## 工程状态
-`pnpm generate` 从 Schema 生成类型，`generate:check` 检查漂移；`docs:check` 检查双语清单和本地链接；`check` 汇总已实现本地门禁，浏览器测试单独运行。CI YAML 只是本地配置，不代表 GitHub 已运行或分支保护已启用。未配置发布任务。
+`pnpm generate` 从 Schema 生成类型，`generate:check` 检查漂移；`docs:check` 检查双语清单和本地链接；`check` 汇总已实现本地门禁，浏览器测试单独运行。verify、browser 与 Node22/24 包安装任务已通过远端 GitHub Actions；精确提交见 [M4 证据](../../specs/0036-trial-distribution/verification.json)。这不代表已启用分支保护。未配置发布任务。
 
 参见 [SPEC-0001](../../specs/0001-core-foundation/spec.zh-CN.md) 与[执行证据](../../specs/0001-core-foundation/tasks.zh-CN.md)。历史计划保持为规划基线，当前实现范围以本页为准。
 
@@ -60,7 +62,7 @@ CLI 与本地 MCP stdio 已通过共同 Node agent 服务接入。参见[接入�
 
 OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效图。宿主拼接流式片段时必须保留上次提交的 response：错误的 OpenUI 程序可能在适配器处理前移除组件。原生和 intent 模式遵守现有核心限制，包括 1 MiB。更新使用稳定图表 ID，换 ID 时重新挂载；数据引用由宿主提供可信 registry。旧版选择事件使用位置或聚合身份，0.3 可提供稳定行键；`onDiagnostics` 返回错误，恢复时返回空数组。不接受模型提供的可执行回调。
 
-验证基线为 OpenUI React Lang 1.0.2、React 19.2.4、Zod 4.3.6。这是实验性的 OpenUI Lang 组件 profile，不代表标准 A2UI、COSUI 或其他 OpenUI 宿主兼容。真实模型输出、SSR/水合、干净包安装、其他 SDK 版本和 npm 发布尚未验证。参见 [SPEC-0003](../../specs/0003-openui-adapter/spec.zh-CN.md)。
+验证基线为 OpenUI React Lang 1.0.2、React 19.2.4、Zod 4.3.6。这是实验性的 OpenUI Lang 组件 profile，不代表标准 A2UI、COSUI 或其他 OpenUI 宿主兼容。干净 tarball 安装和固定浏览器宿主已在 Node22/24 通过；真实模型生成的 OpenUI 程序、SSR/水合、其他 SDK 版本和 npm 发布尚未验证。参见 [SPEC-0003](../../specs/0003-openui-adapter/spec.zh-CN.md)。
 
 ## 其他 GenUI 宿主
 
@@ -141,7 +143,7 @@ Recipe 副本、发现和检索从 [manifest](../../resources/recipes/manifest.j
 
 ## M3 图表扩充
 
-0.3 在原有七类基础上新增雷达、树、桑基和可信区域地图。见[契约、宿主 MapRegistry、模型资源和预览](chart-expansion-03.md)。浏览器/SVG/worker 与四种固定上游 SDK 路径已有本地证据；M4 模型评测和分发仍是独立工作。固定渲染器标签回调保留原文，仍禁止模型回调。
+0.3 在原有七类基础上新增雷达、树、桑基和可信区域地图。见[契约、宿主 MapRegistry、模型资源和预览](chart-expansion-03.md)。浏览器/SVG/worker 与四种固定上游 SDK 路径已有本地证据；M4模型评测和分发证据另见试用指南。固定渲染器标签回调保留原文，仍禁止模型回调。
 
 ## M4 验证命令
 

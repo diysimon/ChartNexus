@@ -1,26 +1,29 @@
 {
   "milestone": "M4",
-  "status": "verifying",
-  "updated": "2026-10-31",
+  "status": "done",
+  "updated": "2026-11-01",
   "gates": {
     "AC16": {
-      "status": "in-progress",
+      "status": "complete-experimental",
+      "plannedRounds": 720,
+      "completedRounds": 720,
+      "attempts": 1563,
       "harness": "pass",
-      "liveBaseline": "Replacement pre-run-audited host-catalog corpus frozen; full 720 rounds running.",
+      "modelQualification": "All four below proposed95% after-repair correctness; Qwen3.5:27b meets separate first-structure target.",
       "evidence": [
         "evaluation-provenance-v2.json",
-        "holdout-audit-v2.json"
+        "holdout-audit-v2.json",
+        "evaluation-summary-v2.json",
+        "evaluation-integrity-v2.json",
+        "render-replay.json"
       ]
     },
     "AC17": {
       "status": "pass-local-and-remote",
       "packages": [
         {
-          "node": "v22.22.3",
           "status": "pass",
-          "browserTests": 45,
-          "browser": "pass",
-          "nodeModulesIsolated": true,
+          "node": "v22.22.3",
           "artifacts": [
             {
               "name": "@chartnexus/adapter-a2ui",
@@ -60,8 +63,8 @@
             },
             {
               "name": "@chartnexus/echarts",
-              "bytes": 13264,
-              "sha256": "21aa28fa46c671b378a040b8c96e224b49d5f2097273fa56047cc44a725fc72d",
+              "bytes": 13317,
+              "sha256": "70c744431f1a4f5e2f25eacf1b1369cf87d8276d5827edb0d231facb6d0597fc",
               "entries": 15
             },
             {
@@ -88,14 +91,15 @@
               "sha256": "2763d132da865c4b7d2dfe0dd58d4027ef707158d650d48fc54c74e9d22b22d3",
               "entries": 23
             }
-          ]
+          ],
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "installMode": "registry-pinned-versions",
+          "browserTests": 46
         },
         {
-          "node": "v24.22.1",
           "status": "pass",
-          "browserTests": 45,
-          "browser": "pass",
-          "nodeModulesIsolated": true,
+          "node": "v24.22.1",
           "artifacts": [
             {
               "name": "@chartnexus/adapter-a2ui",
@@ -135,8 +139,8 @@
             },
             {
               "name": "@chartnexus/echarts",
-              "bytes": 13264,
-              "sha256": "21aa28fa46c671b378a040b8c96e224b49d5f2097273fa56047cc44a725fc72d",
+              "bytes": 13317,
+              "sha256": "70c744431f1a4f5e2f25eacf1b1369cf87d8276d5827edb0d231facb6d0597fc",
               "entries": 15
             },
             {
@@ -163,15 +167,13 @@
               "sha256": "2763d132da865c4b7d2dfe0dd58d4027ef707158d650d48fc54c74e9d22b22d3",
               "entries": 23
             }
-          ]
+          ],
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "installMode": "registry-pinned-versions",
+          "browserTests": 46
         }
       ],
-      "performance": "performance.json",
-      "browserPerformance": [
-        "browser-performance-22.22.3.json",
-        "browser-performance-24.22.1.json"
-      ],
-      "limits": "Pinned dependency/peer rehearsals on macOS arm64 and Linux x64; declarations resolved with skipLibCheck; not all semver/browser combinations.",
       "linuxPackages": [
         {
           "status": "pass",
@@ -215,8 +217,8 @@
             },
             {
               "name": "@chartnexus/echarts",
-              "bytes": 13264,
-              "sha256": "b1470a4d544569698e3a940a7aa3d19c49a80182e10e50d68504e881290f7936",
+              "bytes": 13317,
+              "sha256": "b6f81422d31074c34f7d03aad0e254b20f0ffec6f29d79b03f36ccb37f13abbf",
               "entries": 15
             },
             {
@@ -247,7 +249,7 @@
           "browser": "pass",
           "nodeModulesIsolated": true,
           "installMode": "registry-pinned-versions",
-          "browserTests": 45
+          "browserTests": 46
         },
         {
           "status": "pass",
@@ -291,8 +293,8 @@
             },
             {
               "name": "@chartnexus/echarts",
-              "bytes": 13264,
-              "sha256": "b1470a4d544569698e3a940a7aa3d19c49a80182e10e50d68504e881290f7936",
+              "bytes": 13317,
+              "sha256": "b6f81422d31074c34f7d03aad0e254b20f0ffec6f29d79b03f36ccb37f13abbf",
               "entries": 15
             },
             {
@@ -323,68 +325,99 @@
           "browser": "pass",
           "nodeModulesIsolated": true,
           "installMode": "registry-pinned-versions",
-          "browserTests": 45
+          "browserTests": 46
         }
       ],
-      "remoteArtifactIdentity": "Same eleven tarball SHA256 hashes on both Linux Node jobs."
+      "remoteArtifactIdentity": "Same eleven tarball SHA256 hashes on both Linux Node jobs.",
+      "performance": "performance.json",
+      "performanceComparison": "performance-comparison.json",
+      "browserPerformance": [
+        "browser-performance-22.22.3.json",
+        "browser-performance-24.22.1.json"
+      ],
+      "limits": "Pinned dependency/peer rehearsals on macOS arm64 and Linux x64; declarations resolved with third-party skipLibCheck; not every semver/browser combination."
     },
     "AC18": {
-      "status": "pass-at-7345f34-final-report-pending",
+      "status": "pass",
       "workflow": "../../.github/workflows/ci.yml",
       "supportMatrix": "../../docs/en/support-matrix.md",
       "migration": "../../docs/en/contracts-03.md",
       "remoteCI": {
-        "sha": "7345f34355beed8d3ba65134d22660be1c0be78c",
-        "url": "https://github.com/diysimon/ChartNexus/actions/runs/41207042168",
-        "conclusion": "success"
+        "sha": "226135194103d6332dfdc42d290315a5e5fa8909",
+        "url": "https://github.com/diysimon/ChartNexus/actions/runs/41230226310",
+        "conclusion": "success",
+        "jobs": [
+          {
+            "name": "packages (22.22.3)",
+            "conclusion": "success"
+          },
+          {
+            "name": "browser",
+            "conclusion": "success"
+          },
+          {
+            "name": "packages (24.22.1)",
+            "conclusion": "success"
+          },
+          {
+            "name": "verify",
+            "conclusion": "success"
+          },
+          {
+            "name": "required",
+            "conclusion": "success"
+          }
+        ]
       },
-      "publication": "not-run"
+      "publication": "not-run",
+      "finalDocumentationCommit": "Checked separately at delivery; this evidence cites the tested code revision, not its own future commit hash."
     }
   },
   "checks": {
-    "pnpmCheck": "pass: 248 tests / 32 files, 30 public reference checks, generation, format, lint, types, 98 bilingual pairs and demo build",
-    "independentScorer": "pass: 10 public references, mutations, leakage and statistics checks",
-    "runnerResume": "pass: synthetic subprocess 3 rounds / 9 attempts, idempotent resume and corpus drift rejection; prior 30-round / 90-attempt rehearsal also retained",
-    "bundleBudgets": "pass: 10 fixed raw/gzip entries",
-    "finalPackageAudit": "pass: final package reporting/artifact-retention script rechecked on Node22; same 11 tarball hashes; browser not repeated in this extra audit",
-    "semanticReporting": "pass: validated optional reference identity equivalence, graph/inline boundaries, invalid/duplicate keys, wrong source/revision, changed marks, failed render and error preservation"
+    "pnpmCheck": "pass:251 tests/35 files; generation, docs, format, lint, types, public fixture/scorer checks and demo build",
+    "nativeMarkers": "pass: SVG labels and installed-browser visible labels, removal, single SVG and disposal; native-strict still rejects; both unit and browser probes failed before fix",
+    "renderReplay": "pass:323/323 original successful renders, including incorrect candidates, preserve exact SVG hashes; only two engine files changed from259-file frozen manifest",
+    "aggregateReproduction": "pass: complete semantic aggregate identical except timestamp in isolated frozen checkout; original declaration bytes restored for one union-order variation, disclosed in provenance",
+    "evaluationIntegrity": "pass:720 unique terminal task/model/seed rounds;1563 contiguous attempts; at most two real-diagnostic repairs; unchanged local model digests/Ollama version",
+    "bundleBudgets": "pass: ten fixed raw/gzip budgets without widening; runtime gzip35398 bytes external/370788 bytes bundled",
+    "sameMachineComparison": "pass: same Node22/Apple M4 Pro run compared against post-model unloaded baseline; no simultaneous ChartNexus model/check/package jobs; also numerically passed comparison to earlier loaded baseline, which is only observational"
   },
   "logs": [
     {
-      "path": "/tmp/chartnexus-m4-pack22-final.log",
-      "sha256": "548c5250fe31fd69b742028fc124a57e278ec244bcc9cddb2b6845f1db74451a"
+      "path": "/tmp/chartnexus-m4-closure-check.log",
+      "sha256": "2b323b32f7c08756dd58b17d338542ef57487faac466944cbfdb665cf970ad37"
     },
     {
-      "path": "/tmp/chartnexus-m4-pack24.log",
-      "sha256": "67090679a82bbf9c6f995d8105d715ba6e2830d4852ec2086851d543ed87613b"
+      "path": "/tmp/chartnexus-m4-closure-benchmark.log",
+      "sha256": "1b09b945d037145910fd1eb05a518cd0ec9a4353fd99d3b5865d868dc8e09b98"
     },
     {
-      "path": "/tmp/chartnexus-m4-benchmark-final.log",
-      "sha256": "65ada3d08da309ffc2a071a7ac12fe35f55e0217d646fa8a312edba48f363a72"
+      "path": "/tmp/chartnexus-m4-closure-benchmark-idle.log",
+      "sha256": "cdadfc4e5e578cd304f4f8122bb30a2bdb9f2edaa4fa3914d48ef3e190cc7340"
     },
     {
-      "path": "/tmp/chartnexus-m4-runner-test.log",
-      "sha256": "3495c361b52ffb091a42f9f856068c28032b6a748ea475c58bd67007fe12e332"
+      "path": "/tmp/chartnexus-m4-closure-pack22.log",
+      "sha256": "50cace092826e47ca9dd6c10db0e7bb157a951e8c57865b4b1df3a189a0002fa"
     },
     {
-      "path": "/tmp/chartnexus-m4-check-final3.log",
-      "sha256": "2d2858413b533360dff0e17f02df64f2f4e2fff8eb5a97332e3b2d94d9a456bf"
+      "path": "/tmp/chartnexus-m4-closure-pack24.log",
+      "sha256": "243bdb67e7c2a545b4a0b19258bfd81dba2ace8737199c1f0f0bfacbf1b06985"
     },
     {
-      "path": "/tmp/chartnexus-m4-pack-audit-final.log",
-      "sha256": "8edc1cb81bf9e515e5fe2dd686a1f43708b983d01195c334549fd1895ac4d231"
+      "path": "/tmp/chartnexus-m4-render-replay.log",
+      "sha256": "d78814e2b1cfefffe969be29aeab78b12ae33f6d42930ed6a22c1d2886b4c6f3"
     }
   ],
   "nonClaims": [
     "No npm publication or upstream endorsement",
-    "No completed 95% model acceptance",
+    "No production model qualification or universal model/host compatibility",
+    "No remote/desktop MCP or untested browser/device certification",
     "No absolute cross-device SLA or complete leak proof"
   ],
   "notes": [
-    "Full check first encountered three 5s CLI timeouts under simultaneous live-model load. Rerun with model client briefly suspended and smaller equivalent runner test passed without changing timeout thresholds.",
-    "Final performance observations overlap a live Ollama run; timing data are not an uncontended regression gate.",
-    "Temporary model client suspension was under 90s; raw elapsed times and any errors remain in the baseline.",
-    "Under simultaneous model load, a three-process discovery test also exceeded5s; remaining CLI cases now invoke one subprocess each, same deadlines/assertions. Full check then passed248 tests."
-  ],
-  "corpusQualification": "Replacement corpus accepted before requests against public teaching/evaluation families; same author/reviewer; see holdout-audit-v2.json."
+    "The original overlapping corpus is superseded, not independent evidence. Replacement scope is public teaching/evaluation families, with the same local author/reviewer.",
+    "The frozen strict scorer and original attempts remain unchanged. A tested post-hoc optional-reference-key representation correction is separately hashed and reported.",
+    "Nine diagnosis tasks omitted explicit JSON Pointer instruction. Code/path agreement is separate; all failures retained. This subset is exploratory, not a clean ranking.",
+    "Private corpora, raw responses, model logs and isolated consumers remain ignored. Final engine registration happened after all model rounds; SVG replay is not a rerun of model requests."
+  ]
 }

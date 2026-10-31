@@ -1,8 +1,8 @@
 ---
 doc_id: technical-design-2026-10-31
-version: "0.2"
-status: partially-implemented
-updated: 2026-10-31
+version: "0.3"
+status: implemented-experimental
+updated: 2026-11-01
 language: zh-CN
 ---
 # RFC：基础质量、宿主展示与四类图表扩展
@@ -11,7 +11,7 @@ language: zh-CN
 
 ## 状态与设计原则
 
-这是[技术审视](project-review-2026-10-31.md)后**部分已实现**的 RFC。M0–M3 已通过本地验收；实际 API、证据和限制见 [0.3 契约](contracts-03.md)及[聊天宿主质量](chat-host-quality.md)。D07/D08 渲染器与宿主地图资产已实现，[M3 指南](chart-expansion-03.md)冻结实际接口和限制；D09/D10 工具与分发已在 [M4](trial-distribution.md) 实现；已推送实现通过Linux CI，完整模型评测及最终报告验收仍待完成。执行顺序见[行动计划](action-plan-2026-10-31.md)。
+这是[技术审视](project-review-2026-10-31.md)后**已完成当前范围验收**的 RFC。M0–M3 已通过本地验收；实际 API、证据和限制见 [0.3 契约](contracts-03.md)及[聊天宿主质量](chat-host-quality.md)。D07/D08 渲染器与宿主地图资产已实现，[M3 指南](chart-expansion-03.md)冻结实际接口和限制；D09/D10 工具与分发已在 [M4](trial-distribution.md) 实现；已推送实现通过Linux CI，完整模型评测和最终报告已有[M4证据](../../specs/0036-trial-distribution/tasks.zh-CN.md)。执行顺序见[行动计划](action-plan-2026-10-31.md)。
 
 目标是基础、通用、可解释的聊天图表：少量有用配置、可信数据语义、两套简洁主题、五档展现、多个模型与宿主共用一个核心。维持不联网、不执行模型代码、不隐式排序/聚合/转换、不臆造数据。树图指 **tree 节点连线树**，不包含 treemap；地图指 **GeoJSON 区域着色图**，不包含瓦片、在线底图、轨迹、3D 或地理编码。以上高级方向不作为此次交付条件。
 
@@ -205,4 +205,8 @@ CI 分离生成/类型/语义、浏览器、包安装三个必需任务；失败
 
 ## M3 实施对应
 
-D07/D08 的字段与资产设计已由 [SPEC-0035](../../specs/0035-chart-expansion/spec.zh-CN.md)实施。文中旧草案措辞作为设计记录保留，当前完整文档、成功/失败示例、宿主地图要求、实际预算及验收以 [M3 指南](chart-expansion-03.md)为准。真实模型隐藏集、全包安装、性能及远端 CI 仍属 M4。
+D07/D08 的字段与资产设计已由 [SPEC-0035](../../specs/0035-chart-expansion/spec.zh-CN.md)实施。文中旧草案措辞作为设计记录保留，当前完整文档、成功/失败示例、宿主地图要求、实际预算及验收以 [M3 指南](chart-expansion-03.md)为准。真实模型留出集、全包安装、性能及远端CI已由M4验证；模型仍未达建议95%目标。
+
+## 实施结论 / 2026-11-01
+
+D01–D10当前范围以M0–M4对应Spec的实际接口和证据为准。已完成720轮冻结评测、隔离包安装、模块体积预算及远端CI；补齐guarded native标线/标记点/标记区域，并通过最终引擎全量SVG重放。评测是零样本宿主目录任务基线，不是任意图表选择或所有模型质量证明。诊断子集提示未明确JSON Pointer，记录全部失败和解释限制，不追溯改题提高分数。现有实验结果不足以授予生产模型资格；未实现的高级设计和后续实验不作为本轮承诺。

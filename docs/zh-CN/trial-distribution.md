@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.5"
+version: "0.6"
 status: experimental
 updated: 2026-11-01
 language: zh-CN
@@ -9,7 +9,7 @@ language: zh-CN
 
 [English](../en/trial-distribution.md)
 
-见 [SPEC-0036](../../specs/0036-trial-distribution/spec.zh-CN.md)、[证据](../../specs/0036-trial-distribution/verification.json)和[支持矩阵](support-matrix.md)。冻结评测及已推送版本 CI 全部完成前，M4 保持 verifying。全部11个包仍为私有、未发布。
+见 [SPEC-0036](../../specs/0036-trial-distribution/spec.zh-CN.md)、[证据](../../specs/0036-trial-distribution/verification.json)和[支持矩阵](support-matrix.md)。M4工程/评测已完成并有对应远端CI证据；模型质量仍为实验状态。全部11个包仍为私有、未发布。
 
 ## 评测来源与范围
 
@@ -38,6 +38,8 @@ node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-
 
 私有语料和原始日志保留在维护者本地并被 Git 忽略，其他用户需独立编写语料。`freeze.json`、`status.json`、`summary.json`和各模型 JSONL 支持审计与续跑。源码、语料、提示词、模型、Ollama或设置漂移会拒绝续跑；语义重评分也拒绝源码/语料漂移。聚合导出不含请求、行数据、期望值及模型文本。JSON解析异常可能夹带私有响应片段，因此公开报告仅保留稳定错误类别；错误码与JSON指针的匹配情况单独统计，但不放宽完整正确性的要求。PR不自动运行真实模型，也未配置定时任务。
 
+已完成的v2运行在标注注册变更前导出了语义聚合。相同结果由保留但忽略的`.local/m4-holdout-v2/frozen-checkout`（91f8f66）重新生成，输入/输出使用绝对路径；[来源记录](../../specs/0036-trial-distribution/evaluation-provenance-v2.json)披露了一处等价联合类型顺序差异及原声明文件字节恢复。直接在已变更的最终引擎中重新评分会按预期拒绝源码漂移。公开克隆不包含私有题库或冻结快照。在维护者工作区执行`node scripts/replay-frozen-renders.mjs outputs/m4-holdout-v2 outputs/m4-holdout-v2/render-replay.json`可验证最终引擎。
+
 ## 结果解释边界
 
 这是零样例的“Schema＋诊断说明”入口基线：没有注入配方检索、RAG示例、few-shot示范，也没有启用供应方强制JSON Schema解码。调用使用JSON模式，投影Schema以文本提供。结果衡量这一入口设计在宿主目录组合任务上的表现，不代表模型的通用能力、普通内联绘图成功率或所有模型/宿主组合。
@@ -48,13 +50,13 @@ node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-
 
 `pnpm test:packages --browser`构建并打包11个包，在新的系统临时目录安装 tarball，不含祖先工作区或源码软链接。固定经审核的锁文件版本，验证实际 peer 版本。CI在线解析注册表元数据，因为冻结工作区安装可能仅缓存包内容，缺少新消费者解析可选平台依赖所需的元数据；已有完整内容/元数据缓存时可用`--offline`。两种方式均不证明所有未来 semver 解析组合。
 
-审计归档路径、LICENSE/NOTICE、JS/类型导出、静态资源、安装后的CLI、官方stdio MCP客户端协商/工具/资源/SVG往返、worker相对导入、宿主地图资产和实际固定版本GenUI适配器。浏览器运行前先导入Vite检查原生依赖。TypeScript通过NodeNext及第三方`skipLibCheck`解析已安装声明。macOS arm64下Node22.22.3/24.22.1各通过45项安装后浏览器测试；当前远端状态见结构化证据。保留临时消费者和失败日志，不执行npm发布。
+审计归档路径、LICENSE/NOTICE、JS/类型导出、静态资源、安装后的CLI、官方stdio MCP客户端协商/工具/资源/SVG往返、worker相对导入、宿主地图资产和实际固定版本GenUI适配器。浏览器运行前先导入Vite检查原生依赖。TypeScript通过NodeNext及第三方`skipLibCheck`解析已安装声明。macOS arm64下Node22.22.3/24.22.1各通过46项安装后浏览器测试；当前远端状态见结构化证据。保留临时消费者和失败日志，不执行npm发布。
 
 ## 模块与性能
 
 共享桥接注册10个ECharts系列模块（组合图使用柱/线）、SVG渲染器、组件、标签布局及ARIA。安装测试曾发现并修复零占比饼图缺少ARIA注册。原生模式仍限制为4类图表，不开放任意插件。
 
-[预算](../../resources/performance-budgets.json)冻结全导出压缩ESM的原始/gzip字节基线并预留10%。`includePeers:false`外置包括Ajv在内的全部第三方依赖，true包含宿主SDK及依赖。runtime外置依赖时gzip约35.4kB，打入依赖约362.3kB；这是SDK体积，不是demo体积。
+[预算](../../resources/performance-budgets.json)冻结全导出压缩ESM的原始/gzip字节基线并预留10%。`includePeers:false`外置包括Ajv在内的全部第三方依赖，true包含宿主SDK及依赖。runtime外置依赖时gzip约35.4kB，打入依赖约370.8kB；这是SDK体积，不是demo体积。
 
 ```sh
 pnpm benchmark
@@ -63,6 +65,25 @@ node --expose-gc scripts/benchmark.mjs --compare /absolute/path/to/prior-baselin
 
 基准强制字节预算，记录编译/SVG中位数、p95及GC后堆内存：100/1000/10000行、雷达6×8、树1000节点、桑基200节点/1000边、地图1000区域、原生50系列/50000点。浏览器预热两次后记录10个生命周期样本，断言实例/SVG/可访问性DOM清理。堆内存观察不证明零泄漏；并行模型负载下的耗时仅供观察。同机同运行时且空闲时可启用20% p95对比，共享CI不设硬耗时门禁，也无跨设备SLA。
 
+所有模型调用和安装任务停止后，最终[同机对比](../../specs/0036-trial-distribution/performance-comparison.json)也通过。对比典型100/1000/10000行的编译/SVG p95与另一份模型结束后基线，20%阈值未放宽。边界与堆内存数据仍是观察值；更早的带模型负载基线不能作为受控时延对比。
+
 ## CI 与迁移
 
 required聚合verify、browser和Node22/24安装包任务；保留失败轨迹/截图及包/性能报告。[M4任务](../../specs/0036-trial-distribution/tasks.zh-CN.md)记录实际推送版本的运行、失败与修复，旧版本成功不能证明后续修改。[0.3迁移](contracts-03.md)通过`migrateIntentTo03`显式执行；原生仍为0.1，不适用当前图表的字段直接拒绝。M4不自动迁移用户数据或发布包。
+
+## 原生兼容修复
+
+补齐MarkLine/MarkPoint/MarkArea注册，不改变guarded native契约，也不扩大strict-basic校验范围。[SVG回归](../../tests/native-markers.test.ts)和[浏览器回归](../../tests/browser/native-markers.spec.ts)先复现缺失标签，修复后验证三个标签均呈现、替换后消失以及销毁清理。体积预算保持不变并通过。
+
+模型调用使用原冻结引擎；结束后仅变更记录中的两处引擎源码/构建文件。[精确渲染重放](../../specs/0036-trial-distribution/render-replay.json)覆盖所有323个原来渲染成功的候选，包括语义错误候选，323个SVG哈希全部一致。没有借重放增加模型调用、改分或删除失败；此证据只覆盖观测候选，不保证任意文档。
+
+## 模型结果与资格
+
+| 模型 | 首次结构合格 | 首次任务正确 | 修复后任务正确 | 原严格评分：修复后 |
+| --- | --- | --- | --- | --- |
+| `qwen3.5:9b` | 127/180 (70.6%) | 51/180 (28.3%) | 60/180 (33.3%) | 6/180 |
+| `mistral:latest` | 106/180 (58.9%) | 43/180 (23.9%) | 53/180 (29.4%) | 38/180 |
+| `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
+| `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
+
+四个模型的修复后正确率均未达到建议95%目标，继续保持实验状态；Qwen3.5:27b的首次结构合格率为175/180，达到独立的结构目标。报告层可选键修正保留严格原分。诊断子集的JSON Pointer提示歧义、零样本仅Schema提示、同一作者审查及宿主目录题目范围均限制结果解释，见[指南](../../docs/zh-CN/trial-distribution.md)。这不是beta发布，也不是通用模型排名。私有题库与原始响应保持忽略，未发布npm。

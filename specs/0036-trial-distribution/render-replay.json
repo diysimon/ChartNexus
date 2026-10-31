@@ -1,0 +1,28 @@
+{
+  "status": "pass",
+  "generated": "2026-10-31T18:33:55.479Z",
+  "node": "v22.22.3",
+  "mode": "local-ollama",
+  "toolHash": "a6ee93a7f84ed6ebe81ad0befbda805b0dd5d961f07c9017828ffe541e5c4eae",
+  "corpusHash": "94993d3a9680a3f6803a4bbe884d729996c6fd9ffa74ecbfe28e4513ae4fa70f",
+  "evaluatedSourceHash": "89eaf9528f2990b09da437f7561811e0732682bc9cfd306c1c079331f3297620",
+  "finalSourceHash": "ecb15e851605e3a2baa2f69799f379ff2a9f544f92646e8ac4399c401b6f6843",
+  "reviewedSourceChanges": [
+    {
+      "file": "packages/echarts/dist/engine.js",
+      "previous": "874eaa762e1250e140a1de3414c99a5d017bc8801a2e06083a3ab0fb99bd9011",
+      "current": "27832bac59cdd7f710274ab05c649be22ec57c690e36147763ecc7b99872aa86"
+    },
+    {
+      "file": "packages/echarts/src/engine.ts",
+      "previous": "dcc082bcdb14265342b2ce6a210d3f027ea9129dc23847c1e10014d49d8b7eb5",
+      "current": "03de83c096c70c94dccdd998278e2a7d86db513e70b312f4b9e094f73955563c"
+    }
+  ],
+  "unchangedFrozenFiles": 257,
+  "originalRenderCount": 323,
+  "replayed": 323,
+  "matchingSvgHashes": 323,
+  "failures": [],
+  "scope": "Full mode replays every originally successful render, including semantically incorrect candidates; limited mode is preflight only. Original requests, scores, timings and failures remain unchanged. Native marker compatibility is verified separately."
+}

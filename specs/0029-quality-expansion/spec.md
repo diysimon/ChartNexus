@@ -1,8 +1,8 @@
 ---
 doc_id: spec-0029-spec
-version: "0.1"
-status: implementing
-updated: 2026-10-31
+version: "0.2"
+status: done
+updated: 2026-11-01
 language: en
 ---
 # Reliability and chart expansion
@@ -17,16 +17,16 @@ Work incrementally behind explicit contracts, preserving 0.1 and existing 0.2 be
 ## Acceptance and dependencies
 | Area | Acceptance evidence | Status |
 | --- | --- | --- |
-| Responsive chat layout | Long labels, legends, narrow/wide containers and resize verified without changing data | not-run |
-| Themes and accessibility | Contrast on declared surfaces, keyboard and text alternatives reviewed; limits recorded | not-run |
-| Interaction state | Compatible updates preserve explicitly defined state; incompatible changes reset safely | not-run |
-| Independent evaluation | Held-out tasks, reproducible scoring and real model results without answer leakage | not-run |
-| Real streaming | Real model transport, cancellation, truncation, errors and concurrency tested | not-run |
-| Model usability | Evidence-driven schemas, examples and bounded repair measured against baseline | not-run |
-| Protocols | Version matrix, contracts and real host evidence; Marklang chat profile evaluated | not-run |
-| Distribution | Packed packages installed and exercised in a clean external project; licensing reviewed | not-run |
-| Stability and documentation | Versioning, migration and bilingual documentation reconciled with evidence | implementing |
-| New charts | Radar, tree, Sankey and map each have contracts, schema, compiler, resources, tests and browser/SVG evidence | not-run |
+| Responsive chat layout | Long labels, legends, narrow/wide containers and resize verified without changing data | pass — [evidence](../0034-chat-host-quality/tasks.md) |
+| Themes and accessibility | Contrast on declared surfaces, keyboard and text alternatives reviewed; limits recorded | pass — [evidence](../0034-chat-host-quality/tasks.md) |
+| Interaction state | Compatible updates preserve explicitly defined state; incompatible changes reset safely | pass — [evidence](../0034-chat-host-quality/tasks.md) |
+| Independent evaluation | Held-out tasks, reproducible scoring and real model results without answer leakage | pass — [evidence](../0036-trial-distribution/tasks.md) |
+| Real streaming | Real model transport, cancellation, truncation, errors and concurrency tested | pass — [evidence](../0034-chat-host-quality/tasks.md) |
+| Model usability | Evidence-driven schemas, examples and bounded repair measured against baseline | pass — [evidence](../0036-trial-distribution/tasks.md) |
+| Protocols | Version matrix, contracts and real host evidence; Marklang chat profile evaluated | pass — [evidence](../0034-chat-host-quality/tasks.md) |
+| Distribution | Packed packages installed and exercised in a clean external project; licensing reviewed | pass — [evidence](../0036-trial-distribution/tasks.md) |
+| Stability and documentation | Versioning, migration and bilingual documentation reconciled with evidence | pass — [evidence](../0033-contracts-core/tasks.md) |
+| New charts | Radar, tree, Sankey and map each have contracts, schema, compiler, resources, tests and browser/SVG evidence | pass — [evidence](../0035-chart-expansion/tasks.md) |
 
 Responsive presentation and quality rules precede chart expansion; contracts precede implementation. Actual model, host, device and package evidence are recorded separately from simulations. Do not claim universal model or protocol compatibility.
 
@@ -42,14 +42,18 @@ A fixed 80-pixel category-label limit, overlap hiding and hover tooltip are impl
 
 The [review](../../docs/en/project-review-2026-10-31.md), [technical RFC](../../docs/en/technical-design-2026-10-31.md) and [action plan](../../docs/en/action-plan-2026-10-31.md) refine this scope. This spec remains implementing; completion of 0030 means the review is complete, not these features.
 
-## M1/M2 checkpoint
+## M1/M2 checkpoint (historical)
 
 M0–M2 are now complete locally. [M1 evidence](../0033-contracts-core/tasks.md) covers versioned contracts and core extraction; [M2 evidence](../0034-chat-host-quality/tasks.md) covers dimensions, access, lifecycle, legend state, streaming and pinned host profiles. Four new renderers, final independent evaluation, distribution/performance and remote CI remain open; this umbrella is not done.
 
-## M3 checkpoint
+## M3 checkpoint (historical)
 
 A12–A15 are complete with [M3 evidence](../0035-chart-expansion/tasks.md). All eleven experimental 0.3 intent types have local compiler/browser/SVG coverage; maps require host assets. Final A16/A17/A18 remain open, so this umbrella stays implementing.
 
-## M4 checkpoint
+## M4 checkpoint (historical)
 
 [M4 evidence](../0036-trial-distribution/tasks.md): A17 local package/performance checks pass; A16 full model runs and A18 remote CI remain open. This umbrella is still implementing.
+
+## Final acceptance / 2026-11-01
+
+Earlier checkpoints describe their historical state. M0–M4 and A01–A18 are complete; this table and [M4 final evidence](../0036-trial-distribution/tasks.md) are current: 720 real local model rounds, eleven isolated Node22/24 packages, 251 unit/integration tests, 46 browser tests per suite and remote CI. Missing native marker modules were restored and every originally successful evaluation render was replayed. Model correctness remains below the proposed95% target and experimental; plan completion is not production qualification, all-model/host certification or npm publication.

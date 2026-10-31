@@ -1,8 +1,8 @@
 ---
 doc_id: development
-version: "0.2"
+version: "0.3"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 
@@ -10,7 +10,7 @@ language: en
 
 [Other language](../zh-CN/development.md)
 
-This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Small local model pilots and bounded session-level operation deduplication exist; 0.3 stable row keys and compatible legend-state retention are implemented. Independent evaluation and broader host verification remain open.
+This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Small local model pilots and bounded session-level operation deduplication exist; 0.3 stable row keys and compatible legend-state retention are implemented. The 720-round local evaluation and isolated Node22/24 package/host rehearsals are complete; measured models remain experimental. Broader hosts/devices remain unverified.
 
 ## Run
 Use Node 22.22.3 (baseline) or a supported Node 24 runtime and pnpm 11.25.0. From the repository root:
@@ -34,7 +34,9 @@ pnpm test:browser
 
 All packages are private workspaces. Names do not imply published npm packages or scope ownership. The shared ECharts bridge now explicitly registers supported modules and SVG/ARIA components; see [M4 distribution and performance](trial-distribution.md).
 
-## Current contract
+## Baseline 0.1 contract
+The current intent branches also include 0.2 and 0.3; see [contracts and migration](contracts-03.md). This section describes the retained 0.1 baseline.
+
 Schema version 0.1, native `echarts` or semantic `intent` mode. Intent uses inline fields/object rows or a host registry reference with exact revision. x/y/series field mappings are explicit. Bar/line/pie require string categories; scatter requires numerical coordinates. y is numerical or null, except pie requires nonnegative numbers. Grouped bar/line/scatter are supported; pie grouping is not. Duplicate categories within one series fail. Empty rows produce empty series.
 
 Missing fields must be explicit null. No implicit numeric coercion, aggregation, time parsing, network resolution, or arbitrary transforms. References use a trusted synchronous host registry; native mode currently uses only inline option datasets/data. Native option validation is intentionally partial, not an exhaustive ECharts schema.
@@ -47,7 +49,7 @@ Input budget: 1 MiB, depth 32, 100000 inspected nodes; 100 fields, 10000 rows, 5
 Full replacement uses notMerge, so removed series cannot remain stale. Validation failures leave the prior chart/revision intact. A render failure attempts restoration; unrecoverable failures request remounting. Selection events carry chart/data revision and positional or aggregate identity; 0.3 can supply stable row keys. Native selections have no row mapping. Resizing uses ResizeObserver. Disposing removes observer and instance. Compatible chat/0.3 legend selection is retained; zoom retention is unsupported.
 
 ## Engineering status
-`pnpm generate` regenerates types from JSON Schema; `generate:check` detects drift. `docs:check` verifies bilingual manifest entries and local links. `check` combines the implemented local gates; browser tests are separate. CI YAML is local configuration, not evidence of a successful GitHub run or enabled branch protection. Release jobs are not configured.
+`pnpm generate` regenerates types from JSON Schema; `generate:check` detects drift. `docs:check` verifies bilingual manifest entries and local links. `check` combines the implemented local gates; browser tests are separate. The verify, browser and Node22/24 package jobs have passed remote GitHub Actions; exact revisions are linked in [M4 evidence](../../specs/0036-trial-distribution/verification.json). This does not establish enabled branch protection. Release jobs are not configured.
 
 See [SPEC-0001](../../specs/0001-core-foundation/spec.md) and its [task evidence](../../specs/0001-core-foundation/tasks.md). Historical planning documents remain planning baselines; this page describes the current subset.
 
@@ -60,7 +62,7 @@ Run `pnpm dev` and open `http://127.0.0.1:5173/openui.html`. The demo uses the a
 
 The adapter defers updates while OpenUI reports streaming and retains the previous valid chart on document errors. The host must preserve the last committed response while assembling streaming fragments: a malformed OpenUI program may remove the component before the adapter can retain it. Native and intent modes follow the existing core limits, including 1 MiB. Use a stable chart ID; for another ID remount the component. Supply registry references through a trusted host registry. Legacy chart selections use positional or aggregate identity; 0.3 can supply stable row keys. `onDiagnostics` receives errors and an empty list on recovery. No arbitrary executable callbacks are accepted from the model.
 
-Verified against OpenUI React Lang 1.0.2, React 19.2.4 and Zod 4.3.6. This is an experimental OpenUI Lang component profile, not standard A2UI, COSUI, or all OpenUI hosts. Real model output, SSR/hydration, clean package installation, broader SDK versions and npm publication remain unverified. See [SPEC-0003](../../specs/0003-openui-adapter/spec.md).
+Verified against OpenUI React Lang 1.0.2, React 19.2.4 and Zod 4.3.6. This is an experimental OpenUI Lang component profile, not standard A2UI, COSUI, or all OpenUI hosts. Clean tarball installation and the pinned browser host have passed on Node22/24. Real model-generated OpenUI programs, SSR/hydration, broader SDK versions and npm publication remain unverified. See [SPEC-0003](../../specs/0003-openui-adapter/spec.md).
 
 ## Additional GenUI hosts
 
@@ -141,7 +143,7 @@ See [0.3 contracts and migration](contracts-03.md) and [chat host quality/suppor
 
 ## M3 chart expansion
 
-0.3 now supports radar, tree, Sankey and trusted regional maps in addition to the original seven types. See [contracts, host MapRegistry, resources and preview](chart-expansion-03.md). Browser/SVG/worker and four pinned upstream SDK paths have local evidence; M4 model evaluation and distribution remain separate. Fixed renderer-owned label callbacks preserve text literally; model callbacks remain forbidden.
+0.3 now supports radar, tree, Sankey and trusted regional maps in addition to the original seven types. See [contracts, host MapRegistry, resources and preview](chart-expansion-03.md). Browser/SVG/worker and four pinned upstream SDK paths have local evidence; M4 evaluation/distribution evidence is recorded separately in the trial guide. Fixed renderer-owned label callbacks preserve text literally; model callbacks remain forbidden.
 
 ## M4 verification commands
 

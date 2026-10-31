@@ -1,21 +1,21 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.3"
-status: verifying
-updated: 2026-10-31
+version: "0.5"
+status: done
+updated: 2026-11-01
 language: en
 ---
 # M4 execution and acceptance
 
 [简体中文](tasks.zh-CN.md)
 
-M4 is verifying until the full frozen evaluation finishes and final changes pass remote CI. [Structured evidence](verification.json) and [support matrix](../../docs/en/support-matrix.md) distinguish package, host, model and CI results.
+M4 engineering and evaluation are complete; all profiles remain experimental and unpublished. Completing the measurement does not qualify a model for automatic production use. See [structured evidence](verification.json).
 
 | AC | Result | Evidence |
 | --- | --- | --- |
-| AC16 | Harness and scorer checks pass; replacement live run in progress | [Pre-run audit](holdout-audit-v2.json), [frozen provenance](evaluation-provenance-v2.json);60 tasks ×4 models ×3 repeats; private registries and independently authored marks; raw responses/failures retained. |
-| AC17 | Pass locally and on Linux CI | Eleven isolated tarballs on Node22.22.3/24.22.1,45 installed-browser tests per runtime; exports/types/CLI/official MCP/workers/maps/host SDKs/resources/licenses. [Performance](performance.json), browser [22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json). |
-| AC18 | Pushed implementation passes remote CI; final report revision to be checked | [CI41207042168](https://github.com/diysimon/ChartNexus/actions/runs/41207042168), commit7345f34: verify, browser, both package jobs and required all pass. |
+| AC16 | Complete: 720/720 rounds; four models, three repeats; failures retained | [Aggregate](evaluation-summary-v2.json), [integrity audit](evaluation-integrity-v2.json), [provenance](evaluation-provenance-v2.json), [pre-run scope audit](holdout-audit-v2.json) |
+| AC17 | Pass: eleven isolated tarballs, Node22/24 locally and on Linux CI; 46 browser tests per consumer | [Performance](performance.json), browser [22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json), structured package evidence |
+| AC18 | Pass: verify/browser/both package jobs/required | [Remote CI](https://github.com/diysimon/ChartNexus/actions/runs/41230226310) at `2261351`; final documentation commit checked separately at delivery |
 
 ## Implementation and regression findings
 
@@ -29,6 +29,19 @@ The original [corpus audit](corpus-audit.json) rejected overlapping families; in
 
 The frozen scorer falsely rejects valid optional reference `keyField` because it changes mark representation. A separate, tested reporting correction preserves strict scores and original renders, validates original keys before normalization and still rejects wrong source/revision, duplicate keys, changed values, required identities and failed rendering. Both score versions and correction provenance are disclosed. No raw record, prompt, repair opportunity or frozen runner source is changed. See the [guide](../../docs/en/trial-distribution.md).
 
-## Acceptance still being executed
+## Native compatibility closure
 
-Finish all720 rounds, inspect failures, export private-data-free aggregates and record each model's experimental status against the proposed95% targets. Then commit the final evidence/docs, push over SSH and verify that exact revision's required CI. Packages remain private; no npm publication is authorized or performed.
+Restored MarkLine/MarkPoint/MarkArea registration without changing the guarded native contract or expanding strict-basic validation. [SVG regression](../../tests/native-markers.test.ts) and [browser regression](../../tests/browser/native-markers.spec.ts) reproduce the missing labels before the fix, then verify all three labels and clean replacement/disposal afterwards. Byte budgets remain unchanged and pass.
+
+The model run used the original frozen engine. Only the two recorded engine source/build files changed afterwards; [exact render replay](render-replay.json) re-rendered all 323 originally successful renders, including semantically wrong candidates, with 323 matching SVG hashes. No new model calls, altered scores or dropped failures are hidden in this replay. It is evidence for these observed candidates, not every possible document.
+
+## Model results and qualification
+
+| Model | First-pass structure | First-pass correctness | After-repair correctness | Strict after-repair score |
+| --- | --- | --- | --- | --- |
+| `qwen3.5:9b` | 127/180 (70.6%) | 51/180 (28.3%) | 60/180 (33.3%) | 6/180 |
+| `mistral:latest` | 106/180 (58.9%) | 43/180 (23.9%) | 53/180 (29.4%) | 38/180 |
+| `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
+| `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
+
+All four models remain experimental because after-repair correctness is below the proposed 95% target. Qwen3.5:27b meets the separate first-pass structural target (175/180). The reporting-only optional-key correction retains strict scores. The diagnostic subset's JSON Pointer ambiguity, zero-shot schema-only prompting, same-author review and host-catalog scope limit interpretation; see [guide](../../docs/en/trial-distribution.md). This is neither a beta release nor a universal model ranking. Private corpora and raw responses remain ignored; no npm publication occurred.

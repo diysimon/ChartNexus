@@ -1,22 +1,36 @@
 ---
 doc_id: readme
-version: "0.1"
-status: implementation-baseline
-updated: 2026-10-30
+version: "0.2"
+status: experimental
+updated: 2026-11-01
 language: zh-CN
 ---
 
-# ChartNexus 项目文档
-
-> 2026-10-30：已开始实验核心代码开发；当前运行方式与限制见[开发指南](docs/zh-CN/development.md)。本地 CLI/MCP stdio 已实现，尚未发布或接入 UI 协议。
+# ChartNexus
 
 [English](README.md)
 
-ChartNexus 是面向大模型与 Agent 的 Apache ECharts 图表基础设施，计划提供多 UI 协议适配、MCP 工具和适用于 RAG/训练的资源。
+ChartNexus是面向大模型与Agent的实验性Apache ECharts图表基础设施，提供版本化JSON图表契约、校验、浏览器/SVG渲染、GenUI适配器、CLI/MCP工具及适用于RAG或训练工作流的资源。这是独立项目，兼容性不代表上游官方背书。
 
-**当前已有实验性本地核心包；CLI/MCP stdio 已可本地使用，协议适配器和已发布包尚不存在。** 本地文档未自动提交或推送到 GitHub。计划命令不代表已实现脚本。
+0.3 intent包含柱状、折线、饼图、散点、组合、漏斗、热力、雷达、树、桑基及宿主注册地图。支持明暗主题、聊天透明背景和五档信息密度。保留的guarded native0.1支持受限制的ECharts option子集。OpenUI Lang、A2UI v0.9、COSUI JSON和COSUI Marklang均有固定版本真实宿主测试，支持范围按profile/版本区分。
 
-仓库：[diysimon/ChartNexus](https://github.com/diysimon/ChartNexus)。远端已选择 Apache-2.0；本地文档同步回仓库时保留远端 LICENSE。
+全部11个包保持私有、未发布。模型质量、安装包和UI宿主分别记录证据，见[支持矩阵](docs/zh-CN/support-matrix.md)、[契约与迁移](docs/zh-CN/contracts-03.md)及[评测与分发指南](docs/zh-CN/trial-distribution.md)。模型无关架构不代表所有模型都能成功生成。
+
+## 本地预览
+
+使用Node22.22.3或已测试的Node24运行时，以及pnpm11.25.0：
+
+```sh
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm check
+pnpm dev
+# 本地Ollama演示：
+pnpm dev:ollama
+```
+
+默认预览地址为`http://127.0.0.1:5173/`；宿主演示包括`/openui.html`、`/a2ui.html`、`/cosui.html`和`/marklang.html`。Ollama页面为`http://127.0.0.1:5180/ollama.html`，需要本机Ollama服务和已安装模型。浏览器/安装包检查及限制见[开发指南](docs/zh-CN/development.md)。
+
+仓库：[diysimon/ChartNexus](https://github.com/diysimon/ChartNexus)。许可证：[Apache-2.0](LICENSE)。
 
 ## 推荐阅读顺序
 先读项目章程、技术架构，再读初始化、Spec 执行、编码规范和流水线。开始实现前读 [Agent 指南](AGENTS.zh-CN.md)。

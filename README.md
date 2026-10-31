@@ -1,22 +1,36 @@
 ---
 doc_id: readme
-version: "0.1"
-status: implementation-baseline
-updated: 2026-10-30
+version: "0.2"
+status: experimental
+updated: 2026-11-01
 language: en
 ---
 
-# ChartNexus project documentation
-
-> 2026-10-30: Experimental core implementation has started; see [development guide](docs/en/development.md) for commands and limits. Local CLI/MCP stdio is implemented; no publication or UI protocol integration yet.
+# ChartNexus
 
 [简体中文](README.zh-CN.md)
 
-ChartNexus is Apache ECharts infrastructure for language models and agents, with planned UI protocol adapters, MCP tools, and resources for RAG/training.
+ChartNexus is experimental Apache ECharts infrastructure for language models and agents: versioned JSON chart contracts, validation, browser/SVG rendering, GenUI adapters, CLI/MCP tools and resources for RAG or training workflows. It is an independent project; compatibility does not imply upstream endorsement.
 
-**Experimental local core packages now exist; CLI/MCP stdio is available locally; protocol adapters and published packages do not yet exist.** Local documents are not automatically committed or pushed. Planned commands are not implemented scripts.
+The 0.3 intent profile includes bar, line, pie, scatter, combo, funnel, heatmap, radar, tree, Sankey and host-registered maps. Light/dark themes, transparent chat backgrounds and five detail levels are available. The retained guarded native0.1 profile supports a restricted ECharts option subset. OpenUI Lang, A2UI v0.9, COSUI JSON and COSUI Marklang have pinned real-host tests; support is profile/version-specific.
 
-Repository: [diysimon/ChartNexus](https://github.com/diysimon/ChartNexus). The remote repository uses Apache-2.0; retain its LICENSE when synchronizing these documents.
+All eleven packages remain private and unpublished. Model quality, installed packages and UI hosts have separate evidence; see the [support matrix](docs/en/support-matrix.md), [contracts/migration](docs/en/contracts-03.md), and [evaluation/distribution guide](docs/en/trial-distribution.md). Model-independent architecture does not establish every-model success.
+
+## Local preview
+
+Use Node22.22.3 or the tested Node24 runtime and pnpm11.25.0:
+
+```sh
+pnpm install --frozen-lockfile --ignore-scripts
+pnpm check
+pnpm dev
+# For the localhost Ollama playground:
+pnpm dev:ollama
+```
+
+The default preview is `http://127.0.0.1:5173/`; host demos include `/openui.html`, `/a2ui.html`, `/cosui.html` and `/marklang.html`. The Ollama page is `http://127.0.0.1:5180/ollama.html` and requires a running local Ollama service with an installed model. See the [development guide](docs/en/development.md) for browser/package checks and limits.
+
+Repository: [diysimon/ChartNexus](https://github.com/diysimon/ChartNexus). License: [Apache-2.0](LICENSE).
 
 ## Reading order
 Read the charter and architecture, then initialization, spec execution, coding standards, and pipelines. Read [agent guidance](AGENTS.md) before implementation.

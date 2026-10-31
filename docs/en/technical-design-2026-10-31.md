@@ -1,8 +1,8 @@
 ---
 doc_id: technical-design-2026-10-31
-version: "0.2"
-status: partially-implemented
-updated: 2026-10-31
+version: "0.3"
+status: implemented-experimental
+updated: 2026-11-01
 language: en
 ---
 # RFC: foundational quality, host presentation and four new chart types
@@ -11,7 +11,7 @@ language: en
 
 ## Status and principles
 
-This RFC is **partially implemented** following the [technical review](project-review-2026-10-31.md). M0–M3 are accepted locally: [0.3 contracts](contracts-03.md) and [chat host quality](chat-host-quality.md) describe actual APIs, evidence and limits. D07/D08 renderers and host map assets are implemented; [M3 guide](chart-expansion-03.md) freezes their actual APIs and limits. D09/D10 tooling and distribution are implemented in [M4](trial-distribution.md); the pushed implementation passes Linux CI, while full model evaluation and final-report acceptance remain pending. See the [action plan](action-plan-2026-10-31.md).
+This RFC is **accepted for its current scope** following the [technical review](project-review-2026-10-31.md). M0–M3 are accepted locally: [0.3 contracts](contracts-03.md) and [chat host quality](chat-host-quality.md) describe actual APIs, evidence and limits. D07/D08 renderers and host map assets are implemented; [M3 guide](chart-expansion-03.md) freezes their actual APIs and limits. D09/D10 tooling and distribution are implemented in [M4](trial-distribution.md); the pushed implementation passes Linux CI, while full evaluation and final-report acceptance are recorded in [M4 evidence](../../specs/0036-trial-distribution/tasks.md). See the [action plan](action-plan-2026-10-31.md).
 
 Target basic, general, explainable chat charts: few useful options, faithful data semantics, two clean themes, five detail levels, and one core for multiple models/hosts. Do not fetch data, execute model code, implicitly sort/aggregate/convert or invent facts. Tree means **node-link tree**, not treemap. Map means **GeoJSON regional choropleth**, excluding tiles, online basemaps, tracks, 3D and geocoding. These advanced features are not delivery requirements.
 
@@ -98,7 +98,7 @@ For OpenUI Lang, A2UI v0.9, COSUI JSON and Marklang, record SDK version, represe
 
 ## D07: four bounded chart contracts
 
-These 0.3 fields are implemented under [SPEC-0035](../../specs/0035-chart-expansion/spec.md), with independent compiler/browser/SVG/worker and host evidence. Real-model held-out evaluation remains M4.
+These 0.3 fields are implemented under [SPEC-0035](../../specs/0035-chart-expansion/spec.md), with independent compiler/browser/SVG/worker and host evidence. Real-model holdout evaluation is recorded in M4; models remain below proposed targets.
 
 | Type | Proposed data/fields | Required checks | Initial scope |
 | --- | --- | --- | --- |
@@ -202,3 +202,7 @@ CI separates generation/types/semantics, browser and package-install required jo
 ## Decisions requiring evidence
 
 Font measurement, width thresholds, map budgets, performance limits and model success thresholds need fixed-environment validation, not another round of routine user preferences. External unavailability must not block unrelated local work or be recorded as a pass. M1/M2 freeze a bounded layout with conservative text budgets and explicit fallback, not exact arbitrary-font measurement. Other proposed work remains unimplemented unless its linked spec records passing evidence.
+
+## Implementation conclusion / 2026-11-01
+
+Actual APIs and evidence in the M0–M4 Specs govern D01–D10. The720-round frozen evaluation, isolated distributions, module byte budgets and remote CI are complete. Guarded native marker components were restored, followed by full final-engine SVG replay. Evaluation is a zero-shot host-catalog baseline, not arbitrary chart-choice or all-model certification. Diagnosis prompts omitted explicit JSON Pointer notation; retain failures and the interpretation limit rather than retrospectively changing tasks to raise scores. Measured models do not qualify for production; advanced proposals and future experiments are not this delivery scope.

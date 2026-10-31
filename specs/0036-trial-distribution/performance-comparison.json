@@ -1,0 +1,80 @@
+{
+  "status": "pass",
+  "threshold": 1.2,
+  "node": "v22.22.3",
+  "platform": "darwin",
+  "arch": "arm64",
+  "cpu": "Apple M4 Pro",
+  "baselineCreated": "2026-10-31T18:34:16.374Z",
+  "currentCreated": "2026-10-31T18:38:18.202Z",
+  "baselineFingerprint": "d1b067130ed27d4c2efeae9a70b1745b9ffda9c19a2e49f3abba3016ff2d6c4c",
+  "currentFingerprint": "bd907040b012539046e8f74977d8c918358993dde531f1c3a0f47a443dcbdcac",
+  "baselineMeasurements": [
+    {
+      "rows": 100,
+      "compile": {
+        "samples": 20,
+        "medianMs": 1.4175829999999223,
+        "p95Ms": 1.6480420000000322,
+        "maxMs": 1.9860419999999976
+      },
+      "svg": {
+        "samples": 10,
+        "medianMs": 6.021582999999964,
+        "p95Ms": 7.857083999999986,
+        "maxMs": 7.857083999999986
+      },
+      "heapAfterDisposalDelta": 2787392
+    },
+    {
+      "rows": 1000,
+      "compile": {
+        "samples": 20,
+        "medianMs": 12.834499999999935,
+        "p95Ms": 13.962708999999904,
+        "maxMs": 13.973999999999933
+      },
+      "svg": {
+        "samples": 10,
+        "medianMs": 22.835250000000087,
+        "p95Ms": 26.437165999999934,
+        "maxMs": 26.437165999999934
+      },
+      "heapAfterDisposalDelta": 947256
+    },
+    {
+      "rows": 10000,
+      "compile": {
+        "samples": 20,
+        "medianMs": 118.92100000000028,
+        "p95Ms": 125.44000000000005,
+        "maxMs": 125.8477499999999
+      },
+      "svg": {
+        "samples": 10,
+        "medianMs": 195.89545799999996,
+        "p95Ms": 207.15491699999984,
+        "maxMs": 207.15491699999984
+      },
+      "heapAfterDisposalDelta": 679392
+    }
+  ],
+  "ratios": [
+    {
+      "rows": 100,
+      "compileP95Ratio": 0.9900888448231812,
+      "svgP95Ratio": 1.1108446848729223
+    },
+    {
+      "rows": 1000,
+      "compileP95Ratio": 0.9671982707653672,
+      "svgP95Ratio": 1.0108953811463848
+    },
+    {
+      "rows": 10000,
+      "compileP95Ratio": 0.998265768494899,
+      "svgP95Ratio": 0.9618377342209058
+    }
+  ],
+  "scope": "Typical100/1000/10000-row compile/SVG p95 only; boundary and heap measurements remain observational. Both runs after model evaluation, without concurrent ChartNexus package/check/model jobs; local comparison, not cross-machine SLA."
+}

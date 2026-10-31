@@ -1,0 +1,48 @@
+{
+  "status": "pass",
+  "checked": "2026-10-31T18:31:36.204Z",
+  "corpusHash": "94993d3a9680a3f6803a4bbe884d729996c6fd9ffa74ecbfe28e4513ae4fa70f",
+  "sourceHash": "89eaf9528f2990b09da437f7561811e0732682bc9cfd306c1c079331f3297620",
+  "freezeHash": "fdd3f3125e38b4c982815e4ee787bc543324cfdbd23f073db4b38df907141282",
+  "started": "2026-10-31T13:32:30.865Z",
+  "finished": "2026-10-31T18:30:35.947Z",
+  "plannedRounds": 720,
+  "completedRounds": 720,
+  "models": [
+    {
+      "name": "qwen3.5:9b",
+      "rounds": 180,
+      "attempts": 368,
+      "originalSuccessfulRenders": 96,
+      "attemptLogSha256": "1396b578418d1f1f2f094d9a2d37a6fc926006b0d9a5d1c3149dcd3091adc2eb"
+    },
+    {
+      "name": "mistral:latest",
+      "rounds": 180,
+      "attempts": 379,
+      "originalSuccessfulRenders": 87,
+      "attemptLogSha256": "e305bc96c2374321bf9e64e3e42629effefff32d417f3d3e37f47cea44d272e3"
+    },
+    {
+      "name": "qwen3.5:27b",
+      "rounds": 180,
+      "attempts": 276,
+      "originalSuccessfulRenders": 140,
+      "attemptLogSha256": "b5d35f3dbc3a0c3828fd84f8eca56665ee0c5fa76497e6c5cb58949aebef99e8"
+    },
+    {
+      "name": "goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest",
+      "rounds": 180,
+      "attempts": 540,
+      "originalSuccessfulRenders": 0,
+      "attemptLogSha256": "eee0891549c9bb9a5651f2045ec0dc34a676d296c6f2c3387abd34e9ccb8f41a"
+    }
+  ],
+  "checks": [
+    "Every planned model/task/seed has exactly one terminal round",
+    "Contiguous unique attempt identities, at most two real-diagnostic repairs",
+    "No oracle-only retries or omitted failures",
+    "Frozen corpus/source manifest and strict/corrected denominators agree"
+  ],
+  "privacy": "Only aggregate counts and file hashes are exported; private prompts, data, candidate text and oracle values remain ignored."
+}

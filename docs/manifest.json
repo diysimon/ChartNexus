@@ -131,8 +131,8 @@
     },
     {
       "id": "readme",
-      "version": "0.1",
-      "status": "implementation-baseline",
+      "version": "0.2",
+      "status": "experimental",
       "zh-CN": "README.zh-CN.md",
       "en": "README.md"
     },
@@ -159,7 +159,7 @@
     },
     {
       "id": "development",
-      "version": "0.2",
+      "version": "0.3",
       "status": "experimental",
       "en": "docs/en/development.md",
       "zh-CN": "docs/zh-CN/development.md"
@@ -530,8 +530,8 @@
     },
     {
       "id": "spec-0029-spec",
-      "version": "0.1",
-      "status": "implementing",
+      "version": "0.2",
+      "status": "done",
       "en": "specs/0029-quality-expansion/spec.md",
       "zh-CN": "specs/0029-quality-expansion/spec.zh-CN.md"
     },
@@ -544,15 +544,15 @@
     },
     {
       "id": "technical-design-2026-10-31",
-      "version": "0.2",
-      "status": "partially-implemented",
+      "version": "0.3",
+      "status": "implemented-experimental",
       "en": "docs/en/technical-design-2026-10-31.md",
       "zh-CN": "docs/zh-CN/technical-design-2026-10-31.md"
     },
     {
       "id": "action-plan-2026-10-31",
-      "version": "0.2",
-      "status": "implementing",
+      "version": "0.3",
+      "status": "done",
       "en": "docs/en/action-plan-2026-10-31.md",
       "zh-CN": "docs/zh-CN/action-plan-2026-10-31.md"
     },
@@ -663,28 +663,28 @@
     },
     {
       "id": "spec-0036-spec",
-      "version": "0.1",
-      "status": "verifying",
+      "version": "0.2",
+      "status": "done",
       "en": "specs/0036-trial-distribution/spec.md",
       "zh-CN": "specs/0036-trial-distribution/spec.zh-CN.md"
     },
     {
       "id": "spec-0036-tasks",
-      "version": "0.3",
-      "status": "verifying",
+      "version": "0.5",
+      "status": "done",
       "en": "specs/0036-trial-distribution/tasks.md",
       "zh-CN": "specs/0036-trial-distribution/tasks.zh-CN.md"
     },
     {
       "id": "trial-distribution",
-      "version": "0.5",
+      "version": "0.6",
       "status": "experimental",
       "en": "docs/en/trial-distribution.md",
       "zh-CN": "docs/zh-CN/trial-distribution.md"
     },
     {
       "id": "support-matrix",
-      "version": "0.2",
+      "version": "0.3",
       "status": "experimental",
       "en": "docs/en/support-matrix.md",
       "zh-CN": "docs/zh-CN/support-matrix.md"

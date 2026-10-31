@@ -1,8 +1,8 @@
 ---
 doc_id: action-plan-2026-10-31
-version: "0.2"
-status: implementing
-updated: 2026-10-31
+version: "0.3"
+status: done
+updated: 2026-11-01
 language: en
 ---
 # Detailed action plan and acceptance gates
@@ -11,7 +11,7 @@ language: en
 
 ## Scope, status and execution
 
-Based on the [review](project-review-2026-10-31.md) and [design RFC](technical-design-2026-10-31.md), this covers the nine quality areas plus radar, node-link tree, Sankey and map. **M0–M3 (A01–A15) are complete locally; M4 remains open**. The review baseline was 147 tests and 18 browser tests; M0 passed 176 tests and 21 browser tests. M1/M2 passed 207 unit/integration tests and 33 browser tests, plus one real local Ollama streaming/cancellation smoke case. M3 passes 230 unit/integration and 44 browser tests; it does not add real-model benchmark results. The [review spec](../../specs/0030-project-review/spec.md) accepts review artifacts only; [0029](../../specs/0029-quality-expansion/spec.md) remains the incomplete scope umbrella.
+Based on the [review](project-review-2026-10-31.md) and [design RFC](technical-design-2026-10-31.md), this covers the nine quality areas plus radar, node-link tree, Sankey and map. **M0–M4 (A01–A18) engineering and evaluation acceptance is complete; models remain experimental**. The review baseline was 147 tests and 18 browser tests; M0 passed 176 tests and 21 browser tests. M1/M2 passed 207 unit/integration tests and 33 browser tests, plus one real local Ollama streaming/cancellation smoke case. M3 passes 230 unit/integration and 44 browser tests; it does not add real-model benchmark results. The [review spec](../../specs/0030-project-review/spec.md) accepts review artifacts only; [0029](../../specs/0029-quality-expansion/spec.md) is the completed scope umbrella.
 
 Execute reviewable vertical units: spec/AC → code and resources → targeted tests → relevant full gates → evidence update. Resolve routine choices using the RFC; record breaking contracts through versioning/RFC rules. Keep a local preview working. Do not automatically commit, push, publish or create external issues.
 
@@ -48,9 +48,9 @@ Total provisional effort: 28–43 working days without parallel agents; font/map
 | A13 | Tree parent table, cycle checks, expansion state/export | A09/A12 | AC13: reject orphan/cycle/multiple roots/depth excess; duplicate labels valid; collapsing retains data; stable node events; explicit full/overview export | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
 | A14 | Sankey nodes/links, topology/weights/identity | A09/A13 | AC14: reject cycles/self-links/missing endpoints/negatives/duplicate edges; zero links retained in table; no assumed conservation; correct node/edge events and SVG | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
 | A15 | Map registry, GeoJSON limits, region matching and worker support | A04/A07/A09/A14 | AC15: authored two-region browser/SVG equivalence; reject missing/mismatched assets and unknown/duplicate regions; no version collisions/network; measurable capacity/worker budgets | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
-| A16 | Separate dev/heldout, family-aware scoring, real model/Agent baseline | Harness in M1; final after A11–A15 | AC16: no held-out answers in model resources; initial/repair results separate; data hashes/rendered values checked; failures retained; versions/settings frozen | audited replacement holdout running; old development corpus rejected |
-| A17 | All-package pack/install, bundle/performance | Early probes; final after A11–A15 | AC17: Node22/24 installs without workspace links; exports/worker/CLI/MCP/adapters work; resources/licenses included; typical/boundary performance report | local and Linux CI pass; see SPEC-0036 |
-| A18 | CI, migrations, matrix, docs and demos | A16/A17 | AC18: supported cells link versions/evidence; required CI actually passes; generated docs/resources agree; no unresolved P1 before beta candidate | remote CI passes at7345f34; final report revision pending |
+| A16 | Separate dev/heldout, family-aware scoring, real model/Agent baseline | Harness in M1; final after A11–A15 | AC16: no held-out answers in model resources; initial/repair results separate; data hashes/rendered values checked; failures retained; versions/settings frozen | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.md) |
+| A17 | All-package pack/install, bundle/performance | Early probes; final after A11–A15 | AC17: Node22/24 installs without workspace links; exports/worker/CLI/MCP/adapters work; resources/licenses included; typical/boundary performance report | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.md) |
+| A18 | CI, migrations, matrix, docs and demos | A16/A17 | AC18: supported cells link versions/evidence; required CI actually passes; generated docs/resources agree; no unresolved P1 before beta candidate | done — [M4 evidence](../../specs/0036-trial-distribution/tasks.md) |
 
 The three data families in A04 are ordinary tables (including parent-key trees), nodes/links graphs, and ordinary tables plus trusted map references, not three arbitrary JSON engines. A13–A15 ordering controls risk; it does not imply inappropriate semantic reuse.
 
@@ -93,6 +93,6 @@ Candidate gates: all deterministic data/identity invariants pass; no unsafe/canc
 
 These are proposed change boundaries, not existing PRs or publication instructions. Update task results/evidence after each unit. Close 0029 only when all required ACs have evidence; more documents or small edits are not substitutes for core completion.
 
-## M4 checkpoint
+## M4 final acceptance
 
-A01–A15 remain locally accepted. A17 passes local and Linux CI Node22/24 isolated installs, each45 browser tests; A18 implementation passes all remote gates at7345f34. The rejected original family audit remains preserved. Replacement host-catalog families were [audited](../../specs/0036-trial-distribution/holdout-audit-v2.json) before requests;4 models ×3 repeats,720 rounds are running. See [M4 tasks/evidence](../../specs/0036-trial-distribution/tasks.md). The user authorized commits and SSH pushes. M4 and0029 stay open until final evaluation and report-revision CI complete; no npm publication.
+[M4 tasks/evidence](../../specs/0036-trial-distribution/tasks.md) records720 frozen real-model rounds with all failures, eleven isolated Node22/24 distributions, performance/byte budgets, restored native markers and complete SVG replay. 251 unit/integration tests,46 browser tests and required remote CI pass. A01–A18 and0029 are closed; all four models remain below proposed95% targets, without beta qualification. Authorized commits and SSH pushes were executed; no npm publication. Diagnostic-prompt ambiguity and zero-shot entry quality inform a future experiment; tuning against this holdout cannot produce a new untouched score.

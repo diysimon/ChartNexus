@@ -10,6 +10,8 @@ language: zh-CN
 
 [English](../en/contracts.md)
 
+当前实现与候选设计的分级盘点见[核心能力审查](core-capability-review.md)，0.2 仅为[提案](core-protocol-0.2.md)，不能作为当前 Schema。
+
 ## 状态
 这是字段级契约的设计要求。下列名称为候选，P0 RFC 定稿前不能作为已发布接口。schemaVersion 与包版本独立；初始候选版本为 0.1。
 

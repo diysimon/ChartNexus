@@ -34,3 +34,6 @@ Separate training, development, and held-out evaluation; do not generate trainin
 ## Agent skills and repository guidance
 Consumer skills explain discovery, minimal schemas, validation/repair, and delivery. Contributor AGENTS explains boundaries, commands, specs, and evidence. Do not combine them into a single oversized prompt.
 Skills reference versioned documentation; minimal examples work without model keys. Each new capability includes at least one positive example, one failure, and a diagnosable repair path.
+
+## Implemented local baseline (2026-10-31)
+The [model entry](model-entry.md), generated [inventory](../../resources/model-index.json), and [JSONL retrieval corpus](../../resources/model-retrieval.jsonl) are available locally and via MCP. The JSONL includes source bodies, hashes and public task reference answers; it is not an independently held-out evaluation corpus. Other training and publishing controls above remain planned.

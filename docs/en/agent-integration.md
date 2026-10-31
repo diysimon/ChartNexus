@@ -66,4 +66,9 @@ Tool arguments: 1 MiB; stdio buffer: 2 MiB; compiled output: 4 MiB; SVG: 8 MiB r
 The CLI/stdio executable has no preloaded data registry. Use inline data; references return DATA_NOT_FOUND. Programmatic factories can receive a trusted in-memory registry. Tools cannot register data, read files, request URLs, or change output paths. The resource cache contains input-derived chart labels/data; only connect authorized local clients.
 
 ## Verified workflow and remaining work
-The SDK client test launches an actual server process, negotiates, lists tools/resources, validates an invalid field, repairs it, compiles/renders, and reads the SVG with a matching checksum. Tests also cover deadline/cancellation, limits, cache eviction/expiry, CLI refusal to overwrite, and transport errors. This is not a live-model evaluation or proof of desktop-client rendering. A2UI/OpenUI adapters, remote MCP, prompts, and client installation remain unimplemented.
+The SDK client test launches an actual server process, negotiates, lists tools/resources, validates an invalid field, repairs it, compiles/renders, and reads the SVG with a matching checksum. Tests also cover deadline/cancellation, limits, cache eviction/expiry, CLI refusal to overwrite, and transport errors. This is not a live-model evaluation or proof of desktop-client rendering. Experimental A2UI/OpenUI profiles exist separately; remote MCP, MCP prompts, and desktop client installation remain unimplemented.
+
+## Model resources and offline evaluation
+Read `chartnexus://resources/index/0.1` to discover the bilingual model entry and `chartnexus://evaluation/tasks/0.1` public synthetic development corpus. See [model entry](model-entry.md) and [evaluation baseline](evaluation-baseline.md); reference fixture checks do not establish live-model performance.
+
+[Local model and MCP pilot](local-model-pilot.md) records a real local model calling this server via the official SDK client; it is not desktop-client evidence.

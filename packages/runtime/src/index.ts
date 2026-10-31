@@ -2,21 +2,25 @@ import * as echarts from 'echarts';
 import { compileChart, limits } from '@chartnexus/core';
 import {
   failure,
+  type AggregatePoint,
   type DataRegistry,
   type RenderPlan,
   type Result,
 } from '@chartnexus/schema';
 
-export interface SelectionEvent {
+interface SelectionEventBase {
   chartId: string;
   chartRevision: number;
   dataRevision: string;
   type: 'select';
-  identity: 'position';
   seriesIndex: number;
   dataIndex: number;
-  rowIndex: number | null;
 }
+export type SelectionEvent = SelectionEventBase &
+  (
+    | { identity: 'position'; rowIndex: number | null }
+    | { identity: 'aggregate'; rowIndex: null; aggregate: AggregatePoint }
+  );
 export interface ChartRuntime {
   update(input: unknown, registry?: DataRegistry): Result<{ revision: number }>;
   resize(): Result<true>;
@@ -69,16 +73,26 @@ export function mountChart(
       typeof params.dataIndex !== 'number'
     )
       return;
-    const rowIndex =
-      previous.rowIndices[params.seriesIndex]?.[params.dataIndex];
-    onSelect({
+    const base: SelectionEventBase = {
       chartId: previous.chartId,
       chartRevision: revision,
       dataRevision: previous.dataRevision,
       type: 'select',
-      identity: 'position',
       seriesIndex: params.seriesIndex,
       dataIndex: params.dataIndex,
+    };
+    if (previous.aggregatePoints) {
+      const aggregate =
+        previous.aggregatePoints[params.seriesIndex]?.[params.dataIndex];
+      if (aggregate)
+        onSelect({ ...base, identity: 'aggregate', rowIndex: null, aggregate });
+      return;
+    }
+    const rowIndex =
+      previous.rowIndices[params.seriesIndex]?.[params.dataIndex];
+    onSelect({
+      ...base,
+      identity: 'position',
       rowIndex: rowIndex === undefined || rowIndex < 0 ? null : rowIndex,
     });
   });
@@ -158,3 +172,6 @@ export function mountChart(
     },
   };
 }
+
+export { createUpdateController } from './update-controller.js';
+export type { UpdateController, UpdateReceipt } from './update-controller.js';

@@ -25,13 +25,17 @@
   },
   {
     "name": "validate_chart",
-    "description": "Validate chart shape, data semantics and supported capabilities without rendering.",
+    "description": "Validate a chart without rendering. Optional nativeValidation selects an experimental strict native subset; default native validation is partial.",
     "inputSchema": {
       "type": "object",
       "properties": {
         "document": {
           "type": "object",
-          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+          "description": "ChartDocument 0.1 or experimental 0.2 intent. Read the corresponding schema resource. No executable code."
+        },
+        "nativeValidation": {
+          "enum": ["strict-basic-0.1"],
+          "description": "Optional strict native subset; only for 0.1 echarts documents. No silent fallback."
         }
       },
       "additionalProperties": false,
@@ -46,7 +50,7 @@
       "properties": {
         "document": {
           "type": "object",
-          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+          "description": "ChartDocument 0.1 or experimental 0.2 intent. Read the corresponding schema resource. No executable code."
         }
       },
       "additionalProperties": false,
@@ -61,7 +65,7 @@
       "properties": {
         "document": {
           "type": "object",
-          "description": "ChartDocument 0.1. Read get_chart_schema first. Inline data or a host-registered reference; never executable code."
+          "description": "ChartDocument 0.1 or experimental 0.2 intent. Read the corresponding schema resource. No executable code."
         },
         "width": {
           "type": "integer",

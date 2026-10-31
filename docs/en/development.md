@@ -65,3 +65,46 @@ Verified against OpenUI React Lang 1.0.2, React 19.2.4 and Zod 4.3.6. This is an
 ## Additional GenUI hosts
 
 Run `pnpm dev` and open `/cosui.html`, `/marklang.html`, or `/a2ui.html`. Each demo uses its actual upstream SDK with locally generated example data; none invokes a model. See [GenUI integration guide](genui-integrations.md) for versions, model recipes, lifecycle and limitations.
+
+## Offline model evaluation
+Run `pnpm eval:self` for fixture checks, or `pnpm eval:candidates /path/to/candidates.json` to evaluate local candidate documents. See [evaluation baseline](evaluation-baseline.md) and [model entry](model-entry.md). This does not call a model.
+
+## Local model and MCP pilot
+See [local model pilot](local-model-pilot.md) for the bounded localhost-only Ollama runner, observed evidence and limitations. This is separate from offline fixture checks.
+
+## Local Ollama playground
+Run `pnpm dev:ollama` and visit `http://127.0.0.1:5180/ollama.html`; see [usage and limits](ollama-playground.md).
+
+### Ordered runtime updates
+
+`createUpdateController(runtime)` is an optional session-local wrapper. Capture `runtime.getRevision()` before starting asynchronous work, then call `commit({ operationId, baseRevision, complete: true, document }, registry?, signal?)`. Partial operations use `complete: false` without `document` and return `pending`. Successful retries with the same ID and canonical payload (including registry) return `duplicate`; changed payloads conflict. A stale base revision or pre-aborted signal never invokes the runtime. Failed updates may be retried. Deduplication retains at most 128 signatures, 4 MiB and 10 minutes; revision checks still apply after eviction. Dispose the controller and runtime separately. The controller does not interrupt synchronous rendering, preserve zoom/legend state, implement stream transport, or automatically protect protocol adapters; hosts must opt in and supply revisions.
+
+### Experimental 0.2 intent subset
+
+The separate 0.2 schema supports 0.1 intent data semantics plus `chart.orientation: "horizontal"` for bars, `chart.area: true` for lines, `chart.donut: true` for pies, and `presentation.theme` with `{ "id": "light" | "dark", "version": "1" }`. Themes are compiled into JSON options and do not load external assets. No accessibility claim is made. `migrateIntent01To02` explicitly converts schema-valid 0.1 intent documents without mutation; native migration is rejected. `validateChart` checks structure, while `compileChart` also checks supported combinations and data semantics. Existing 0.1 input behavior is unchanged. Timestamp instants, 0.2 native mode and arbitrary theme overrides are not implemented. The default `get_chart_schema` tool remains 0.1; retrieve `chartnexus://schema/chart-document/0.2` for 0.2. See [preview](../../examples/playground/core-02.html).
+
+### Explicit sorting in 0.2
+
+Set `chart.sort` to `{ "by": "category" | "value", "order": "ascending" | "descending", "nulls": "first" | "last" }` for a bar, line or pie chart. Sorting is opt-in and stable; category comparison follows UTF-16 code-unit order, independent of locale. Null placement is independent of sort direction. Category sorting aligns all grouped series; value sorting with a grouping field and all scatter sorting are rejected rather than implicitly aggregating. Selection `rowIndex` still refers to the original source row within its data revision, not the sorted position. This does not introduce persistent row IDs or locale-aware collation.
+
+### Units and calendar dates in 0.2
+
+Bar, line and scatter may set `chart.encoding.y.unit` to `{ "kind": "currency", "code": "USD" }`, `{ "kind": "unit", "label": "kg" }`, or `{ "kind": "percent", "scale": "percent" | "ratio" }`. Codes are checked only for three uppercase ASCII letters, not against a currency registry. A `percent` value of 25 denotes 25%; a `ratio` value of 0.25 denotes 25%. The compiler adds an axis label and never converts values or formats ratios as percentages. Pie units are rejected.
+
+For line charts only, x may be `{ "field": "day", "type": "temporal", "temporalKind": "date" }` with valid Gregorian `YYYY-MM-DD` dates in years 1000–9999. Render coordinates use UTC midnight and ECharts `useUTC`, preserving calendar dates without guessing a local timezone. No automatic sort is applied to series; explicit sorting is available. Date-times, offset-bearing instants, local times, other calendars and timezones are not supported. See [date spec](../../specs/0018-temporal-date/spec.md) and [unit spec](../../specs/0017-quantity-units/spec.md).
+
+### Explicit aggregation in 0.2
+
+Bar, line and pie may declare `chart.aggregate: { "op": "sum" | "mean" | "count" }`; the compiler groups by the encoded x category and optional series. `count` counts non-null numeric y values; sum/mean ignore null and return null for an all-null group. An absent group/category combination remains a gap. Order is first appearance unless an explicit supported sort is requested. Finite IEEE-754 arithmetic does not guarantee exact decimal arithmetic. Overflow fails. Count with a y unit, scatter aggregation, and grouped value sorting are rejected; pie retains its nonnegative and non-null constraints after aggregation.
+
+The render plan includes `aggregatePoints` aligned with series data, including operation, category, series, sourceCount and nonNullCount. The selection event reports `identity: "aggregate"`, `rowIndex: null`, and this metadata; no raw rows or source indices are exposed. Gaps have no aggregate identity. Non-aggregated selections remain positional. Aggregate metadata is scoped to the data revision and is not a stable row ID. See [spec](../../specs/0019-explicit-aggregation/spec.md).
+
+### Opt-in strict native validation
+
+`validateNativeStrict(document)` checks an experimental bounded subset of 0.1 `mode: echarts` documents: explicit bar/line category data, numeric scatter or a single pie. Unknown nested fields, duplicate category/pie names, mismatched lengths and incompatible axes are rejected. It first applies the existing native safety guard, then validates [the option schema](../../packages/schema/src/native-strict-basic-0.1.schema.json) and specific cross-field rules. The allowed components and options are intentionally small; dataset, arbitrary styling and other ECharts features may be valid ECharts but are outside this subset. Passing does not establish full ECharts semantics, data truth or visual quality.
+
+In MCP call `validate_chart` with `nativeValidation: "strict-basic-0.1"`; success reports `native-strict-basic-0.1`, with no silent fallback. The default remains `guarded-native-partial`. Read `chartnexus://schema/native-strict-basic/0.1` and `chartnexus://capabilities/native-strict-basic-0.1` for discovery. Compilation and rendering still use the default guard: hosts requiring strictness must explicitly validate the exact document before committing it. This check does not change 0.1 native rendering behavior.
+
+### Data labels and legend in 0.2
+
+Set `presentation.dataLabels: { "show": true | false }` and optionally `presentation.legend: { "show": true | false, "position": "top" | "bottom" }`. Both objects require `show`; omit them to preserve existing defaults. Labels use ECharts default content for the chart type, without a formatter or percentage conversion. A top legend reserves space in cartesian charts; exact layout depends on data, chart size and font. When a light or dark theme is selected, explicitly enabled labels use its foreground color. This does not promise universal legibility, accessibility, custom formatting, or legend state preservation.

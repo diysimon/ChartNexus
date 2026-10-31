@@ -48,3 +48,7 @@ Read the charter and architecture, then initialization, spec execution, coding s
 [Contributing](CONTRIBUTING.md) · [Security reporting status](SECURITY.md) · [Document manifest](docs/manifest.json)
 
 [CLI and MCP integration guide](docs/en/agent-integration.md)
+
+[Model and agent entry](docs/en/model-entry.md) · [Offline evaluation baseline](docs/en/evaluation-baseline.md)
+
+[Try the local Ollama chart playground](docs/en/ollama-playground.md)

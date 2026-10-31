@@ -41,11 +41,151 @@ describe('real MCP stdio connection', () => {
           })
         ).structuredContent,
       ).toMatchObject({ ok: true });
-      expect((await client.listResources()).resources).toHaveLength(5);
+      expect((await client.listResources()).resources).toHaveLength(14);
+      const index = await client.readResource({
+        uri: 'chartnexus://resources/index/0.1',
+      });
+      expect(index.contents[0]).toHaveProperty('text');
+      const entry = await client.readResource({
+        uri: 'chartnexus://resources/model-entry/zh-CN/0.1',
+      });
+      expect(entry.contents[0]).toMatchObject({
+        mimeType: 'text/markdown',
+        text: expect.stringContaining('模型与 Agent 入口'),
+      });
+      const retrieval = await client.readResource({
+        uri: 'chartnexus://resources/retrieval/0.1',
+      });
+      const retrievalText = retrieval.contents[0];
+      if (!retrievalText || !('text' in retrievalText))
+        throw new Error('Expected retrieval JSONL text.');
+      const records = retrievalText.text
+        .trimEnd()
+        .split('\n')
+        .map((line: string) => JSON.parse(line));
+      expect(records).toHaveLength(14);
+      expect(
+        records.find(
+          (item: { id: string }) => item.id === 'native-strict-schema',
+        ),
+      ).toMatchObject({ capabilityIds: ['native-strict-basic-0.1'] });
+      expect(
+        records.find(
+          (item: { id: string }) => item.id === 'chart-document-0.2',
+        ),
+      ).toMatchObject({ schemaVersion: '0.2', capabilityIds: ['basic-0.2'] });
+      const schema02 = await client.readResource({
+        uri: 'chartnexus://schema/chart-document/0.2',
+      });
+      expect(schema02.contents[0]).toHaveProperty('text');
+      const capabilities02 = await client.readResource({
+        uri: 'chartnexus://capabilities/basic-0.2',
+      });
+      const cap = capabilities02.contents[0];
+      if (!cap || !('text' in cap))
+        throw new Error('Expected 0.2 capabilities.');
+      expect(JSON.parse(cap.text)).toMatchObject({
+        temporal: { kinds: ['date'] },
+        units: { kinds: ['currency', 'percent', 'unit'] },
+        presentation: {
+          dataLabels: { show: true },
+          legend: { positions: ['top', 'bottom'] },
+        },
+      });
+      expect(
+        records.find(
+          (item: { id: string; language: string }) =>
+            item.id === 'model-entry' && item.language === 'zh-CN',
+        ),
+      ).toMatchObject({
+        schemaVersion: '0.1',
+        license: 'Apache-2.0',
+        contentHash: expect.stringMatching(/^sha256:/),
+        body: expect.stringContaining('模型与 Agent 入口'),
+      });
+      const tasks = await client.readResource({
+        uri: 'chartnexus://evaluation/tasks/0.1',
+      });
+      const tasksText = tasks.contents[0];
+      if (!tasksText || !('text' in tasksText))
+        throw new Error('Expected task corpus text.');
+      expect(JSON.parse(tasksText.text).tasks).toHaveLength(20);
       const schema = await client.readResource({
         uri: 'chartnexus://schema/chart-document/0.1',
       });
       expect(schema.contents[0]).toHaveProperty('text');
+      const validated02 = await client.callTool({
+        name: 'validate_chart',
+        arguments: {
+          document: {
+            ...recipe,
+            schemaVersion: '0.2',
+            chart: { ...recipe.chart, orientation: 'horizontal' },
+            presentation: {
+              dataLabels: { show: true },
+              legend: { show: true, position: 'top' },
+            },
+          },
+        },
+      });
+      expect(validated02.structuredContent).toMatchObject({
+        ok: true,
+        value: { profile: 'basic-0.2', validation: 'structure-and-semantics' },
+      });
+      const strictSchema = await client.readResource({
+        uri: 'chartnexus://schema/native-strict-basic/0.1',
+      });
+      expect(strictSchema.contents[0]).toHaveProperty('text');
+      const strictNative = {
+        schemaVersion: '0.1',
+        id: 'strict',
+        mode: 'echarts',
+        option: {
+          xAxis: { type: 'category', data: ['A'] },
+          yAxis: { type: 'value' },
+          series: [{ type: 'bar', data: [2] }],
+        },
+      };
+      const strictResult = await client.callTool({
+        name: 'validate_chart',
+        arguments: {
+          document: strictNative,
+          nativeValidation: 'strict-basic-0.1',
+        },
+      });
+      expect(strictResult.structuredContent).toMatchObject({
+        ok: true,
+        value: { validation: 'native-strict-basic-0.1' },
+      });
+      const rejectedStrict = await client.callTool({
+        name: 'validate_chart',
+        arguments: {
+          document: {
+            ...strictNative,
+            option: {
+              ...strictNative.option,
+              series: [{ type: 'bar', data: [2], typo: true }],
+            },
+          },
+          nativeValidation: 'strict-basic-0.1',
+        },
+      });
+      expect(rejectedStrict.isError).toBe(true);
+      const nativeValidation = await client.callTool({
+        name: 'validate_chart',
+        arguments: {
+          document: {
+            schemaVersion: '0.1',
+            id: 'native',
+            mode: 'echarts',
+            option: { series: [] },
+          },
+        },
+      });
+      expect(nativeValidation.structuredContent).toMatchObject({
+        ok: true,
+        value: { validation: 'guarded-native-partial' },
+      });
       const failure = await client.callTool({
         name: 'validate_chart',
         arguments: { document: invalid },
@@ -93,7 +233,7 @@ describe('real MCP stdio connection', () => {
           sha256: createHash('sha256').update(first.text).digest('hex'),
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(6);
+      expect((await client.listResources()).resources).toHaveLength(15);
       await expect(
         client.readResource({ uri: 'file:///etc/passwd' }),
       ).rejects.toThrow();

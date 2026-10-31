@@ -1,0 +1,17 @@
+{
+  "id": "native-strict-basic-0.1",
+  "status": "experimental",
+  "schemaVersion": "0.1",
+  "mode": "echarts",
+  "validation": "strict-subset",
+  "chartShapes": ["bar-line-category", "scatter-value", "single-pie"],
+  "optionSchema": "chartnexus://schema/native-strict-basic/0.1",
+  "restrictions": [
+    "unknown fields rejected",
+    "explicit series data",
+    "no dataset",
+    "no formatter",
+    "no external resources"
+  ],
+  "notes": "Validation of a bounded subset; not full ECharts semantics or visual correctness."
+}

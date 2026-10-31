@@ -296,6 +296,181 @@
       "status": "experimental",
       "en": "docs/en/genui-integrations.md",
       "zh-CN": "docs/zh-CN/genui-integrations.md"
+    },
+    {
+      "id": "spec-0007-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0007-model-evaluation/spec.md",
+      "zh-CN": "specs/0007-model-evaluation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0007-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0007-model-evaluation/tasks.md",
+      "zh-CN": "specs/0007-model-evaluation/tasks.zh-CN.md"
+    },
+    {
+      "id": "model-entry",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/model-entry.md",
+      "zh-CN": "docs/zh-CN/model-entry.md"
+    },
+    {
+      "id": "evaluation-baseline",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/evaluation-baseline.md",
+      "zh-CN": "docs/zh-CN/evaluation-baseline.md"
+    },
+    {
+      "id": "spec-0008-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0008-live-model-validation/spec.md",
+      "zh-CN": "specs/0008-live-model-validation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0008-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0008-live-model-validation/tasks.md",
+      "zh-CN": "specs/0008-live-model-validation/tasks.zh-CN.md"
+    },
+    {
+      "id": "local-model-pilot",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/local-model-pilot.md",
+      "zh-CN": "docs/zh-CN/local-model-pilot.md"
+    },
+    {
+      "id": "spec-0009-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0009-ollama-playground/spec.md",
+      "zh-CN": "specs/0009-ollama-playground/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0009-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0009-ollama-playground/tasks.md",
+      "zh-CN": "specs/0009-ollama-playground/tasks.zh-CN.md"
+    },
+    {
+      "id": "ollama-playground",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/ollama-playground.md",
+      "zh-CN": "docs/zh-CN/ollama-playground.md"
+    },
+    {
+      "id": "spec-0010-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0010-runtime-update-controller/spec.md",
+      "zh-CN": "specs/0010-runtime-update-controller/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0010-tasks",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0010-runtime-update-controller/tasks.md",
+      "zh-CN": "specs/0010-runtime-update-controller/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0011-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0011-a2ui-ordered-updates/spec.md",
+      "zh-CN": "specs/0011-a2ui-ordered-updates/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0012-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0012-stream-buffer/spec.md",
+      "zh-CN": "specs/0012-stream-buffer/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0013-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0013-ordered-protocols/spec.md",
+      "zh-CN": "specs/0013-ordered-protocols/spec.zh-CN.md"
+    },
+    {
+      "id": "core-capability-review",
+      "version": "0.1",
+      "status": "assessment",
+      "en": "docs/en/core-capability-review.md",
+      "zh-CN": "docs/zh-CN/core-capability-review.md"
+    },
+    {
+      "id": "core-protocol-0.2",
+      "version": "0.1",
+      "status": "proposal",
+      "en": "docs/en/core-protocol-0.2.md",
+      "zh-CN": "docs/zh-CN/core-protocol-0.2.md"
+    },
+    {
+      "id": "spec-0014-spec",
+      "version": "0.1",
+      "status": "completed",
+      "en": "specs/0014-core-contract-review/spec.md",
+      "zh-CN": "specs/0014-core-contract-review/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0015-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0015-core-02-foundation/spec.md",
+      "zh-CN": "specs/0015-core-02-foundation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0016-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0016-explicit-sorting/spec.md",
+      "zh-CN": "specs/0016-explicit-sorting/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0017-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0017-quantity-units/spec.md",
+      "zh-CN": "specs/0017-quantity-units/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0018-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0018-temporal-date/spec.md",
+      "zh-CN": "specs/0018-temporal-date/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0019-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0019-explicit-aggregation/spec.md",
+      "zh-CN": "specs/0019-explicit-aggregation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0020-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0020-native-validation/spec.md",
+      "zh-CN": "specs/0020-native-validation/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0021-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0021-labels-legend/spec.md",
+      "zh-CN": "specs/0021-labels-legend/spec.zh-CN.md"
     }
   ]
 }

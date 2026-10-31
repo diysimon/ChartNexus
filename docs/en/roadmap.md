@@ -51,3 +51,18 @@ Delays must narrow release claims or move milestones; never place unverified cap
 
 ## COSUI scope addition (2026-10-30)
 COSUI is a required P3 target with separate JSON/San and Marklang profiles. See [research and acceptance plan](cosui-integration.md). Suggested order: first OpenUI slice, COSUI JSON, COSUI Marklang, then standard A2UI integration after its version is resolved. The historical P3 estimate covers only two protocols and must be re-estimated. Alpha may retain one verified protocol; COSUI remains required work until both profiles have evidence, even if shipped after beta. Experimental chart profiles for COSUI JSON/San, Marklang and A2UI v0.9 React are now implemented; see [the integration guide](genui-integrations.md) for verification boundaries.
+
+## Current checkpoint (2026-10-31)
+The core, local CLI/MCP and experimental protocol profiles are implemented with local evidence. The first model-resource phase now provides [bilingual model entry](model-entry.md), a generated inventory and [20 public synthetic development tasks](evaluation-baseline.md). Live-model evaluation, independent held-out data, real streaming transport, interaction state preservation, package installation and release remain future work. The original P0–P4 estimates and planned statuses above are historical, not current completion claims.
+
+## Local model checkpoint (2026-10-31)
+A small local Ollama pilot has run against two models with the official MCP stdio client. See [local pilot](local-model-pilot.md) for exact per-task evidence and limits. Full tasks, repeated runs, independent held-out data and desktop MCP verification remain outstanding.
+
+## Ordered update checkpoint (2026-10-31)
+The optional runtime controller and A2UI ordered host profile have local browser evidence. Streaming transport, interaction state preservation and ordered COSUI Marklang integration remain planned.
+
+## Multi-protocol ordering (2026-10-31)
+Opt-in OpenUI and COSUI JSON host profiles now use the session controller and have local browser coverage. Hosts own revisions and transport.
+
+## Core review checkpoint (2026-10-31)
+The [capability review](core-capability-review.md) records 28 representative tasks and evidence levels. The [0.2 proposal](core-protocol-0.2.md) is partially implemented as an experimental intent subset. Prioritize native validation boundaries and data semantics before expanding chart types and themes.

@@ -1,5 +1,8 @@
 import chartDocumentSchema from './chart-document.schema.json' with { type: 'json' };
-export { chartDocumentSchema };
+import nativeStrictBasicSchema from './native-strict-basic-0.1.schema.json' with { type: 'json' };
+import chartDocument02Schema from './chart-document-0.2.schema.json' with { type: 'json' };
+export { chartDocumentSchema, chartDocument02Schema, nativeStrictBasicSchema };
+export type { ChartDocument02 } from './generated-0.2.js';
 export type { ChartDocument } from './generated.js';
 export type JsonValue =
   | null
@@ -29,13 +32,21 @@ export interface DataEntry {
   readonly table: DataTable;
 }
 export type DataRegistry = Readonly<Record<string, DataEntry>>;
+export interface AggregatePoint {
+  operation: 'sum' | 'mean' | 'count';
+  category: string;
+  series: string | null;
+  sourceCount: number;
+  nonNullCount: number;
+}
 export interface RenderPlan {
   chartId: string;
   dataRevision: string;
   option: Record<string, JsonValue>;
   compilerVersion: '0.0.1';
-  profile: 'basic-0.1';
+  profile: 'basic-0.1' | 'basic-0.2';
   rowIndices: number[][];
+  aggregatePoints?: (AggregatePoint | null)[][];
 }
 export function failure(
   code: string,

@@ -51,3 +51,18 @@ alpha 必须有原生入口、四种 intent、数据引用、校验编译、DOM/
 
 ## COSUI 范围补充（2026-10-30）
 COSUI 纳入 P3 必需目标，JSON/San 与 Marklang 分别验收。见[调研与验收计划](cosui-integration.md)。建议顺序：首个 OpenUI 闭环、COSUI JSON、COSUI Marklang，再在标准 A2UI 版本明确后接入。原 P3 工期仅覆盖两个协议，需要重估。alpha 可保留一个已验证协议；即使排在 beta 后，COSUI 仍是必须完成且分别提供证据的工作。目前已实现 COSUI JSON/San、Marklang 与 A2UI v0.9 React 的实验性图表 profile，验证边界见[集成指南](genui-integrations.md)。
+
+## 当前进度（2026-10-31）
+核心、本地 CLI/MCP 和实验性协议 profile 已实现并有本地证据。模型资源第一阶段提供[双语模型入口](model-entry.md)、生成的资源目录和 [20 项公开合成开发任务](evaluation-baseline.md)。真实模型评测、独立隐藏数据、真实流式传输、交互状态保持、包安装和发布仍属后续工作。上方 P0–P4 工期与 planned 状态为历史规划，并非当前完成情况。
+
+## 本地模型检查点（2026-10-31）
+已使用官方 MCP stdio 客户端对两个本地 Ollama 模型开展小样本试验。逐任务证据与限制见[本地试运行](local-model-pilot.md)；完整任务、重复运行、独立隐藏数据及桌面 MCP 验证仍待完成。
+
+## 顺序更新检查点（2026-10-31）
+可选 runtime 控制器及 A2UI 顺序更新宿主 profile 已有本地浏览器证据。流式传输、交互状态保持及 COSUI Marklang 顺序接入仍待实现。
+
+## 多协议顺序更新（2026-10-31）
+OpenUI 和 COSUI JSON 的可选宿主 profile 已接入会话控制器并有本地浏览器测试；版本和传输由宿主负责。
+
+## 核心审查检查点（2026-10-31）
+[能力审查](core-capability-review.md)记录 28 个代表任务及证据层级；[0.2 协议草案](core-protocol-0.2.md)已部分实现为实验性 intent 子集。应先明确原生校验边界和数据语义，再扩展图表类型和主题。

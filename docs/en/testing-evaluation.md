@@ -42,3 +42,6 @@ Use public synthetic data at typical small and near-limit sizes. Measure compila
 ## Release acceptance
 Every required AC has evidence. No known unresolved data rewriting, arbitrary code execution, or state-corruption defects. Contracts and derived resources agree; supported versions have evidence and unverified capabilities are labeled. Bilingual notes, licenses, and migrations are complete.
 Coverage is a supporting signal, not a substitute for critical behaviors. Reproduce defects with regression cases before fixing and verifying them.
+
+## Implemented development fixtures (2026-10-31)
+A public synthetic 20-task development corpus and offline candidate checker are available; see [evaluation baseline](evaluation-baseline.md). The 100-task corpus, held-out split, human review and actual model runs remain future work. Fixture self-checks do not establish model performance.

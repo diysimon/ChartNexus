@@ -1,0 +1,75 @@
+{
+  "id": "basic-0.2",
+  "schemaVersion": "0.2",
+  "status": "experimental",
+  "charts": ["bar", "line", "pie", "scatter"],
+  "modes": ["intent"],
+  "variants": {
+    "bar": ["horizontal"],
+    "line": ["area"],
+    "pie": ["donut"]
+  },
+  "themes": [
+    {
+      "id": "light",
+      "version": "1"
+    },
+    {
+      "id": "dark",
+      "version": "1"
+    }
+  ],
+  "outputs": ["browser", "svg"],
+  "limits": {
+    "bytes": 1048576,
+    "depth": 32,
+    "rows": 10000,
+    "series": 50,
+    "points": 50000,
+    "dimension": 4096
+  },
+  "sorting": {
+    "charts": ["bar", "line", "pie"],
+    "by": ["category", "value"],
+    "orders": ["ascending", "descending"],
+    "nulls": ["first", "last"],
+    "groupedValue": "unsupported",
+    "collation": "utf16-code-unit"
+  },
+  "units": {
+    "charts": ["bar", "line", "scatter"],
+    "kinds": ["currency", "percent", "unit"],
+    "percentScales": ["percent", "ratio"],
+    "conversion": false
+  },
+  "temporal": {
+    "charts": ["line"],
+    "kinds": ["date"],
+    "format": "YYYY-MM-DD",
+    "years": "1000-9999",
+    "coordinate": "UTC midnight",
+    "timestamps": false
+  },
+  "aggregation": {
+    "charts": ["bar", "line", "pie"],
+    "operations": ["sum", "mean", "count"],
+    "count": "non-null numeric y",
+    "allNull": {
+      "sum": "null",
+      "mean": "null",
+      "count": 0
+    },
+    "identity": "aggregate"
+  },
+  "presentation": {
+    "dataLabels": {
+      "show": true,
+      "content": "echarts-default",
+      "formatter": false
+    },
+    "legend": {
+      "show": true,
+      "positions": ["top", "bottom"]
+    }
+  }
+}

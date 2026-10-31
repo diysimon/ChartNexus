@@ -20,3 +20,7 @@ Default ECharts merging risks stale series. Full replacement sacrifices zoom/leg
 
 ## Validation
 Real browser tests cover mode/type switching, series replacement, invalid update preservation, clicks, resizing, and disposal. SSR is separately tested and does not prove interactivity. Hardware deadlines are not provided by synchronous rendering.
+
+## Implementation note (2026-10-31)
+
+The optional session-level `createUpdateController` provides explicit revision checks and bounded operation deduplication. Hosts must opt in; the A2UI profile can opt in; other protocol adapters and streaming transport do not automatically use it. Interaction state preservation remains future work. See the development guide for the current contract.

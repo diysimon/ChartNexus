@@ -66,4 +66,9 @@ resources/list 提供能力、ChartDocument Schema、正确柱状图、字段错
 CLI/stdio 入口没有预载数据 registry，请使用内联数据；引用返回 DATA_NOT_FOUND。工厂接口可接收可信内存 registry。工具不能注册数据、读文件、请求 URL 或指定输出路径。资源缓存包含图表中的标签/数据，只连接获得授权的本地客户端。
 
 ## 验证流程与剩余工作
-SDK 客户端测试启动真实进程，完成协商、工具/资源发现、错误字段诊断、修复、编译/渲染及 SVG 校验和读取。另测截止/取消、限制、缓存淘汰/过期、CLI 拒绝覆盖、传输错误。这不等于真实模型评测或桌面客户端显示验证。A2UI/OpenUI、远程 MCP、prompts 和客户端安装仍未实现。
+SDK 客户端测试启动真实进程，完成协商、工具/资源发现、错误字段诊断、修复、编译/渲染及 SVG 校验和读取。另测截止/取消、限制、缓存淘汰/过期、CLI 拒绝覆盖、传输错误。这不等于真实模型评测或桌面客户端显示验证。A2UI/OpenUI 实验 profile 另见集成指南；远程 MCP、MCP prompts 和客户端安装仍未实现。
+
+## 模型资源与离线评测
+通过 `chartnexus://resources/index/0.1` 发现双语模型入口及 `chartnexus://evaluation/tasks/0.1` 公开合成开发任务集。参见[模型入口](model-entry.md)和[评测基线](evaluation-baseline.md)；参考样例自检不代表真实模型表现。
+
+[本地模型与 MCP 试运行](local-model-pilot.md)记录了真实本地模型通过官方 SDK 客户端调用本服务；这不是桌面客户端验证证据。

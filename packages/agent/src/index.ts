@@ -1,6 +1,13 @@
 import { Buffer } from 'node:buffer';
 import { Ajv2020 } from 'ajv/dist/2020.js';
-import { capabilities, compileChart, inspectJson } from '@chartnexus/core';
+import {
+  capabilities,
+  capabilities02,
+  nativeStrictCapabilities,
+  validateNativeStrict,
+  compileChart,
+  inspectJson,
+} from '@chartnexus/core';
 import {
   chartDocumentSchema,
   failure,
@@ -73,6 +80,7 @@ export function createAgentService(
           ok: true,
           value: {
             ...capabilities,
+            additionalProfiles: [capabilities02, nativeStrictCapabilities],
             agent: {
               transport: 'stdio',
               staticSvg: true,
@@ -114,6 +122,13 @@ export function createAgentService(
             }
           : result;
       }
+      if (
+        name === 'validate_chart' &&
+        input.nativeValidation === 'strict-basic-0.1'
+      ) {
+        const strict = validateNativeStrict(input.document);
+        if (!strict.ok) return strict;
+      }
       const result = compileChart(input.document, registry);
       if (!result.ok) return result;
       if (name === 'validate_chart')
@@ -124,7 +139,15 @@ export function createAgentService(
             chartId: result.value.chartId,
             profile: result.value.profile,
             dataRevision: result.value.dataRevision,
-            validation: 'structure-and-semantics',
+            validation:
+              input.nativeValidation === 'strict-basic-0.1'
+                ? 'native-strict-basic-0.1'
+                : input.document !== null &&
+                    typeof input.document === 'object' &&
+                    !Array.isArray(input.document) &&
+                    input.document.mode === 'echarts'
+                  ? 'guarded-native-partial'
+                  : 'structure-and-semantics',
           },
         };
       if (Buffer.byteLength(JSON.stringify(result.value), 'utf8') > 4_194_304)

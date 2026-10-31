@@ -19,8 +19,8 @@
     },
     {
       "code": "REVISION_CONFLICT",
-      "en": "Refresh host data metadata and request the exact registered revision.",
-      "zh-CN": "刷新宿主数据元信息，使用精确注册版本。"
+      "en": "Refresh host data metadata or capture the current chart revision before starting an update.",
+      "zh-CN": "刷新宿主数据元信息，或在开始更新前获取当前图表版本。"
     },
     {
       "code": "DATA_NOT_FOUND",
@@ -41,6 +41,31 @@
       "code": "BUSY",
       "en": "Wait for an active render to finish before retrying.",
       "zh-CN": "等待当前渲染结束后重试。"
+    },
+    {
+      "code": "OPERATION_ID_CONFLICT",
+      "en": "Use a new operation ID for a different payload.",
+      "zh-CN": "不同内容请使用新的操作 ID。"
+    },
+    {
+      "code": "INVALID_OPERATION",
+      "en": "Provide a valid operation ID, base revision and completion state.",
+      "zh-CN": "提供有效的操作 ID、基础版本和完成状态。"
+    },
+    {
+      "code": "CANCELLED",
+      "en": "The update was cancelled before commit; retry if needed.",
+      "zh-CN": "更新在提交前已取消，可按需重试。"
+    },
+    {
+      "code": "STREAM_CLOSED",
+      "en": "Start a new stream buffer after completion, cancellation or failure.",
+      "zh-CN": "流完成、取消或失败后，请创建新的缓冲器。"
+    },
+    {
+      "code": "INVALID_NATIVE_STRICT",
+      "en": "Use the native-strict-basic-0.1 schema and repair the indicated field; strict validation covers a small subset only.",
+      "zh-CN": "参照 native-strict-basic-0.1 Schema 修复所示字段；严格校验只覆盖有限子集。"
     }
   ]
 }

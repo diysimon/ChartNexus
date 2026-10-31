@@ -48,3 +48,7 @@ ChartNexus 是面向大模型与 Agent 的 Apache ECharts 图表基础设施，�
 [贡献指南](CONTRIBUTING.zh-CN.md) · [安全报告状态](SECURITY.zh-CN.md) · [文档清单](docs/manifest.json)
 
 [CLI 与 MCP 接入指南](docs/zh-CN/agent-integration.md)
+
+[模型与 Agent 入口](docs/zh-CN/model-entry.md) · [离线评测基线](docs/zh-CN/evaluation-baseline.md)
+
+[体验本地 Ollama 图表页面](docs/zh-CN/ollama-playground.md)

@@ -1,0 +1,1742 @@
+{
+  "version": "0.1",
+  "purpose": "public synthetic development fixtures, not a held-out benchmark or real-model result",
+  "tasks": [
+    {
+      "id": "create-bar",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a bar chart for Jan, Feb, Mar revenue 120, 180, 150.",
+        "zh-CN": "将一月至三月的收入 120、180、150 制作柱状图。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "create-line",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a line chart for Jan, Feb, Mar revenue 120, 180, 150.",
+        "zh-CN": "将一月至三月的收入 120、180、150 制作折线图。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "line"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "line",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "create-pie",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a pie chart for Jan, Feb, Mar revenue 120, 180, 150.",
+        "zh-CN": "将一月至三月的收入 120、180、150 制作饼图。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "pie"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [
+              {
+                "name": "Jan",
+                "value": 120
+              },
+              {
+                "name": "Feb",
+                "value": 180
+              },
+              {
+                "name": "Mar",
+                "value": 150
+              }
+            ]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "pie",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "create-scatter",
+      "familyId": "scatter-points",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Plot the points (1,2) and (3,5) as a scatter plot.",
+        "zh-CN": "用散点图展示坐标 (1,2)、(3,5)。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "scatter"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [
+              [1, 2],
+              [3, 5]
+            ]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["x", "y"],
+          "rows": [
+            {
+              "x": 1,
+              "y": 2
+            },
+            {
+              "x": 3,
+              "y": 5
+            }
+          ]
+        },
+        "chart": {
+          "type": "scatter",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "x",
+              "type": "quantitative"
+            },
+            "y": {
+              "field": "y",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "native-bar",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Use native ECharts mode to display a bar chart for Jan/Feb/Mar with 120/180/150.",
+        "zh-CN": "使用原生 ECharts 模式绘制一月至三月数值 120、180、150 的柱状图。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          },
+          {
+            "pointer": "/profile",
+            "equals": "basic-0.1"
+          },
+          {
+            "target": "document",
+            "pointer": "/mode",
+            "equals": "echarts"
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "echarts",
+        "option": {
+          "xAxis": {
+            "type": "category",
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value"
+          },
+          "series": [
+            {
+              "type": "bar",
+              "data": [120, 180, 150]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "edit-bar-to-line",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Change the previous bar chart to a line chart, retaining the data.",
+        "zh-CN": "将上一柱状图改为折线图，保留数据。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "line"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "line",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "previousDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "edit-replace-values",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Replace the previous values with 200, 50, 75, keeping the categories.",
+        "zh-CN": "将上一图表数值替换为 200、50、75，保留分类。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [200, 50, 75]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 200
+            },
+            {
+              "month": "Feb",
+              "revenue": 50
+            },
+            {
+              "month": "Mar",
+              "revenue": 75
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "previousDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "edit-title",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Set the chart title to Revenue without changing the values.",
+        "zh-CN": "将标题改为 Revenue，不改变数据。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          },
+          {
+            "pointer": "/option/title/text",
+            "equals": "Revenue"
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Revenue",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "previousDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "data-order",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a bar chart with categories in the supplied order Mar, Jan, Feb and corresponding values.",
+        "zh-CN": "用柱状图按提供的顺序展示 Mar、Jan、Feb 及对应数值。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Mar", "Jan", "Feb"]
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [150, 120, 180]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Mar",
+              "revenue": 150
+            },
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "data-null-zero",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a line chart for Jan=0, Feb=null, Mar=3. Preserve null rather than treating it as zero.",
+        "zh-CN": "用折线图绘制 Jan=0、Feb=null、Mar=3，保留 null，不能当作零。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "line"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [0, null, 3]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 0
+            },
+            {
+              "month": "Feb",
+              "revenue": null
+            },
+            {
+              "month": "Mar",
+              "revenue": 3
+            }
+          ]
+        },
+        "chart": {
+          "type": "line",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "data-empty",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Create a bar chart with no rows.",
+        "zh-CN": "创建没有数据行的柱状图。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series",
+            "equals": []
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": []
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "grouped-bar",
+      "familyId": "regional-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Group bars by East and West: Jan/Feb East 1/2 and West 3/4.",
+        "zh-CN": "按 East 和 West 分组柱状图：Jan/Feb 的 East 为 1/2、West 为 3/4。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb"]
+          },
+          {
+            "pointer": "/option/series/0/name",
+            "equals": "East"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [1, 2]
+          },
+          {
+            "pointer": "/option/series/1/name",
+            "equals": "West"
+          },
+          {
+            "pointer": "/option/series/1/data",
+            "equals": [3, 4]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue", "region"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 1,
+              "region": "East"
+            },
+            {
+              "month": "Feb",
+              "revenue": 2,
+              "region": "East"
+            },
+            {
+              "month": "Jan",
+              "revenue": 3,
+              "region": "West"
+            },
+            {
+              "month": "Feb",
+              "revenue": 4,
+              "region": "West"
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            },
+            "series": {
+              "field": "region"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "edit-stack",
+      "familyId": "regional-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Stack East and West bars while retaining the grouped values.",
+        "zh-CN": "将 East 和 West 的分组柱状图堆叠，保留数据。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/stack",
+            "equals": "total"
+          },
+          {
+            "pointer": "/option/series/1/stack",
+            "equals": "total"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [1, 2]
+          },
+          {
+            "pointer": "/option/series/1/data",
+            "equals": [3, 4]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue", "region"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 1,
+              "region": "East"
+            },
+            {
+              "month": "Feb",
+              "revenue": 2,
+              "region": "East"
+            },
+            {
+              "month": "Jan",
+              "revenue": 3,
+              "region": "West"
+            },
+            {
+              "month": "Feb",
+              "revenue": 4,
+              "region": "West"
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            },
+            "series": {
+              "field": "region"
+            }
+          },
+          "stack": true
+        }
+      },
+      "previousDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue", "region"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 1,
+              "region": "East"
+            },
+            {
+              "month": "Feb",
+              "revenue": 2,
+              "region": "East"
+            },
+            {
+              "month": "Jan",
+              "revenue": 3,
+              "region": "West"
+            },
+            {
+              "month": "Feb",
+              "revenue": 4,
+              "region": "West"
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            },
+            "series": {
+              "field": "region"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "repair-field",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Repair the unknown revenue field in the previous document; keep all data.",
+        "zh-CN": "修复上一文档中不存在的收入字段，保留全部数据。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "compile",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "bar"
+          },
+          {
+            "pointer": "/option/series/0/data",
+            "equals": [120, 180, 150]
+          },
+          {
+            "pointer": "/option/xAxis/data",
+            "equals": ["Jan", "Feb", "Mar"]
+          }
+        ]
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "previousDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "missing",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-numeric-string",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Identify that a numeric string is invalid; do not coerce it. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "识别数值字符串无效，不要隐式转换。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/data/rows/0/revenue",
+            "equals": "120"
+          }
+        ],
+        "diagnosticCode": "INVALID_DATA",
+        "diagnosticPath": "/data/rows/0"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": "120"
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": "120"
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-duplicates",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Diagnose duplicate categories within a series without silently aggregating. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "诊断同一系列中的重复分类，不要静默聚合。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/data/rows/1/month",
+            "equals": "Jan"
+          }
+        ],
+        "diagnosticCode": "AMBIGUOUS_DATA",
+        "diagnosticPath": "/data/rows/1"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Jan",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Jan",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-negative-pie",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Diagnose a negative pie value. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "诊断饼图中的负数。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/data/rows/0/revenue",
+            "equals": -1
+          }
+        ],
+        "diagnosticCode": "INVALID_DATA",
+        "diagnosticPath": "/data/rows/0"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": -1
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "pie",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": -1
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "pie",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-unknown-field",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Diagnose the missing encoded field in the supplied document. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "诊断所给文档中不存在的映射字段。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/chart/encoding/y/field",
+            "equals": "missing"
+          }
+        ],
+        "diagnosticCode": "UNKNOWN_FIELD",
+        "diagnosticPath": "/chart/encoding"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "missing",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            {
+              "month": "Jan",
+              "revenue": 120
+            },
+            {
+              "month": "Feb",
+              "revenue": 180
+            },
+            {
+              "month": "Mar",
+              "revenue": 150
+            }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "missing",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-missing-reference",
+      "familyId": "registry-reference",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Diagnose a data reference that the host has not registered. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "诊断宿主未注册的数据引用。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/data/id",
+            "equals": "missing"
+          }
+        ],
+        "diagnosticCode": "DATA_NOT_FOUND",
+        "diagnosticPath": "/data/id"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "reference",
+          "id": "missing",
+          "revision": "v1"
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "reference",
+          "id": "missing",
+          "revision": "v1"
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": {
+              "field": "month",
+              "type": "ordinal"
+            },
+            "y": {
+              "field": "revenue",
+              "type": "quantitative"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "reject-unsupported-series",
+      "familyId": "monthly-revenue",
+      "split": "development",
+      "language": ["en", "zh-CN"],
+      "prompt": {
+        "en": "Diagnose an unsupported custom series in native mode. Return diagnosticCode and diagnosticPath.",
+        "zh-CN": "诊断原生模式中不支持的 custom 系列。 返回 diagnosticCode 和 diagnosticPath。"
+      },
+      "schemaVersion": "0.1",
+      "provenance": {
+        "origin": "project-authored-synthetic",
+        "license": "Apache-2.0",
+        "productionData": false
+      },
+      "expected": {
+        "result": "diagnostic",
+        "assertions": [
+          {
+            "pointer": "/option/series/0/type",
+            "equals": "custom"
+          }
+        ],
+        "diagnosticCode": "UNSUPPORTED_CAPABILITY",
+        "diagnosticPath": "/option/series"
+      },
+      "reference": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "echarts",
+        "option": {
+          "xAxis": {
+            "type": "category",
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value"
+          },
+          "series": [
+            {
+              "type": "custom",
+              "data": [120, 180, 150]
+            }
+          ]
+        }
+      },
+      "inputDocument": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "echarts",
+        "option": {
+          "xAxis": {
+            "type": "category",
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value"
+          },
+          "series": [
+            {
+              "type": "custom",
+              "data": [120, 180, 150]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

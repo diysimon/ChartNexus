@@ -4,6 +4,9 @@ import { CommonSchemas } from '@a2ui/web_core/v0_9';
 import { z } from 'zod';
 import {
   mountChart,
+  createUpdateController,
+  type UpdateController,
+  type UpdateReceipt,
   type ChartRuntime,
   type SelectionEvent,
 } from '@chartnexus/runtime';
@@ -15,6 +18,9 @@ import {
 
 export interface A2uiChartOptions {
   registry?: DataRegistry;
+  /** Opt into ChartNexus operation envelopes in the document binding. */
+  orderedUpdates?: boolean;
+  onUpdateReceipt?: (receipt: UpdateReceipt) => void;
   onSelect?: (event: SelectionEvent) => void;
   onDiagnostics?: (diagnostics: Diagnostic[]) => void;
 }
@@ -23,7 +29,9 @@ export function createA2uiChart(options: A2uiChartOptions = {}) {
     name: 'ChartNexusChart',
     schema: z.object({
       document: CommonSchemas.DynamicString.describe(
-        'A JSON-encoded ChartDocument. Use schemaVersion 0.1 and a stable id.',
+        options.orderedUpdates
+          ? 'A JSON-encoded ChartNexus update operation with operationId, baseRevision, complete and a complete document.'
+          : 'A JSON-encoded ChartDocument. Use schemaVersion 0.1 and a stable id.',
       ),
     }),
   };
@@ -40,18 +48,24 @@ function Chart({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const runtime = useRef<ChartRuntime | null>(null);
+  const controller = useRef<UpdateController | null>(null);
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
   useEffect(() => {
     if (!container.current) return;
     const result = mountChart(container.current, (event) =>
       options.onSelect?.(event),
     );
-    if (result.ok) runtime.current = result.value;
-    else {
+    if (result.ok) {
+      runtime.current = result.value;
+      if (options.orderedUpdates)
+        controller.current = createUpdateController(result.value);
+    } else {
       setDiagnostics(result.diagnostics);
       options.onDiagnostics?.(result.diagnostics);
     }
     return () => {
+      controller.current?.dispose();
+      controller.current = null;
       runtime.current?.dispose();
       runtime.current = null;
     };
@@ -85,7 +99,11 @@ function Chart({
       }
       return;
     }
-    const result = runtime.current.update(input, options.registry);
+    const result = controller.current
+      ? controller.current.commit(input, options.registry)
+      : runtime.current.update(input, options.registry);
+    if (result.ok && controller.current)
+      options.onUpdateReceipt?.(result.value as UpdateReceipt);
     const next = result.ok ? [] : result.diagnostics;
     setDiagnostics(next);
     options.onDiagnostics?.(next);
@@ -110,3 +128,8 @@ function Chart({
 
 export { A2uiSurface } from '@a2ui/react/v0_9';
 export { Catalog, MessageProcessor } from '@a2ui/web_core/v0_9';
+export { createChartStreamBuffer } from './stream-buffer.js';
+export type {
+  ChartStreamBuffer,
+  BufferedChartOperation,
+} from './stream-buffer.js';

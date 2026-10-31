@@ -3,6 +3,9 @@ import { defineComponent, useIsStreaming } from '@openuidev/react-lang';
 import { z } from 'zod/v4';
 import {
   mountChart,
+  createUpdateController,
+  type UpdateController,
+  type UpdateReceipt,
   type ChartRuntime,
   type SelectionEvent,
 } from '@chartnexus/runtime';
@@ -14,6 +17,8 @@ import {
 
 export interface OpenUIChartOptions {
   registry?: DataRegistry;
+  orderedUpdates?: boolean;
+  onUpdateReceipt?: (receipt: UpdateReceipt) => void;
   onSelect?: (event: SelectionEvent) => void;
   onDiagnostics?: (diagnostics: Diagnostic[]) => void;
 }
@@ -22,13 +27,16 @@ export interface OpenUIChartOptions {
 export function createOpenUIChart(options: OpenUIChartOptions = {}) {
   return defineComponent({
     name: 'ChartNexusChart',
-    description:
-      'Render a ChartNexus ChartDocument. Pass the complete document as a JSON string. Use schemaVersion 0.1 and either intent or echarts mode.',
+    description: options.orderedUpdates
+      ? 'Render a ChartNexus ordered update operation as a JSON string; the host supplies its revision and operation ID.'
+      : 'Render a ChartNexus ChartDocument. Pass the complete document as a JSON string. Use schemaVersion 0.1 and either intent or echarts mode.',
     props: z.object({
       document: z
         .string()
         .describe(
-          'Complete JSON-encoded ChartDocument, not JavaScript. Keep its id stable during updates.',
+          options.orderedUpdates
+            ? 'JSON-encoded ChartNexus operation with operationId, baseRevision, complete and document when complete.'
+            : 'Complete JSON-encoded ChartDocument, not JavaScript. Keep its id stable during updates.',
         ),
     }),
     component: ({ props }) =>
@@ -45,6 +53,7 @@ function Chart({
 }) {
   const container = useRef<HTMLDivElement>(null);
   const runtime = useRef<ChartRuntime | null>(null);
+  const controller = useRef<UpdateController | null>(null);
   const optionsRef = useRef(options);
   optionsRef.current = options;
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
@@ -54,12 +63,17 @@ function Chart({
     const result = mountChart(container.current, (event) =>
       optionsRef.current.onSelect?.(event),
     );
-    if (result.ok) runtime.current = result.value;
-    else {
+    if (result.ok) {
+      runtime.current = result.value;
+      if (optionsRef.current.orderedUpdates)
+        controller.current = createUpdateController(result.value);
+    } else {
       setDiagnostics(result.diagnostics);
       optionsRef.current.onDiagnostics?.(result.diagnostics);
     }
     return () => {
+      controller.current?.dispose();
+      controller.current = null;
       runtime.current?.dispose();
       runtime.current = null;
     };
@@ -93,7 +107,11 @@ function Chart({
       }
       return;
     }
-    const result = runtime.current.update(input, optionsRef.current.registry);
+    const result = controller.current
+      ? controller.current.commit(input, optionsRef.current.registry)
+      : runtime.current.update(input, optionsRef.current.registry);
+    if (result.ok && controller.current)
+      optionsRef.current.onUpdateReceipt?.(result.value as UpdateReceipt);
     const next = result.ok ? [] : result.diagnostics;
     setDiagnostics(next);
     optionsRef.current.onDiagnostics?.(next);

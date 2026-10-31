@@ -1,0 +1,33 @@
+---
+doc_id: model-entry
+version: "0.1"
+status: experimental
+updated: 2026-10-31
+language: en
+---
+
+# ChartNexus: entry for models and agents
+
+[简体中文](../zh-CN/model-entry.md)
+
+ChartNexus compiles constrained JSON chart documents to Apache ECharts. First discover `chartnexus://capabilities/basic-0.1`, then read `chartnexus://schema/chart-document/0.1` and a relevant recipe. A machine-readable inventory is at `chartnexus://resources/index/0.1`. The full JSONL retrieval corpus is `chartnexus://resources/retrieval/0.1`. Sources and content hashes are also available in [the retrieval index](../../resources/model-index.json); hashes identify canonical source bytes, not necessarily the serialized MCP response.
+
+Choose `mode: intent` for compact supported bar, line, pie or scatter charts, or `mode: echarts` for a restricted native JSON option. Do not invent fields or capabilities, run code, include executable callbacks, fetch URLs, aggregate implicitly, or treat null as zero. Use actual field names and values. Native validation is partial and is not the entire ECharts API.
+
+Use `validate_chart` for structural and semantic validation. On failure, inspect diagnostic code and path, retrieve a repair example, revise the document, and validate again. `compile_chart` yields an ECharts plan; `render_chart` returns a session-local static SVG resource. Interactivity belongs to a browser host. Data references require a host-supplied registry and revision; never invent accessible datasets.
+
+Start with [bar example](../../resources/recipes/bar.json), [field-error example](../../resources/recipes/unknown-field.json), [diagnostics](../../resources/diagnostics.json), and [GenUI host guide](genui-integrations.md). The [20-task development corpus](../../resources/evaluation/tasks.json) is synthetic and public; it is not a hidden benchmark or real-model result. See [evaluation guide](evaluation-baseline.md) for scoring and limitations.
+
+For ordered browser-host updates, the host captures `baseRevision` before asynchronous generation and supplies a unique `operationId`; do not invent revisions. A `REVISION_CONFLICT` requires obtaining the current revision and resolving the stale work before retrying. A changed payload needs a new operation ID. The optional A2UI, OpenUI and COSUI JSON host profiles use the same ChartNexus operation contract; they are not protocol-native guarantees. See the [GenUI host guide](genui-integrations.md).
+
+An experimental intent-only 0.2 profile is discoverable via `chartnexus://capabilities/basic-0.2` and `chartnexus://schema/chart-document/0.2`. The `get_chart_schema` tool still returns 0.1; read the 0.2 resource explicitly. Native 0.1 validation is guarded and partial, and the validation result reports `guarded-native-partial`.
+
+For experimental 0.2 bar, line or pie sorting, explicitly set `chart.sort` with `by` (`category` or `value`), `order` (`ascending` or `descending`) and `nulls` (`first` or `last`). Never sort grouped charts by value: the current profile rejects this ambiguous request; aggregation must be resolved upstream. Category order uses UTF-16 code-unit comparison, not locale.
+
+For 0.2 dates use line x `type: temporal`, `temporalKind: date` and valid `YYYY-MM-DD` strings; timestamps and timezone inference are unsupported. Declare y units explicitly; percent scale `percent` and `ratio` describe original values and never trigger conversion. Read the 0.2 schema and capabilities before generating.
+
+For 0.2 bar, line and pie, aggregate repeated categories only when the user explicitly requests it: set `chart.aggregate.op` to `sum`, `mean`, or `count`. Count is non-null numeric y count, not total row count; sum/mean ignore null. Do not invent grouping, units, or treat an aggregate as one source row.
+
+For native ECharts input, default validation is partial. When the host requests the small strict subset, read `chartnexus://schema/native-strict-basic/0.1` and call `validate_chart` with `nativeValidation: "strict-basic-0.1"`. Do not claim strict validation of arbitrary ECharts options or silently retry a failure in the partial profile.
+
+For experimental 0.2 intent charts, use `presentation.dataLabels.show` and `presentation.legend.show` with optional legend `position` (`top` or `bottom`). Label content is the ECharts default for that chart type; do not invent formatters or imply automatic percentage conversion.

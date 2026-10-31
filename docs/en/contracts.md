@@ -10,6 +10,8 @@ language: en
 
 [简体中文](../zh-CN/contracts.md)
 
+For an evidence-graded distinction between current implementation and planned design, see the [core capability review](core-capability-review.md). Version 0.2 is only a [proposal](core-protocol-0.2.md), not the current schema.
+
 ## Status
 These are field-level design requirements. Names below are candidates, not published APIs before P0 RFC approval. schemaVersion is independent of package versions; 0.1 is the initial candidate.
 

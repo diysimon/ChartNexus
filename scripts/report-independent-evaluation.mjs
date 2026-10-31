@@ -28,6 +28,18 @@ if (semantic) {
   if (!prepared.ok) throw new Error('Map fixture failed');
   catalog = mapCatalog({ [prepared.value.id]: prepared.value });
 }
+// Error messages can contain a JSON excerpt from the private model response.
+// Only stable categories, never arbitrary exception text, may leave raw logs.
+const publicError = (error) => {
+  if (!error) return null;
+  if (/^Ollama HTTP \d{3}$/.test(error)) return error;
+  if (error === 'Incomplete output: length') return 'TRUNCATED_RESPONSE';
+  if (/JSON|Unexpected token|Unexpected end/.test(error)) return 'INVALID_JSON';
+  if (/timeout|timed out/i.test(error)) return 'REQUEST_TIMEOUT';
+  if (/response exceeds 2MiB/.test(error)) return 'RESPONSE_SIZE_LIMIT';
+  if (/fetch failed/i.test(error)) return 'TRANSPORT_ERROR';
+  return 'EVALUATION_ERROR';
+};
 const metric = (attempts, key) => {
   const eligible = attempts.filter((a) => typeof a.score[key] === 'boolean'),
     successes = eligible.filter((a) => a.score[key]).length;
@@ -91,11 +103,21 @@ for (const model of freeze.models) {
           terminal && !rows.some((a) => a.score.correct)
             ? rows.map((a) => ({
                 attempt: a.attempt,
-                error: a.score.error ?? null,
+                error: publicError(a.score.error),
                 diagnostics: a.score.diagnostics?.map((d) => d.code) ?? [],
                 dataFidelity: a.score.dataFidelity ?? null,
                 renderedFidelity: a.score.renderedFidelity ?? null,
                 taskCorrect: a.score.taskCorrect ?? null,
+                ...(task.kind === 'invalid'
+                  ? {
+                      diagnosticCodeMatch:
+                        a.document?.diagnosticCode ===
+                        task.expected.diagnosticCode,
+                      diagnosticPathMatch:
+                        a.document?.diagnosticPath ===
+                        task.expected.diagnosticPath,
+                    }
+                  : {}),
               }))
             : [],
       });
@@ -138,6 +160,7 @@ for (const model of freeze.models) {
     afterRepair: {
       successes: tasks.filter((t) => t.afterRepair).length,
       total: tasks.length,
+      rate: tasks.filter((t) => t.afterRepair).length / tasks.length,
       wilson95: wilson(tasks.filter((t) => t.afterRepair).length, tasks.length),
     },
     ...(semantic
@@ -166,6 +189,40 @@ for (const model of freeze.models) {
         }
       : null,
     byKind,
+    diagnosticDetails: Object.fromEntries(
+      ['first', 'last'].map((position) => {
+        const rows = tasks
+          .filter((t) => t.kind === 'invalid')
+          .map((t) => {
+            const rounds = attempts.filter(
+              (a) => a.id === t.id && a.repeat === t.repeat,
+            );
+            const task = corpus.tasks.find((task) => task.id === t.id);
+            return {
+              attempt: position === 'first' ? rounds[0] : rounds.at(-1),
+              expected: task.expected,
+            };
+          })
+          .filter((r) => r.attempt);
+        return [
+          position,
+          {
+            observed: rows.length,
+            codeMatch: rows.filter(
+              (r) =>
+                r.attempt.document?.diagnosticCode ===
+                r.expected.diagnosticCode,
+            ).length,
+            pathMatch: rows.filter(
+              (r) =>
+                r.attempt.document?.diagnosticPath ===
+                r.expected.diagnosticPath,
+            ).length,
+            note: 'Exact diagnostic code and JSON pointer are both required; partial matches do not change correctness.',
+          },
+        ];
+      }),
+    ),
     failures: tasks
       .filter((t) => t.failures.length)
       .map(({ id, repeat, failures }) => ({ id, repeat, failures })),

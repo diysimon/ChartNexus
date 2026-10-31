@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.2"
+version: "0.3"
 status: experimental
 updated: 2026-10-31
 language: zh-CN
@@ -36,7 +36,7 @@ pnpm eval:independent --corpus .local/m4-holdout-v2/corpus.json --models qwen3.5
 node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-holdout-v2/aggregate.json --semantic
 ```
 
-私有语料和原始日志保留在维护者本地并被 Git 忽略，其他用户需独立编写语料。`freeze.json`、`status.json`、`summary.json`和各模型 JSONL 支持审计与续跑。源码、语料、提示词、模型、Ollama或设置漂移会拒绝续跑；语义重评分也拒绝源码/语料漂移。聚合导出不含请求、行数据、期望值及模型文本。PR不自动运行真实模型，也未配置定时任务。
+私有语料和原始日志保留在维护者本地并被 Git 忽略，其他用户需独立编写语料。`freeze.json`、`status.json`、`summary.json`和各模型 JSONL 支持审计与续跑。源码、语料、提示词、模型、Ollama或设置漂移会拒绝续跑；语义重评分也拒绝源码/语料漂移。聚合导出不含请求、行数据、期望值及模型文本。JSON解析异常可能夹带私有响应片段，因此公开报告仅保留稳定错误类别；错误码与JSON指针的匹配情况单独统计，但不放宽完整正确性的要求。PR不自动运行真实模型，也未配置定时任务。
 
 ## 安装包验证
 

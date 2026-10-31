@@ -677,7 +677,7 @@
     },
     {
       "id": "trial-distribution",
-      "version": "0.2",
+      "version": "0.3",
       "status": "experimental",
       "en": "docs/en/trial-distribution.md",
       "zh-CN": "docs/zh-CN/trial-distribution.md"

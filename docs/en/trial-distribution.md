@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.2"
+version: "0.3"
 status: experimental
 updated: 2026-10-31
 language: en
@@ -36,7 +36,7 @@ pnpm eval:independent --corpus .local/m4-holdout-v2/corpus.json --models qwen3.5
 node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-holdout-v2/aggregate.json --semantic
 ```
 
-Private corpus/raw logs stay ignored in the maintainer checkout. Other users supply independently authored corpora. `freeze.json`, `status.json`, `summary.json` and per-model JSONL support audit/resume. Changed source, corpus, prompt, model, Ollama or settings refuse resume; semantic rescoring also refuses source/corpus drift. Aggregate export excludes prompts, rows, expected values and model text. Live models are not called on every PR; no scheduled run is configured.
+Private corpus/raw logs stay ignored in the maintainer checkout. Other users supply independently authored corpora. `freeze.json`, `status.json`, `summary.json` and per-model JSONL support audit/resume. Changed source, corpus, prompt, model, Ollama or settings refuse resume; semantic rescoring also refuses source/corpus drift. Aggregate export excludes prompts, rows, expected values and model text. Exception text is mapped to stable categories because JSON parse errors can embed private response excerpts. Diagnostic code and JSON-pointer matches are reported separately without relaxing exact correctness. Live models are not called on every PR; no scheduled run is configured.
 
 ## Installed distributions
 

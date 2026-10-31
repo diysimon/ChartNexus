@@ -23,6 +23,23 @@ const samples = {
     document: { ...bar, schemaVersion: '0.2', id: 'chat' },
     summary: '柱状图：Jan 120，Feb 180，Mar 150。',
   },
+  'long-labels': {
+    document: {
+      ...bar,
+      schemaVersion: '0.2',
+      id: 'chat',
+      data: {
+        ...bar.data,
+        rows: [
+          { month: '华东地区超长分类名称', revenue: 120 },
+          { month: '华南地区超长分类名称', revenue: 180 },
+          { month: '华北地区超长分类名称', revenue: 150 },
+        ],
+      },
+    },
+    summary:
+      '柱状图：华东地区超长分类名称 120，华南地区超长分类名称 180，华北地区超长分类名称 150。',
+  },
   combo: {
     document: { ...combo, id: 'chat' },
     summary:
@@ -69,12 +86,18 @@ function update() {
     : JSON.stringify(result.diagnostics);
   summary.textContent = sample.summary;
   const report = compileChatChart(sample.document, settings);
-  adjustments.textContent =
-    report.ok && report.value.adjustments.includes('REQUIRED_LEGEND')
-      ? '为便于区分类别或系列，图例保持显示。'
-      : report.ok && report.value.adjustments.includes('LABEL_DENSITY_LIMIT')
-        ? '数据较多，已减少标签以保持可读。'
-        : '';
+  adjustments.textContent = report.ok
+    ? [
+        report.value.adjustments.includes('REQUIRED_LEGEND')
+          ? '为便于区分类别或系列，图例保持显示。'
+          : '',
+        report.value.adjustments.includes('LABEL_DENSITY_LIMIT')
+          ? '数据较多，已减少标签以保持可读。'
+          : '',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    : '';
 }
 for (const control of [theme, level, background, width, chartType])
   control.addEventListener('change', update);

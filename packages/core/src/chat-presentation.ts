@@ -157,10 +157,14 @@ export function compileChatChart(
             nameTextStyle: { color: foreground },
             axisLabel: {
               color: foreground,
+              ...(axis.type === 'category'
+                ? { width: 80, overflow: 'truncate', hideOverlap: true }
+                : {}),
               ...(level === 'comprehensive'
                 ? { showMinLabel: true, showMaxLabel: true }
                 : {}),
             },
+            ...(axis.type === 'category' ? { tooltip: { show: true } } : {}),
             ...(level === 'comprehensive' ? { axisTick: { show: true } } : {}),
             axisLine: { lineStyle: { color: line } },
             splitLine: {

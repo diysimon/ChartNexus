@@ -69,3 +69,6 @@ The [capability review](core-capability-review.md) records 28 representative tas
 
 ## Chart capability checkpoint (2026-10-31)
 Experimental 0.2 now includes bar-line combinations with explicit shared/right axes and a funnel subset. A categorical heatmap subset is also implemented; model evaluation, radar, theme accessibility, state retention and distribution checks remain incomplete.
+
+## Reliability and chart expansion (2026-10-31)
+The nine quality areas and bounded radar, tree, Sankey and map profiles are tracked in [SPEC-0029](../../specs/0029-quality-expansion/spec.md). They remain open unless the spec records implementation and verification evidence.

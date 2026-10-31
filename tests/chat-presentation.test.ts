@@ -15,6 +15,24 @@ function chat(
   return result.value;
 }
 describe('host chat presentation', () => {
+  test('bounds category labels without modifying category values or identity', () => {
+    const input = {
+      ...doc,
+      data: {
+        ...doc.data,
+        rows: [{ month: 'A very long category label', revenue: 12 }],
+      },
+    };
+    const baseline = compileChart(input);
+    if (!baseline.ok) throw new Error('baseline');
+    const result = chat(input);
+    expect(result.plan.option.xAxis).toMatchObject({
+      axisLabel: { width: 80, overflow: 'truncate', hideOverlap: true },
+      tooltip: { show: true },
+    });
+    expect(result.plan.rowIndices).toEqual(baseline.value.rowIndices);
+    expect(result.plan.option.series).toMatchObject([{ data: [12] }]);
+  });
   test('default is opt-in light, transparent, and preserves all data and source identity', () => {
     const before = structuredClone(doc),
       ordinary = compileChart(doc);

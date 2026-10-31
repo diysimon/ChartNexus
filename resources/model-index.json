@@ -28,7 +28,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": null,
-      "contentHash": "sha256:ea7654037e66a77015b8d0ef40a9df166be5f1f951e5cafd9a6690200211168f"
+      "contentHash": "sha256:bbbbed6f868555cf1ac148008dd62876cf25fdd5eb743607778dfa38d32e88d7"
     },
     {
       "id": "chat-presentation-0.2",
@@ -41,7 +41,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": null,
-      "contentHash": "sha256:ce35462f5084c51a57e873fa1b8d50d5f486c8e84b0d9dce544c58f0f2ba1755"
+      "contentHash": "sha256:bea516ba1eb02c5c189f7dfed494b3e1046c1c56ad5da8020c6eb034b485b2bc"
     },
     {
       "id": "heatmap-recipe-0.2",

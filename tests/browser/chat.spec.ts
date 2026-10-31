@@ -53,6 +53,38 @@ test('chat preview adapts themes, five levels, chart types, widths and SVG expor
   await page.selectOption('#background', 'theme');
   await expect(page.locator('#chart-status')).toContainText('VALID');
   await page.setViewportSize({ width: 375, height: 800 });
+  await page.selectOption('#chart-type', 'long-labels');
+  await expect
+    .poll(() =>
+      page.locator('#chat-chart').evaluate((el) => {
+        const svg = el.querySelector('svg');
+        return (
+          svg &&
+          Math.abs(svg.getBoundingClientRect().width - el.clientWidth) < 1
+        );
+      }),
+    )
+    .toBe(true);
+  await expect(page.locator('#chart-summary')).toContainText(
+    '华东地区超长分类名称 120',
+  );
+  await expect(page.locator('#chat-chart svg')).toContainText('...');
+  await expect
+    .poll(() =>
+      page.locator('#chat-chart').evaluate((el) => {
+        const chartBounds = el.getBoundingClientRect();
+        return Array.from(el.querySelectorAll('svg text'))
+          .filter((text) => {
+            const bounds = text.getBoundingClientRect();
+            return (
+              bounds.left < chartBounds.left - 1 ||
+              bounds.right > chartBounds.right + 1
+            );
+          })
+          .map((text) => text.textContent);
+      }),
+    )
+    .toEqual([]);
   await expect
     .poll(() =>
       page

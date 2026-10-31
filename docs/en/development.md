@@ -10,7 +10,7 @@ language: en
 
 [Other language](../zh-CN/development.md)
 
-This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Model evaluations, operation deduplication, stable row IDs, and interaction-state preservation are not implemented.
+This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Small local model pilots and bounded session-level operation deduplication exist; stable row IDs and interaction-state preservation are not implemented. Independent evaluation and broader host verification remain open.
 
 ## Run
 Use Node 22.22.3 (baseline) or a supported Node 24 runtime and pnpm 11.25.0. From the repository root:

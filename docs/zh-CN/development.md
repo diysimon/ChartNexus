@@ -10,7 +10,7 @@ language: zh-CN
 
 [Other language](../en/development.md)
 
-这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；模型评测、operation 去重、稳定行 ID 和交互状态保留尚未实现。
+这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；已有少量本地模型试验和有界的会话内 operation 去重；稳定行 ID 和交互状态保留尚未实现。独立评测和更广泛的宿主验证仍待完成。
 
 ## 运行
 使用 Node 22.22.3（基线）或受支持的 Node 24 运行时，pnpm 11.25.0。在项目根目录执行：

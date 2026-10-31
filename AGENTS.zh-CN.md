@@ -8,7 +8,7 @@ language: zh-CN
 
 # Agent 执行指南
 
-> 2026-10-30：已开始实验核心代码开发；当前运行方式与限制见[开发指南](docs/zh-CN/development.md)。本地 CLI/MCP stdio 已实现，尚未发布或接入 UI 协议。
+> 2026-10-30：已开始实验核心代码开发；当前运行方式与限制见[开发指南](docs/zh-CN/development.md)。本地 CLI/MCP stdio 与实验性 OpenUI、COSUI 和 A2UI 图表 profile 已实现；尚未发布。
 
 [English](AGENTS.md)
 

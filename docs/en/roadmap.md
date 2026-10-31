@@ -2,7 +2,7 @@
 doc_id: roadmap
 version: "0.1"
 status: implementation-baseline
-updated: 2026-10-29
+updated: 2026-10-30
 language: en
 ---
 
@@ -48,3 +48,6 @@ Delays must narrow release claims or move milestones; never place unverified cap
 | Unstable model output | Structured diagnostics, bounded repair, public controlled evaluations |
 | Bilingual/schema drift | Shared-source generation, pair checks, same-PR updates |
 | Excessive scope | Vertical milestones; defer framework and hosted-service expansion |
+
+## COSUI scope addition (2026-10-30)
+COSUI is a required P3 target with separate JSON/San and Marklang profiles. See [research and acceptance plan](cosui-integration.md). Suggested order: first OpenUI slice, COSUI JSON, COSUI Marklang, then standard A2UI integration after its version is resolved. The historical P3 estimate covers only two protocols and must be re-estimated. Alpha may retain one verified protocol; COSUI remains required work until both profiles have evidence, even if shipped after beta. Experimental chart profiles for COSUI JSON/San, Marklang and A2UI v0.9 React are now implemented; see [the integration guide](genui-integrations.md) for verification boundaries.

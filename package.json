@@ -25,25 +25,37 @@
     "mcp": "node packages/mcp/dist/main.js"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "vitest": "5.0.1",
-    "vite": "8.3.5",
+    "@cosui/cosmic-dynamic-ui": "1.0.0",
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@openuidev/react-lang": "1.0.2",
     "@playwright/test": "1.64.1",
-    "prettier": "3.8.1",
-    "json-schema-to-typescript": "15.0.4",
     "@types/node": "22.19.11",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "echarts": "6.1.0",
     "eslint": "10.13.0",
+    "json-schema-to-typescript": "15.0.4",
+    "marklang": "1.0.1",
+    "prettier": "3.8.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "san": "3.15.5",
+    "typescript": "5.9.3",
     "typescript-eslint": "8.72.1",
-    "@modelcontextprotocol/sdk": "1.32.2"
+    "vite": "8.3.5",
+    "vitest": "5.0.1",
+    "zod": "4.3.6"
   },
   "dependencies": {
-    "@chartnexus/schema": "workspace:*",
-    "@chartnexus/core": "workspace:*",
-    "@chartnexus/runtime": "workspace:*",
-    "@chartnexus/render": "workspace:*",
+    "@chartnexus/adapter-cosui": "workspace:*",
+    "@chartnexus/adapter-openui": "workspace:*",
     "@chartnexus/agent": "workspace:*",
     "@chartnexus/cli": "workspace:*",
-    "@chartnexus/mcp": "workspace:*"
+    "@chartnexus/core": "workspace:*",
+    "@chartnexus/mcp": "workspace:*",
+    "@chartnexus/render": "workspace:*",
+    "@chartnexus/runtime": "workspace:*",
+    "@chartnexus/schema": "workspace:*",
+    "@chartnexus/adapter-a2ui": "workspace:*"
   }
 }

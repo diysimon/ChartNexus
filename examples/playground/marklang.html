@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ChartNexus · Marklang</title>
+  </head>
+  <body>
+    <main style="max-width: 1000px; margin: 40px auto; font-family: system-ui">
+      <h1>ChartNexus × Marklang</h1>
+      <p>Complete Markdown source with ml-data is rendered by Marklang.</p>
+      <button id="intent">Intent</button> <button id="native">Native</button>
+      <button id="invalid">Invalid</button> <button id="stream">Partial</button>
+      <button id="missing">Missing reference</button>
+      <button id="duplicate">Duplicate data</button>
+      <button id="remove">Dispose</button>
+      <section
+        id="marklang-chart"
+        style="min-height: 320px; border: 1px solid #ccd5df"
+      ></section>
+      <h2>Diagnostics</h2>
+      <pre id="marklang-status"></pre>
+      <h2>Selection</h2>
+      <pre id="marklang-event"></pre>
+    </main>
+    <script type="module" src="/marklang.ts"></script>
+  </body>
+</html>

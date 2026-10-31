@@ -1,0 +1,26 @@
+{
+  "name": "@chartnexus/adapter-openui",
+  "version": "0.0.1-alpha.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@chartnexus/runtime": "workspace:*",
+    "@chartnexus/schema": "workspace:*"
+  },
+  "peerDependencies": {
+    "@openuidev/react-lang": "1.0.2",
+    "react": "19.2.4",
+    "zod": "4.3.6",
+    "echarts": "6.1.0"
+  }
+}

@@ -8,7 +8,7 @@ language: en
 
 # Agent execution guidance
 
-> 2026-10-30: Experimental core implementation has started; see [development guide](docs/en/development.md) for commands and limits. Local CLI/MCP stdio is implemented; no publication or UI protocol integration yet.
+> 2026-10-30: Experimental core implementation has started; see [development guide](docs/en/development.md) for commands and limits. Local CLI/MCP stdio and experimental OpenUI, COSUI and A2UI chart profiles are implemented; no publication.
 
 [简体中文](AGENTS.zh-CN.md)
 

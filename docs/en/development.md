@@ -10,7 +10,7 @@ language: en
 
 [Other language](../zh-CN/development.md)
 
-This is a local, unpublished experimental implementation. Protocol adapters, model evaluations, operation deduplication, stable row IDs, and interaction-state preservation are not implemented.
+This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Model evaluations, operation deduplication, stable row IDs, and interaction-state preservation are not implemented.
 
 ## Run
 Use Node 22.22.3 (baseline) or a supported Node 24 runtime and pnpm 11.25.0. From the repository root:
@@ -53,3 +53,15 @@ See [SPEC-0001](../../specs/0001-core-foundation/spec.md) and its [task evidence
 
 ## Agent entry points
 CLI and local MCP stdio now use a shared Node agent service. See [integration guide](agent-integration.md) for commands, client configuration, resources and explicit limits. Worker tool rendering has deadlines; direct renderSvg remains synchronous.
+
+## OpenUI Lang integration
+
+Run `pnpm dev` and open `http://127.0.0.1:5173/openui.html`. The demo uses the actual OpenUI React Renderer and a local response; it does not call a model. `@chartnexus/adapter-openui` exports `createOpenUIChart({ registry?, onSelect?, onDiagnostics? })` for registration in an OpenUI library. The `ChartNexusChart(document)` prop is a JSON string containing a complete ChartDocument. Consult the canonical schema in `packages/schema/src/chart-document.schema.json` and `resources/recipes/` when generating prompts; `library.prompt()` describes the wrapper but does not embed the complete chart schema.
+
+The adapter defers updates while OpenUI reports streaming and retains the previous valid chart on document errors. The host must preserve the last committed response while assembling streaming fragments: a malformed OpenUI program may remove the component before the adapter can retain it. Native and intent modes follow the existing core limits, including 1 MiB. Use a stable chart ID; for another ID remount the component. Supply registry references through a trusted host registry. Chart selections use positional identity. `onDiagnostics` receives errors and an empty list on recovery. No arbitrary executable callbacks are accepted from the model.
+
+Verified against OpenUI React Lang 1.0.2, React 19.2.4 and Zod 4.3.6. This is an experimental OpenUI Lang component profile, not standard A2UI, COSUI, or all OpenUI hosts. Real model output, SSR/hydration, clean package installation, broader SDK versions and npm publication remain unverified. See [SPEC-0003](../../specs/0003-openui-adapter/spec.md).
+
+## Additional GenUI hosts
+
+Run `pnpm dev` and open `/cosui.html`, `/marklang.html`, or `/a2ui.html`. Each demo uses its actual upstream SDK with locally generated example data; none invokes a model. See [GenUI integration guide](genui-integrations.md) for versions, model recipes, lifecycle and limitations.

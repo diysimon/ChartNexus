@@ -226,6 +226,76 @@
       "status": "experimental-design",
       "en": "rfcs/0004-agent-tools.md",
       "zh-CN": "rfcs/0004-agent-tools.zh-CN.md"
+    },
+    {
+      "id": "cosui-integration",
+      "version": "0.1",
+      "status": "research",
+      "en": "docs/en/cosui-integration.md",
+      "zh-CN": "docs/zh-CN/cosui-integration.md"
+    },
+    {
+      "id": "spec-0003-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0003-openui-adapter/spec.md",
+      "zh-CN": "specs/0003-openui-adapter/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0003-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0003-openui-adapter/tasks.md",
+      "zh-CN": "specs/0003-openui-adapter/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0004-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0004-cosui-json/spec.md",
+      "zh-CN": "specs/0004-cosui-json/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0004-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0004-cosui-json/tasks.md",
+      "zh-CN": "specs/0004-cosui-json/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0005-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0005-cosui-marklang/spec.md",
+      "zh-CN": "specs/0005-cosui-marklang/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0005-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0005-cosui-marklang/tasks.md",
+      "zh-CN": "specs/0005-cosui-marklang/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0006-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0006-a2ui/spec.md",
+      "zh-CN": "specs/0006-a2ui/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0006-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0006-a2ui/tasks.md",
+      "zh-CN": "specs/0006-a2ui/tasks.zh-CN.md"
+    },
+    {
+      "id": "genui-integrations",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/genui-integrations.md",
+      "zh-CN": "docs/zh-CN/genui-integrations.md"
     }
   ]
 }

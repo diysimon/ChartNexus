@@ -2,7 +2,7 @@
 doc_id: roadmap
 version: "0.1"
 status: implementation-baseline
-updated: 2026-10-29
+updated: 2026-10-30
 language: zh-CN
 ---
 
@@ -48,3 +48,6 @@ alpha 必须有原生入口、四种 intent、数据引用、校验编译、DOM/
 | 模型生成不稳定 | 结构化诊断、有限修复、公开对照评测 |
 | 双语与 Schema 漂移 | 共同来源生成、配对检查、同 PR 更新 |
 | 范围过大 | 每阶段纵向交付，推迟框架与托管服务扩张 |
+
+## COSUI 范围补充（2026-10-30）
+COSUI 纳入 P3 必需目标，JSON/San 与 Marklang 分别验收。见[调研与验收计划](cosui-integration.md)。建议顺序：首个 OpenUI 闭环、COSUI JSON、COSUI Marklang，再在标准 A2UI 版本明确后接入。原 P3 工期仅覆盖两个协议，需要重估。alpha 可保留一个已验证协议；即使排在 beta 后，COSUI 仍是必须完成且分别提供证据的工作。目前已实现 COSUI JSON/San、Marklang 与 A2UI v0.9 React 的实验性图表 profile，验证边界见[集成指南](genui-integrations.md)。

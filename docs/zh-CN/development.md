@@ -10,7 +10,7 @@ language: zh-CN
 
 [Other language](../en/development.md)
 
-这是本地、未发布的实验实现。协议适配器、模型评测、operation 去重、稳定行 ID 和交互状态保留尚未实现。
+这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；模型评测、operation 去重、稳定行 ID 和交互状态保留尚未实现。
 
 ## 运行
 使用 Node 22.22.3（基线）或受支持的 Node 24 运行时，pnpm 11.25.0。在项目根目录执行：
@@ -53,3 +53,15 @@ Schema 版本 0.1，原生 echarts 或语义 intent 模式。intent 使用字段
 
 ## Agent 入口
 CLI 与本地 MCP stdio 已通过共同 Node agent 服务接入。参见[接入指南](agent-integration.md)了解命令、客户端配置、资源与限制。工具 worker 渲染有截止时间，直接 renderSvg 仍同步。
+
+## OpenUI Lang 集成
+
+运行 `pnpm dev` 后打开 `http://127.0.0.1:5173/openui.html`。演示使用真实 OpenUI React Renderer 与本地响应，不调用模型。`@chartnexus/adapter-openui` 导出 `createOpenUIChart({ registry?, onSelect?, onDiagnostics? })`，供 OpenUI library 注册。`ChartNexusChart(document)` 属性为完整 ChartDocument 的 JSON 字符串。生成提示词时应提供 `packages/schema/src/chart-document.schema.json` 和 `resources/recipes/`；`library.prompt()` 描述组件外壳，但不包含完整图表 schema。
+
+OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效图。宿主拼接流式片段时必须保留上次提交的 response：错误的 OpenUI 程序可能在适配器处理前移除组件。原生和 intent 模式遵守现有核心限制，包括 1 MiB。更新使用稳定图表 ID，换 ID 时重新挂载；数据引用由宿主提供可信 registry。选择事件使用位置身份；`onDiagnostics` 返回错误，恢复时返回空数组。不接受模型提供的可执行回调。
+
+验证基线为 OpenUI React Lang 1.0.2、React 19.2.4、Zod 4.3.6。这是实验性的 OpenUI Lang 组件 profile，不代表标准 A2UI、COSUI 或其他 OpenUI 宿主兼容。真实模型输出、SSR/水合、干净包安装、其他 SDK 版本和 npm 发布尚未验证。参见 [SPEC-0003](../../specs/0003-openui-adapter/spec.zh-CN.md)。
+
+## 其他 GenUI 宿主
+
+运行 `pnpm dev`，打开 `/cosui.html`、`/marklang.html` 或 `/a2ui.html`。每个演示均使用实际上游 SDK 和本地示例数据，不调用模型。版本、模型示例、生命周期及限制见 [GenUI 集成指南](genui-integrations.md)。

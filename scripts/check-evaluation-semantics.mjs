@@ -84,6 +84,25 @@ const explicitKey = {
   },
 };
 assert.equal(scoreReferenceSemantics(explicitKey, keyed).correct, false);
+const exactData = {
+  ...task,
+  expected: {
+    ...task.expected,
+    assertions: [
+      ...task.expected.assertions,
+      { target: 'document', pointer: '/data', equals: data },
+    ],
+  },
+};
+const exactScore = scoreReferenceSemantics(exactData, keyed);
+assert.equal(exactScore.correct, false);
+assert.equal(exactScore.dataFidelity, true);
+assert.equal(exactScore.taskCorrect, false);
+assert.ok(
+  exactScore.failedAssertions.some(
+    (a) => a.target === 'document' && a.pointer === '/data',
+  ),
+);
 const attempt = {
   document: keyed,
   score: scoreIndependent(task, keyed, {}, registry),

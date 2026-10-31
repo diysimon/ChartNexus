@@ -29,7 +29,22 @@ export function scoreReferenceSemantics(task, candidate, catalog = {}) {
     return strict;
   // Check original keys for missing fields, duplicates, etc. before normalization.
   if (!compileChart(candidate, registry, catalog).ok) return strict;
-  return scoreIndependent(task, normalized, catalog, registry);
+  const corrected = scoreIndependent(task, normalized, catalog, registry);
+  // Representation equivalence must never override an explicit assertion on
+  // the original document (for example an exact /data object requirement).
+  if (!strict.taskCorrect) {
+    corrected.taskCorrect = false;
+    corrected.correct = false;
+    corrected.failedAssertions = [
+      ...new Map(
+        [
+          ...corrected.failedAssertions,
+          ...strict.failedAssertions.filter((a) => a.target === 'document'),
+        ].map((a) => [a.target + ':' + a.pointer, a]),
+      ).values(),
+    ];
+  }
+  return corrected;
 }
 
 export function rescoreAttempt(task, attempt, catalog = {}) {

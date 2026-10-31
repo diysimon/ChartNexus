@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.4"
+version: "0.5"
 status: experimental
 updated: 2026-11-01
 language: en
@@ -23,7 +23,7 @@ Synthetic source tables and expected marks were authored locally. Models receive
 
 ## Scoring and reporting correction
 
-The frozen strict scorer hashes source objects and compares independent compiled marks and required document fields. During the run it incorrectly rejected valid optional `keyField`: keyed marks use `{id,value}` while unkeyed marks use scalar values. The reporting-only `reference-keyfield-equivalence-v1` correction first validates/compiles the original candidate, then removes optional reference keys only when the remaining source object exactly matches the expected source hash. Original validation and actual SVG render must pass. Wrong sources/revisions, invalid/duplicate keys, changed numeric marks, required identity assertions and render errors remain failures. Inline data are not normalized.
+The frozen strict scorer hashes source objects and compares independent compiled marks and required document fields. During the run it incorrectly rejected valid optional `keyField`: keyed marks use `{id,value}` while unkeyed marks use scalar values. The reporting-only `reference-keyfield-equivalence-v1` correction first validates/compiles the original candidate, then removes optional reference keys only when the remaining source object exactly matches the expected source hash. Original validation and actual SVG render must pass. Wrong sources/revisions, invalid/duplicate keys, changed numeric marks, required identity assertions and render errors remain failures. Inline data are not normalized. Explicit original-document assertions remain authoritative even if the normalized source object matches; a regression test covers exact `/data` assertions. Tightening this guard left all885 existing attempt scores unchanged.
 
 Raw strict scores, responses, SVG hashes and all failures remain immutable. Corrected scores and their deltas are reported separately, with the correction-module hash. No requests, settings, repair opportunities or model prompts changed. This post-hoc representation correction is disclosed rather than presented as a pre-registered metric. It is still not a general proof of every semantic equivalent or a pixel comparison.
 

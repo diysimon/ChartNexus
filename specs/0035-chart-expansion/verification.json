@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-31",
+  "scope": "M3 A12-A15",
+  "environment": {
+    "node": "22.22.3",
+    "pnpm": "11.25.0",
+    "echarts": "6.1.0",
+    "chrome": "156.0.8078.74",
+    "playwright": "1.64.1"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "result": "pass",
+      "testFiles": 30,
+      "tests": 230,
+      "referenceSelfChecks": 20,
+      "bilingualPairs": 94,
+      "logSha256": "c44969feea524f199203e7154f372b42d89beffb6b37079aff72bb65b06c2d72"
+    },
+    {
+      "command": "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:browser",
+      "result": "pass",
+      "tests": 44,
+      "durationSeconds": 33.0,
+      "logSha256": "116e9413129ab66183d2422087b8a0f08fb1af31b42ad02ddcde1fb9d0a23a7d"
+    }
+  ],
+  "acceptance": {
+    "AC12": "pass",
+    "AC13": "pass",
+    "AC14": "pass",
+    "AC15": "pass",
+    "AC16": "pass"
+  },
+  "localHostCoverage": {
+    "charts": [
+      "radar",
+      "tree",
+      "sankey",
+      "map"
+    ],
+    "hosts": {
+      "OpenUI react-lang": "1.0.2",
+      "A2UI React": "0.9.1 / web_core 0.9.2",
+      "COSUI Dynamic UI": "1.0.0 / San 3.15.5",
+      "Marklang": "1.0.1"
+    },
+    "paths": [
+      "core",
+      "browser",
+      "SVG",
+      "Agent worker",
+      "pinned upstream hosts"
+    ]
+  },
+  "mapLimits": {
+    "assetBytes": 5242880,
+    "coordinatePoints": 20000,
+    "regions": 1000,
+    "registrations": 8,
+    "totalSourceBytes": 20971520
+  },
+  "notRun": [
+    "new live-model evaluation",
+    "held-out benchmark",
+    "clean all-package Node 22/24 installation",
+    "remote CI",
+    "mobile certification",
+    "publication"
+  ],
+  "gitActions": {
+    "commit": false,
+    "push": false
+  },
+  "note": "Existing offline workspace relink is not package publication/install proof; M4 remains open. Fixed host rendering callbacks never execute model code."
+}

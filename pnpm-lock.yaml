@@ -26,6 +26,9 @@ importers:
       '@chartnexus/core':
         specifier: workspace:*
         version: link:packages/core
+      '@chartnexus/echarts':
+        specifier: workspace:*
+        version: link:packages/echarts
       '@chartnexus/mcp':
         specifier: workspace:*
         version: link:packages/mcp
@@ -171,6 +174,9 @@ importers:
       '@chartnexus/core':
         specifier: workspace:*
         version: link:../core
+      '@chartnexus/echarts':
+        specifier: workspace:*
+        version: link:../echarts
       '@chartnexus/render':
         specifier: workspace:*
         version: link:../render
@@ -199,6 +205,15 @@ importers:
         specifier: 8.20.0
         version: 8.20.0
 
+  packages/echarts:
+    dependencies:
+      '@chartnexus/schema':
+        specifier: workspace:*
+        version: link:../schema
+      echarts:
+        specifier: 6.1.0
+        version: 6.1.0
+
   packages/mcp:
     dependencies:
       '@chartnexus/agent':
@@ -216,6 +231,9 @@ importers:
       '@chartnexus/core':
         specifier: workspace:*
         version: link:../core
+      '@chartnexus/echarts':
+        specifier: workspace:*
+        version: link:../echarts
       '@chartnexus/schema':
         specifier: workspace:*
         version: link:../schema
@@ -228,6 +246,9 @@ importers:
       '@chartnexus/core':
         specifier: workspace:*
         version: link:../core
+      '@chartnexus/echarts':
+        specifier: workspace:*
+        version: link:../echarts
       '@chartnexus/schema':
         specifier: workspace:*
         version: link:../schema

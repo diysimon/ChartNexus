@@ -2,7 +2,7 @@
 doc_id: genui-integrations
 version: "0.1"
 status: experimental
-updated: 2026-10-30
+updated: 2026-10-31
 language: en
 ---
 
@@ -38,7 +38,7 @@ Create `createMarklangCharts(container, options)`, call `update(source, complete
 :::
 ````
 
-The JSON above is illustrative; use the canonical schema and [bar recipe](../../resources/recipes/bar.json) to generate a complete supported document. Data names must be unique ASCII names of at most 64 characters, beginning with a letter and followed by letters, numbers, underscore or hyphen. Missing, duplicate or invalid chart data return diagnostics. Up to 16 charts and 1 MiB Markdown are allowed. Passing `complete: false` keeps existing charts untouched; the host owns assembly and deciding completeness. Valid input is checked before old charts are disposed, but a later mount/render failure can leave the replacement incomplete.
+The JSON above is illustrative; use the canonical schema and [bar recipe](../../resources/recipes/bar.json) to generate a complete supported document. Data names must be unique ASCII names of at most 64 characters, beginning with a letter and followed by letters, numbers, underscore or hyphen. Missing, duplicate or invalid chart data return diagnostics. Up to 16 charts and 1 MiB Markdown are allowed. Passing `complete: false` keeps existing charts untouched; the host owns assembly and deciding completeness. Complete input is validated and all charts are mounted in a measurable staging surface before an atomic swap; any staging failure retains the old charts.
 
 **Trust boundary:** upstream Marklang may render HTML from Markdown. This adapter does not sanitize general Markdown or HTML; use trusted or separately sanitized Markdown and a suitable host security policy. SSR, hydration, arbitrary live streams, and behavior across other Markdown features are not verified.
 
@@ -70,4 +70,12 @@ Set `orderedUpdates: true` when creating either `createOpenUIChart` or `createCo
 
 ### Chat presentation in GenUI hosts
 
-`createA2uiChart`, `createOpenUIChart` and `createCosuiChart` accept optional host-owned `chatPresentation` settings. They use the same 0.2 intent chat profile as the runtime; without this option, existing behavior is unchanged. A2UI, OpenUI and COSUI JSON were tested locally with dark/transparent settings and ordered updates. The experimental Marklang adapter does not accept this option. Theme settings do not automatically track the host; a host must manage settings and trigger an update or remount. See the [chat presentation guide](chat-presentation.md).
+`createA2uiChart`, `createOpenUIChart` and `createCosuiChart` accept optional host-owned `chatPresentation` settings. They use the same 0.2/0.3 intent chat profile as the runtime; without this option, existing behavior is unchanged. A2UI, OpenUI and COSUI JSON were tested locally with dark/transparent settings and ordered updates. Marklang accepts chatPresentation with transactional whole-document updates. Theme settings do not automatically track the host; a host must manage settings and trigger an update or remount. See the [chat presentation guide](chat-presentation.md).
+
+## M1/M2 implementation
+
+See [0.3 contracts and migration](contracts-03.md) and [chat host quality/support matrix](chat-host-quality.md) for current version discovery, dimensions, tables, lifecycle, legend retention and real local Ollama streaming evidence. Legacy spec evidence remains historical.
+
+## M3 chart expansion
+
+0.3 now supports radar, tree, Sankey and trusted regional maps in addition to the original seven types. See [contracts, host MapRegistry, resources and preview](chart-expansion-03.md). Browser/SVG/worker and four pinned upstream SDK paths have local evidence; M4 model evaluation and distribution remain separate. Fixed renderer-owned label callbacks preserve text literally; model callbacks remain forbidden.

@@ -1,0 +1,197 @@
+{
+  "id": "basic-0.3",
+  "schemaVersion": "0.3",
+  "status": "experimental",
+  "charts": [
+    "bar",
+    "line",
+    "pie",
+    "scatter",
+    "combo",
+    "funnel",
+    "heatmap",
+    "radar",
+    "tree",
+    "sankey",
+    "map"
+  ],
+  "modes": ["intent"],
+  "variants": {
+    "bar": ["horizontal"],
+    "line": ["area"],
+    "pie": ["donut"]
+  },
+  "themes": ["light", "dark"],
+  "outputs": ["browser", "svg"],
+  "limits": {
+    "bytes": 1048576,
+    "depth": 32,
+    "rows": 10000,
+    "series": 50,
+    "points": 50000,
+    "dimension": 4096
+  },
+  "sorting": {
+    "charts": ["bar", "line", "pie", "funnel"],
+    "by": ["category", "value"],
+    "orders": ["ascending", "descending"],
+    "nulls": ["first", "last"],
+    "groupedValue": "unsupported",
+    "collation": "utf16-code-unit"
+  },
+  "units": {
+    "charts": ["bar", "line", "scatter"],
+    "kinds": ["currency", "percent", "unit"],
+    "percentScales": ["percent", "ratio"],
+    "conversion": false
+  },
+  "temporal": {
+    "charts": ["line"],
+    "kinds": ["date", "instant"],
+    "dateFormat": "YYYY-MM-DD",
+    "instantFormat": "YYYY-MM-DDTHH:mm:ss[.SSS]Z or \u00b1HH:mm",
+    "years": "1000-9999",
+    "coordinate": "UTC",
+    "displayTimezone": "UTC",
+    "namedTimezones": false,
+    "numericTimestamps": false
+  },
+  "aggregation": {
+    "charts": ["bar", "line", "pie", "funnel"],
+    "operations": ["sum", "mean", "count"],
+    "count": "non-null numeric y",
+    "allNull": {
+      "sum": "null",
+      "mean": "null",
+      "count": 0
+    },
+    "identity": "aggregate"
+  },
+  "presentation": {
+    "dataLabels": {
+      "show": true,
+      "content": "echarts-default",
+      "formatter": false
+    },
+    "legend": {
+      "show": true,
+      "positions": ["top", "bottom"]
+    },
+    "typeSpecific03": {
+      "radar": ["theme", "dataLabels", "detailLevel"],
+      "tree": ["theme", "detailLevel"],
+      "sankey": ["theme", "detailLevel"],
+      "map": ["theme", "dataLabels", "detailLevel"],
+      "legend": "radar required; tree/sankey/map have no categorical legend; override rejected"
+    }
+  },
+  "combo": {
+    "series": ["bar", "line"],
+    "axes": ["shared", "right"],
+    "x": "ordinal",
+    "grouping": false,
+    "aggregation": false,
+    "units": "shared requires identical or both absent; right requires explicit units for both"
+  },
+  "funnel": {
+    "x": "ordinal",
+    "y": "nonnegative",
+    "order": "input unless explicitly sorted",
+    "conversionRate": "not inferred"
+  },
+  "heatmap": {
+    "x": "ordinal",
+    "y": "ordinal",
+    "value": "quantitative",
+    "range": "explicit",
+    "missing": "null is not rendered",
+    "duplicates": "rejected",
+    "sorting": false,
+    "aggregation": false
+  },
+  "chatPresentation": {
+    "status": "experimental",
+    "hostOptIn": true,
+    "detailLevels": [
+      "minimal",
+      "simple",
+      "standard",
+      "detailed",
+      "comprehensive"
+    ],
+    "themes": ["light", "dark"],
+    "backgrounds": ["transparent", "theme"],
+    "defaultLevel": "standard",
+    "defaultTheme": "light",
+    "defaultBackground": "transparent",
+    "versions": ["0.2", "0.3"],
+    "layout": {
+      "minimumWidth": 240,
+      "minimumHeight": 240,
+      "fallback": "browser data access; SVG EXPORT_LIMIT"
+    },
+    "accessibility": {
+      "sourceRows": "paginated 50",
+      "renderedMarks": "paginated 50",
+      "svg": "title and full JSON metadata"
+    },
+    "legendRetention": "compatible semantic keys; Marklang resets on document swap"
+  },
+  "intentSemantics": {
+    "pieZeroTotal": "no-sectors; NO_SHARE_DATA notice and dataState no-share",
+    "pieEmpty": "dataState empty; no placeholder circle",
+    "groupIdentity": "group-field, raw-group-value and measure-field",
+    "emptyGroupLabel": "first unused (empty) or (empty) [n]",
+    "groupMetadata": "seriesMetadata preserves raw group values; not stable row IDs"
+  },
+  "stableRowKeys": {
+    "field": "data.keyField",
+    "identity": "unique nonempty strings; aggregate identity unchanged"
+  },
+  "reservedSchemaBranches": [],
+  "radar": {
+    "indicators": [3, 8],
+    "items": [1, 6],
+    "range": "explicit finite min < max",
+    "missing": "rejected",
+    "normalization": false
+  },
+  "tree": {
+    "nodes": 1000,
+    "depth": 16,
+    "rootDepth": 0,
+    "initialDepth": [0, 2],
+    "defaultInitialDepth": 2,
+    "topology": "one root, connected and acyclic",
+    "identity": "node ID",
+    "svg": "labelled collapsed overview and full source metadata",
+    "retention": "same encoding and topology"
+  },
+  "sankey": {
+    "nodes": 200,
+    "edges": 1000,
+    "topology": "DAG; no self or duplicate directed edges",
+    "weights": "finite nonnegative",
+    "zeroEdges": "not drawn; preserved in full source table",
+    "conservation": "not assumed; incoming/outgoing/difference metadata",
+    "identity": ["node ID", "ordered endpoint pair"]
+  },
+  "map": {
+    "hostRequired": true,
+    "profile": "regional choropleth",
+    "coordinateSystem": "WGS84",
+    "geometry": ["Polygon", "MultiPolygon"],
+    "regionMatch": "exact",
+    "colorDomain": "explicit finite min < max",
+    "missing": "null/absent use missing-data color",
+    "assetLimits": {
+      "bytes": 5242880,
+      "points": 20000,
+      "regions": 1000,
+      "registrations": 8,
+      "totalBytes": 20971520
+    },
+    "network": false,
+    "assetsInModelInputs": false
+  }
+}

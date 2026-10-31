@@ -1,8 +1,11 @@
+import { mapCatalog } from '@chartnexus/echarts';
+import type { MapRegistry } from '@chartnexus/schema';
 import { Buffer } from 'node:buffer';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 import {
   capabilities,
   capabilities02,
+  capabilities03,
   nativeStrictCapabilities,
   validateNativeStrict,
   compileChart,
@@ -13,6 +16,8 @@ import {
 import {
   chartDocumentSchema,
   chartDocument02Schema,
+  chartDocument03Schema,
+  projectChartSchema03,
   failure,
   type DataRegistry,
   type Result,
@@ -51,6 +56,7 @@ export interface AgentService {
 export function createAgentService(
   settings: {
     registry?: DataRegistry;
+    maps?: MapRegistry;
     timeoutMs?: number;
     concurrency?: number;
   } = {},
@@ -83,7 +89,12 @@ export function createAgentService(
           ok: true,
           value: {
             ...capabilities,
-            additionalProfiles: [capabilities02, nativeStrictCapabilities],
+            additionalProfiles: [
+              capabilities02,
+              capabilities03,
+              nativeStrictCapabilities,
+            ],
+            hostMaps: Object.values(mapCatalog(settings.maps)),
             agent: {
               transport: 'stdio',
               staticSvg: true,
@@ -95,6 +106,31 @@ export function createAgentService(
           },
         };
       if (name === 'get_chart_schema') {
+        if (input.schemaVersion === '0.3') {
+          if (input.mode === 'echarts')
+            return failure(
+              'UNSUPPORTED_CAPABILITY',
+              '/mode',
+              '0.3 supports intent only.',
+            );
+          const schema =
+            typeof input.chartType === 'string'
+              ? projectChartSchema03(input.chartType)
+              : structuredClone(chartDocument03Schema);
+          return schema
+            ? { ok: true, value: schema }
+            : failure(
+                'UNSUPPORTED_CAPABILITY',
+                '/chartType',
+                'Unknown chart type.',
+              );
+        }
+        if (input.chartType !== undefined)
+          return failure(
+            'UNSUPPORTED_CAPABILITY',
+            '/chartType',
+            'Projection requires explicit schemaVersion 0.3.',
+          );
         if (input.schemaVersion === '0.2') {
           if (input.mode === 'echarts')
             return failure(
@@ -135,6 +171,7 @@ export function createAgentService(
           registry,
           signal,
           chatPresentation,
+          settings.maps,
         );
         return result.ok
           ? {
@@ -158,11 +195,16 @@ export function createAgentService(
       const chat =
         chatPresentation === undefined
           ? undefined
-          : compileChatChart(input.document, chatPresentation, registry);
+          : compileChatChart(
+              input.document,
+              chatPresentation,
+              registry,
+              mapCatalog(settings.maps),
+            );
       if (chat && !chat.ok) return chat;
       const result = chat
         ? { ok: true as const, value: chat.value.plan }
-        : compileChart(input.document, registry);
+        : compileChart(input.document, registry, mapCatalog(settings.maps));
       if (!result.ok) return result;
       if (name === 'validate_chart')
         return {
@@ -172,6 +214,10 @@ export function createAgentService(
             chartId: result.value.chartId,
             profile: result.value.profile,
             dataRevision: result.value.dataRevision,
+            ...(result.value.dataState
+              ? { dataState: result.value.dataState }
+              : {}),
+            ...(result.value.notices ? { notices: result.value.notices } : {}),
             ...(chat ? { chatAdjustments: chat.value.adjustments } : {}),
             validation:
               input.nativeValidation === 'strict-basic-0.1'

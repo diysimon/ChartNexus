@@ -1,19 +1,17 @@
+import recipeResources from './recipe-resources.json' with { type: 'json' };
+import recipeManifest from './recipes/manifest.json' with { type: 'json' };
 import {
   capabilities,
   capabilities02,
+  capabilities03,
   nativeStrictCapabilities,
 } from '@chartnexus/core';
 import {
   chartDocumentSchema,
   chartDocument02Schema,
+  chartDocument03Schema,
   nativeStrictBasicSchema,
 } from '@chartnexus/schema';
-import recipe from './recipes/bar.json' with { type: 'json' };
-import chatBarRecipe from './recipes/chat-bar.json' with { type: 'json' };
-import comboRecipe from './recipes/combo.json' with { type: 'json' };
-import funnelRecipe from './recipes/funnel.json' with { type: 'json' };
-import heatmapRecipe from './recipes/heatmap.json' with { type: 'json' };
-import invalidRecipe from './recipes/unknown-field.json' with { type: 'json' };
 import diagnostics from './diagnostics.json' with { type: 'json' };
 import modelIndex from './model-index.json' with { type: 'json' };
 import retrieval from './model-retrieval.json' with { type: 'json' };
@@ -23,28 +21,23 @@ import modelEntryZh from './model-entry-zh-CN.json' with { type: 'json' };
 
 export const resources = [
   {
-    uri: 'chartnexus://recipes/chat-bar/0.2',
-    name: 'Synthetic chat bar',
+    uri: 'chartnexus://schema/chart-document/0.3',
+    name: 'Experimental 0.3 contract; consult capabilities before use',
     mimeType: 'application/json',
-    value: chatBarRecipe,
+    value: chartDocument03Schema,
   },
   {
-    uri: 'chartnexus://recipes/heatmap/0.2',
-    name: 'Synthetic sparse heatmap',
+    uri: 'chartnexus://capabilities/basic-0.3',
+    name: 'Implemented 0.3 capabilities',
     mimeType: 'application/json',
-    value: heatmapRecipe,
+    value: capabilities03,
   },
+  ...recipeResources,
   {
-    uri: 'chartnexus://recipes/combo/0.2',
-    name: 'Synthetic single-axis combo',
+    uri: 'chartnexus://recipes/manifest/0.1',
+    name: 'Synthetic development recipe inventory',
     mimeType: 'application/json',
-    value: comboRecipe,
-  },
-  {
-    uri: 'chartnexus://recipes/funnel/0.2',
-    name: 'Synthetic funnel',
-    mimeType: 'application/json',
-    value: funnelRecipe,
+    value: recipeManifest,
   },
   {
     uri: 'chartnexus://capabilities/native-strict-basic-0.1',
@@ -111,22 +104,6 @@ export const resources = [
     name: 'ChartDocument 0.1',
     mimeType: 'application/json',
     value: chartDocumentSchema,
-  },
-  {
-    uri: 'chartnexus://recipes/bar',
-    name: 'Synthetic sales bar chart',
-    mimeType: 'application/json',
-    value: recipe,
-  },
-  {
-    uri: 'chartnexus://recipes/unknown-field',
-    name: 'Unknown field repair example',
-    mimeType: 'application/json',
-    value: {
-      document: invalidRecipe,
-      expectedCode: 'UNKNOWN_FIELD',
-      repair: { path: '/chart/encoding/y/field', value: 'revenue' },
-    },
   },
   {
     uri: 'chartnexus://diagnostics/basic-0.1',

@@ -53,7 +53,7 @@ export async function runCli(
       send({
         commands: Object.keys(commands),
         usage:
-          'chartnexus <command> [file|-] [--mode intent|echarts] [--schema-version 0.1|0.2] [--width N --height N] [--output path]',
+          'chartnexus <command> [file|-] [--mode intent|echarts] [--schema-version 0.1|0.2|0.3] [--chart-type TYPE] [--width N --height N] [--output path]',
         exitCodes: { success: 0, invalidInput: 1, usageOrIo: 2 },
       });
       return 0;
@@ -81,6 +81,7 @@ export async function runCli(
           ![
             '--mode',
             '--schema-version',
+            '--chart-type',
             '--width',
             '--height',
             '--output',
@@ -100,12 +101,16 @@ export async function runCli(
               '--mode applies to schema and must be intent or echarts.',
             );
           args.mode = value;
+        } else if (flag === '--chart-type') {
+          if (command !== 'schema')
+            throw new CliError('USAGE', 2, '--chart-type applies to schema.');
+          args.chartType = value;
         } else if (flag === '--schema-version') {
-          if (command !== 'schema' || !['0.1', '0.2'].includes(value))
+          if (command !== 'schema' || !['0.1', '0.2', '0.3'].includes(value))
             throw new CliError(
               'USAGE',
               2,
-              '--schema-version applies to schema and must be 0.1 or 0.2.',
+              '--schema-version applies to schema and must be 0.1, 0.2 or 0.3.',
             );
           args.schemaVersion = value;
         } else {

@@ -1,3 +1,4 @@
+import { newChartFixture, newChartHostOptions } from './expansion-fixtures.js';
 import {
   createMarklangCharts,
   marklangDataSource,
@@ -36,6 +37,7 @@ const native = {
 const host = createMarklangCharts(
   document.querySelector<HTMLElement>('#marklang-chart')!,
   {
+    ...newChartHostOptions,
     onSelect(event) {
       document.querySelector('#marklang-event')!.textContent =
         JSON.stringify(event);
@@ -89,4 +91,4 @@ document
   .addEventListener('click', () =>
     host.update(source(intent) + marklangDataSource('chart', native), true),
   );
-update(intent);
+update(newChartFixture ?? intent);

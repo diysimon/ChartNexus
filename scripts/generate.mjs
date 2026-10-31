@@ -47,14 +47,80 @@ if (process.argv.includes('--check')) {
     throw new Error('Generated 0.2 schema types differ; run pnpm generate.');
 } else await writeFile(output02, code02);
 
+const source03 = new URL(
+  '../packages/schema/src/chart-document-0.3.schema.json',
+  import.meta.url,
+);
+const code03 = await format(
+  await compile(
+    JSON.parse(await readFile(source03, 'utf8')),
+    'ChartDocument03',
+    {
+      bannerComment:
+        '/* Generated from chart-document-0.3.schema.json. Do not edit. */',
+    },
+  ),
+  { parser: 'typescript', singleQuote: true },
+);
+const output03 = new URL(
+  '../packages/schema/src/generated-0.3.ts',
+  import.meta.url,
+);
+if (process.argv.includes('--check')) {
+  if ((await readFile(output03, 'utf8')) !== code03)
+    throw new Error('Generated 0.3 types differ.');
+} else await writeFile(output03, code03);
+
+const recipeManifest = JSON.parse(
+  await readFile(
+    new URL('../resources/recipes/manifest.json', import.meta.url),
+    'utf8',
+  ),
+);
+const recipeResources = [];
+for (const entry of recipeManifest.examples) {
+  const document = JSON.parse(
+    await readFile(
+      new URL(`../resources/recipes/${entry.path}`, import.meta.url),
+      'utf8',
+    ),
+  );
+  recipeResources.push({
+    uri: entry.uri,
+    name: entry.title,
+    mimeType: 'application/json',
+    value: entry.expectedCode
+      ? { document, expectedCode: entry.expectedCode, repair: entry.repair }
+      : document,
+  });
+}
+for (const [target, value] of [
+  ['../packages/agent/src/recipe-resources.json', recipeResources],
+  [
+    '../packages/runtime/src/input-example-03.json',
+    recipeResources.find(
+      (entry) => entry.uri === 'chartnexus://recipes/chat-bar/0.3',
+    ).value,
+  ],
+  [
+    '../packages/runtime/src/input-example.json',
+    recipeResources.find(
+      (entry) => entry.uri === 'chartnexus://recipes/chat-bar/0.2',
+    ).value,
+  ],
+]) {
+  const file = new URL(target, import.meta.url);
+  const content = await format(JSON.stringify(value), { parser: 'json' });
+  if (process.argv.includes('--check')) {
+    if ((await readFile(file, 'utf8')) !== content)
+      throw new Error(`Resource drift: ${target}`);
+  } else await writeFile(file, content);
+}
+
 // Package copies are derived from repository resources, never maintained twice.
 for (const relative of [
-  'recipes/bar.json',
-  'recipes/chat-bar.json',
-  'recipes/combo.json',
-  'recipes/funnel.json',
-  'recipes/heatmap.json',
-  'recipes/unknown-field.json',
+  ...recipeManifest.examples.map((entry) => `recipes/${entry.path}`),
+  'recipes/manifest.json',
   'diagnostics.json',
   'evaluation/tasks.json',
 ]) {
@@ -76,12 +142,62 @@ for (const relative of [
 
 // A compact, versioned retrieval inventory references canonical source bytes.
 const entries = [
+  ...['en', 'zh-CN'].flatMap((language) => [
+    [
+      'chart-expansion-0.3',
+      language,
+      'Four bounded 0.3 chart types and trusted map assets',
+      `docs/${language}/chart-expansion-03.md`,
+      null,
+      '0.3',
+    ],
+    [
+      'contracts-0.3',
+      language,
+      '0.3 contracts and migration',
+      `docs/${language}/contracts-03.md`,
+      null,
+      '0.3',
+    ],
+    [
+      'chat-host-quality-0.3',
+      language,
+      'Chat host quality and support matrix',
+      `docs/${language}/chat-host-quality.md`,
+      null,
+      '0.3',
+    ],
+  ]),
   [
-    'chat-bar-recipe-0.2',
+    'chart-document-0.3',
     'en',
-    'Synthetic chat bar chart',
-    'resources/recipes/chat-bar.json',
-    'chartnexus://recipes/chat-bar/0.2',
+    'Experimental 0.3 contract',
+    'packages/schema/src/chart-document-0.3.schema.json',
+    'chartnexus://schema/chart-document/0.3',
+    '0.3',
+  ],
+  [
+    'capabilities-0.3',
+    'en',
+    'Implemented 0.3 capabilities',
+    'packages/core/src/capabilities-0.3.json',
+    'chartnexus://capabilities/basic-0.3',
+    '0.3',
+  ],
+  ...recipeManifest.examples.map((entry) => [
+    entry.resourceId,
+    'en',
+    entry.title,
+    `resources/recipes/${entry.path}`,
+    entry.uri,
+    entry.schemaVersion,
+  ]),
+  [
+    'recipe-manifest',
+    'en',
+    'Synthetic development recipe inventory',
+    'resources/recipes/manifest.json',
+    'chartnexus://recipes/manifest/0.1',
   ],
   [
     'chat-presentation-0.2',
@@ -96,27 +212,6 @@ const entries = [
     '聊天展示 profile',
     'docs/zh-CN/chat-presentation.md',
     null,
-  ],
-  [
-    'heatmap-recipe-0.2',
-    'en',
-    'Synthetic sparse heatmap',
-    'resources/recipes/heatmap.json',
-    'chartnexus://recipes/heatmap/0.2',
-  ],
-  [
-    'combo-recipe-0.2',
-    'en',
-    'Synthetic single-axis bar-line combo',
-    'resources/recipes/combo.json',
-    'chartnexus://recipes/combo/0.2',
-  ],
-  [
-    'funnel-recipe-0.2',
-    'en',
-    'Synthetic ordered funnel chart',
-    'resources/recipes/funnel.json',
-    'chartnexus://recipes/funnel/0.2',
   ],
   [
     'native-strict-schema',
@@ -159,20 +254,6 @@ const entries = [
     'Supported capabilities',
     'packages/core/src/capabilities.json',
     'chartnexus://capabilities/basic-0.1',
-  ],
-  [
-    'bar-recipe',
-    'en',
-    'Synthetic bar recipe',
-    'resources/recipes/bar.json',
-    'chartnexus://recipes/bar',
-  ],
-  [
-    'repair-unknown-field',
-    'en',
-    'Unknown field example',
-    'resources/recipes/unknown-field.json',
-    'chartnexus://recipes/unknown-field',
   ],
   [
     'diagnostics',
@@ -225,7 +306,7 @@ const index = {
   entries: [],
 };
 const retrieval = [];
-for (const [id, language, title, sourcePath, uri] of entries) {
+for (const [id, language, title, sourcePath, uri, explicitVersion] of entries) {
   const content = await readFile(new URL(`../${sourcePath}`, import.meta.url));
   const metadata = {
     id,
@@ -235,11 +316,13 @@ for (const [id, language, title, sourcePath, uri] of entries) {
     capabilityIds: [
       id.startsWith('native-strict-')
         ? 'native-strict-basic-0.1'
-        : id.endsWith('-0.2')
-          ? 'basic-0.2'
-          : 'basic-0.1',
+        : explicitVersion === '0.3'
+          ? 'basic-0.3'
+          : explicitVersion === '0.2' || id.endsWith('-0.2')
+            ? 'basic-0.2'
+            : 'basic-0.1',
     ],
-    schemaVersion: id.endsWith('-0.2') ? '0.2' : '0.1',
+    schemaVersion: explicitVersion ?? (id.endsWith('-0.2') ? '0.2' : '0.1'),
     source: sourcePath,
     license: 'Apache-2.0',
     updatedAt: '2026-10-31',
@@ -287,4 +370,31 @@ for (const language of ['en', 'zh-CN']) {
     if ((await readFile(destination, 'utf8')) !== text)
       throw new Error(`Model entry drift: ${language}`);
   } else await writeFile(destination, text);
+}
+
+// Every ordinary pnpm pack must include the same distribution notices.
+for (const name of [
+  'schema',
+  'core',
+  'echarts',
+  'runtime',
+  'render',
+  'agent',
+  'cli',
+  'mcp',
+  'adapter-a2ui',
+  'adapter-openui',
+  'adapter-cosui',
+]) {
+  for (const file of ['LICENSE', 'NOTICE']) {
+    const value = await readFile(
+      new URL(`../${file}`, import.meta.url),
+      'utf8',
+    );
+    const target = new URL(`../packages/${name}/${file}`, import.meta.url);
+    if (process.argv.includes('--check')) {
+      if ((await readFile(target, 'utf8')) !== value)
+        throw new Error(`${name}/${file} differs`);
+    } else await writeFile(target, value);
+  }
 }

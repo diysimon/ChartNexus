@@ -1,0 +1,230 @@
+{
+  "milestone": "M4",
+  "status": "verifying",
+  "updated": "2026-10-31",
+  "gates": {
+    "AC16": {
+      "status": "in-progress",
+      "harness": "pass",
+      "liveBaseline": "running private development baseline; clean heldout acceptance requires a new family-separated corpus",
+      "evidence": [
+        "evaluation-provenance.json",
+        "evaluation-summary.json",
+        "corpus-audit.json"
+      ]
+    },
+    "AC17": {
+      "status": "pass-local",
+      "packages": [
+        {
+          "node": "v22.22.3",
+          "status": "pass",
+          "browserTests": 45,
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "artifacts": [
+            {
+              "name": "@chartnexus/adapter-a2ui",
+              "bytes": 7647,
+              "sha256": "4b41146169d2daa5c735da7e7fafef645cd5dc57400d8de9d1ab62919ada365a",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-cosui",
+              "bytes": 10907,
+              "sha256": "a9e1cb51af8c5cfb56fdb8472b660bbbf1a37832010ab11ad72f5ae335065da3",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-openui",
+              "bytes": 7445,
+              "sha256": "00cb896d8e321985e2a12e2d2b0fdc89bf6981664b5e034ae5c5655dc5d93dfc",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/agent",
+              "bytes": 90452,
+              "sha256": "7d273c8a4a46232b5fa9d14f803118aecaea0a92c24b0b4172ff76254543c51a",
+              "entries": 44
+            },
+            {
+              "name": "@chartnexus/cli",
+              "bytes": 8423,
+              "sha256": "f8c7ab3238254a0771d2ca6961d066826acfa0f8c185863383257f8ae9df380a",
+              "entries": 12
+            },
+            {
+              "name": "@chartnexus/core",
+              "bytes": 59080,
+              "sha256": "0a2cf272f29e9fcfdb8479421b2a717c62d6e220118f27a10f843d3e604105c0",
+              "entries": 95
+            },
+            {
+              "name": "@chartnexus/echarts",
+              "bytes": 13264,
+              "sha256": "21aa28fa46c671b378a040b8c96e224b49d5f2097273fa56047cc44a725fc72d",
+              "entries": 15
+            },
+            {
+              "name": "@chartnexus/mcp",
+              "bytes": 9754,
+              "sha256": "11db64b0e412bd6288eba6fd4acb9b9aeb57f52664d0c960e40bb6ce13299a9a",
+              "entries": 16
+            },
+            {
+              "name": "@chartnexus/render",
+              "bytes": 6420,
+              "sha256": "abdada8a7595a86fa806c46e5fecc41a44c70f8feba9de1c961d8a9b651bac40",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/runtime",
+              "bytes": 31664,
+              "sha256": "ae27877940b92e69c4ac930ca5f83c85a195fac61d69ebd4d62a628236458a07",
+              "entries": 41
+            },
+            {
+              "name": "@chartnexus/schema",
+              "bytes": 20484,
+              "sha256": "2763d132da865c4b7d2dfe0dd58d4027ef707158d650d48fc54c74e9d22b22d3",
+              "entries": 23
+            }
+          ]
+        },
+        {
+          "node": "v24.22.1",
+          "status": "pass",
+          "browserTests": 45,
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "artifacts": [
+            {
+              "name": "@chartnexus/adapter-a2ui",
+              "bytes": 7647,
+              "sha256": "4b41146169d2daa5c735da7e7fafef645cd5dc57400d8de9d1ab62919ada365a",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-cosui",
+              "bytes": 10907,
+              "sha256": "a9e1cb51af8c5cfb56fdb8472b660bbbf1a37832010ab11ad72f5ae335065da3",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-openui",
+              "bytes": 7445,
+              "sha256": "00cb896d8e321985e2a12e2d2b0fdc89bf6981664b5e034ae5c5655dc5d93dfc",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/agent",
+              "bytes": 90452,
+              "sha256": "7d273c8a4a46232b5fa9d14f803118aecaea0a92c24b0b4172ff76254543c51a",
+              "entries": 44
+            },
+            {
+              "name": "@chartnexus/cli",
+              "bytes": 8423,
+              "sha256": "f8c7ab3238254a0771d2ca6961d066826acfa0f8c185863383257f8ae9df380a",
+              "entries": 12
+            },
+            {
+              "name": "@chartnexus/core",
+              "bytes": 59080,
+              "sha256": "0a2cf272f29e9fcfdb8479421b2a717c62d6e220118f27a10f843d3e604105c0",
+              "entries": 95
+            },
+            {
+              "name": "@chartnexus/echarts",
+              "bytes": 13264,
+              "sha256": "21aa28fa46c671b378a040b8c96e224b49d5f2097273fa56047cc44a725fc72d",
+              "entries": 15
+            },
+            {
+              "name": "@chartnexus/mcp",
+              "bytes": 9754,
+              "sha256": "11db64b0e412bd6288eba6fd4acb9b9aeb57f52664d0c960e40bb6ce13299a9a",
+              "entries": 16
+            },
+            {
+              "name": "@chartnexus/render",
+              "bytes": 6420,
+              "sha256": "abdada8a7595a86fa806c46e5fecc41a44c70f8feba9de1c961d8a9b651bac40",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/runtime",
+              "bytes": 31664,
+              "sha256": "ae27877940b92e69c4ac930ca5f83c85a195fac61d69ebd4d62a628236458a07",
+              "entries": 41
+            },
+            {
+              "name": "@chartnexus/schema",
+              "bytes": 20484,
+              "sha256": "2763d132da865c4b7d2dfe0dd58d4027ef707158d650d48fc54c74e9d22b22d3",
+              "entries": 23
+            }
+          ]
+        }
+      ],
+      "performance": "performance.json",
+      "browserPerformance": [
+        "browser-performance-22.22.3.json",
+        "browser-performance-24.22.1.json"
+      ],
+      "limits": "Pinned transitive dependency/peer rehearsal on macOS arm64; installed declarations resolved with skipLibCheck; no claim for all semver resolutions or browsers."
+    },
+    "AC18": {
+      "status": "pending-remote-ci",
+      "workflow": "../../.github/workflows/ci.yml",
+      "supportMatrix": "../../docs/en/support-matrix.md",
+      "migration": "../../docs/en/contracts-03.md",
+      "remoteCI": "not-run for uncommitted changes",
+      "publication": "not-run"
+    }
+  },
+  "checks": {
+    "pnpmCheck": "pass: 231 tests / 31 files, 20 legacy + 10 new public reference checks, generation, formatting, lint, typecheck, 98 bilingual pairs and demo build",
+    "independentScorer": "pass: 10 public references, mutations, leakage and statistics checks",
+    "runnerResume": "pass: synthetic subprocess 3 rounds / 9 attempts, idempotent resume and corpus drift rejection; prior 30-round / 90-attempt rehearsal also retained",
+    "bundleBudgets": "pass: 10 fixed raw/gzip entries",
+    "finalPackageAudit": "pass: final package reporting/artifact-retention script rechecked on Node22; same 11 tarball hashes; browser not repeated in this extra audit"
+  },
+  "logs": [
+    {
+      "path": "/tmp/chartnexus-m4-pack22-final.log",
+      "sha256": "548c5250fe31fd69b742028fc124a57e278ec244bcc9cddb2b6845f1db74451a"
+    },
+    {
+      "path": "/tmp/chartnexus-m4-pack24.log",
+      "sha256": "67090679a82bbf9c6f995d8105d715ba6e2830d4852ec2086851d543ed87613b"
+    },
+    {
+      "path": "/tmp/chartnexus-m4-benchmark-final.log",
+      "sha256": "65ada3d08da309ffc2a071a7ac12fe35f55e0217d646fa8a312edba48f363a72"
+    },
+    {
+      "path": "/tmp/chartnexus-m4-runner-test.log",
+      "sha256": "3495c361b52ffb091a42f9f856068c28032b6a748ea475c58bd67007fe12e332"
+    },
+    {
+      "path": "/tmp/chartnexus-m4-check-final3.log",
+      "sha256": "2d2858413b533360dff0e17f02df64f2f4e2fff8eb5a97332e3b2d94d9a456bf"
+    },
+    {
+      "path": "/tmp/chartnexus-m4-pack-audit-final.log",
+      "sha256": "8edc1cb81bf9e515e5fe2dd686a1f43708b983d01195c334549fd1895ac4d231"
+    }
+  ],
+  "nonClaims": [
+    "No commit, push, publication or upstream endorsement",
+    "No completed 95% model acceptance",
+    "No absolute cross-device SLA or complete leak proof"
+  ],
+  "notes": [
+    "Full check first encountered three 5s CLI timeouts under simultaneous live-model load. Rerun with model client briefly suspended and smaller equivalent runner test passed without changing timeout thresholds.",
+    "Final performance observations overlap a live Ollama run; timing data are not an uncontended regression gate.",
+    "Temporary model client suspension was under 90s; raw elapsed times and any errors remain in the baseline."
+  ],
+  "corpusQualification": "Private development baseline; independent heldout family audit failed. See corpus-audit.json."
+}

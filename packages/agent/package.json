@@ -5,7 +5,9 @@
   "type": "module",
   "license": "Apache-2.0",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "NOTICE"
   ],
   "exports": {
     ".": {
@@ -17,6 +19,7 @@
     "@chartnexus/schema": "workspace:*",
     "@chartnexus/core": "workspace:*",
     "@chartnexus/render": "workspace:*",
-    "ajv": "8.20.0"
+    "ajv": "8.20.0",
+    "@chartnexus/echarts": "workspace:*"
   }
 }

@@ -1,6 +1,6 @@
 {
   "version": "0.1",
-  "updated": "2026-10-30",
+  "updated": "2026-10-31",
   "status": "documentation-baseline",
   "documents": [
     {
@@ -534,6 +534,160 @@
       "status": "implementing",
       "en": "specs/0029-quality-expansion/spec.md",
       "zh-CN": "specs/0029-quality-expansion/spec.zh-CN.md"
+    },
+    {
+      "id": "project-review-2026-10-31",
+      "version": "0.1",
+      "status": "reviewed",
+      "en": "docs/en/project-review-2026-10-31.md",
+      "zh-CN": "docs/zh-CN/project-review-2026-10-31.md"
+    },
+    {
+      "id": "technical-design-2026-10-31",
+      "version": "0.1",
+      "status": "partially-implemented",
+      "en": "docs/en/technical-design-2026-10-31.md",
+      "zh-CN": "docs/zh-CN/technical-design-2026-10-31.md"
+    },
+    {
+      "id": "action-plan-2026-10-31",
+      "version": "0.1",
+      "status": "implementing",
+      "en": "docs/en/action-plan-2026-10-31.md",
+      "zh-CN": "docs/zh-CN/action-plan-2026-10-31.md"
+    },
+    {
+      "id": "spec-0030-spec",
+      "version": "0.1",
+      "status": "reviewed",
+      "en": "specs/0030-project-review/spec.md",
+      "zh-CN": "specs/0030-project-review/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0030-tasks",
+      "version": "0.1",
+      "status": "reviewed",
+      "en": "specs/0030-project-review/tasks.md",
+      "zh-CN": "specs/0030-project-review/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0031-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0031-intent-semantics/spec.md",
+      "zh-CN": "specs/0031-intent-semantics/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0031-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0031-intent-semantics/tasks.md",
+      "zh-CN": "specs/0031-intent-semantics/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0032-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0032-model-entry-consistency/spec.md",
+      "zh-CN": "specs/0032-model-entry-consistency/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0032-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0032-model-entry-consistency/tasks.md",
+      "zh-CN": "specs/0032-model-entry-consistency/tasks.zh-CN.md"
+    },
+    {
+      "id": "contracts-03",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/contracts-03.md",
+      "zh-CN": "docs/zh-CN/contracts-03.md"
+    },
+    {
+      "id": "chat-host-quality",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/chat-host-quality.md",
+      "zh-CN": "docs/zh-CN/chat-host-quality.md"
+    },
+    {
+      "id": "spec-0033-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0033-contracts-core/spec.md",
+      "zh-CN": "specs/0033-contracts-core/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0033-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0033-contracts-core/tasks.md",
+      "zh-CN": "specs/0033-contracts-core/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0034-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0034-chat-host-quality/spec.md",
+      "zh-CN": "specs/0034-chat-host-quality/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0034-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0034-chat-host-quality/tasks.md",
+      "zh-CN": "specs/0034-chat-host-quality/tasks.zh-CN.md"
+    },
+    {
+      "id": "spec-0035-spec",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0035-chart-expansion/spec.md",
+      "zh-CN": "specs/0035-chart-expansion/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0035-tasks",
+      "version": "0.1",
+      "status": "done",
+      "en": "specs/0035-chart-expansion/tasks.md",
+      "zh-CN": "specs/0035-chart-expansion/tasks.zh-CN.md"
+    },
+    {
+      "id": "chart-expansion-03",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/chart-expansion-03.md",
+      "zh-CN": "docs/zh-CN/chart-expansion-03.md"
+    },
+    {
+      "id": "spec-0036-spec",
+      "version": "0.1",
+      "status": "verifying",
+      "en": "specs/0036-trial-distribution/spec.md",
+      "zh-CN": "specs/0036-trial-distribution/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0036-tasks",
+      "version": "0.1",
+      "status": "verifying",
+      "en": "specs/0036-trial-distribution/tasks.md",
+      "zh-CN": "specs/0036-trial-distribution/tasks.zh-CN.md"
+    },
+    {
+      "id": "trial-distribution",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/trial-distribution.md",
+      "zh-CN": "docs/zh-CN/trial-distribution.md"
+    },
+    {
+      "id": "support-matrix",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/support-matrix.md",
+      "zh-CN": "docs/zh-CN/support-matrix.md"
     }
   ]
 }

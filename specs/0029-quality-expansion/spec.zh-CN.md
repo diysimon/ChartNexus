@@ -33,7 +33,23 @@ language: zh-CN
 ## 资源与发布
 每项已实现能力同步 Schema、能力表、生成类型、示例、MCP/RAG 资源和双语文档。本规格不授权发布。回退新增能力时不得改变现有图表语义。
 
-## 完成记录
+## 初始检查点（历史记录）
 仅完成规划及开发指南过时状态的修正；其余项目须取得证据后才能关闭。
 
 已实现分类标签固定 80 像素上限、重叠隐藏和悬停提示，并检查了窄容器长标签示例；自适应宽度、其他布局和无障碍替代仍待完成。
+
+## 2026-10-31 审视后执行依据
+
+[审视报告](../../docs/zh-CN/project-review-2026-10-31.md)、[技术 RFC](../../docs/zh-CN/technical-design-2026-10-31.md)及[行动计划](../../docs/zh-CN/action-plan-2026-10-31.md)细化本范围。本规格保持 implementing；0030 仅表示审视完成，不表示本规格功能完成。
+
+## M1/M2 检查点
+
+M0–M2 现已在本地完成。[M1 证据](../0033-contracts-core/tasks.zh-CN.md)覆盖版本契约和核心提取；[M2 证据](../0034-chat-host-quality/tasks.zh-CN.md)覆盖尺寸、可访问入口、生命周期、图例状态、流式和固定宿主 profile。四类新渲染器、最终独立评测、分发/性能及远端 CI 仍待完成，本总规格尚未完成。
+
+## M3 检查点
+
+A12–A15 已完成，见 [M3 证据](../0035-chart-expansion/tasks.zh-CN.md)。十一种实验性0.3 intent 类型已有本地编译/浏览器/SVG覆盖；地图需要宿主资产。A16/A17/A18 最终工作未完成，总规格继续保持 implementing。
+
+## M4 checkpoint
+
+[M4 证据](../0036-trial-distribution/tasks.zh-CN.md)：A17 本地安装/性能检查通过；A16 完整模型运行与 A18 远端 CI 仍未关闭，本总表继续 implementing。

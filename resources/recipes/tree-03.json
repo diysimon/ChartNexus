@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "0.3",
+  "id": "m3-tree",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["id", "parent", "label"],
+    "rows": [
+      {
+        "id": "root",
+        "parent": null,
+        "label": "Product"
+      },
+      {
+        "id": "a",
+        "parent": "root",
+        "label": "Design"
+      },
+      {
+        "id": "b",
+        "parent": "root",
+        "label": "Engineering"
+      },
+      {
+        "id": "c",
+        "parent": "b",
+        "label": "Web"
+      },
+      {
+        "id": "d",
+        "parent": "c",
+        "label": "Charts"
+      },
+      {
+        "id": "e",
+        "parent": "d",
+        "label": "Labels"
+      }
+    ]
+  },
+  "chart": {
+    "type": "tree",
+    "title": "Product structure",
+    "encoding": {
+      "id": {
+        "field": "id"
+      },
+      "parentId": {
+        "field": "parent"
+      },
+      "label": {
+        "field": "label"
+      }
+    }
+  }
+}

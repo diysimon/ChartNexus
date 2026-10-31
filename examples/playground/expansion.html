@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChartNexus · M3 图表</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f5f7fa;
+      color: #172033;
+      font:
+        15px/1.6 system-ui,
+        sans-serif;
+    }
+    main {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+    h1 {
+      font-size: 26px;
+    }
+    nav {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0;
+    }
+    select,
+    button,
+    textarea {
+      font: inherit;
+      color: inherit;
+      border: 1px solid #94a3b8;
+      border-radius: 6px;
+      padding: 6px 10px;
+      background: transparent;
+    }
+    button {
+      cursor: pointer;
+    }
+    #surface {
+      padding: 16px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      overflow: auto;
+    }
+    #host {
+      width: 768px;
+      max-width: 100%;
+    }
+    #chart {
+      width: 100%;
+      height: 480px;
+    }
+    textarea {
+      width: 100%;
+      height: 240px;
+      font: 13px/1.5 monospace;
+    }
+    pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    summary {
+      cursor: pointer;
+    }
+    td,
+    th {
+      text-align: left;
+      padding: 4px 12px;
+    }
+    body.dark {
+      background: #0b1220;
+      color: #f3f4f6;
+    }
+    body.dark #surface {
+      background: #111827;
+      border-color: #475569;
+    }
+    body.dark select {
+      background: #111827;
+    }
+    a {
+      color: inherit;
+    }
+  </style>
+  <body>
+    <main>
+      <a href="/">← ChartNexus</a>
+      <h1>四种新的基础图表</h1>
+      <p>
+        0.3 实验协议 · 透明背景 ·
+        完整数据可查。地图使用项目自制矩形区域，不代表真实行政边界。
+      </p>
+      <nav>
+        <label
+          >图表
+          <select id="type">
+            <option value="radar">雷达图</option>
+            <option value="tree">树图</option>
+            <option value="sankey">桑基图</option>
+            <option value="map">区域地图</option>
+          </select></label
+        >
+        <label
+          >主题
+          <select id="theme">
+            <option value="light">浅色</option>
+            <option value="dark">深色</option>
+          </select></label
+        >
+        <label
+          >展示
+          <select id="level">
+            <option>minimal</option>
+            <option>simple</option>
+            <option selected>standard</option>
+            <option>detailed</option>
+            <option>comprehensive</option>
+          </select></label
+        >
+        <label
+          >宽度
+          <select id="width">
+            <option>240</option>
+            <option>320</option>
+            <option>480</option>
+            <option selected>768</option>
+          </select></label
+        >
+      </nav>
+      <p id="status" role="status"></p>
+      <section id="surface">
+        <div id="host"><div id="chart"></div></div>
+      </section>
+      <p>点击图形查看选择事件；树节点可折叠/展开，源数据始终保留。</p>
+      <pre id="event">尚未选择图形</pre>
+      <details>
+        <summary>编辑 ChartDocument</summary>
+        <textarea id="source" aria-label="ChartDocument"></textarea
+        ><button id="apply">应用</button>
+      </details>
+      <script type="module" src="/expansion.ts"></script>
+    </main>
+  </body>
+</html>

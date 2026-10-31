@@ -1,9 +1,12 @@
+import type { MapRegistry } from '@chartnexus/schema';
 import { createElement, useEffect, useRef, useState } from 'react';
 import { createComponentImplementation } from '@a2ui/react/v0_9';
 import { CommonSchemas } from '@a2ui/web_core/v0_9';
 import { z } from 'zod';
 import {
-  mountChart,
+  observeChartMount,
+  validatePendingInput,
+  getChartInputContract,
   createUpdateController,
   type UpdateController,
   type UpdateReceipt,
@@ -19,6 +22,7 @@ import {
 
 export interface A2uiChartOptions {
   registry?: DataRegistry;
+  maps?: MapRegistry;
   chatPresentation?: ChatPresentationSettings;
   /** Opt into ChartNexus operation envelopes in the document binding. */
   orderedUpdates?: boolean;
@@ -27,14 +31,14 @@ export interface A2uiChartOptions {
   onDiagnostics?: (diagnostics: Diagnostic[]) => void;
 }
 export function createA2uiChart(options: A2uiChartOptions = {}) {
+  const contract = getChartInputContract({
+    chatPresentation: Boolean(options.chatPresentation),
+    orderedUpdates: Boolean(options.orderedUpdates),
+  });
   const api = {
     name: 'ChartNexusChart',
     schema: z.object({
-      document: CommonSchemas.DynamicString.describe(
-        options.orderedUpdates
-          ? 'A JSON-encoded ChartNexus update operation with operationId, baseRevision, complete and a complete document.'
-          : 'A JSON-encoded ChartDocument. Use schemaVersion 0.1 and a stable id.',
-      ),
+      document: CommonSchemas.DynamicString.describe(contract.description),
     }),
   };
   return createComponentImplementation(api, ({ props }) =>
@@ -51,33 +55,37 @@ function Chart({
   const container = useRef<HTMLDivElement>(null);
   const runtime = useRef<ChartRuntime | null>(null);
   const controller = useRef<UpdateController | null>(null);
+  const applyCurrent = useRef<(override?: unknown) => void>(() => {});
+  const pendingInput = useRef<unknown>(undefined);
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
   useEffect(() => {
     if (!container.current) return;
-    const result = mountChart(
+    const coordinator = observeChartMount(
       container.current,
+      (value) => {
+        runtime.current = value;
+        if (options.orderedUpdates)
+          controller.current = createUpdateController(value);
+        applyCurrent.current(pendingInput.current);
+        pendingInput.current = undefined;
+      },
+      (items) => {
+        setDiagnostics(items);
+        options.onDiagnostics?.(items);
+      },
       (event) => options.onSelect?.(event),
-      options.chatPresentation
-        ? { chatPresentation: options.chatPresentation }
-        : {},
+      options,
     );
-    if (result.ok) {
-      runtime.current = result.value;
-      if (options.orderedUpdates)
-        controller.current = createUpdateController(result.value);
-    } else {
-      setDiagnostics(result.diagnostics);
-      options.onDiagnostics?.(result.diagnostics);
-    }
     return () => {
+      coordinator.dispose();
       controller.current?.dispose();
       controller.current = null;
       runtime.current?.dispose();
       runtime.current = null;
     };
   }, []);
-  useEffect(() => {
-    if (!runtime.current || document === undefined || document === null) return;
+  applyCurrent.current = (override) => {
+    if (document === undefined || document === null) return;
     let input: unknown;
     if (new TextEncoder().encode(document).byteLength > 1024 * 1024) {
       const result = failure(
@@ -92,7 +100,7 @@ function Chart({
       return;
     }
     try {
-      input = JSON.parse(document);
+      input = override ?? JSON.parse(document);
     } catch {
       const result = failure(
         'INVALID_JSON',
@@ -105,6 +113,16 @@ function Chart({
       }
       return;
     }
+    if (!runtime.current) {
+      const checked = validatePendingInput(input, options, options.registry);
+      if (checked.ok) {
+        if (checked.value) pendingInput.current = structuredClone(input);
+      } else {
+        setDiagnostics(checked.diagnostics);
+        options.onDiagnostics?.(checked.diagnostics);
+      }
+      return;
+    }
     const result = controller.current
       ? controller.current.commit(input, options.registry)
       : runtime.current.update(input, options.registry);
@@ -113,7 +131,8 @@ function Chart({
     const next = result.ok ? [] : result.diagnostics;
     setDiagnostics(next);
     options.onDiagnostics?.(next);
-  }, [document]);
+  };
+  useEffect(() => applyCurrent.current(), [document]);
   return createElement(
     'div',
     null,
@@ -139,3 +158,8 @@ export type {
   ChartStreamBuffer,
   BufferedChartOperation,
 } from './stream-buffer.js';
+
+export {
+  getChartInputContract,
+  type ChartInputProfile,
+} from '@chartnexus/runtime';

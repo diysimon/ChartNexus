@@ -1,0 +1,72 @@
+{
+  "schemaVersion": "0.3",
+  "id": "m3-sankey",
+  "mode": "intent",
+  "data": {
+    "kind": "graph",
+    "nodes": {
+      "kind": "inline",
+      "fields": ["id", "label"],
+      "rows": [
+        {
+          "id": "input",
+          "label": "Input"
+        },
+        {
+          "id": "work",
+          "label": "Process"
+        },
+        {
+          "id": "output",
+          "label": "Output"
+        },
+        {
+          "id": "zero",
+          "label": "Unused"
+        }
+      ]
+    },
+    "links": {
+      "kind": "inline",
+      "fields": ["from", "to", "weight"],
+      "rows": [
+        {
+          "from": "input",
+          "to": "work",
+          "weight": 12
+        },
+        {
+          "from": "work",
+          "to": "output",
+          "weight": 9
+        },
+        {
+          "from": "input",
+          "to": "zero",
+          "weight": 0
+        }
+      ]
+    }
+  },
+  "chart": {
+    "type": "sankey",
+    "title": "Measured flows",
+    "encoding": {
+      "nodeId": {
+        "field": "id"
+      },
+      "nodeLabel": {
+        "field": "label"
+      },
+      "source": {
+        "field": "from"
+      },
+      "target": {
+        "field": "to"
+      },
+      "value": {
+        "field": "weight"
+      }
+    }
+  }
+}

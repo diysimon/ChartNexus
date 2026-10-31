@@ -2,7 +2,7 @@
 doc_id: development
 version: "0.1"
 status: experimental
-updated: 2026-10-30
+updated: 2026-10-31
 language: en
 ---
 
@@ -10,7 +10,7 @@ language: en
 
 [Other language](../zh-CN/development.md)
 
-This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Small local model pilots and bounded session-level operation deduplication exist; stable row IDs and interaction-state preservation are not implemented. Independent evaluation and broader host verification remain open.
+This is a local, unpublished experimental implementation. OpenUI Lang React, COSUI JSON/San, COSUI Marklang and A2UI v0.9 React chart profiles are experimental. Small local model pilots and bounded session-level operation deduplication exist; 0.3 stable row keys and compatible legend-state retention are implemented. Independent evaluation and broader host verification remain open.
 
 ## Run
 Use Node 22.22.3 (baseline) or a supported Node 24 runtime and pnpm 11.25.0. From the repository root:
@@ -32,7 +32,7 @@ pnpm test:browser
 - `@chartnexus/runtime`: `mountChart(container, onSelect?)` returns a Result containing update/resize/dispose/getRevision. One runtime owns one container and chart ID.
 - `@chartnexus/render`: `renderSvg(document, { width?, height?, registry? })` returns static SVG or diagnostics.
 
-All packages are private workspaces. Names do not imply published npm packages or scope ownership. The full ECharts bundle is currently used; modular bundle optimization is deferred.
+All packages are private workspaces. Names do not imply published npm packages or scope ownership. The shared ECharts bridge now explicitly registers supported modules and SVG/ARIA components; see [M4 distribution and performance](trial-distribution.md).
 
 ## Current contract
 Schema version 0.1, native `echarts` or semantic `intent` mode. Intent uses inline fields/object rows or a host registry reference with exact revision. x/y/series field mappings are explicit. Bar/line/pie require string categories; scatter requires numerical coordinates. y is numerical or null, except pie requires nonnegative numbers. Grouped bar/line/scatter are supported; pie grouping is not. Duplicate categories within one series fail. Empty rows produce empty series.
@@ -44,7 +44,7 @@ Top-level native components: title, legend, grid, xAxis, yAxis, series, dataset,
 Input budget: 1 MiB, depth 32, 100000 inspected nodes; 100 fields, 10000 rows, 50 series, 50000 expanded category/series points; dimensions at most 4096; exported SVG at most 8 MiB. Synchronous compilation/rendering has no hard deadline or process isolation. These are conservative starting limits, not performance guarantees; hosted untrusted rendering is out of scope.
 
 ## Runtime behavior
-Full replacement uses notMerge, so removed series cannot remain stale. Validation failures leave the prior chart/revision intact. A render failure attempts restoration; unrecoverable failures request remounting. Selection events carry positional row identity, chart revision, and data revision; native selections have no row mapping. Resizing uses ResizeObserver. Disposing removes observer and instance. Zoom/legend preservation is not provided yet.
+Full replacement uses notMerge, so removed series cannot remain stale. Validation failures leave the prior chart/revision intact. A render failure attempts restoration; unrecoverable failures request remounting. Selection events carry chart/data revision and positional or aggregate identity; 0.3 can supply stable row keys. Native selections have no row mapping. Resizing uses ResizeObserver. Disposing removes observer and instance. Compatible chat/0.3 legend selection is retained; zoom retention is unsupported.
 
 ## Engineering status
 `pnpm generate` regenerates types from JSON Schema; `generate:check` detects drift. `docs:check` verifies bilingual manifest entries and local links. `check` combines the implemented local gates; browser tests are separate. CI YAML is local configuration, not evidence of a successful GitHub run or enabled branch protection. Release jobs are not configured.
@@ -58,7 +58,7 @@ CLI and local MCP stdio now use a shared Node agent service. See [integration gu
 
 Run `pnpm dev` and open `http://127.0.0.1:5173/openui.html`. The demo uses the actual OpenUI React Renderer and a local response; it does not call a model. `@chartnexus/adapter-openui` exports `createOpenUIChart({ registry?, onSelect?, onDiagnostics? })` for registration in an OpenUI library. The `ChartNexusChart(document)` prop is a JSON string containing a complete ChartDocument. Consult the canonical schema in `packages/schema/src/chart-document.schema.json` and `resources/recipes/` when generating prompts; `library.prompt()` describes the wrapper but does not embed the complete chart schema.
 
-The adapter defers updates while OpenUI reports streaming and retains the previous valid chart on document errors. The host must preserve the last committed response while assembling streaming fragments: a malformed OpenUI program may remove the component before the adapter can retain it. Native and intent modes follow the existing core limits, including 1 MiB. Use a stable chart ID; for another ID remount the component. Supply registry references through a trusted host registry. Chart selections use positional identity. `onDiagnostics` receives errors and an empty list on recovery. No arbitrary executable callbacks are accepted from the model.
+The adapter defers updates while OpenUI reports streaming and retains the previous valid chart on document errors. The host must preserve the last committed response while assembling streaming fragments: a malformed OpenUI program may remove the component before the adapter can retain it. Native and intent modes follow the existing core limits, including 1 MiB. Use a stable chart ID; for another ID remount the component. Supply registry references through a trusted host registry. Legacy chart selections use positional or aggregate identity; 0.3 can supply stable row keys. `onDiagnostics` receives errors and an empty list on recovery. No arbitrary executable callbacks are accepted from the model.
 
 Verified against OpenUI React Lang 1.0.2, React 19.2.4 and Zod 4.3.6. This is an experimental OpenUI Lang component profile, not standard A2UI, COSUI, or all OpenUI hosts. Real model output, SSR/hydration, clean package installation, broader SDK versions and npm publication remain unverified. See [SPEC-0003](../../specs/0003-openui-adapter/spec.md).
 
@@ -115,7 +115,7 @@ Line x may use `type: "temporal", temporalKind: "instant"`, with values like `20
 
 ### Version-aware schema discovery
 
-MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2"` and `mode`. Defaults remain 0.1; 0.2 currently accepts only intent, and requesting 0.2 with `mode: "echarts"` fails with `UNSUPPORTED_CAPABILITY`. In CLI use `pnpm cli schema --schema-version 0.2 --mode intent`. This discovers the schema; it does not make 0.2 native mode available.
+MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2" | "0.3"` and `mode`; 0.3 also accepts `chartType` for a projected branch. Defaults remain 0.1; 0.2/0.3 accept only intent, and requesting either with `mode: "echarts"` fails with `UNSUPPORTED_CAPABILITY`. In CLI use `pnpm cli schema --schema-version 0.3 --chart-type bar`. Discovery does not make reserved 0.3 renderers available.
 
 ### Combo and funnel charts in 0.2
 
@@ -126,3 +126,23 @@ MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2"` and `mode
 ### Categorical heatmaps in 0.2
 
 Use `chart.type: "heatmap"` with ordinal string x/y fields and `chart.heatmap: { "field": "orders", "min": 0, "max": 10 }` for a distinct numeric field. The range must be explicit and non-degenerate; non-null values outside it are rejected. A null value produces no drawable cell, while zero remains zero. Duplicate x/y pairs are rejected even if a row is null; sparse cells are not invented. Categories follow first appearance; selected visible cells report the original source row index. This first profile does not support sorting, grouping, aggregation, unit, or label/legend overrides, and uses a fixed color scale. See [recipe](../../resources/recipes/heatmap.json) and [spec](../../specs/0027-heatmap/spec.md).
+
+## M0 semantic corrections
+
+Intent pie/donut distinguishes positive, empty and all-zero data. Zero totals draw no sectors, show “No shares: all values are zero.” even at minimal detail, and expose an informational notice. Empty data draws no placeholder circle. Browser ARIA host attributes are restored when leaving no-share or disposing. Native charts retain their previous behavior; funnels do not inherit share semantics.
+
+Grouped series IDs now encode group field, raw group value and measure field. Empty names use the first unused `(empty)` / `(empty) [n]`; nonempty values are preserved. `seriesMetadata` retains raw values; existing grouped IDs change and should not be persisted across this compiler change. Event row identities remain positional/aggregate.
+
+Recipe copies, discovery and retrieval are generated from [manifest](../../resources/recipes/manifest.json). `docs:check` validates frontmatter status against the manifest and paired update dates. See [semantic spec](../../specs/0031-intent-semantics/spec.md) and [entry spec](../../specs/0032-model-entry-consistency/spec.md).
+
+## M1/M2 implementation
+
+See [0.3 contracts and migration](contracts-03.md) and [chat host quality/support matrix](chat-host-quality.md) for current version discovery, dimensions, tables, lifecycle, legend retention and real local Ollama streaming evidence. Legacy spec evidence remains historical.
+
+## M3 chart expansion
+
+0.3 now supports radar, tree, Sankey and trusted regional maps in addition to the original seven types. See [contracts, host MapRegistry, resources and preview](chart-expansion-03.md). Browser/SVG/worker and four pinned upstream SDK paths have local evidence; M4 model evaluation and distribution remain separate. Fixed renderer-owned label callbacks preserve text literally; model callbacks remain forbidden.
+
+## M4 verification commands
+
+`pnpm test:packages --offline --browser` verifies all eleven tarballs in an isolated consumer. `pnpm benchmark` enforces bundle budgets and records performance; `pnpm eval:independent:check` checks the independent scorer. Full live evaluation is opt-in, local-only and may take hours; see [trial/distribution](trial-distribution.md) and the [support matrix](support-matrix.md). Node 22.22.3 and 24.22.1 installations are locally verified; remote CI remains open.

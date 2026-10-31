@@ -1,0 +1,1392 @@
+{
+  "status": "in-progress",
+  "generated": "2026-10-31T13:33:37.834Z",
+  "mode": "local-ollama",
+  "freezeHash": "4f8716238c24f7e69613ab75cb39c73ead2076b616b75960fc784a339f544d0b",
+  "corpusHash": "18c685c4db15d0bc1e9e7650439c9935a8482b160f344a38ad28b44ab64d5f8d",
+  "sourceHash": "a9caf2ee3df28520750ab2ae88b0525a64d26bfbed095346c8e3d97fa9707141",
+  "settings": {
+    "temperature": 0.2,
+    "num_predict": 2048,
+    "num_ctx": 32768
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "ollama": {
+    "version": "0.40.6"
+  },
+  "models": [
+    {
+      "name": "qwen3.5:9b",
+      "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+      "quantization": "Q4_K_M",
+      "planned": 180,
+      "completed": 86,
+      "pending": 94,
+      "firstPass": {
+        "jsonValid": {
+          "successes": 86,
+          "total": 87,
+          "rate": 0.9885057471264368,
+          "wilson95": [
+            0.9377280216427621,
+            0.9979680922624077
+          ]
+        },
+        "structuralValid": {
+          "successes": 75,
+          "total": 87,
+          "rate": 0.8620689655172413,
+          "wilson95": [
+            0.7742137261595751,
+            0.9193022170877859
+          ]
+        },
+        "compiled": {
+          "successes": 63,
+          "total": 86,
+          "rate": 0.7325581395348837,
+          "wilson95": [
+            0.6305495916710698,
+            0.8146791537774222
+          ]
+        },
+        "dataFidelity": {
+          "successes": 77,
+          "total": 77,
+          "rate": 1,
+          "wilson95": [
+            0.9524815747175658,
+            0.9999999999999999
+          ]
+        },
+        "renderedFidelity": {
+          "successes": 49,
+          "total": 77,
+          "rate": 0.6363636363636364,
+          "wilson95": [
+            0.5248220271273843,
+            0.7349456750683153
+          ]
+        },
+        "taskCorrect": {
+          "successes": 65,
+          "total": 86,
+          "rate": 0.7558139534883721,
+          "wilson95": [
+            0.6553712705919826,
+            0.8343803494013585
+          ]
+        },
+        "correct": {
+          "successes": 42,
+          "total": 87,
+          "rate": 0.4827586206896552,
+          "wilson95": [
+            0.3807266446376226,
+            0.5862487866363125
+          ]
+        }
+      },
+      "afterRepair": {
+        "successes": 45,
+        "total": 180,
+        "wilson95": [
+          0.1924130893803151,
+          0.3180346595804914
+        ]
+      },
+      "repairs": 42,
+      "attempts": 129,
+      "responseTokens": 31359,
+      "latency": {
+        "medianMs": 11588.637457999866,
+        "p95Ms": 20102.080749999965
+      },
+      "byKind": {
+        "chart": {
+          "planned": 99,
+          "completed": 59,
+          "initial": 31,
+          "afterRepair": 34
+        },
+        "edit": {
+          "planned": 36,
+          "completed": 12,
+          "initial": 6,
+          "afterRepair": 6
+        },
+        "invalid": {
+          "planned": 27,
+          "completed": 9,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "recovery": {
+          "planned": 18,
+          "completed": 6,
+          "initial": 5,
+          "afterRepair": 5
+        }
+      },
+      "failures": [
+        {
+          "id": "hold-02",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-02",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-03",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-03",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-06",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-06",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-07",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-07",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-08",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-08",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-13",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-13",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-14",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-14",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-15",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-15",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_ENCODING"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-16",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-16",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-17",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-17",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-18",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-18",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": true
+            }
+          ]
+        },
+        {
+          "id": "hold-22",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-24",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-24",
+          "repeat": 1,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA",
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": false,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-34",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-35",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-36",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-37",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-42",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-45",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [
+                "INVALID_SCHEMA"
+              ],
+              "dataFidelity": true,
+              "renderedFidelity": false,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-46",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-47",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-48",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-49",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-50",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-51",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-52",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-53",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-54",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 1,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            },
+            {
+              "attempt": 2,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": null,
+              "renderedFidelity": null,
+              "taskCorrect": false
+            }
+          ]
+        },
+        {
+          "id": "hold-58",
+          "repeat": 0,
+          "failures": [
+            {
+              "attempt": 0,
+              "error": null,
+              "diagnostics": [],
+              "dataFidelity": true,
+              "renderedFidelity": true,
+              "taskCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mistral:latest",
+      "digest": "6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf",
+      "quantization": "Q4_K_M",
+      "planned": 180,
+      "completed": 0,
+      "pending": 180,
+      "firstPass": {
+        "jsonValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "structuralValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "compiled": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "dataFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "renderedFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "taskCorrect": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "correct": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        }
+      },
+      "afterRepair": {
+        "successes": 0,
+        "total": 180,
+        "wilson95": [
+          0,
+          0.02089549792161305
+        ]
+      },
+      "repairs": 0,
+      "attempts": 0,
+      "responseTokens": 0,
+      "latency": null,
+      "byKind": {
+        "chart": {
+          "planned": 99,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "edit": {
+          "planned": 36,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "invalid": {
+          "planned": 27,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "recovery": {
+          "planned": 18,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        }
+      },
+      "failures": []
+    },
+    {
+      "name": "qwen3.5:27b",
+      "digest": "7653528ba5cba4dd8e19da24aaddc7f4d0b5ecd93571c0825dfd4137958ec06e",
+      "quantization": "Q4_K_M",
+      "planned": 180,
+      "completed": 0,
+      "pending": 180,
+      "firstPass": {
+        "jsonValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "structuralValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "compiled": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "dataFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "renderedFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "taskCorrect": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "correct": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        }
+      },
+      "afterRepair": {
+        "successes": 0,
+        "total": 180,
+        "wilson95": [
+          0,
+          0.02089549792161305
+        ]
+      },
+      "repairs": 0,
+      "attempts": 0,
+      "responseTokens": 0,
+      "latency": null,
+      "byKind": {
+        "chart": {
+          "planned": 99,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "edit": {
+          "planned": 36,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "invalid": {
+          "planned": 27,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "recovery": {
+          "planned": 18,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        }
+      },
+      "failures": []
+    },
+    {
+      "name": "goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest",
+      "digest": "cf62f31c7147c87e67f2bab1859ce482335862f3a67d94c53ad286c57b88351e",
+      "quantization": "F16",
+      "planned": 180,
+      "completed": 0,
+      "pending": 180,
+      "firstPass": {
+        "jsonValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "structuralValid": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "compiled": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "dataFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "renderedFidelity": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "taskCorrect": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        },
+        "correct": {
+          "successes": 0,
+          "total": 0,
+          "rate": null,
+          "wilson95": null
+        }
+      },
+      "afterRepair": {
+        "successes": 0,
+        "total": 180,
+        "wilson95": [
+          0,
+          0.02089549792161305
+        ]
+      },
+      "repairs": 0,
+      "attempts": 0,
+      "responseTokens": 0,
+      "latency": null,
+      "byKind": {
+        "chart": {
+          "planned": 99,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "edit": {
+          "planned": 36,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "invalid": {
+          "planned": 27,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        },
+        "recovery": {
+          "planned": 18,
+          "completed": 0,
+          "initial": 0,
+          "afterRepair": 0
+        }
+      },
+      "failures": []
+    }
+  ],
+  "acceptance": "No acceptance decision from an incomplete run.",
+  "confidenceNote": "Descriptive attempt-level Wilson intervals; repeats are correlated. Pending tasks are explicit. Private prompts, data, expected answers and model text are excluded."
+}

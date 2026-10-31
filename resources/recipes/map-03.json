@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "0.3",
+  "id": "m3-map",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["region", "value"],
+    "rows": [
+      {
+        "region": "West",
+        "value": 0
+      },
+      {
+        "region": "East",
+        "value": 75
+      }
+    ]
+  },
+  "chart": {
+    "type": "map",
+    "title": "Synthetic regions",
+    "mapRef": {
+      "id": "two-regions",
+      "revision": "1"
+    },
+    "encoding": {
+      "region": {
+        "field": "region"
+      },
+      "value": {
+        "field": "value"
+      }
+    },
+    "colorDomain": {
+      "min": 0,
+      "max": 100
+    }
+  }
+}

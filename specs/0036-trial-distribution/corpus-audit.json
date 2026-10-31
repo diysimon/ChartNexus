@@ -1,0 +1,22 @@
+{
+  "status": "not-accepted-as-independent-heldout",
+  "privateTasks": 60,
+  "auditDate": "2026-10-31",
+  "findings": [
+    {
+      "severity": "acceptance-blocker",
+      "kind": "semantic-family-overlap",
+      "examples": [
+        "all-zero pie shares already occur in public recipes/regressions",
+        "scatter variants that only change coordinate numbers do not establish independent task families"
+      ]
+    },
+    {
+      "severity": "limitation",
+      "kind": "prior-exposure",
+      "detail": "Interrupted pilot exercised a subset before final runner correction. Retained raw provenance is not a claim of pristine holdout."
+    }
+  ],
+  "interpretation": "Current frozen run is a private development/model baseline. Its corpus split labels and authored separation claims are historical inputs, not an accepted independence finding. No private answers were sent in model prompts.",
+  "requiredNext": "Author and audit a genuinely family-separated replacement set before a fresh heldout run. Keep this baseline and its failures; do not relabel them as independent results."
+}

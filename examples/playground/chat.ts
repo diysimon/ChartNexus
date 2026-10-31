@@ -23,6 +23,19 @@ const samples = {
     document: { ...bar, schemaVersion: '0.2', id: 'chat' },
     summary: '柱状图：Jan 120，Feb 180，Mar 150。',
   },
+  'zero-pie': {
+    document: {
+      ...bar,
+      schemaVersion: '0.2',
+      id: 'chat',
+      chart: { ...bar.chart, type: 'pie' },
+      data: {
+        ...bar.data,
+        rows: bar.data.rows.map((row) => ({ ...row, revenue: 0 })),
+      },
+    },
+    summary: 'Jan、Feb、Mar 均为 0，没有可计算的占比。',
+  },
   'long-labels': {
     document: {
       ...bar,

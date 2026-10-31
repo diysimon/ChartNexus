@@ -1,0 +1,66 @@
+{
+  "version": "1",
+  "basis": "M4 local Vite 8.3.5 minified ESM all-export baseline, 10% byte headroom. Third-party imports external when includePeers=false.",
+  "bundles": [
+    {
+      "name": "core",
+      "includePeers": false,
+      "rawBytes": 150578,
+      "gzipBytes": 28651
+    },
+    {
+      "name": "core",
+      "includePeers": true,
+      "rawBytes": 335430,
+      "gzipBytes": 75317
+    },
+    {
+      "name": "runtime",
+      "includePeers": false,
+      "rawBytes": 183424,
+      "gzipBytes": 38905
+    },
+    {
+      "name": "runtime",
+      "includePeers": true,
+      "rawBytes": 1470308,
+      "gzipBytes": 398546
+    },
+    {
+      "name": "adapter-openui",
+      "includePeers": false,
+      "rawBytes": 181672,
+      "gzipBytes": 38381
+    },
+    {
+      "name": "adapter-openui",
+      "includePeers": true,
+      "rawBytes": 2584111,
+      "gzipBytes": 682214
+    },
+    {
+      "name": "adapter-a2ui",
+      "includePeers": false,
+      "rawBytes": 183275,
+      "gzipBytes": 38895
+    },
+    {
+      "name": "adapter-a2ui",
+      "includePeers": true,
+      "rawBytes": 1746318,
+      "gzipBytes": 463005
+    },
+    {
+      "name": "adapter-cosui",
+      "includePeers": false,
+      "rawBytes": 180606,
+      "gzipBytes": 38040
+    },
+    {
+      "name": "adapter-cosui",
+      "includePeers": true,
+      "rawBytes": 1727787,
+      "gzipBytes": 460610
+    }
+  ]
+}

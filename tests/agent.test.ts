@@ -75,7 +75,7 @@ describe('agent tools', () => {
       diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY', path: '/mode' }],
     });
     expect(
-      await service.execute('get_chart_schema', { schemaVersion: '0.3' }),
+      await service.execute('get_chart_schema', { schemaVersion: '0.4' }),
     ).toMatchObject({
       ok: false,
       diagnostics: [{ code: 'INVALID_ARGUMENTS' }],

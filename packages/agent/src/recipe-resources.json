@@ -1,0 +1,493 @@
+[
+  {
+    "uri": "chartnexus://recipes/bar",
+    "name": "Synthetic sales bar chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.1",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 120 },
+          { "month": "Feb", "revenue": 180 },
+          { "month": "Mar", "revenue": 150 }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/chat-bar/0.2",
+    "name": "Synthetic chat bar chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 120 },
+          { "month": "Feb", "revenue": 180 },
+          { "month": "Mar", "revenue": 150 }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      },
+      "presentation": { "detailLevel": "minimal" }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/combo/0.2",
+    "name": "Synthetic single-axis combo",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "sales", "cost"],
+        "rows": [
+          { "month": "Jan", "sales": 120, "cost": 90 },
+          { "month": "Feb", "sales": 180, "cost": 130 },
+          { "month": "Mar", "sales": 150, "cost": 110 }
+        ]
+      },
+      "chart": {
+        "type": "combo",
+        "title": "Sales and cost",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": {
+            "field": "sales",
+            "type": "quantitative",
+            "unit": { "kind": "currency", "code": "USD" }
+          }
+        },
+        "secondary": {
+          "field": "cost",
+          "unit": { "kind": "currency", "code": "USD" }
+        }
+      },
+      "presentation": { "legend": { "show": true } }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/funnel/0.2",
+    "name": "Synthetic funnel",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "funnel",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["stage", "users"],
+        "rows": [
+          { "stage": "Visit", "users": 1000 },
+          { "stage": "Sign up", "users": 350 },
+          { "stage": "Purchase", "users": 90 }
+        ]
+      },
+      "chart": {
+        "type": "funnel",
+        "title": "Conversion stages",
+        "encoding": {
+          "x": { "field": "stage", "type": "ordinal" },
+          "y": { "field": "users", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/heatmap/0.2",
+    "name": "Synthetic sparse heatmap",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "orders",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["day", "region", "orders"],
+        "rows": [
+          { "day": "Mon", "region": "East", "orders": 4 },
+          { "day": "Tue", "region": "West", "orders": null },
+          { "day": "Tue", "region": "East", "orders": 0 },
+          { "day": "Mon", "region": "West", "orders": 10 }
+        ]
+      },
+      "chart": {
+        "type": "heatmap",
+        "title": "Orders",
+        "encoding": {
+          "x": { "field": "day", "type": "ordinal" },
+          "y": { "field": "region", "type": "ordinal" }
+        },
+        "heatmap": { "field": "orders", "min": 0, "max": 10 }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/line/0.2",
+    "name": "Synthetic line chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 120 },
+          { "month": "Feb", "revenue": 180 },
+          { "month": "Mar", "revenue": 150 }
+        ]
+      },
+      "chart": {
+        "type": "line",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/pie/0.2",
+    "name": "Synthetic pie chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 120 },
+          { "month": "Feb", "revenue": 180 },
+          { "month": "Mar", "revenue": 150 }
+        ]
+      },
+      "chart": {
+        "type": "pie",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/scatter/0.2",
+    "name": "Synthetic scatter chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": 1, "revenue": 120 },
+          { "month": 2, "revenue": 180 },
+          { "month": 3, "revenue": 150 }
+        ]
+      },
+      "chart": {
+        "type": "scatter",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "quantitative" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/zero-pie/0.2",
+    "name": "All-zero pie without fabricated shares",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 0 },
+          { "month": "Feb", "revenue": 0 },
+          { "month": "Mar", "revenue": 0 }
+        ]
+      },
+      "chart": {
+        "type": "pie",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/empty-group/0.2",
+    "name": "Unambiguous empty group labels",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue", "region"],
+        "rows": [
+          { "month": "Jan", "revenue": 1, "region": "" },
+          { "month": "Jan", "revenue": 2, "region": "revenue" },
+          { "month": "Jan", "revenue": 3, "region": "(empty)" }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" },
+          "series": { "field": "region" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/unknown-field",
+    "name": "Unknown field repair example",
+    "mimeType": "application/json",
+    "value": {
+      "document": {
+        "schemaVersion": "0.1",
+        "id": "sales",
+        "mode": "intent",
+        "data": {
+          "kind": "inline",
+          "fields": ["month", "revenue"],
+          "rows": [
+            { "month": "Jan", "revenue": 120 },
+            { "month": "Feb", "revenue": 180 },
+            { "month": "Mar", "revenue": 150 }
+          ]
+        },
+        "chart": {
+          "type": "bar",
+          "title": "Monthly sales",
+          "encoding": {
+            "x": { "field": "month", "type": "ordinal" },
+            "y": { "field": "missing", "type": "quantitative" }
+          }
+        }
+      },
+      "expectedCode": "UNKNOWN_FIELD",
+      "repair": { "path": "/chart/encoding/y/field", "value": "revenue" }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/chat-bar/0.3",
+    "name": "0.3 chat bar with stable row keys",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.3",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          { "month": "Jan", "revenue": 120 },
+          { "month": "Feb", "revenue": 180 },
+          { "month": "Mar", "revenue": 150 }
+        ],
+        "keyField": "month"
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": { "field": "month", "type": "ordinal" },
+          "y": { "field": "revenue", "type": "quantitative" }
+        }
+      },
+      "presentation": { "detailLevel": "minimal" }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/radar/0.3",
+    "name": "Synthetic radar chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.3",
+      "id": "m3-radar",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["team", "speed", "quality", "coverage"],
+        "rows": [
+          { "team": "Alpha", "speed": 65, "quality": 85, "coverage": 70 },
+          { "team": "Beta", "speed": 80, "quality": 60, "coverage": 90 }
+        ]
+      },
+      "chart": {
+        "type": "radar",
+        "title": "Team comparison",
+        "encoding": { "item": { "field": "team" } },
+        "indicators": [
+          {
+            "field": "speed",
+            "label": "Speed",
+            "min": 0,
+            "max": 100,
+            "unit": { "kind": "unit", "label": "points" }
+          },
+          {
+            "field": "quality",
+            "label": "Quality",
+            "min": 0,
+            "max": 100,
+            "unit": { "kind": "unit", "label": "points" }
+          },
+          {
+            "field": "coverage",
+            "label": "Coverage",
+            "min": 0,
+            "max": 100,
+            "unit": { "kind": "unit", "label": "points" }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/tree/0.3",
+    "name": "Synthetic tree chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.3",
+      "id": "m3-tree",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["id", "parent", "label"],
+        "rows": [
+          { "id": "root", "parent": null, "label": "Product" },
+          { "id": "a", "parent": "root", "label": "Design" },
+          { "id": "b", "parent": "root", "label": "Engineering" },
+          { "id": "c", "parent": "b", "label": "Web" },
+          { "id": "d", "parent": "c", "label": "Charts" },
+          { "id": "e", "parent": "d", "label": "Labels" }
+        ]
+      },
+      "chart": {
+        "type": "tree",
+        "title": "Product structure",
+        "encoding": {
+          "id": { "field": "id" },
+          "parentId": { "field": "parent" },
+          "label": { "field": "label" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/sankey/0.3",
+    "name": "Synthetic sankey chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.3",
+      "id": "m3-sankey",
+      "mode": "intent",
+      "data": {
+        "kind": "graph",
+        "nodes": {
+          "kind": "inline",
+          "fields": ["id", "label"],
+          "rows": [
+            { "id": "input", "label": "Input" },
+            { "id": "work", "label": "Process" },
+            { "id": "output", "label": "Output" },
+            { "id": "zero", "label": "Unused" }
+          ]
+        },
+        "links": {
+          "kind": "inline",
+          "fields": ["from", "to", "weight"],
+          "rows": [
+            { "from": "input", "to": "work", "weight": 12 },
+            { "from": "work", "to": "output", "weight": 9 },
+            { "from": "input", "to": "zero", "weight": 0 }
+          ]
+        }
+      },
+      "chart": {
+        "type": "sankey",
+        "title": "Measured flows",
+        "encoding": {
+          "nodeId": { "field": "id" },
+          "nodeLabel": { "field": "label" },
+          "source": { "field": "from" },
+          "target": { "field": "to" },
+          "value": { "field": "weight" }
+        }
+      }
+    }
+  },
+  {
+    "uri": "chartnexus://recipes/map/0.3",
+    "name": "Synthetic map chart",
+    "mimeType": "application/json",
+    "value": {
+      "schemaVersion": "0.3",
+      "id": "m3-map",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["region", "value"],
+        "rows": [
+          { "region": "West", "value": 0 },
+          { "region": "East", "value": 75 }
+        ]
+      },
+      "chart": {
+        "type": "map",
+        "title": "Synthetic regions",
+        "mapRef": { "id": "two-regions", "revision": "1" },
+        "encoding": {
+          "region": { "field": "region" },
+          "value": { "field": "value" }
+        },
+        "colorDomain": { "min": 0, "max": 100 }
+      }
+    }
+  }
+]

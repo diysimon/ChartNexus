@@ -2,7 +2,7 @@
 doc_id: genui-integrations
 version: "0.1"
 status: experimental
-updated: 2026-10-30
+updated: 2026-10-31
 language: zh-CN
 ---
 
@@ -38,7 +38,7 @@ A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.
 :::
 ````
 
-示例 JSON 仅展示结构；完整有效文档请参照权威 schema 和 [柱状图 recipe](../../resources/recipes/bar.json)。数据名必须唯一，最多 64 个 ASCII 字符，以字母开头，其后仅允许字母、数字、下划线、连字符。缺失、重复或无效的图表数据产生诊断。最多 16 张图、1 MiB Markdown。传入 `complete: false` 时不改动现有图表；片段组装和完整性判定由宿主负责。有效输入先校验再释放旧图，但后续挂载/渲染失败仍可能导致替换不完整。
+示例 JSON 仅展示结构；完整有效文档请参照权威 schema 和 [柱状图 recipe](../../resources/recipes/bar.json)。数据名必须唯一，最多 64 个 ASCII 字符，以字母开头，其后仅允许字母、数字、下划线、连字符。缺失、重复或无效的图表数据产生诊断。最多 16 张图、1 MiB Markdown。传入 `complete: false` 时不改动现有图表；片段组装和完整性判定由宿主负责。完整输入先校验，并在可测量暂存区挂载全部图表后原子替换；任何暂存失败均保留旧图。
 
 **信任边界：**上游 Marklang 可能渲染 Markdown 中的 HTML。本适配器不净化通用 Markdown 或 HTML；宿主应仅传入可信内容或另行净化，并配置适当的安全策略。SSR、水合、真实流式传输以及其他 Markdown 功能尚未验证。
 
@@ -54,7 +54,7 @@ A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.
 
 ## 证据与限制
 
-本地 `pnpm check`、`pnpm test:browser` 覆盖真实 Dynamic UI、Marklang、A2UI React 宿主和 OpenUI 回归。示例验证 intent/原生模式、替换、无效输入、恢复、选择和释放；Marklang 另测不完整输入及重复/缺失引用，A2UI 另测不完整 JSON。真实模型、流式传输、SSR/水合、发布包、干净外部安装、移动设备或其他协议/SDK 版本均未验证。演示构建中 ECharts 共享 JS chunk 约 1.26 MB，占主要体积；宿主代码分块独立。Dynamic UI 源码仓库标记 Apache-2.0，但安装包元数据标记 ISC，发布前需厘清分发声明。
+本地 `pnpm check`、`pnpm test:browser` 覆盖真实 Dynamic UI、Marklang、A2UI React 宿主和 OpenUI 回归。示例验证 intent/原生模式、替换、无效输入、恢复、选择和释放；Marklang 另测不完整输入及重复/缺失引用，A2UI 另测不完整 JSON。更广泛的真实模型、远端流式传输、SSR/水合、发布包、干净外部安装、移动设备或其他协议/SDK 版本均未验证。演示构建中 ECharts 共享 JS chunk 约 1.26 MB，占主要体积；宿主代码分块独立。Dynamic UI 源码仓库标记 Apache-2.0，但安装包元数据标记 ISC，发布前需厘清分发声明。
 
 ### 可选的 A2UI 顺序更新 profile
 
@@ -70,4 +70,12 @@ A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.
 
 ### GenUI 宿主中的聊天展示
 
-`createA2uiChart`、`createOpenUIChart` 和 `createCosuiChart` 接受可选、由宿主持有的 `chatPresentation` 设置，并使用 runtime 相同的 0.2 intent 聊天 profile；不传时保持原行为。A2UI、OpenUI 和 COSUI JSON 已在本机验证深色透明设置与顺序更新。实验性 Marklang 适配器暂不接受此设置。主题不会自动追踪宿主；宿主需要管理设置并触发更新或重新挂载。详见[聊天展示指南](chat-presentation.md)。
+`createA2uiChart`、`createOpenUIChart` 和 `createCosuiChart` 接受可选、由宿主持有的 `chatPresentation` 设置，并使用 runtime 相同的 0.2/0.3 intent 聊天 profile；不传时保持原行为。A2UI、OpenUI 和 COSUI JSON 已在本机验证深色透明设置与顺序更新。Marklang 已接受此设置，采用整个文档的事务更新。主题不会自动追踪宿主；宿主需要管理设置并触发更新或重新挂载。详见[聊天展示指南](chat-presentation.md)。
+
+## M1/M2 实施
+
+当前版本发现、迁移、尺寸、数据表、生命周期、图例保留及真实本地 Ollama 流式证据见 [0.3 契约](contracts-03.md) 与 [聊天宿主质量/支持矩阵](chat-host-quality.md)。旧 spec 的验证记录保留为历史证据。
+
+## M3 图表扩充
+
+0.3 在原有七类基础上新增雷达、树、桑基和可信区域地图。见[契约、宿主 MapRegistry、模型资源和预览](chart-expansion-03.md)。浏览器/SVG/worker 与四种固定上游 SDK 路径已有本地证据；M4 模型评测和分发仍是独立工作。固定渲染器标签回调保留原文，仍禁止模型回调。

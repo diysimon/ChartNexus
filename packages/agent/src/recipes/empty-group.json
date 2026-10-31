@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "0.2",
+  "id": "sales",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["month", "revenue", "region"],
+    "rows": [
+      {
+        "month": "Jan",
+        "revenue": 1,
+        "region": ""
+      },
+      {
+        "month": "Jan",
+        "revenue": 2,
+        "region": "revenue"
+      },
+      {
+        "month": "Jan",
+        "revenue": 3,
+        "region": "(empty)"
+      }
+    ]
+  },
+  "chart": {
+    "type": "bar",
+    "title": "Monthly sales",
+    "encoding": {
+      "x": {
+        "field": "month",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "revenue",
+        "type": "quantitative"
+      },
+      "series": {
+        "field": "region"
+      }
+    }
+  }
+}

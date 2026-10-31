@@ -1,0 +1,2677 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ChartDocument03",
+  "description": "Experimental 0.3 contract. Four reserved branches require separately advertised renderer capabilities.",
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "bar"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    },
+                    "unit": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "currency"
+                            },
+                            "code": {
+                              "type": "string",
+                              "pattern": "^[A-Z]{3}$"
+                            }
+                          },
+                          "required": ["kind", "code"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "percent"
+                            },
+                            "scale": {
+                              "enum": ["percent", "ratio"]
+                            }
+                          },
+                          "required": ["kind", "scale"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "unit"
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 32
+                            }
+                          },
+                          "required": ["kind", "label"]
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "series": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "stack": {
+              "type": "boolean"
+            },
+            "orientation": {
+              "enum": ["vertical", "horizontal"]
+            },
+            "sort": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "by": {
+                  "enum": ["category", "value"]
+                },
+                "order": {
+                  "enum": ["ascending", "descending"]
+                },
+                "nulls": {
+                  "enum": ["first", "last"]
+                }
+              },
+              "required": ["by", "order", "nulls"]
+            },
+            "aggregate": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "op": {
+                  "enum": ["sum", "mean", "count"]
+                }
+              },
+              "required": ["op"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "line"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "enum": ["ordinal", "temporal"]
+                    },
+                    "temporalKind": {
+                      "enum": ["date", "instant"]
+                    }
+                  },
+                  "required": ["field", "type"],
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "type": {
+                            "const": "temporal"
+                          }
+                        }
+                      },
+                      "then": {
+                        "required": ["temporalKind"],
+                        "properties": {
+                          "temporalKind": {
+                            "enum": ["date", "instant"]
+                          }
+                        }
+                      },
+                      "else": {
+                        "not": {
+                          "required": ["temporalKind"],
+                          "properties": {
+                            "temporalKind": {}
+                          }
+                        }
+                      }
+                    }
+                  ]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    },
+                    "unit": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "currency"
+                            },
+                            "code": {
+                              "type": "string",
+                              "pattern": "^[A-Z]{3}$"
+                            }
+                          },
+                          "required": ["kind", "code"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "percent"
+                            },
+                            "scale": {
+                              "enum": ["percent", "ratio"]
+                            }
+                          },
+                          "required": ["kind", "scale"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "unit"
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 32
+                            }
+                          },
+                          "required": ["kind", "label"]
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "series": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "stack": {
+              "type": "boolean"
+            },
+            "area": {
+              "type": "boolean"
+            },
+            "sort": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "by": {
+                  "enum": ["category", "value"]
+                },
+                "order": {
+                  "enum": ["ascending", "descending"]
+                },
+                "nulls": {
+                  "enum": ["first", "last"]
+                }
+              },
+              "required": ["by", "order", "nulls"]
+            },
+            "aggregate": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "op": {
+                  "enum": ["sum", "mean", "count"]
+                }
+              },
+              "required": ["op"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "pie"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    }
+                  },
+                  "required": ["field", "type"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "donut": {
+              "type": "boolean"
+            },
+            "sort": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "by": {
+                  "enum": ["category", "value"]
+                },
+                "order": {
+                  "enum": ["ascending", "descending"]
+                },
+                "nulls": {
+                  "enum": ["first", "last"]
+                }
+              },
+              "required": ["by", "order", "nulls"]
+            },
+            "aggregate": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "op": {
+                  "enum": ["sum", "mean", "count"]
+                }
+              },
+              "required": ["op"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "scatter"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    },
+                    "unit": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "currency"
+                            },
+                            "code": {
+                              "type": "string",
+                              "pattern": "^[A-Z]{3}$"
+                            }
+                          },
+                          "required": ["kind", "code"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "percent"
+                            },
+                            "scale": {
+                              "enum": ["percent", "ratio"]
+                            }
+                          },
+                          "required": ["kind", "scale"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "unit"
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 32
+                            }
+                          },
+                          "required": ["kind", "label"]
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "series": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["x", "y"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "combo"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    },
+                    "unit": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "currency"
+                            },
+                            "code": {
+                              "type": "string",
+                              "pattern": "^[A-Z]{3}$"
+                            }
+                          },
+                          "required": ["kind", "code"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "percent"
+                            },
+                            "scale": {
+                              "enum": ["percent", "ratio"]
+                            }
+                          },
+                          "required": ["kind", "scale"]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "kind": {
+                              "const": "unit"
+                            },
+                            "label": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 32
+                            }
+                          },
+                          "required": ["kind", "label"]
+                        }
+                      ]
+                    }
+                  },
+                  "required": ["field", "type"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "secondary": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "unit": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "currency"
+                        },
+                        "code": {
+                          "type": "string",
+                          "pattern": "^[A-Z]{3}$"
+                        }
+                      },
+                      "required": ["kind", "code"]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "percent"
+                        },
+                        "scale": {
+                          "enum": ["percent", "ratio"]
+                        }
+                      },
+                      "required": ["kind", "scale"]
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "unit"
+                        },
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 32
+                        }
+                      },
+                      "required": ["kind", "label"]
+                    }
+                  ]
+                },
+                "axis": {
+                  "enum": ["shared", "right"]
+                }
+              },
+              "required": ["field"]
+            },
+            "sort": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "by": {
+                  "const": "category"
+                },
+                "order": {
+                  "enum": ["ascending", "descending"]
+                },
+                "nulls": {
+                  "enum": ["first", "last"]
+                }
+              },
+              "required": ["by", "order", "nulls"]
+            }
+          },
+          "required": ["type", "encoding", "secondary"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "legend": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                },
+                "position": {
+                  "enum": ["top", "bottom"]
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "funnel"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "quantitative"
+                    }
+                  },
+                  "required": ["field", "type"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "sort": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "by": {
+                  "enum": ["category", "value"]
+                },
+                "order": {
+                  "enum": ["ascending", "descending"]
+                },
+                "nulls": {
+                  "enum": ["first", "last"]
+                }
+              },
+              "required": ["by", "order", "nulls"]
+            },
+            "aggregate": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "op": {
+                  "enum": ["sum", "mean", "count"]
+                }
+              },
+              "required": ["op"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 10000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "heatmap"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "x": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                },
+                "y": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "type": {
+                      "const": "ordinal"
+                    }
+                  },
+                  "required": ["field", "type"]
+                }
+              },
+              "required": ["x", "y"]
+            },
+            "heatmap": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "field": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": ["field", "min", "max"]
+            }
+          },
+          "required": ["type", "encoding", "heatmap"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 6
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "radar"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "item": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["item"]
+            },
+            "indicators": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "field": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 256
+                  },
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "unit": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "currency"
+                          },
+                          "code": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{3}$"
+                          }
+                        },
+                        "required": ["kind", "code"]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "percent"
+                          },
+                          "scale": {
+                            "enum": ["percent", "ratio"]
+                          }
+                        },
+                        "required": ["kind", "scale"]
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "kind": {
+                            "const": "unit"
+                          },
+                          "label": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 32
+                          }
+                        },
+                        "required": ["kind", "label"]
+                      }
+                    ]
+                  }
+                },
+                "required": ["field", "label", "min", "max"]
+              },
+              "minItems": 3,
+              "maxItems": 8
+            }
+          },
+          "required": ["type", "encoding", "indicators"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 1000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "tree"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "parentId": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "label": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["id", "parentId", "label"]
+            },
+            "initialDepth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2,
+              "description": "Initial expanded depth from the real root (0). SVG exports a labelled overview."
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "graph"
+            },
+            "nodes": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "inline"
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "maxItems": 100
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "maxProperties": 100
+                      },
+                      "maxItems": 200
+                    },
+                    "keyField": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["kind", "fields", "rows"]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "reference"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "revision": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "keyField": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["kind", "id", "revision"]
+                }
+              ]
+            },
+            "links": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "inline"
+                    },
+                    "fields": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "maxItems": 100
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "maxProperties": 100
+                      },
+                      "maxItems": 1000
+                    },
+                    "keyField": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["kind", "fields", "rows"]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "reference"
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "revision": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 256
+                    },
+                    "keyField": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["kind", "id", "revision"]
+                }
+              ]
+            }
+          },
+          "required": ["kind", "nodes", "links"]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "sankey"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "nodeId": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "nodeLabel": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "source": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "target": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "value": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["nodeId", "nodeLabel", "source", "target", "value"]
+            }
+          },
+          "required": ["type", "encoding"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "schemaVersion": {
+          "const": "0.3"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "mode": {
+          "const": "intent"
+        },
+        "presentation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "theme": {
+              "enum": ["light", "dark"]
+            },
+            "dataLabels": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "show": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["show"]
+            },
+            "detailLevel": {
+              "enum": [
+                "minimal",
+                "simple",
+                "standard",
+                "detailed",
+                "comprehensive"
+              ],
+              "description": "Display intent applied only when the host opts into the chat presentation profile; host policy may override it."
+            }
+          }
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "inline"
+                },
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 128
+                  },
+                  "uniqueItems": true,
+                  "minItems": 1,
+                  "maxItems": 100
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "number"
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "maxProperties": 100
+                  },
+                  "maxItems": 1000
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "fields", "rows"]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "reference"
+                },
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 256
+                },
+                "keyField": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["kind", "id", "revision"]
+            }
+          ]
+        },
+        "chart": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "const": "map"
+            },
+            "title": {
+              "type": "string",
+              "maxLength": 256
+            },
+            "encoding": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "region": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                },
+                "value": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "field": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": ["field"]
+                }
+              },
+              "required": ["region", "value"]
+            },
+            "mapRef": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "revision": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                }
+              },
+              "required": ["id", "revision"]
+            },
+            "colorDomain": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "min": {
+                  "type": "number"
+                },
+                "max": {
+                  "type": "number"
+                }
+              },
+              "required": ["min", "max"]
+            }
+          },
+          "required": ["type", "encoding", "mapRef", "colorDomain"]
+        }
+      },
+      "required": ["schemaVersion", "id", "mode", "data", "chart"]
+    }
+  ]
+}

@@ -5,6 +5,123 @@
   "license": "Apache-2.0",
   "entries": [
     {
+      "id": "chart-expansion-0.3",
+      "language": "en",
+      "title": "Four bounded 0.3 chart types and trusted map assets",
+      "summary": "Four bounded 0.3 chart types and trusted map assets",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/chart-expansion-03.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:a2c8de7d0ce41c01dd629929a7e8442e2016840a45d55e8c9074634356ff2bce"
+    },
+    {
+      "id": "contracts-0.3",
+      "language": "en",
+      "title": "0.3 contracts and migration",
+      "summary": "0.3 contracts and migration",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/contracts-03.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:ca37caf387a413b16689c50fed9642e5ef8bc9d0e447d117bbc04332ffb47cb9"
+    },
+    {
+      "id": "chat-host-quality-0.3",
+      "language": "en",
+      "title": "Chat host quality and support matrix",
+      "summary": "Chat host quality and support matrix",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/chat-host-quality.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:ec0f1498b6b85f759ca52997b41279edc0ff71510cbaab7649e9d404ce1fba14"
+    },
+    {
+      "id": "chart-expansion-0.3",
+      "language": "zh-CN",
+      "title": "Four bounded 0.3 chart types and trusted map assets",
+      "summary": "Four bounded 0.3 chart types and trusted map assets",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/chart-expansion-03.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:8cb7c776f1e0fd52c9894a0be7389acd13cb894c432f00c6ea82b4e1e6390e38"
+    },
+    {
+      "id": "contracts-0.3",
+      "language": "zh-CN",
+      "title": "0.3 contracts and migration",
+      "summary": "0.3 contracts and migration",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/contracts-03.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:f73d177ea0cb78e54c9cb94b3905e2247d6136f2d32ca90bb797f858021359ac"
+    },
+    {
+      "id": "chat-host-quality-0.3",
+      "language": "zh-CN",
+      "title": "Chat host quality and support matrix",
+      "summary": "Chat host quality and support matrix",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/chat-host-quality.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:9376890008da5bfc4c677a7f5fbfaa7fa496ad52038b2c8704fd38977e5bade1"
+    },
+    {
+      "id": "chart-document-0.3",
+      "language": "en",
+      "title": "Experimental 0.3 contract",
+      "summary": "Experimental 0.3 contract",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "packages/schema/src/chart-document-0.3.schema.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://schema/chart-document/0.3",
+      "contentHash": "sha256:b9363086eddd932dd654ebd9d9deeb27200ad91829ff46a4f949b5471b9f3090"
+    },
+    {
+      "id": "capabilities-0.3",
+      "language": "en",
+      "title": "Implemented 0.3 capabilities",
+      "summary": "Implemented 0.3 capabilities",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "packages/core/src/capabilities-0.3.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://capabilities/basic-0.3",
+      "contentHash": "sha256:208bd06b06a9edebc3ac8b2c4bf36743517fcdb34806412ef7c48f13b6aa026b"
+    },
+    {
+      "id": "bar-recipe",
+      "language": "en",
+      "title": "Synthetic sales bar chart",
+      "summary": "Synthetic sales bar chart",
+      "capabilityIds": ["basic-0.1"],
+      "schemaVersion": "0.1",
+      "source": "resources/recipes/bar.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/bar",
+      "contentHash": "sha256:032bdeb138545140fcac815b0c5e6ba5b98dc5162c578c53772a0a1ac1fbd7bc"
+    },
+    {
       "id": "chat-bar-recipe-0.2",
       "language": "en",
       "title": "Synthetic chat bar chart",
@@ -18,30 +135,30 @@
       "contentHash": "sha256:b8605eda1ff4ebe37b8a892f9a406a671f033e022f33061e67bead542c33a29c"
     },
     {
-      "id": "chat-presentation-0.2",
+      "id": "combo-recipe-0.2",
       "language": "en",
-      "title": "Chat presentation profile",
-      "summary": "Chat presentation profile",
+      "title": "Synthetic single-axis combo",
+      "summary": "Synthetic single-axis combo",
       "capabilityIds": ["basic-0.2"],
       "schemaVersion": "0.2",
-      "source": "docs/en/chat-presentation.md",
+      "source": "resources/recipes/combo.json",
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
-      "uri": null,
-      "contentHash": "sha256:bbbbed6f868555cf1ac148008dd62876cf25fdd5eb743607778dfa38d32e88d7"
+      "uri": "chartnexus://recipes/combo/0.2",
+      "contentHash": "sha256:5d42f0b9d98d16d3b0ec56be6db8231444cda25082777f6204e09691b8b86b61"
     },
     {
-      "id": "chat-presentation-0.2",
-      "language": "zh-CN",
-      "title": "聊天展示 profile",
-      "summary": "聊天展示 profile",
+      "id": "funnel-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic funnel",
+      "summary": "Synthetic funnel",
       "capabilityIds": ["basic-0.2"],
       "schemaVersion": "0.2",
-      "source": "docs/zh-CN/chat-presentation.md",
+      "source": "resources/recipes/funnel.json",
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
-      "uri": null,
-      "contentHash": "sha256:bea516ba1eb02c5c189f7dfed494b3e1046c1c56ad5da8020c6eb034b485b2bc"
+      "uri": "chartnexus://recipes/funnel/0.2",
+      "contentHash": "sha256:7804ba5c3180457ceb063b2290201f6247ade37ab4bfab652811c5d12873eb46"
     },
     {
       "id": "heatmap-recipe-0.2",
@@ -57,30 +174,186 @@
       "contentHash": "sha256:1b0699c6635f6dff3119ccd32743452044c22227bed1c887bec9c26090851e50"
     },
     {
-      "id": "combo-recipe-0.2",
+      "id": "line-recipe-0.2",
       "language": "en",
-      "title": "Synthetic single-axis bar-line combo",
-      "summary": "Synthetic single-axis bar-line combo",
+      "title": "Synthetic line chart",
+      "summary": "Synthetic line chart",
       "capabilityIds": ["basic-0.2"],
       "schemaVersion": "0.2",
-      "source": "resources/recipes/combo.json",
+      "source": "resources/recipes/line.json",
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
-      "uri": "chartnexus://recipes/combo/0.2",
-      "contentHash": "sha256:5d42f0b9d98d16d3b0ec56be6db8231444cda25082777f6204e09691b8b86b61"
+      "uri": "chartnexus://recipes/line/0.2",
+      "contentHash": "sha256:9b355b58d596c97f8f112eb6f89757b1211c025840117967badc27977038910b"
     },
     {
-      "id": "funnel-recipe-0.2",
+      "id": "pie-recipe-0.2",
       "language": "en",
-      "title": "Synthetic ordered funnel chart",
-      "summary": "Synthetic ordered funnel chart",
+      "title": "Synthetic pie chart",
+      "summary": "Synthetic pie chart",
       "capabilityIds": ["basic-0.2"],
       "schemaVersion": "0.2",
-      "source": "resources/recipes/funnel.json",
+      "source": "resources/recipes/pie.json",
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
-      "uri": "chartnexus://recipes/funnel/0.2",
-      "contentHash": "sha256:7804ba5c3180457ceb063b2290201f6247ade37ab4bfab652811c5d12873eb46"
+      "uri": "chartnexus://recipes/pie/0.2",
+      "contentHash": "sha256:4dd613d416a76745d35a139b122ee6f9c46bacc4a3d6e0b9e2b5f37e222bab46"
+    },
+    {
+      "id": "scatter-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic scatter chart",
+      "summary": "Synthetic scatter chart",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/scatter.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/scatter/0.2",
+      "contentHash": "sha256:3c230fd9a7a858592509c80270186884d0aa706e6aed7617924c665c7af72f5e"
+    },
+    {
+      "id": "zero-pie-recipe-0.2",
+      "language": "en",
+      "title": "All-zero pie without fabricated shares",
+      "summary": "All-zero pie without fabricated shares",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/zero-pie.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/zero-pie/0.2",
+      "contentHash": "sha256:cb4717a6354008f6f58362bfe769a5dc9212ea1c148e249bcf9e8783d3a067d9"
+    },
+    {
+      "id": "empty-group-recipe-0.2",
+      "language": "en",
+      "title": "Unambiguous empty group labels",
+      "summary": "Unambiguous empty group labels",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/empty-group.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/empty-group/0.2",
+      "contentHash": "sha256:bc17c5ac59f9fad984b340a2c8036dd7801d48efb8e779c41e89781e5f28d837"
+    },
+    {
+      "id": "repair-unknown-field",
+      "language": "en",
+      "title": "Unknown field repair example",
+      "summary": "Unknown field repair example",
+      "capabilityIds": ["basic-0.1"],
+      "schemaVersion": "0.1",
+      "source": "resources/recipes/unknown-field.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/unknown-field",
+      "contentHash": "sha256:94ceec5430e6462d069aaaf9165bd75aba31082aa62c45a9d721f667184bb5af"
+    },
+    {
+      "id": "chat-bar-recipe-0.3",
+      "language": "en",
+      "title": "0.3 chat bar with stable row keys",
+      "summary": "0.3 chat bar with stable row keys",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/chat-bar-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/chat-bar/0.3",
+      "contentHash": "sha256:2b693ff1a37cca23770984d997383a550f08bdf196dcb76dae1abfa25cb8167a"
+    },
+    {
+      "id": "radar-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic radar chart",
+      "summary": "Synthetic radar chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/radar-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/radar/0.3",
+      "contentHash": "sha256:4fee423673053ca550d020111d809d0f7ab765c2fbb032865d0d39b767f3490c"
+    },
+    {
+      "id": "tree-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic tree chart",
+      "summary": "Synthetic tree chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/tree-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/tree/0.3",
+      "contentHash": "sha256:c104124d2aac4473e122d1acc7e4a8ca81a9e34eb6ba03b10663682583c8473d"
+    },
+    {
+      "id": "sankey-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic sankey chart",
+      "summary": "Synthetic sankey chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/sankey-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/sankey/0.3",
+      "contentHash": "sha256:9cffbdf468c4383a184f52bf421cd0e066a16da4e3df3ee9182703505d1a621d"
+    },
+    {
+      "id": "map-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic map chart",
+      "summary": "Synthetic map chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/map-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/map/0.3",
+      "contentHash": "sha256:1d118a02010bce08597d4d4a81d3fc08b68b95762fe0ad67c68a9c5453eebc1a"
+    },
+    {
+      "id": "recipe-manifest",
+      "language": "en",
+      "title": "Synthetic development recipe inventory",
+      "summary": "Synthetic development recipe inventory",
+      "capabilityIds": ["basic-0.1"],
+      "schemaVersion": "0.1",
+      "source": "resources/recipes/manifest.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/manifest/0.1",
+      "contentHash": "sha256:bb30ddeec78962bb27ef4c78f7ed1b4eaa631691a8417cf8eebae5ff7bfa6fd8"
+    },
+    {
+      "id": "chat-presentation-0.2",
+      "language": "en",
+      "title": "Chat presentation profile",
+      "summary": "Chat presentation profile",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "docs/en/chat-presentation.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:b1a41a119f4033c498950f1f314a97a459887ebe6b3248372737663a2b5e0f6d"
+    },
+    {
+      "id": "chat-presentation-0.2",
+      "language": "zh-CN",
+      "title": "聊天展示 profile",
+      "summary": "聊天展示 profile",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "docs/zh-CN/chat-presentation.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": null,
+      "contentHash": "sha256:da424b5099f6ff6ed0b6b2d703ca4d2d67b2f5cf9e4826f895fb02694c8d4231"
     },
     {
       "id": "native-strict-schema",
@@ -132,7 +405,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://capabilities/basic-0.2",
-      "contentHash": "sha256:501c3f2294807d363d4c93c086e7b886c0828e1d6ab26f6ce9e692b66fc44f6b"
+      "contentHash": "sha256:2d181c9793f98436fd6f31269527e776cd4f7b5487ac64d1b62ce53dab7ce1ae"
     },
     {
       "id": "chart-document",
@@ -158,33 +431,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://capabilities/basic-0.1",
-      "contentHash": "sha256:0cfaccd90a9e02b44776d9b94151fad78be68acb429b3d29baa525105f55c103"
-    },
-    {
-      "id": "bar-recipe",
-      "language": "en",
-      "title": "Synthetic bar recipe",
-      "summary": "Synthetic bar recipe",
-      "capabilityIds": ["basic-0.1"],
-      "schemaVersion": "0.1",
-      "source": "resources/recipes/bar.json",
-      "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
-      "uri": "chartnexus://recipes/bar",
-      "contentHash": "sha256:032bdeb138545140fcac815b0c5e6ba5b98dc5162c578c53772a0a1ac1fbd7bc"
-    },
-    {
-      "id": "repair-unknown-field",
-      "language": "en",
-      "title": "Unknown field example",
-      "summary": "Unknown field example",
-      "capabilityIds": ["basic-0.1"],
-      "schemaVersion": "0.1",
-      "source": "resources/recipes/unknown-field.json",
-      "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
-      "uri": "chartnexus://recipes/unknown-field",
-      "contentHash": "sha256:94ceec5430e6462d069aaaf9165bd75aba31082aa62c45a9d721f667184bb5af"
+      "contentHash": "sha256:2d5ff97778f8ae54168ad23b9a2ca951a9d882df98fa94d9ee4c625e633cbe52"
     },
     {
       "id": "diagnostics",
@@ -197,7 +444,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://diagnostics/basic-0.1",
-      "contentHash": "sha256:4d97c6cb51323c0cf60aa41e619db71dde474aae89047ac1adefd3851d1678ab"
+      "contentHash": "sha256:f3550e3c974d00260d190dc93d891713fbeb7fab22df836eca3436f34677e262"
     },
     {
       "id": "model-entry",
@@ -210,7 +457,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/en/0.1",
-      "contentHash": "sha256:eb68763b5bc537222d826aa77f3891d9ea4ff8103027e4fed161cb84523197cb"
+      "contentHash": "sha256:c0f04b9ac7d93f73142aa3c3de25bfb988a1a787c3d10dba35a18db35d36e082"
     },
     {
       "id": "model-entry",
@@ -223,7 +470,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/zh-CN/0.1",
-      "contentHash": "sha256:58da90a393402dede753dcb5b8108ad1c3b09b0d19c7b723e7f542baec7c00b6"
+      "contentHash": "sha256:7ff16b4f0a7a978aac7cd19f6adbe3f5c9c47568536106a3245574c0d1288f42"
     },
     {
       "id": "evaluation-baseline",

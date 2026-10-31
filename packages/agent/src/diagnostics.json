@@ -66,6 +66,110 @@
       "code": "INVALID_NATIVE_STRICT",
       "en": "Use the native-strict-basic-0.1 schema and repair the indicated field; strict validation covers a small subset only.",
       "zh-CN": "参照 native-strict-basic-0.1 Schema 修复所示字段；严格校验只覆盖有限子集。"
+    },
+    {
+      "code": "NO_SHARE_DATA",
+      "severity": "info",
+      "en": "All pie values are zero, so shares cannot be computed. Preserve data; do not invent nonzero values.",
+      "zh-CN": "饼图数值全为零，无法计算占比。保留数据，不编造非零值。"
+    },
+    {
+      "code": "INVALID_ROW_KEY",
+      "en": "Use unique nonempty string values in the declared keyField.",
+      "zh-CN": "声明 keyField 的值必须是唯一非空字符串。"
+    },
+    {
+      "code": "EXPORT_LIMIT",
+      "en": "Increase export dimensions; do not remove data to make the export fit.",
+      "zh-CN": "增大导出尺寸，不得通过删除数据来适配。"
+    },
+    {
+      "code": "LAYOUT_FALLBACK",
+      "severity": "info",
+      "en": "Use the full source and rendered-value views when the chart does not fit.",
+      "zh-CN": "图表空间不足时，通过完整源数据和渲染值入口查看。"
+    },
+    {
+      "code": "STATE_RESET",
+      "severity": "info",
+      "en": "Chart semantics changed; legend selections were reset.",
+      "zh-CN": "图表语义改变，已重置图例选择。"
+    },
+    {
+      "code": "LABEL_DENSITY_LIMIT",
+      "severity": "info",
+      "en": "Dense labels are available through full data access.",
+      "zh-CN": "标签过密，完整内容可从数据入口访问。"
+    },
+    {
+      "code": "INCOMPLETE_STREAM",
+      "en": "Wait for a successful terminal frame; do not commit parseable partial output.",
+      "zh-CN": "必须等待成功终止帧，不提交仅能解析的部分输出。"
+    },
+    {
+      "code": "TRUNCATED_GENERATION",
+      "en": "Generation was truncated; request a new complete result.",
+      "zh-CN": "生成被截断，请重新请求完整结果。"
+    },
+    {
+      "code": "INVALID_STREAM",
+      "en": "Transport framing or UTF-8 was invalid; preserve the previous chart.",
+      "zh-CN": "传输帧或 UTF-8 无效，保留上次图表。"
+    },
+    {
+      "code": "HOST_CALLBACK_FAILED",
+      "en": "Fix the host callback; committed chart data remains separate.",
+      "zh-CN": "修复宿主回调，已提交图表数据不受回调错误影响。"
+    },
+    {
+      "code": "INVALID_RADAR",
+      "en": "Use 1–6 uniquely named items, 3–8 distinct indicators and explicit ranges; never impute missing values.",
+      "zh-CN": "使用1–6个唯一名称对象、3–8个不同指标与明确范围，不填补缺失值。"
+    },
+    {
+      "code": "INVALID_TREE",
+      "en": "Check unique node IDs, one root, parent references, cycles and depth <=16. Do not remove source nodes silently.",
+      "zh-CN": "检查唯一节点ID、唯一根、父引用、环和深度≤16，不静默删除源节点。"
+    },
+    {
+      "code": "INVALID_SANKEY",
+      "en": "Check node/edge limits, endpoints, duplicate pairs, cycles and nonnegative flow. Never fabricate conservation.",
+      "zh-CN": "检查节点/边上限、端点、重复边、环和非负流量，不伪造守恒。"
+    },
+    {
+      "code": "INVALID_MAP_DATA",
+      "en": "Match registered region keys exactly and preserve null; check explicit color domain and duplicate rows.",
+      "zh-CN": "精确匹配注册区域键，保留null，检查显式色域与重复行。"
+    },
+    {
+      "code": "MAP_NOT_FOUND",
+      "en": "Ask the host to register an authorized map; list_capabilities exposes available metadata, not geometry.",
+      "zh-CN": "由宿主注册已授权地图；list_capabilities提供可用元信息而非几何。"
+    },
+    {
+      "code": "MAP_REVISION_CONFLICT",
+      "en": "Use the exact host asset revision; do not overwrite a registered map revision.",
+      "zh-CN": "使用准确宿主版本，不覆盖已注册地图版本。"
+    },
+    {
+      "code": "MAP_HASH_MISMATCH",
+      "en": "Host must rebuild a validated asset snapshot; never disable integrity checks.",
+      "zh-CN": "由宿主重建有效资产快照，不关闭完整性检查。"
+    },
+    {
+      "code": "INVALID_MAP_ASSET",
+      "en": "Host must validate supported WGS84 polygons, keys, metadata and limits. Geometry is not a model argument.",
+      "zh-CN": "宿主校验受支持WGS84多边形、区域键、元信息和限制；几何不是模型参数。"
+    },
+    {
+      "code": "MAP_RESOURCE_LIMIT",
+      "en": "Use a smaller authorized asset or a fresh renderer when registration capacity is exhausted.",
+      "zh-CN": "使用更小的已授权资产；注册容量耗尽时使用新渲染进程。"
+    },
+    {
+      "code": "TREE_OVERVIEW",
+      "en": "This view is a collapsed overview; full source hierarchy remains in the data table and SVG metadata.",
+      "zh-CN": "当前为折叠概览，完整源层级保留在数据表和SVG元信息中。"
     }
   ]
 }

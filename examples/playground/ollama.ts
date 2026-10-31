@@ -1,5 +1,9 @@
 import { compileChart } from '@chartnexus/core';
-import { mountChart, type ChartRuntime } from '@chartnexus/runtime';
+import {
+  mountChart,
+  readOllamaStream,
+  type ChartRuntime,
+} from '@chartnexus/runtime';
 import './ollama.css';
 
 const model = document.querySelector<HTMLSelectElement>('#model')!;
@@ -20,6 +24,7 @@ let renderedNode: HTMLElement | undefined;
 let lastDocument: unknown;
 let current: AbortController | undefined;
 let generation = 0;
+let documentRevision = 0;
 
 const examples: Record<string, string> = {
   bar: '画一个柱状图：1 月销售额 120，2 月 180，3 月 150。标题为月度销售额。',
@@ -34,19 +39,6 @@ function setStatus(
   badge.textContent =
     kind === 'working' ? '生成中' : kind === 'error' ? '需要处理' : '已就绪';
   badge.dataset.kind = kind;
-}
-function errorMessage(code: string): string {
-  if (code === 'OLLAMA_UNAVAILABLE')
-    return '无法连接 Ollama。请确认本机 Ollama 服务已启动。';
-  if (code === 'OLLAMA_HTTP_404')
-    return '模型不可用，请刷新列表并选择已安装的模型。';
-  if (code === 'OLLAMA_TIMEOUT')
-    return '模型响应超时，请稍后重试或更换较小的模型。';
-  if (code === 'RESPONSE_TOO_LARGE') return '模型响应过大，请简化请求。';
-  if (code === 'INVALID_UPSTREAM_JSON')
-    return 'Ollama 接口返回了无效数据，请检查服务。';
-  if (code === 'REQUEST_TOO_LARGE') return '请求数据过大，请缩减输入内容。';
-  return `请求未完成（${code}），请检查 Ollama 状态或更换模型。`;
 }
 async function refreshModels() {
   connection.textContent = '正在连接本地 Ollama…';
@@ -140,6 +132,7 @@ function renderDocument(input: unknown): boolean {
   runtime = mounted.value;
   renderedNode = node;
   lastDocument = input;
+  documentRevision++;
   node.style.visibility = 'visible';
   empty.hidden = true;
   event.textContent = '';
@@ -158,47 +151,109 @@ async function generateChart() {
   generate.disabled = true;
   cancel.hidden = false;
   setStatus('正在请求本地模型，首次加载可能较慢…', 'working');
+  const baseRevision = documentRevision;
+  const requestSignal = AbortSignal.any([
+    controller.signal,
+    AbortSignal.timeout(120000),
+  ]);
+  const attempts: { attempt: number; valid: boolean; diagnostics?: unknown }[] =
+    [];
+  let repair: string | undefined;
   try {
-    const response = await fetch('/api/local-ollama/generate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      signal: controller.signal,
-      body: JSON.stringify({
-        model: model.value,
-        prompt: prompt.value,
-        ...(continueEdit.checked && lastDocument
-          ? { previous: lastDocument }
-          : {}),
-      }),
-    });
-    const payload: unknown = await response.json();
-    if (sequence !== generation) return;
-    if (
-      !response.ok ||
-      !payload ||
-      typeof payload !== 'object' ||
-      !('content' in payload) ||
-      typeof payload.content !== 'string'
-    ) {
-      const code =
-        payload &&
-        typeof payload === 'object' &&
-        'error' in payload &&
-        typeof payload.error === 'string'
-          ? payload.error
-          : 'INVALID_MODEL_RESPONSE';
-      setStatus(errorMessage(code), 'error');
-      return;
-    }
-    raw.textContent = payload.content;
-    jsonEditor.value = payload.content;
-    try {
-      renderDocument(parseDocument(payload.content));
-    } catch {
-      setStatus(
-        '模型没有返回有效 JSON。请查看原始响应，或换一个模型重试。',
-        'error',
-      );
+    for (let attempt = 0; attempt < 3; attempt++) {
+      raw.textContent = '';
+      const response = await fetch('/api/local-ollama/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: requestSignal,
+        body: JSON.stringify({
+          model: model.value,
+          prompt: prompt.value,
+          ...(continueEdit.checked && lastDocument
+            ? { previous: lastDocument }
+            : {}),
+          ...(repair ? { repair } : {}),
+        }),
+      });
+      if (!response.ok || !response.body) {
+        setStatus('本地模型请求失败。', 'error');
+        return;
+      }
+      const result = await readOllamaStream(response.body, {
+        operationId: `generation-${sequence}-${attempt}`,
+        baseRevision,
+        signal: requestSignal,
+        onFragment(text) {
+          if (sequence === generation && !controller.signal.aborted)
+            raw.textContent += text;
+        },
+      });
+      if (sequence !== generation || controller.signal.aborted) return;
+      if (documentRevision !== baseRevision) {
+        setStatus(
+          '图表已被修改，本次旧结果未应用（REVISION_CONFLICT）。',
+          'error',
+        );
+        return;
+      }
+      if (!result.ok) {
+        if (result.diagnostics[0]?.code === 'INVALID_JSON') {
+          attempts.push({
+            attempt,
+            valid: false,
+            diagnostics: result.diagnostics,
+          });
+          event.textContent = JSON.stringify({
+            generation: sequence,
+            attempts,
+          });
+          repair = JSON.stringify({
+            invalidText: raw.textContent,
+            diagnostics: result.diagnostics,
+          });
+          if (attempt < 2 && repair.length <= 30000) {
+            setStatus(
+              `JSON 未通过，正在进行第 ${attempt + 1} 次修复…`,
+              'working',
+            );
+            continue;
+          }
+        }
+        setStatus(
+          `流式生成失败：${result.diagnostics[0]?.code}，保留上次图表。`,
+          'error',
+        );
+        return;
+      }
+      const candidate = result.value.document;
+      const checked = compileChart(candidate);
+      attempts.push({
+        attempt,
+        valid: checked.ok,
+        ...(!checked.ok ? { diagnostics: checked.diagnostics } : {}),
+      });
+      event.textContent = JSON.stringify({ generation: sequence, attempts });
+      if (checked.ok) {
+        renderDocument(candidate);
+        event.textContent = JSON.stringify({ generation: sequence, attempts });
+        return;
+      }
+      if (attempt === 2) {
+        setStatus(
+          `校验失败：${checked.diagnostics[0]?.code}；两次修复后仍未通过，保留上次图表。`,
+          'error',
+        );
+        return;
+      }
+      repair = JSON.stringify({
+        invalidDocument: candidate,
+        diagnostics: checked.diagnostics,
+      });
+      if (repair.length > 30000) {
+        setStatus('待修复输入过大，保留上次图表。', 'error');
+        return;
+      }
+      setStatus(`校验未通过，正在进行第 ${attempt + 1} 次修复…`, 'working');
     }
   } catch (error) {
     if (sequence !== generation) return;

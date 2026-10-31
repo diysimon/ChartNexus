@@ -1,3 +1,4 @@
+import { newChartFixture, newChartHostOptions } from './expansion-fixtures.js';
 import { createElement as h, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createLibrary, Renderer } from '@openuidev/react-lang';
@@ -44,6 +45,7 @@ let diagnosticHandler: (diagnostics: Diagnostic[]) => void = () => {};
 const library = createLibrary({
   components: [
     createOpenUIChart({
+      ...newChartHostOptions,
       onSelect: (event) => selectHandler(event),
       onDiagnostics: (diagnostics) => diagnosticHandler(diagnostics),
     }),
@@ -51,7 +53,9 @@ const library = createLibrary({
   root: 'ChartNexusChart',
 });
 function App() {
-  const [response, setResponse] = useState(makeResponse(bar));
+  const [response, setResponse] = useState(
+    makeResponse(newChartFixture ?? bar),
+  );
   const [draft, setDraft] = useState(response);
   const [streaming, setStreaming] = useState(false);
   const [event, setEvent] = useState('Click a chart item');

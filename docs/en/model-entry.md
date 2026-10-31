@@ -10,9 +10,9 @@ language: en
 
 [简体中文](../zh-CN/model-entry.md)
 
-ChartNexus compiles constrained JSON chart documents to Apache ECharts. First discover `chartnexus://capabilities/basic-0.1`, then read `chartnexus://schema/chart-document/0.1` and a relevant recipe. A machine-readable inventory is at `chartnexus://resources/index/0.1`. The full JSONL retrieval corpus is `chartnexus://resources/retrieval/0.1`. Sources and content hashes are also available in [the retrieval index](../../resources/model-index.json); hashes identify canonical source bytes, not necessarily the serialized MCP response.
+ChartNexus compiles constrained JSON chart documents to Apache ECharts. For new 0.3 intent generation, discover `chartnexus://capabilities/basic-0.3`, then `chartnexus://schema/chart-document/0.3` and `chartnexus://recipes/manifest/0.1`. Follow the host profile: chat accepts only 0.2/0.3 intent; non-chat also accepts 0.1 intent/native. The inventory `chartnexus://resources/index/0.1` and JSONL corpus `chartnexus://resources/retrieval/0.1` expose canonical sources and hashes; hashes identify source bytes, not necessarily serialized MCP responses.
 
-Choose `mode: intent` for compact supported bar, line, pie or scatter charts, or `mode: echarts` for a restricted native JSON option. Do not invent fields or capabilities, run code, include executable callbacks, fetch URLs, aggregate implicitly, or treat null as zero. Use actual field names and values. Native validation is partial and is not the entire ECharts API.
+Choose `mode: intent` for supported bar, line, pie, scatter, combo, funnel or heatmap charts in 0.2. Use 0.1 `mode: echarts` only in a non-chat host that enables native input. Never invent fields or capabilities, execute callbacks, fetch URLs, aggregate implicitly, or treat null as zero. Native validation is partial.
 
 Use `validate_chart` for structural and semantic validation. On failure, inspect diagnostic code and path, retrieve a repair example, revise the document, and validate again. `compile_chart` yields an ECharts plan; `render_chart` returns a session-local static SVG resource. Interactivity belongs to a browser host. Data references require a host-supplied registry and revision; never invent accessible datasets.
 
@@ -41,3 +41,17 @@ For 0.2 categorical heatmaps, read `chartnexus://recipes/heatmap/0.2`. Supply di
 The host may enable the 0.2 chat profile through `chatPresentation`; a user-requested detail level can be expressed as `presentation.detailLevel` (`minimal`, `simple`, `standard`, `detailed`, `comprehensive`). Host theme, background and level settings take precedence. Without host opt-in the document level does not change rendering. Never remove required legend or alter data for visual simplicity. See [chat profile](chat-presentation.md).
 
 For 0.2 chat charts, read `chartnexus://recipes/chat-bar/0.2` for a valid row-based example and `chartnexus://recipes/funnel/0.2` for a different chart type. Use the user's actual rows and values; examples are not task answers. Theme version is the string `"1"`; omit optional transforms unless requested.
+
+## Input contract and semantic notices
+
+Hosts can call `getChartInputContract({ chatPresentation: true, orderedUpdates: false })` from runtime or any JSON adapter. It returns the recommended document schema, accepted profiles, canonical complete example and model description. With ordered updates the example is an illustrative envelope; the host must replace operationId/baseRevision with real session values. A2UI/OpenUI descriptions use this helper; COSUI hosts explicitly add it to their model prompt. Marklang also supports chat settings; ordered envelopes are explicitly rejected.
+
+All-zero nonempty pie/donut values produce no sectors and return `dataState: "no-share"` plus informational `NO_SHARE_DATA`; empty pie returns `dataState: "empty"` without that notice. Preserve the values. Grouped series expose raw group values and display names through `seriesMetadata`; empty labels are disambiguated. These are series identities, not stable row IDs.
+
+## M1/M2 implementation
+
+See [0.3 contracts and migration](contracts-03.md) and [chat host quality/support matrix](chat-host-quality.md) for current version discovery, dimensions, tables, lifecycle, legend retention and real local Ollama streaming evidence. Legacy spec evidence remains historical.
+
+## M3 chart expansion
+
+0.3 now supports radar, tree, Sankey and trusted regional maps in addition to the original seven types. See [contracts, host MapRegistry, resources and preview](chart-expansion-03.md). Browser/SVG/worker and four pinned upstream SDK paths have local evidence; M4 model evaluation and distribution remain separate. Fixed renderer-owned label callbacks preserve text literally; model callbacks remain forbidden.

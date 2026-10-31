@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-31",
+  "node": "v22.22.3",
+  "model": {
+    "name": "qwen3.5:9b",
+    "model": "qwen3.5:9b",
+    "modified_at": "2026-03-04T15:34:57.996677247+08:00",
+    "size": 6594474711,
+    "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+    "details": {
+      "parent_model": "",
+      "format": "gguf",
+      "family": "qwen35",
+      "families": [
+        "qwen35"
+      ],
+      "parameter_size": "9.7B",
+      "quantization_level": "Q4_K_M",
+      "context_length": 262144,
+      "embedding_length": 4096,
+      "runner": "ggml"
+    },
+    "capabilities": [
+      "completion",
+      "vision",
+      "tools",
+      "thinking"
+    ]
+  },
+  "transport": "real local Ollama -> same-origin proxy -> incremental UTF-8 NDJSON -> terminal check -> compile",
+  "attempts": [
+    {
+      "attempt": 0,
+      "fragments": 127,
+      "durationMs": 10755,
+      "terminalValid": true,
+      "compiled": true,
+      "dataFidelity": true
+    }
+  ],
+  "cancellation": true,
+  "document": {
+    "schemaVersion": "0.2",
+    "id": "local-stream",
+    "mode": "intent",
+    "data": {
+      "kind": "inline",
+      "fields": [
+        "category",
+        "value"
+      ],
+      "rows": [
+        {
+          "category": "A",
+          "value": 3
+        },
+        {
+          "category": "B",
+          "value": 5
+        }
+      ]
+    },
+    "chart": {
+      "type": "bar",
+      "encoding": {
+        "x": {
+          "field": "category",
+          "type": "ordinal"
+        },
+        "y": {
+          "field": "value",
+          "type": "quantitative"
+        }
+      }
+    }
+  },
+  "passed": true,
+  "scope": "One synthetic smoke case; not a model benchmark or every-model claim."
+}

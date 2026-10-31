@@ -1,6 +1,8 @@
+import type { MapRegistry } from '@chartnexus/schema';
 import san from 'san';
 import {
-  mountChart,
+  observeChartMount,
+  validatePendingInput,
   createUpdateController,
   type UpdateController,
   type UpdateReceipt,
@@ -12,6 +14,7 @@ import type { DataRegistry, Diagnostic } from '@chartnexus/schema';
 
 export interface CosuiOptions {
   registry?: DataRegistry;
+  maps?: MapRegistry;
   chatPresentation?: ChatPresentationSettings;
   orderedUpdates?: boolean;
   onUpdateReceipt?: (receipt: UpdateReceipt) => void;
@@ -25,35 +28,45 @@ export function createCosuiChart(options: CosuiOptions = {}) {
     static template =
       '<div class="chartnexus-cosui" style="width:100%;height:320px"></div>';
     chart: ChartRuntime | undefined;
+    pendingInput: unknown;
     controller: UpdateController | undefined;
+    coordinator: ReturnType<typeof observeChartMount> | undefined;
     attached() {
       if (!(this.el instanceof HTMLElement)) return;
-      const result = mountChart(
+      this.watch('document', () => this.updateChart());
+      this.updateChart();
+      this.coordinator = observeChartMount(
         this.el,
+        (runtime) => {
+          this.chart = runtime;
+          if (options.orderedUpdates)
+            this.controller = createUpdateController(runtime);
+          this.updateChart(this.pendingInput);
+          this.pendingInput = undefined;
+        },
+        (diagnostics) => {
+          options.onDiagnostics?.(diagnostics);
+          this.fire('chart-diagnostics', diagnostics);
+        },
         (event) => {
           this.fire('chart-select', event);
           options.onSelect?.(event);
         },
-        options.chatPresentation
-          ? { chatPresentation: options.chatPresentation }
-          : {},
+        options,
       );
-      if (!result.ok) {
-        options.onDiagnostics?.(result.diagnostics);
-        this.fire('chart-diagnostics', result.diagnostics);
+    }
+    updateChart(override?: unknown) {
+      const input = override ?? this.data.get('document');
+      if (!this.chart) {
+        const checked = validatePendingInput(input, options, options.registry);
+        if (checked.ok) {
+          if (checked.value) this.pendingInput = structuredClone(input);
+        } else options.onDiagnostics?.(checked.diagnostics);
         return;
       }
-      this.chart = result.value;
-      if (options.orderedUpdates)
-        this.controller = createUpdateController(result.value);
-      this.updateChart();
-      this.watch('document', () => this.updateChart());
-    }
-    updateChart() {
-      if (!this.chart) return;
       const result = this.controller
-        ? this.controller.commit(this.data.get('document'), options.registry)
-        : this.chart.update(this.data.get('document'), options.registry);
+        ? this.controller.commit(input, options.registry)
+        : this.chart.update(input, options.registry);
       if (result.ok && this.controller) {
         const receipt = result.value as UpdateReceipt;
         options.onUpdateReceipt?.(receipt);
@@ -64,6 +77,8 @@ export function createCosuiChart(options: CosuiOptions = {}) {
       this.fire('chart-diagnostics', diagnostics);
     }
     disposed() {
+      this.coordinator?.dispose();
+      this.coordinator = undefined;
       this.controller?.dispose();
       this.controller = undefined;
       this.chart?.dispose();
@@ -71,3 +86,8 @@ export function createCosuiChart(options: CosuiOptions = {}) {
     }
   };
 }
+
+export {
+  getChartInputContract,
+  type ChartInputProfile,
+} from '@chartnexus/runtime';

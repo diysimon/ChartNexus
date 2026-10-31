@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-31",
+  "scope": "M2 A06-A11",
+  "environment": {
+    "node": "22.22.3",
+    "pnpm": "11.25.0",
+    "chrome": "156.0.8078.74",
+    "echarts": "6.1.0",
+    "playwright": "1.64.1"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "result": "pass",
+      "tests": 207,
+      "testFiles": 28,
+      "referenceSelfChecks": 20,
+      "bilingualPairs": 91,
+      "includes": [
+        "generation consistency",
+        "docs and links",
+        "format",
+        "lint",
+        "typecheck",
+        "unit/integration",
+        "reference self-checks",
+        "demo build"
+      ]
+    },
+    {
+      "command": "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:browser",
+      "result": "pass",
+      "tests": 33,
+      "durationSeconds": 21.6,
+      "logSha256": "29a4704c970e983f92c2b7ba013f91f040f622adefc738fed8d4e80cb1e2a4ab"
+    }
+  ],
+  "notRun": [
+    "independent held-out model benchmark",
+    "cross-provider evaluation",
+    "all-package clean Node 22/24 installation",
+    "remote CI",
+    "hydration/mobile certification",
+    "publication"
+  ],
+  "limits": [
+    "0.3 radar/tree/sankey/map are schema-reserved only",
+    "transparent background contrast depends on declared host surfaces",
+    "Marklang ordered envelopes and cross-document interaction retention unsupported",
+    "zoom retention unsupported",
+    "full ECharts demo bundle still produces size warning"
+  ],
+  "gitActions": {
+    "commit": false,
+    "push": false
+  },
+  "liveOllama": {
+    "result": "pass",
+    "evidence": "ollama-verification.json",
+    "model": "qwen3.5:9b",
+    "syntheticCases": 1,
+    "firstPass": true,
+    "cancellation": true,
+    "benchmark": false
+  },
+  "regressionsResolved": [
+    "same-frame Marklang hide/update/show may suppress ResizeObserver notification; re-observe pending container and verify repeated transitions"
+  ]
+}

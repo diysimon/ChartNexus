@@ -1,0 +1,35 @@
+{
+  "status": "accepted-before-model-run",
+  "scope": "Held out from thirty public evaluation tasks and teaching recipes. Not held out from protocol primitives, compiler tests, or general model knowledge.",
+  "corpusHash": "94993d3a9680a3f6803a4bbe884d729996c6fd9ffa74ecbfe28e4513ae4fa70f",
+  "publicHashes": {
+    "resources/evaluation/tasks.json": "6fd4562d5666ae205bb6d295d9b0a939ca95451f4b59c4bc5fc046f562ce9e89",
+    "resources/evaluation/development-03.json": "86af7a7fb848e577d657d181c1d78cb21ddd62892647550a75486e74b8ca20c0",
+    "resources/recipes/manifest.json": "0948a2259e25dcd198574776091583a0f25aef6c7078a0d5a823f41faae3d2ad"
+  },
+  "counts": {
+    "chart": 33,
+    "edit": 12,
+    "invalid": 9,
+    "recovery": 6
+  },
+  "families": [
+    "catalog-exact-snapshot",
+    "catalog-authorized-vs-draft",
+    "catalog-withdrawn-newer-revision",
+    "catalog-retarget-preserve-presentation",
+    "catalog-atomic-graph-retarget",
+    "catalog-withdrawn-revision-diagnosis",
+    "catalog-rebase-rejected-revision",
+    "catalog-rebase-both-graph-snapshots"
+  ],
+  "review": [
+    "New source-selection/revision decisions alter executable data dependencies, not category names or numbers.",
+    "Every creation/edit/recovery requires resolving current authorized catalog semantics.",
+    "Host-only registries and expected marks never enter model messages.",
+    "Independent expected numbers/tree IDs/edges written from authored input tables; compiling references only checks oracle consistency.",
+    "Type-directed construction: no unrestricted chart recommendation claim.",
+    "Author and reviewer are the same local agent; no external audit claim."
+  ],
+  "frozenBeforeRun": "2026-10-31T13:32:06.433Z"
+}

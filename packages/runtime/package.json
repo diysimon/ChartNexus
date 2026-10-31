@@ -5,7 +5,9 @@
   "type": "module",
   "license": "Apache-2.0",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "NOTICE"
   ],
   "exports": {
     ".": {
@@ -15,7 +17,8 @@
   },
   "dependencies": {
     "@chartnexus/schema": "workspace:*",
-    "@chartnexus/core": "workspace:*"
+    "@chartnexus/core": "workspace:*",
+    "@chartnexus/echarts": "workspace:*"
   },
   "peerDependencies": {
     "echarts": "6.1.0"

@@ -46,7 +46,7 @@
     "charts": ["line"],
     "kinds": ["date", "instant"],
     "dateFormat": "YYYY-MM-DD",
-    "instantFormat": "YYYY-MM-DDTHH:mm:ss[.SSS]Z or ±HH:mm",
+    "instantFormat": "YYYY-MM-DDTHH:mm:ss[.SSS]Z or \u00b1HH:mm",
     "years": "1000-9999",
     "coordinate": "UTC",
     "displayTimezone": "UTC",
@@ -113,6 +113,25 @@
     "backgrounds": ["transparent", "theme"],
     "defaultLevel": "standard",
     "defaultTheme": "light",
-    "defaultBackground": "transparent"
+    "defaultBackground": "transparent",
+    "versions": ["0.2", "0.3"],
+    "layout": {
+      "minimumWidth": 240,
+      "minimumHeight": 240,
+      "fallback": "browser data access; SVG EXPORT_LIMIT"
+    },
+    "accessibility": {
+      "sourceRows": "paginated 50",
+      "renderedMarks": "paginated 50",
+      "svg": "title and full JSON metadata"
+    },
+    "legendRetention": "compatible semantic keys; Marklang resets on document swap"
+  },
+  "intentSemantics": {
+    "pieZeroTotal": "no-sectors; NO_SHARE_DATA notice and dataState no-share",
+    "pieEmpty": "dataState empty; no placeholder circle",
+    "groupIdentity": "group-field, raw-group-value and measure-field",
+    "emptyGroupLabel": "first unused (empty) or (empty) [n]",
+    "groupMetadata": "seriesMetadata preserves raw group values; not stable row IDs"
   }
 }

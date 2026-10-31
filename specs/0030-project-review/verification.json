@@ -1,0 +1,70 @@
+{
+  "baselineCommit": "54fbf2a3f7f21a5f5d565e8aed885fe2aac2aa16",
+  "reviewDate": "2026-10-31",
+  "environment": {
+    "node": "22.22.3",
+    "pnpm": "11.25.0",
+    "chrome": "156.0.8078.74"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "result": "pass",
+      "tests": 147,
+      "testFiles": 21,
+      "publicReferenceSelfChecks": 20,
+      "note": "Reference self-checks are not model evaluation."
+    },
+    {
+      "command": "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=<installed Chrome> pnpm test:browser",
+      "result": "pass",
+      "tests": 18,
+      "note": "Local upstream SDK fixtures; Ollama responses in browser tests are mocked."
+    },
+    {
+      "command": "pnpm --dir packages/schema pack --pack-destination <temporary directory>",
+      "result": "pass",
+      "note": "Tarball includes LICENSE, JSON resources and public exports."
+    },
+    {
+      "command": "npm install --prefix <clean temporary directory> --cache <temporary cache> --offline --ignore-scripts --no-audit --no-fund <schema tarball>; import public @chartnexus/schema",
+      "result": "pass",
+      "note": "Only schema, not the full package dependency graph."
+    },
+    {
+      "command": "node specs/0030-project-review/probes.mjs",
+      "result": "executed",
+      "output": "baseline-observations.json",
+      "note": "Known findings remain unfixed."
+    },
+    {
+      "command": "pnpm docs:check",
+      "result": "pass",
+      "bilingualPairs": 81,
+      "localLinks": 482,
+      "stage": "after review artifacts"
+    },
+    {
+      "command": "pnpm generate:check",
+      "result": "pass",
+      "stage": "after review artifacts"
+    },
+    {
+      "command": "git diff --check",
+      "result": "pass",
+      "stage": "after review artifacts"
+    }
+  ],
+  "notRun": [
+    "new live-model evaluation",
+    "remote CI verification",
+    "all-package installation",
+    "full accessibility certification",
+    "full security audit",
+    "new chart implementations"
+  ],
+  "logDigests": {
+    "check": "64825709aff33cd3e651e03024aa30a4418270d901baa29b570b03c7971360ca",
+    "browser": "5d175d70a61f2ed1bab1bb6ee244943792757a59575359037d27dbea3ed89bd8"
+  }
+}

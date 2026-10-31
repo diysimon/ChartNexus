@@ -2,7 +2,7 @@
 doc_id: development
 version: "0.1"
 status: experimental
-updated: 2026-10-30
+updated: 2026-10-31
 language: zh-CN
 ---
 
@@ -10,7 +10,7 @@ language: zh-CN
 
 [Other language](../en/development.md)
 
-这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；已有少量本地模型试验和有界的会话内 operation 去重；稳定行 ID 和交互状态保留尚未实现。独立评测和更广泛的宿主验证仍待完成。
+这是本地、未发布的实验实现。OpenUI Lang React、COSUI JSON/San、COSUI Marklang 和 A2UI v0.9 React 图表 profile 均为实验功能；已有少量本地模型试验和有界的会话内 operation 去重；已实现 0.3 稳定行键与兼容图例状态保留。独立评测和更广泛的宿主验证仍待完成。
 
 ## 运行
 使用 Node 22.22.3（基线）或受支持的 Node 24 运行时，pnpm 11.25.0。在项目根目录执行：
@@ -44,7 +44,7 @@ Schema 版本 0.1，原生 echarts 或语义 intent 模式。intent 使用字段
 输入 1 MiB、深度 32、最多检查 100000 节点；100 字段、10000 行、50 系列、50000 个展开后的分类/系列点；尺寸不超过 4096；SVG 不超过 8 MiB。同步编译/渲染尚无硬超时和进程隔离。这些是保守起点，不是性能承诺；不用于公开托管不可信渲染服务。
 
 ## 运行时行为
-完整更新使用 notMerge，删除系列不会留下旧数据。校验失败保留上一图表和 revision。渲染失败尝试恢复；恢复失败提示重新挂载。选择事件包含位置行身份、图表 revision、数据 revision，原生模式没有行映射。ResizeObserver 处理尺寸变化，dispose 清理监听和实例。暂不保留缩放和图例状态。
+完整更新使用 notMerge，删除系列不会留下旧数据。校验失败保留上一图表和 revision。渲染失败尝试恢复；恢复失败提示重新挂载。选择事件包含位置或聚合身份、图表 revision、数据 revision；0.3 可提供稳定行键，原生模式没有行映射。ResizeObserver 处理尺寸变化，dispose 清理监听和实例。兼容 chat/0.3 图例状态会保留，缩放状态保留不支持。
 
 ## 工程状态
 `pnpm generate` 从 Schema 生成类型，`generate:check` 检查漂移；`docs:check` 检查双语清单和本地链接；`check` 汇总已实现本地门禁，浏览器测试单独运行。CI YAML 只是本地配置，不代表 GitHub 已运行或分支保护已启用。未配置发布任务。
@@ -58,7 +58,7 @@ CLI 与本地 MCP stdio 已通过共同 Node agent 服务接入。参见[接入�
 
 运行 `pnpm dev` 后打开 `http://127.0.0.1:5173/openui.html`。演示使用真实 OpenUI React Renderer 与本地响应，不调用模型。`@chartnexus/adapter-openui` 导出 `createOpenUIChart({ registry?, onSelect?, onDiagnostics? })`，供 OpenUI library 注册。`ChartNexusChart(document)` 属性为完整 ChartDocument 的 JSON 字符串。生成提示词时应提供 `packages/schema/src/chart-document.schema.json` 和 `resources/recipes/`；`library.prompt()` 描述组件外壳，但不包含完整图表 schema。
 
-OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效图。宿主拼接流式片段时必须保留上次提交的 response：错误的 OpenUI 程序可能在适配器处理前移除组件。原生和 intent 模式遵守现有核心限制，包括 1 MiB。更新使用稳定图表 ID，换 ID 时重新挂载；数据引用由宿主提供可信 registry。选择事件使用位置身份；`onDiagnostics` 返回错误，恢复时返回空数组。不接受模型提供的可执行回调。
+OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效图。宿主拼接流式片段时必须保留上次提交的 response：错误的 OpenUI 程序可能在适配器处理前移除组件。原生和 intent 模式遵守现有核心限制，包括 1 MiB。更新使用稳定图表 ID，换 ID 时重新挂载；数据引用由宿主提供可信 registry。旧版选择事件使用位置或聚合身份，0.3 可提供稳定行键；`onDiagnostics` 返回错误，恢复时返回空数组。不接受模型提供的可执行回调。
 
 验证基线为 OpenUI React Lang 1.0.2、React 19.2.4、Zod 4.3.6。这是实验性的 OpenUI Lang 组件 profile，不代表标准 A2UI、COSUI 或其他 OpenUI 宿主兼容。真实模型输出、SSR/水合、干净包安装、其他 SDK 版本和 npm 发布尚未验证。参见 [SPEC-0003](../../specs/0003-openui-adapter/spec.zh-CN.md)。
 
@@ -115,7 +115,7 @@ MCP 调用 `validate_chart` 时传入 `nativeValidation: "strict-basic-0.1"`；�
 
 ### 按版本发现 Schema
 
-MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2"` 和 `mode`。默认仍为 0.1；0.2 目前仅支持 intent，若同时请求 `mode: "echarts"` 会返回 `UNSUPPORTED_CAPABILITY`。CLI 可使用 `pnpm cli schema --schema-version 0.2 --mode intent`。获取 Schema 不代表 0.2 已支持原生模式。
+MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2" | "0.3"` 和 `mode`；0.3 还可用 `chartType` 获取分支投影。默认仍为 0.1；0.2/0.3 仅支持 intent，若同时请求 `mode: "echarts"` 会返回 `UNSUPPORTED_CAPABILITY`。CLI 可使用 `pnpm cli schema --schema-version 0.3 --chart-type bar`。获取 Schema 不代表预留的 0.3 渲染器已经支持。
 
 ### 0.2 柱线组合与漏斗图
 
@@ -126,3 +126,23 @@ MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2"` 和 `mode`。
 ### 0.2 分类热力图
 
 使用 `chart.type: "heatmap"`，为 x/y 指定 ordinal 字符串字段，并用 `chart.heatmap: { "field": "orders", "min": 0, "max": 10 }` 指定不同的数值字段。范围须显式且上下限不同；非 null 值超出范围会被拒绝。null 不生成可绘制格，零仍是零；即使其中一行是 null，重复 x/y 组合仍会拒绝，稀疏格不会被填造。分类按首次出现顺序排列；点击可见格返回原始行索引。首个 profile 不支持排序、分组、聚合、单位或标签/图例覆盖，使用固定颜色范围。参见[示例](../../resources/recipes/heatmap.json)与 [Spec](../../specs/0027-heatmap/spec.zh-CN.md)。
+
+## M0 语义修正
+
+意图饼图/环图区分正数、空数据和全零。零总量不绘制扇区，即使在最简档也显示 “No shares: all values are zero.” 并返回信息提示。空数据不绘制占位圆。浏览器离开 no-share 或销毁时恢复宿主 ARIA 属性。原生图表保留原行为，漏斗不继承占比语义。
+
+分组序列 ID 现在编码分组字段、原始分组值和度量字段。空名称使用首个未占用的 `(empty)` / `(empty) [n]`，非空值保持不变。`seriesMetadata` 保留原始值；原有分组 ID 会改变，不应跨此编译器变更持久化。事件行身份仍为位置或聚合。
+
+Recipe 副本、发现和检索从 [manifest](../../resources/recipes/manifest.json) 生成。`docs:check` 检查 frontmatter 状态与清单一致、双语更新日期一致。见 [语义 spec](../../specs/0031-intent-semantics/spec.zh-CN.md) 与 [入口 spec](../../specs/0032-model-entry-consistency/spec.zh-CN.md)。
+
+## M1/M2 实施
+
+当前版本发现、迁移、尺寸、数据表、生命周期、图例保留及真实本地 Ollama 流式证据见 [0.3 契约](contracts-03.md) 与 [聊天宿主质量/支持矩阵](chat-host-quality.md)。旧 spec 的验证记录保留为历史证据。
+
+## M3 图表扩充
+
+0.3 在原有七类基础上新增雷达、树、桑基和可信区域地图。见[契约、宿主 MapRegistry、模型资源和预览](chart-expansion-03.md)。浏览器/SVG/worker 与四种固定上游 SDK 路径已有本地证据；M4 模型评测和分发仍是独立工作。固定渲染器标签回调保留原文，仍禁止模型回调。
+
+## M4 验证命令
+
+`pnpm test:packages --offline --browser` 在隔离消费者验证 11 个 tarball；`pnpm benchmark` 执行体积预算并记录性能；`pnpm eval:independent:check` 检查独立评分器。完整真实评测仅手动、本机运行，可能耗时数小时，见[试用/分发](trial-distribution.md)和[支持矩阵](support-matrix.md)。Node 22.22.3 与 24.22.1 安装已本地验证，远端 CI 仍待完成。

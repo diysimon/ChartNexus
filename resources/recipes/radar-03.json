@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "0.3",
+  "id": "m3-radar",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["team", "speed", "quality", "coverage"],
+    "rows": [
+      {
+        "team": "Alpha",
+        "speed": 65,
+        "quality": 85,
+        "coverage": 70
+      },
+      {
+        "team": "Beta",
+        "speed": 80,
+        "quality": 60,
+        "coverage": 90
+      }
+    ]
+  },
+  "chart": {
+    "type": "radar",
+    "title": "Team comparison",
+    "encoding": {
+      "item": {
+        "field": "team"
+      }
+    },
+    "indicators": [
+      {
+        "field": "speed",
+        "label": "Speed",
+        "min": 0,
+        "max": 100,
+        "unit": {
+          "kind": "unit",
+          "label": "points"
+        }
+      },
+      {
+        "field": "quality",
+        "label": "Quality",
+        "min": 0,
+        "max": 100,
+        "unit": {
+          "kind": "unit",
+          "label": "points"
+        }
+      },
+      {
+        "field": "coverage",
+        "label": "Coverage",
+        "min": 0,
+        "max": 100,
+        "unit": {
+          "kind": "unit",
+          "label": "points"
+        }
+      }
+    ]
+  }
+}

@@ -40,7 +40,16 @@ describe('CLI child process', () => {
       status: 1,
       json: { ok: false, diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }] },
     });
-    expect(run(['schema', '--schema-version', '0.3']).status).toBe(2);
+    expect(
+      run(['schema', '--schema-version', '0.3', '--chart-type', 'bar']),
+    ).toMatchObject({
+      status: 0,
+      json: {
+        ok: true,
+        value: { properties: { schemaVersion: { const: '0.3' } } },
+      },
+    });
+    expect(run(['schema', '--schema-version', '0.4']).status).toBe(2);
     expect(run(['capabilities', '--schema-version', '0.2']).status).toBe(2);
     expect(
       run(['schema', '--schema-version', '0.1', '--schema-version', '0.2'])

@@ -5,6 +5,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        performance: resolve(import.meta.dirname, 'performance.html'),
+        expansion: resolve(import.meta.dirname, 'expansion.html'),
+        quality: resolve(import.meta.dirname, 'quality.html'),
         playground: resolve(import.meta.dirname, 'index.html'),
         core02: resolve(import.meta.dirname, 'core-02.html'),
         chat: resolve(import.meta.dirname, 'chat.html'),

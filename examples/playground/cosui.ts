@@ -1,3 +1,4 @@
+import { newChartFixture, newChartHostOptions } from './expansion-fixtures.js';
 import UIJSON from '@cosui/cosmic-dynamic-ui';
 import { createCosuiChart } from '@chartnexus/adapter-cosui';
 
@@ -35,6 +36,7 @@ const native = {
 const status = document.querySelector<HTMLElement>('#cosui-status')!;
 const event = document.querySelector<HTMLElement>('#cosui-event')!;
 const Chart = createCosuiChart({
+  ...newChartHostOptions,
   onSelect: (selection) => {
     event.textContent = JSON.stringify(selection);
   },
@@ -48,7 +50,7 @@ const App = UIJSON.compile({
   ui: { type: 'chartnexus-chart', props: { document: '{{document}}' } },
   components: { 'chartnexus-chart': Chart },
 });
-const app = new App({ data: { document: intent } });
+const app = new App({ data: { document: newChartFixture ?? intent } });
 app.attach(document.querySelector('#cosui-chart')!);
 function append(value: unknown) {
   app.appendData({ document: value });

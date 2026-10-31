@@ -12,5 +12,12 @@
     "series": 50,
     "points": 50000,
     "dimension": 4096
+  },
+  "intentSemantics": {
+    "pieZeroTotal": "no-sectors; NO_SHARE_DATA notice and dataState no-share",
+    "pieEmpty": "dataState empty; no placeholder circle",
+    "groupIdentity": "group-field, raw-group-value and measure-field",
+    "emptyGroupLabel": "first unused (empty) or (empty) [n]",
+    "groupMetadata": "seriesMetadata preserves raw group values; not stable row IDs"
   }
 }

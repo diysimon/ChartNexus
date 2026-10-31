@@ -1,3 +1,4 @@
+import { newChartFixture, newChartHostOptions } from './expansion-fixtures.js';
 import { createElement as h, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
@@ -42,6 +43,7 @@ const native = {
 let selectionHandler: (event: SelectionEvent) => void = () => {};
 let diagnosticHandler: (diagnostics: Diagnostic[]) => void = () => {};
 const chart = createA2uiChart({
+  ...newChartHostOptions,
   onSelect: (event) => selectionHandler(event),
   onDiagnostics: (items) => diagnosticHandler(items),
 });
@@ -72,7 +74,7 @@ processor.processMessages([
     updateDataModel: {
       surfaceId: 'main',
       path: '/document',
-      value: JSON.stringify(intent),
+      value: JSON.stringify(newChartFixture ?? intent),
     },
   },
 ]);

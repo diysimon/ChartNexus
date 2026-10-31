@@ -1,8 +1,11 @@
+import type { MapRegistry } from '@chartnexus/schema';
 import { createElement, useEffect, useRef, useState } from 'react';
 import { defineComponent, useIsStreaming } from '@openuidev/react-lang';
 import { z } from 'zod/v4';
 import {
-  mountChart,
+  observeChartMount,
+  validatePendingInput,
+  getChartInputContract,
   createUpdateController,
   type UpdateController,
   type UpdateReceipt,
@@ -18,6 +21,7 @@ import {
 
 export interface OpenUIChartOptions {
   registry?: DataRegistry;
+  maps?: MapRegistry;
   chatPresentation?: ChatPresentationSettings;
   orderedUpdates?: boolean;
   onUpdateReceipt?: (receipt: UpdateReceipt) => void;
@@ -27,19 +31,15 @@ export interface OpenUIChartOptions {
 
 /** Register this component in an OpenUI library. `document` is JSON, never code. */
 export function createOpenUIChart(options: OpenUIChartOptions = {}) {
+  const contract = getChartInputContract({
+    chatPresentation: Boolean(options.chatPresentation),
+    orderedUpdates: Boolean(options.orderedUpdates),
+  });
   return defineComponent({
     name: 'ChartNexusChart',
-    description: options.orderedUpdates
-      ? 'Render a ChartNexus ordered update operation as a JSON string; the host supplies its revision and operation ID.'
-      : 'Render a ChartNexus ChartDocument. Pass the complete document as a JSON string. Use schemaVersion 0.1 and either intent or echarts mode.',
+    description: contract.description,
     props: z.object({
-      document: z
-        .string()
-        .describe(
-          options.orderedUpdates
-            ? 'JSON-encoded ChartNexus operation with operationId, baseRevision, complete and document when complete.'
-            : 'Complete JSON-encoded ChartDocument, not JavaScript. Keep its id stable during updates.',
-        ),
+      document: z.string().describe(contract.description),
     }),
     component: ({ props }) =>
       createElement(Chart, { document: props.document, options }),
@@ -56,36 +56,40 @@ function Chart({
   const container = useRef<HTMLDivElement>(null);
   const runtime = useRef<ChartRuntime | null>(null);
   const controller = useRef<UpdateController | null>(null);
+  const applyCurrent = useRef<(override?: unknown) => void>(() => {});
+  const pendingInput = useRef<unknown>(undefined);
   const optionsRef = useRef(options);
   optionsRef.current = options;
   const [diagnostics, setDiagnostics] = useState<Diagnostic[]>([]);
   const streaming = useIsStreaming();
   useEffect(() => {
     if (!container.current) return;
-    const result = mountChart(
+    const coordinator = observeChartMount(
       container.current,
+      (value) => {
+        runtime.current = value;
+        if (optionsRef.current.orderedUpdates)
+          controller.current = createUpdateController(value);
+        applyCurrent.current(pendingInput.current);
+        pendingInput.current = undefined;
+      },
+      (items) => {
+        setDiagnostics(items);
+        optionsRef.current.onDiagnostics?.(items);
+      },
       (event) => optionsRef.current.onSelect?.(event),
-      optionsRef.current.chatPresentation
-        ? { chatPresentation: optionsRef.current.chatPresentation }
-        : {},
+      optionsRef.current,
     );
-    if (result.ok) {
-      runtime.current = result.value;
-      if (optionsRef.current.orderedUpdates)
-        controller.current = createUpdateController(result.value);
-    } else {
-      setDiagnostics(result.diagnostics);
-      optionsRef.current.onDiagnostics?.(result.diagnostics);
-    }
     return () => {
+      coordinator.dispose();
       controller.current?.dispose();
       controller.current = null;
       runtime.current?.dispose();
       runtime.current = null;
     };
   }, []);
-  useEffect(() => {
-    if (streaming || !runtime.current) return;
+  applyCurrent.current = (override) => {
+    if (streaming && override === undefined) return;
     if (new TextEncoder().encode(document).byteLength > 1024 * 1024) {
       const result = failure(
         'INPUT_TOO_LARGE',
@@ -100,7 +104,7 @@ function Chart({
     }
     let input: unknown;
     try {
-      input = JSON.parse(document);
+      input = override ?? JSON.parse(document);
     } catch {
       const result = failure(
         'INVALID_JSON',
@@ -113,6 +117,20 @@ function Chart({
       }
       return;
     }
+    if (!runtime.current) {
+      const checked = validatePendingInput(
+        input,
+        optionsRef.current,
+        optionsRef.current.registry,
+      );
+      if (checked.ok) {
+        if (checked.value) pendingInput.current = structuredClone(input);
+      } else {
+        setDiagnostics(checked.diagnostics);
+        optionsRef.current.onDiagnostics?.(checked.diagnostics);
+      }
+      return;
+    }
     const result = controller.current
       ? controller.current.commit(input, optionsRef.current.registry)
       : runtime.current.update(input, optionsRef.current.registry);
@@ -121,7 +139,8 @@ function Chart({
     const next = result.ok ? [] : result.diagnostics;
     setDiagnostics(next);
     optionsRef.current.onDiagnostics?.(next);
-  }, [document, streaming]);
+  };
+  useEffect(() => applyCurrent.current(), [document, streaming]);
   return createElement(
     'div',
     { className: 'chartnexus-openui' },
@@ -139,3 +158,8 @@ function Chart({
       : null,
   );
 }
+
+export {
+  getChartInputContract,
+  type ChartInputProfile,
+} from '@chartnexus/runtime';

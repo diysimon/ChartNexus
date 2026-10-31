@@ -7,18 +7,26 @@ test('Ollama playground validates and preserves a chart on failure and cancellat
   await page.route('**/api/local-ollama/models', (route) =>
     route.fulfill({ json: { models: ['qwen3.5:9b'] } }),
   );
+  const response = (content: string) => ({
+    contentType: 'application/x-ndjson',
+    body:
+      JSON.stringify({ done: false, message: { content } }) +
+      '\n' +
+      JSON.stringify({ done: true, done_reason: 'stop' }) +
+      '\n',
+  });
   let count = 0;
-  await page.route('**/api/local-ollama/generate', async (route) => {
+  await page.route('**/api/local-ollama/stream', async (route) => {
     count++;
-    if (count === 1)
-      return route.fulfill({ json: { content: JSON.stringify(bar) } });
+    if (count === 1) return route.fulfill(response(JSON.stringify(bar)));
     if (count === 2)
-      return route.fulfill({ json: { content: '{invalid json' } });
-    if (count === 3) return route.fulfill({ json: { content: '{}' } });
+      return route.fulfill({
+        contentType: 'application/x-ndjson',
+        body: '{invalid frame}\n',
+      });
+    if (count >= 3 && count <= 5) return route.fulfill(response('{}'));
     await new Promise((resolve) => setTimeout(resolve, 1200));
-    await route
-      .fulfill({ json: { content: JSON.stringify(bar) } })
-      .catch(() => {});
+    await route.fulfill(response(JSON.stringify(bar))).catch(() => {});
   });
   await page.goto('/ollama.html');
   await expect(page.locator('#connection')).toContainText('已连接');
@@ -28,10 +36,10 @@ test('Ollama playground validates and preserves a chart on failure and cancellat
   await expect(page.locator('#chart-layer svg')).toHaveCount(1);
   const before = await page.locator('#chart-layer svg').innerHTML();
   await page.click('#generate');
-  await expect(page.locator('#status')).toContainText('没有返回有效 JSON');
+  await expect(page.locator('#status')).toContainText('INVALID_STREAM');
   expect(await page.locator('#chart-layer svg').innerHTML()).toBe(before);
   await page.click('#generate');
-  await expect(page.locator('#status')).toContainText('不会自动联网查询');
+  await expect(page.locator('#status')).toContainText('两次修复后仍未通过');
   expect(await page.locator('#chart-layer svg').innerHTML()).toBe(before);
   await page.click('#generate');
   await page.click('#cancel');
@@ -79,4 +87,45 @@ test('accepts native option JSON and rejects unsafe input without losing the cha
   await page.locator('#render-json').click();
   await expect(page.locator('#status')).toContainText('校验失败');
   expect(await page.locator('#chart-layer svg').innerHTML()).toBe(before);
+});
+
+test('repairs syntax once, records attempts, and discards a result made stale by manual editing', async ({
+  page,
+}) => {
+  await page.route('**/api/local-ollama/models', (route) =>
+    route.fulfill({ json: { models: ['local'] } }),
+  );
+  const frame = (content: string) => ({
+    contentType: 'application/x-ndjson',
+    body:
+      JSON.stringify({ done: false, message: { content } }) +
+      '\n' +
+      JSON.stringify({ done: true, done_reason: 'stop' }) +
+      '\n',
+  });
+  let count = 0;
+  await page.route('**/api/local-ollama/stream', async (route) => {
+    count++;
+    if (count === 1) return route.fulfill(frame('{invalid JSON'));
+    if (count === 2) return route.fulfill(frame(JSON.stringify(bar)));
+    await new Promise((resolve) => setTimeout(resolve, 700));
+    return route.fulfill(frame(JSON.stringify(bar)));
+  });
+  await page.goto('/ollama.html');
+  await expect(page.locator('#connection')).toContainText('已连接');
+  await page.locator('[data-example="bar"]').click();
+  await page.click('#generate');
+  await expect(page.locator('#status')).toContainText('通过校验');
+  await expect(page.locator('#event')).toContainText('"attempt":1');
+  await expect(page.locator('#event')).toContainText('"valid":false');
+  await page.click('#generate');
+  await page.locator('summary').first().click();
+  const edited = {
+    ...bar,
+    data: { ...bar.data, rows: [{ month: 'Changed', revenue: 99 }] },
+  };
+  await page.locator('#document').fill(JSON.stringify(edited));
+  await page.click('#render-json');
+  await expect(page.locator('#status')).toContainText('REVISION_CONFLICT');
+  await expect(page.locator('#chart-layer')).toContainText('Changed');
 });

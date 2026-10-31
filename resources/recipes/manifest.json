@@ -1,21 +1,247 @@
 {
   "schemaVersion": "0.1",
   "license": "Apache-2.0",
-  "provenance": "Project-authored synthetic data; not production data or a training benchmark.",
+  "provenance": "Project-authored synthetic development examples, including declarative negative-case patches; not a held-out benchmark.",
   "examples": [
     {
       "id": "bar",
+      "resourceId": "bar-recipe",
       "path": "bar.json",
-      "expected": "success"
+      "title": "Synthetic sales bar chart",
+      "uri": "chartnexus://recipes/bar",
+      "schemaVersion": "0.1",
+      "chartType": "bar",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "chat-bar",
+      "resourceId": "chat-bar-recipe-0.2",
+      "path": "chat-bar.json",
+      "title": "Synthetic chat bar chart",
+      "uri": "chartnexus://recipes/chat-bar/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "bar",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "combo",
+      "resourceId": "combo-recipe-0.2",
+      "path": "combo.json",
+      "title": "Synthetic single-axis combo",
+      "uri": "chartnexus://recipes/combo/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "combo",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "funnel",
+      "resourceId": "funnel-recipe-0.2",
+      "path": "funnel.json",
+      "title": "Synthetic funnel",
+      "uri": "chartnexus://recipes/funnel/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "funnel",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "heatmap",
+      "resourceId": "heatmap-recipe-0.2",
+      "path": "heatmap.json",
+      "title": "Synthetic sparse heatmap",
+      "uri": "chartnexus://recipes/heatmap/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "heatmap",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/heatmap/max",
+        "value": 0,
+        "expectedCode": "INVALID_DATA"
+      }
+    },
+    {
+      "id": "line",
+      "resourceId": "line-recipe-0.2",
+      "path": "line.json",
+      "title": "Synthetic line chart",
+      "uri": "chartnexus://recipes/line/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "line",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/y/type",
+        "value": "ordinal",
+        "expectedCode": "INVALID_ENCODING"
+      }
+    },
+    {
+      "id": "pie",
+      "resourceId": "pie-recipe-0.2",
+      "path": "pie.json",
+      "title": "Synthetic pie chart",
+      "uri": "chartnexus://recipes/pie/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "pie",
+      "expected": "success",
+      "negative": {
+        "path": "/data/rows/0/revenue",
+        "value": -1,
+        "expectedCode": "INVALID_DATA"
+      }
+    },
+    {
+      "id": "scatter",
+      "resourceId": "scatter-recipe-0.2",
+      "path": "scatter.json",
+      "title": "Synthetic scatter chart",
+      "uri": "chartnexus://recipes/scatter/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "scatter",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/type",
+        "value": "ordinal",
+        "expectedCode": "INVALID_ENCODING"
+      }
+    },
+    {
+      "id": "zero-pie",
+      "resourceId": "zero-pie-recipe-0.2",
+      "path": "zero-pie.json",
+      "title": "All-zero pie without fabricated shares",
+      "uri": "chartnexus://recipes/zero-pie/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "pie",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "empty-group",
+      "resourceId": "empty-group-recipe-0.2",
+      "path": "empty-group.json",
+      "title": "Unambiguous empty group labels",
+      "uri": "chartnexus://recipes/empty-group/0.2",
+      "schemaVersion": "0.2",
+      "chartType": "bar",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
     },
     {
       "id": "unknown-field",
+      "resourceId": "repair-unknown-field",
       "path": "unknown-field.json",
+      "title": "Unknown field repair example",
+      "uri": "chartnexus://recipes/unknown-field",
+      "schemaVersion": "0.1",
+      "chartType": "bar",
       "expectedCode": "UNKNOWN_FIELD",
       "repair": {
         "path": "/chart/encoding/y/field",
         "value": "revenue"
       }
+    },
+    {
+      "id": "chat-bar-03",
+      "resourceId": "chat-bar-recipe-0.3",
+      "path": "chat-bar-03.json",
+      "title": "0.3 chat bar with stable row keys",
+      "uri": "chartnexus://recipes/chat-bar/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "bar",
+      "expected": "success",
+      "negative": {
+        "path": "/data/keyField",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "radar-03",
+      "resourceId": "radar-recipe-0.3",
+      "path": "radar-03.json",
+      "title": "Synthetic radar chart",
+      "uri": "chartnexus://recipes/radar/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "radar",
+      "expected": "success",
+      "negative": {
+        "path": "/data/rows/0/speed",
+        "value": 101,
+        "expectedCode": "INVALID_RADAR"
+      }
+    },
+    {
+      "id": "tree-03",
+      "resourceId": "tree-recipe-0.3",
+      "path": "tree-03.json",
+      "title": "Synthetic tree chart",
+      "uri": "chartnexus://recipes/tree/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "tree",
+      "expected": "success",
+      "negative": {
+        "path": "/data/rows/1/parent",
+        "value": "missing",
+        "expectedCode": "INVALID_TREE"
+      }
+    },
+    {
+      "id": "sankey-03",
+      "resourceId": "sankey-recipe-0.3",
+      "path": "sankey-03.json",
+      "title": "Synthetic sankey chart",
+      "uri": "chartnexus://recipes/sankey/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "sankey",
+      "expected": "success",
+      "negative": {
+        "path": "/data/links/rows/0/weight",
+        "value": -1,
+        "expectedCode": "INVALID_SANKEY"
+      }
+    },
+    {
+      "id": "map-03",
+      "resourceId": "map-recipe-0.3",
+      "path": "map-03.json",
+      "title": "Synthetic map chart",
+      "uri": "chartnexus://recipes/map/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "map",
+      "expected": "success",
+      "negative": {
+        "path": "/data/rows/0/region",
+        "value": "missing",
+        "expectedCode": "INVALID_MAP_DATA"
+      },
+      "hostRequirement": "Register authored two-regions@1 map asset before compilation/rendering."
     }
   ]
 }

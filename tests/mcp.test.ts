@@ -5,6 +5,8 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { describe, expect, test } from 'vitest';
 import recipe from '../resources/recipes/bar.json';
+import { resources } from '@chartnexus/agent';
+import modelIndex from '../resources/model-index.json';
 import invalid from '../resources/recipes/unknown-field.json';
 const entry = resolve('packages/mcp/bin/chartnexus-mcp.mjs');
 
@@ -63,7 +65,9 @@ describe('real MCP stdio connection', () => {
           diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }],
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(18);
+      expect(
+        (await client.listResources()).resources.map((item) => item.uri).sort(),
+      ).toEqual(resources.map((item) => item.uri).sort());
       const index = await client.readResource({
         uri: 'chartnexus://resources/index/0.1',
       });
@@ -85,7 +89,12 @@ describe('real MCP stdio connection', () => {
         .trimEnd()
         .split('\n')
         .map((line: string) => JSON.parse(line));
-      expect(records).toHaveLength(20);
+      expect(
+        records.map((item: { id: string; language: string }) => [
+          item.id,
+          item.language,
+        ]),
+      ).toEqual(modelIndex.entries.map((item) => [item.id, item.language]));
       expect(
         records.find(
           (item: { id: string }) => item.id === 'native-strict-schema',
@@ -297,7 +306,9 @@ describe('real MCP stdio connection', () => {
           sha256: createHash('sha256').update(first.text).digest('hex'),
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(19);
+      expect(
+        (await client.listResources()).resources.map((item) => item.uri).sort(),
+      ).toEqual([...resources.map((item) => item.uri), link.uri].sort());
       const chatSvgResult = await client.callTool({
         name: 'render_chart',
         arguments: {

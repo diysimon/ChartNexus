@@ -10,9 +10,9 @@ language: zh-CN
 
 [English](../en/model-entry.md)
 
-ChartNexus 将受限的 JSON 图表文档编译为 Apache ECharts。先读取 `chartnexus://capabilities/basic-0.1`，再按需读取 `chartnexus://schema/chart-document/0.1` 和相关示例。机器可读目录位于 `chartnexus://resources/index/0.1`；完整 JSONL 检索资源位于 `chartnexus://resources/retrieval/0.1`。来源与内容哈希也保存在[检索索引](../../resources/model-index.json)；哈希对应权威源文件字节，不一定等于序列化后的 MCP 响应。
+ChartNexus 将受约束的 JSON 图表文档编译为 Apache ECharts。新生成的 0.3 意图图表优先发现 `chartnexus://capabilities/basic-0.3`、`chartnexus://schema/chart-document/0.3` 和 `chartnexus://recipes/manifest/0.1`。遵循宿主 profile：聊天仅接受 0.2/0.3 intent；非聊天也接受 0.1 intent/native。资源清单 `chartnexus://resources/index/0.1` 与 JSONL 语料 `chartnexus://resources/retrieval/0.1` 提供规范源与哈希；哈希对应源文件字节，不一定对应 MCP 序列化响应。
 
-简洁的柱状、折线、饼图或散点图使用 `mode: intent`；受限的原生 JSON option 使用 `mode: echarts`。不要编造字段或能力、执行代码、包含可执行回调、获取 URL、隐式聚合或将 null 当零；使用真实字段和值。原生校验为部分校验，并非完整 ECharts API。
+0.2 的 `mode: intent` 支持柱状、折线、饼图、散点、组合、漏斗和热力图。仅在接受 native 的非聊天宿主中使用 0.1 `mode: echarts`。不得虚构字段或能力、执行回调、拉取 URL、隐式聚合或将 null 当作零。原生配置验证仍是部分验证。
 
 使用 `validate_chart` 做结构和语义校验；失败后查看诊断码及路径、读取修复示例、修改文档并重新校验。`compile_chart` 返回 ECharts 计划；`render_chart` 返回会话内静态 SVG 资源。交互由浏览器宿主提供。数据引用依赖宿主提供的可信 registry 和 revision，不要编造可访问的数据集。
 
@@ -41,3 +41,17 @@ ChartNexus 将受限的 JSON 图表文档编译为 Apache ECharts。先读取 `c
 宿主可通过 `chatPresentation` 启用 0.2 聊天展示 profile；用户要求的详略可写入 `presentation.detailLevel`（`minimal`、`simple`、`standard`、`detailed`、`comprehensive`）。宿主的主题、背景和档位设置优先；未启用 profile 时文档档位不改变渲染。不要为了简洁删减必要图例或数据。详见[聊天展示](chat-presentation.md)。
 
 0.2 聊天图表可先读取 `chartnexus://recipes/chat-bar/0.2` 了解正确的逐行数据结构，再读取 `chartnexus://recipes/funnel/0.2` 了解另一种图表。使用用户实际数据和数值，示例不是任务答案。主题版本是字符串 `"1"`；用户未要求时不要添加可选变换。
+
+## 输入契约与语义提示
+
+宿主可从 runtime 或各 JSON adapter 调用 `getChartInputContract({ chatPresentation: true, orderedUpdates: false })`，获取推荐文档 schema、接受的 profile、完整规范示例和模型描述。有序更新示例是示意信封，宿主必须用实际会话值替换 operationId/baseRevision。A2UI/OpenUI 描述使用此 helper；COSUI 宿主显式将其加入模型提示词。Marklang 已支持聊天设置；显式拒绝有序操作信封。
+
+非空且全零的饼图/环图不绘制扇区，返回 `dataState: "no-share"` 与信息级 `NO_SHARE_DATA`；空饼图返回 `dataState: "empty"`，不附该提示。保留原始数值。分组序列通过 `seriesMetadata` 暴露原始分组值和显示名称，空名称进行消歧。这是序列身份，不是稳定行 ID。
+
+## M1/M2 实施
+
+当前版本发现、迁移、尺寸、数据表、生命周期、图例保留及真实本地 Ollama 流式证据见 [0.3 契约](contracts-03.md) 与 [聊天宿主质量/支持矩阵](chat-host-quality.md)。旧 spec 的验证记录保留为历史证据。
+
+## M3 图表扩充
+
+0.3 在原有七类基础上新增雷达、树、桑基和可信区域地图。见[契约、宿主 MapRegistry、模型资源和预览](chart-expansion-03.md)。浏览器/SVG/worker 与四种固定上游 SDK 路径已有本地证据；M4 模型评测和分发仍是独立工作。固定渲染器标签回调保留原文，仍禁止模型回调。

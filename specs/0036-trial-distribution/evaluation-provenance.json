@@ -1,0 +1,135 @@
+{
+  "mode": "local-ollama",
+  "corpusHash": "18c685c4db15d0bc1e9e7650439c9935a8482b160f344a38ad28b44ab64d5f8d",
+  "sourceHash": "a9caf2ee3df28520750ab2ae88b0525a64d26bfbed095346c8e3d97fa9707141",
+  "head": "54fbf2a3f7f21a5f5d565e8aed885fe2aac2aa16",
+  "promptHash": "edcfbd2a22de33ae5df4db5e0091b5fe31717907b85b7571d3a98938db14bd18",
+  "ollama": {
+    "version": "0.40.6"
+  },
+  "settings": {
+    "temperature": 0.2,
+    "num_predict": 2048,
+    "num_ctx": 32768
+  },
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "models": [
+    {
+      "name": "qwen3.5:9b",
+      "model": "qwen3.5:9b",
+      "modified_at": "2026-03-04T15:34:57.996677247+08:00",
+      "size": 6594474711,
+      "digest": "6488c96fa5faab64bb65cbd30d4289e20e6130ef535a93ef9a49f42eda893ea7",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "9.7B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 262144,
+        "embedding_length": 4096,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ]
+    },
+    {
+      "name": "mistral:latest",
+      "model": "mistral:latest",
+      "modified_at": "2025-10-24T21:39:12.713305968+08:00",
+      "size": 4372824384,
+      "digest": "6577803aa9a036369e481d648a2baebb381ebc6e897f2bb9a766a2aa7bfbc1cf",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "llama",
+        "families": [
+          "llama"
+        ],
+        "parameter_size": "7.2B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 32768,
+        "embedding_length": 4096,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "tools"
+      ]
+    },
+    {
+      "name": "qwen3.5:27b",
+      "model": "qwen3.5:27b",
+      "modified_at": "2026-03-04T16:28:30.10732908+08:00",
+      "size": 17420432728,
+      "digest": "7653528ba5cba4dd8e19da24aaddc7f4d0b5ecd93571c0825dfd4137958ec06e",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen35",
+        "families": [
+          "qwen35"
+        ],
+        "parameter_size": "27.8B",
+        "quantization_level": "Q4_K_M",
+        "context_length": 262144,
+        "embedding_length": 5120,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion",
+        "vision",
+        "tools",
+        "thinking"
+      ]
+    },
+    {
+      "name": "goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest",
+      "model": "goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest",
+      "modified_at": "2025-10-24T23:46:05.328903378+08:00",
+      "size": 6178922220,
+      "digest": "cf62f31c7147c87e67f2bab1859ce482335862f3a67d94c53ad286c57b88351e",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen2",
+        "families": [
+          "qwen2"
+        ],
+        "parameter_size": "3.1B",
+        "quantization_level": "F16",
+        "context_length": 32768,
+        "embedding_length": 2048,
+        "runner": "ggml"
+      },
+      "capabilities": [
+        "completion"
+      ]
+    }
+  ],
+  "taskCount": 60,
+  "created": "2026-10-31T13:05:57.977Z",
+  "publicDevelopment": 30,
+  "privateTasks": 60,
+  "distribution": {
+    "chart": 33,
+    "edit": 12,
+    "invalid": 9,
+    "recovery": 6
+  },
+  "origin": "Project-authored synthetic, Apache-2.0; private corpus excluded from Git/resources/packages. Interrupted pilot retained separately; not an untouched externally audited holdout.",
+  "plannedTaskRounds": 720,
+  "modelBoundary": "Whitelisted requests/data/prior documents/map metadata and projected schemas. No expected assertions or answers. Repairs use actual diagnostics only.",
+  "corpusQualification": "Private development baseline; independent heldout family audit failed. See corpus-audit.json."
+}

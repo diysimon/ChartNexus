@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-31",
+  "scope": "M0 A01-A03",
+  "environment": {
+    "node": "22.22.3",
+    "pnpm": "11.25.0",
+    "chrome": "156.0.8078.74"
+  },
+  "checks": [
+    {
+      "command": "pnpm check",
+      "result": "pass",
+      "tests": 176,
+      "testFiles": 24,
+      "referenceSelfChecks": 20
+    },
+    {
+      "command": "PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' pnpm test:browser",
+      "result": "pass",
+      "tests": 21
+    }
+  ],
+  "notRun": [
+    "new live-model evaluation",
+    "remote CI",
+    "all-package installation",
+    "publication"
+  ],
+  "note": "Local upstream SDK/stdio verification; browser Ollama responses are mocked. Prior review evidence is retained as historical baseline."
+}

@@ -2,13 +2,17 @@
 doc_id: roadmap
 version: "0.1"
 status: implementation-baseline
-updated: 2026-10-30
+updated: 2026-10-31
 language: en
 ---
 
 # Implementation roadmap and dependencies
 
 [简体中文](../zh-CN/roadmap.md)
+
+## Current execution entry (2026-10-31 review)
+
+See the [review](project-review-2026-10-31.md), [technical RFC](technical-design-2026-10-31.md) and [detailed action plan](action-plan-2026-10-31.md). A01–A18 define current dependencies and acceptance; P0–P4 below remain historical planning. M0–M3 are complete locally, including the four new chart types; M4 remains open.
 
 ## Planning baseline
 Estimate 6–8 weeks of sustained work by one primary developer for a public beta. This is an effort estimate, not a launch commitment. All phases are planned; documentation delivery does not mark implementation complete.
@@ -72,3 +76,11 @@ Experimental 0.2 now includes bar-line combinations with explicit shared/right a
 
 ## Reliability and chart expansion (2026-10-31)
 The nine quality areas and bounded radar, tree, Sankey and map profiles are tracked in [SPEC-0029](../../specs/0029-quality-expansion/spec.md). They remain open unless the spec records implementation and verification evidence.
+
+## M1/M2 acceptance (2026-10-31)
+
+M0–M2 are complete locally: experimental 0.3 contracts for seven existing renderers, dimension-aware chat presentation, keyboard/data access, lifecycle transactions, stable keys/legend retention and real local Ollama streaming. See the [current action plan](action-plan-2026-10-31.md) for 207 unit/integration and 33 browser checks. Earlier checkpoints above are historical; streaming and compatible legend retention are now implemented. M3 four new renderers and M4 independent evaluation/distribution/CI remain open. Marklang ordered envelopes are explicitly unsupported.
+
+## M3 acceptance (2026-10-31)
+
+Radar, tree, Sankey and trusted regional maps are implemented in experimental 0.3, with 230 unit/integration tests and 44 browser tests passing. See [guide](chart-expansion-03.md) and [evidence](../../specs/0035-chart-expansion/tasks.md). Earlier milestones above are historical; continue with final A16/A17/A18, including the new shared ECharts bridge in installation/performance checks.

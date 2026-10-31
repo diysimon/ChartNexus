@@ -11,7 +11,7 @@
   },
   {
     "name": "get_chart_schema",
-    "description": "Read ChartDocument 0.1 or experimental 0.2 schema; optionally choose an input mode.",
+    "description": "Read ChartDocument 0.1 or experimental 0.2/0.3 schema; optionally choose a mode or exact 0.3 chart branch.",
     "inputSchema": {
       "type": "object",
       "properties": {
@@ -19,8 +19,24 @@
           "enum": ["intent", "echarts"]
         },
         "schemaVersion": {
-          "enum": ["0.1", "0.2"],
-          "description": "Defaults to 0.1. Version 0.2 currently supports intent only."
+          "enum": ["0.1", "0.2", "0.3"],
+          "description": "Defaults to 0.1. Versions 0.2 and 0.3 support intent only. Map assets are host-owned and discovered via list_capabilities."
+        },
+        "chartType": {
+          "type": "string",
+          "enum": [
+            "bar",
+            "line",
+            "pie",
+            "scatter",
+            "combo",
+            "funnel",
+            "heatmap",
+            "radar",
+            "tree",
+            "sankey",
+            "map"
+          ]
         }
       },
       "additionalProperties": false,

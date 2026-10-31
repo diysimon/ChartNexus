@@ -18,7 +18,7 @@
     "docs:check": "node scripts/check-docs.mjs",
     "format": "prettier --write packages scripts tests examples resources .github package.json pnpm-workspace.yaml tsconfig.json playwright.config.ts vitest.config.ts tsconfig.base.json tsconfig.tooling.json eslint.config.mjs",
     "format:check": "prettier --check packages scripts tests examples resources .github package.json pnpm-workspace.yaml tsconfig.json playwright.config.ts vitest.config.ts tsconfig.base.json tsconfig.tooling.json eslint.config.mjs",
-    "check": "pnpm generate:check && pnpm docs:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && node scripts/evaluate.mjs --self-check && pnpm build:demo",
+    "check": "pnpm generate:check && pnpm docs:check && pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && node scripts/evaluate.mjs --self-check && pnpm eval:independent:check && pnpm build:demo",
     "demo:svg": "pnpm build && node scripts/render-example.mjs",
     "lint": "eslint packages tests examples --ignore-pattern \"**/generated.ts\"",
     "cli": "node packages/cli/dist/main.js",
@@ -26,7 +26,11 @@
     "eval:self": "pnpm build && node scripts/evaluate.mjs --self-check",
     "eval:candidates": "pnpm build && node scripts/evaluate.mjs --candidates",
     "eval:ollama": "pnpm build && node scripts/eval-ollama.mjs",
-    "dev:ollama": "pnpm build && vite examples/playground --config examples/playground/vite.ollama.config.mjs --host 127.0.0.1 --port 5180 --strictPort"
+    "dev:ollama": "pnpm build && vite examples/playground --config examples/playground/vite.ollama.config.mjs --host 127.0.0.1 --port 5180 --strictPort",
+    "test:packages": "pnpm build && node scripts/verify-packages.mjs",
+    "benchmark": "pnpm build && node --expose-gc scripts/benchmark.mjs",
+    "eval:independent": "pnpm build && node scripts/run-independent-evaluation.mjs",
+    "eval:independent:check": "node scripts/check-independent-evaluation.mjs"
   },
   "devDependencies": {
     "@cosui/cosmic-dynamic-ui": "1.0.0",
@@ -60,6 +64,7 @@
     "@chartnexus/render": "workspace:*",
     "@chartnexus/runtime": "workspace:*",
     "@chartnexus/schema": "workspace:*",
-    "@chartnexus/adapter-a2ui": "workspace:*"
+    "@chartnexus/adapter-a2ui": "workspace:*",
+    "@chartnexus/echarts": "workspace:*"
   }
 }

@@ -1,0 +1,982 @@
+[
+  {
+    "id": "bar",
+    "input": {
+      "schemaVersion": "0.1",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 120
+          },
+          {
+            "month": "Feb",
+            "revenue": 180
+          },
+          {
+            "month": "Mar",
+            "revenue": 150
+          }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "bar",
+              "data": [120, 180, 150]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "revenue"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.1",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "chat-bar",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 120
+          },
+          {
+            "month": "Feb",
+            "revenue": 180
+          },
+          {
+            "month": "Mar",
+            "revenue": 150
+          }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      },
+      "presentation": {
+        "detailLevel": "minimal"
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "bar",
+              "data": [120, 180, 150]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "revenue"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "combo",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "sales", "cost"],
+        "rows": [
+          {
+            "month": "Jan",
+            "sales": 120,
+            "cost": 90
+          },
+          {
+            "month": "Feb",
+            "sales": 180,
+            "cost": 130
+          },
+          {
+            "month": "Mar",
+            "sales": 150,
+            "cost": 110
+          }
+        ]
+      },
+      "chart": {
+        "type": "combo",
+        "title": "Sales and cost",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "sales",
+            "type": "quantitative",
+            "unit": {
+              "kind": "currency",
+              "code": "USD"
+            }
+          }
+        },
+        "secondary": {
+          "field": "cost",
+          "unit": {
+            "kind": "currency",
+            "code": "USD"
+          }
+        }
+      },
+      "presentation": {
+        "legend": {
+          "show": true
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Sales and cost"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4,
+            "show": true
+          },
+          "series": [
+            {
+              "id": "series:combo:bar",
+              "name": "sales",
+              "type": "bar",
+              "data": [120, 180, 150]
+            },
+            {
+              "id": "series:combo:line",
+              "name": "cost",
+              "type": "line",
+              "data": [90, 130, 110]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "sales / cost (USD)"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [
+          [0, 1, 2],
+          [0, 1, 2]
+        ]
+      }
+    }
+  },
+  {
+    "id": "funnel",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "funnel",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["stage", "users"],
+        "rows": [
+          {
+            "stage": "Visit",
+            "users": 1000
+          },
+          {
+            "stage": "Sign up",
+            "users": 350
+          },
+          {
+            "stage": "Purchase",
+            "users": 90
+          }
+        ]
+      },
+      "chart": {
+        "type": "funnel",
+        "title": "Conversion stages",
+        "encoding": {
+          "x": {
+            "field": "stage",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "users",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "funnel",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Conversion stages"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "users",
+              "type": "funnel",
+              "data": [
+                {
+                  "name": "Visit",
+                  "value": 1000
+                },
+                {
+                  "name": "Sign up",
+                  "value": 350
+                },
+                {
+                  "name": "Purchase",
+                  "value": 90
+                }
+              ],
+              "sort": "none"
+            }
+          ]
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "heatmap",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "orders",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["day", "region", "orders"],
+        "rows": [
+          {
+            "day": "Mon",
+            "region": "East",
+            "orders": 4
+          },
+          {
+            "day": "Tue",
+            "region": "West",
+            "orders": null
+          },
+          {
+            "day": "Tue",
+            "region": "East",
+            "orders": 0
+          },
+          {
+            "day": "Mon",
+            "region": "West",
+            "orders": 10
+          }
+        ]
+      },
+      "chart": {
+        "type": "heatmap",
+        "title": "Orders",
+        "encoding": {
+          "x": {
+            "field": "day",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "region",
+            "type": "ordinal"
+          }
+        },
+        "heatmap": {
+          "field": "orders",
+          "min": 0,
+          "max": 10
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "orders",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Orders"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "show": false
+          },
+          "series": [
+            {
+              "id": "series:heatmap",
+              "name": "orders",
+              "type": "heatmap",
+              "data": [
+                [0, 0, 4],
+                [1, 0, 0],
+                [0, 1, 10]
+              ]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "day",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Mon", "Tue"]
+          },
+          "yAxis": {
+            "type": "category",
+            "name": "region",
+            "data": ["East", "West"]
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 95
+          },
+          "visualMap": {
+            "type": "continuous",
+            "min": 0,
+            "max": 10,
+            "orient": "horizontal",
+            "left": "center",
+            "bottom": 0,
+            "calculable": false,
+            "inRange": {
+              "color": ["#e0f2fe", "#0369a1", "#082f49"]
+            }
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 2, 3]]
+      }
+    }
+  },
+  {
+    "id": "line",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 120
+          },
+          {
+            "month": "Feb",
+            "revenue": 180
+          },
+          {
+            "month": "Mar",
+            "revenue": 150
+          }
+        ]
+      },
+      "chart": {
+        "type": "line",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "line",
+              "data": [120, 180, 150]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Jan", "Feb", "Mar"]
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "revenue"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "pie",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 120
+          },
+          {
+            "month": "Feb",
+            "revenue": 180
+          },
+          {
+            "month": "Mar",
+            "revenue": 150
+          }
+        ]
+      },
+      "chart": {
+        "type": "pie",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "pie",
+              "stillShowZeroSum": false,
+              "showEmptyCircle": false,
+              "data": [
+                {
+                  "name": "Jan",
+                  "value": 120
+                },
+                {
+                  "name": "Feb",
+                  "value": 180
+                },
+                {
+                  "name": "Mar",
+                  "value": 150
+                }
+              ]
+            }
+          ]
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "scatter",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": 1,
+            "revenue": 120
+          },
+          {
+            "month": 2,
+            "revenue": 180
+          },
+          {
+            "month": 3,
+            "revenue": 150
+          }
+        ]
+      },
+      "chart": {
+        "type": "scatter",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "quantitative"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "scatter",
+              "data": [
+                [1, 120],
+                [2, 180],
+                [3, 150]
+              ]
+            }
+          ],
+          "xAxis": {
+            "type": "value",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "revenue"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]]
+      }
+    }
+  },
+  {
+    "id": "zero-pie",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 0
+          },
+          {
+            "month": "Feb",
+            "revenue": 0
+          },
+          {
+            "month": "Mar",
+            "revenue": 0
+          }
+        ]
+      },
+      "chart": {
+        "type": "pie",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales",
+            "subtext": "No shares: all values are zero."
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:",
+              "name": "revenue",
+              "type": "pie",
+              "stillShowZeroSum": false,
+              "showEmptyCircle": false,
+              "data": [
+                {
+                  "name": "Jan",
+                  "value": 0
+                },
+                {
+                  "name": "Feb",
+                  "value": 0
+                },
+                {
+                  "name": "Mar",
+                  "value": 0
+                }
+              ]
+            }
+          ],
+          "aria": {
+            "enabled": true,
+            "description": "No shares: all values are zero."
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0, 1, 2]],
+        "dataState": "no-share",
+        "notices": [
+          {
+            "code": "NO_SHARE_DATA",
+            "severity": "info",
+            "path": "/data",
+            "message": "No shares: all values are zero."
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "empty-group",
+    "input": {
+      "schemaVersion": "0.2",
+      "id": "sales",
+      "mode": "intent",
+      "data": {
+        "kind": "inline",
+        "fields": ["month", "revenue", "region"],
+        "rows": [
+          {
+            "month": "Jan",
+            "revenue": 1,
+            "region": ""
+          },
+          {
+            "month": "Jan",
+            "revenue": 2,
+            "region": "revenue"
+          },
+          {
+            "month": "Jan",
+            "revenue": 3,
+            "region": "(empty)"
+          }
+        ]
+      },
+      "chart": {
+        "type": "bar",
+        "title": "Monthly sales",
+        "encoding": {
+          "x": {
+            "field": "month",
+            "type": "ordinal"
+          },
+          "y": {
+            "field": "revenue",
+            "type": "quantitative"
+          },
+          "series": {
+            "field": "region"
+          }
+        }
+      }
+    },
+    "expected": {
+      "ok": true,
+      "value": {
+        "chartId": "sales",
+        "dataRevision": "inline",
+        "option": {
+          "animation": false,
+          "title": {
+            "text": "Monthly sales"
+          },
+          "tooltip": {
+            "renderMode": "richText"
+          },
+          "legend": {
+            "bottom": 4
+          },
+          "series": [
+            {
+              "id": "series:[\"region\",\"\",\"revenue\"]",
+              "name": "(empty) [2]",
+              "type": "bar",
+              "data": [1]
+            },
+            {
+              "id": "series:[\"region\",\"revenue\",\"revenue\"]",
+              "name": "revenue",
+              "type": "bar",
+              "data": [2]
+            },
+            {
+              "id": "series:[\"region\",\"(empty)\",\"revenue\"]",
+              "name": "(empty)",
+              "type": "bar",
+              "data": [3]
+            }
+          ],
+          "xAxis": {
+            "type": "category",
+            "name": "month",
+            "nameLocation": "middle",
+            "nameGap": 28,
+            "data": ["Jan"]
+          },
+          "yAxis": {
+            "type": "value",
+            "name": "revenue"
+          },
+          "grid": {
+            "containLabel": true,
+            "left": 32,
+            "right": 24,
+            "bottom": 64
+          }
+        },
+        "compilerVersion": "0.0.1",
+        "profile": "basic-0.2",
+        "rowIndices": [[0], [1], [2]],
+        "seriesMetadata": [
+          {
+            "id": "series:[\"region\",\"\",\"revenue\"]",
+            "groupField": "region",
+            "groupValue": "",
+            "displayName": "(empty) [2]"
+          },
+          {
+            "id": "series:[\"region\",\"revenue\",\"revenue\"]",
+            "groupField": "region",
+            "groupValue": "revenue",
+            "displayName": "revenue"
+          },
+          {
+            "id": "series:[\"region\",\"(empty)\",\"revenue\"]",
+            "groupField": "region",
+            "groupValue": "(empty)",
+            "displayName": "(empty)"
+          }
+        ]
+      }
+    }
+  }
+]

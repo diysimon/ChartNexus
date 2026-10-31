@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "0.3",
+  "id": "sales",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["month", "revenue"],
+    "rows": [
+      {
+        "month": "Jan",
+        "revenue": 120
+      },
+      {
+        "month": "Feb",
+        "revenue": 180
+      },
+      {
+        "month": "Mar",
+        "revenue": 150
+      }
+    ],
+    "keyField": "month"
+  },
+  "chart": {
+    "type": "bar",
+    "title": "Monthly sales",
+    "encoding": {
+      "x": {
+        "field": "month",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "revenue",
+        "type": "quantitative"
+      }
+    }
+  },
+  "presentation": {
+    "detailLevel": "minimal"
+  }
+}

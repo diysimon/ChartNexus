@@ -1,6 +1,10 @@
 import marklang from 'marklang';
-import { compileChart } from '@chartnexus/core';
-import { mountChart, type ChartRuntime } from '@chartnexus/runtime';
+import { inspectJson } from '@chartnexus/core';
+import {
+  mountChart,
+  validatePendingInput,
+  type ChartRuntime,
+} from '@chartnexus/runtime';
 import { failure, type Diagnostic, type Result } from '@chartnexus/schema';
 import type { CosuiOptions } from './index.js';
 
@@ -11,14 +15,31 @@ export function createMarklangCharts(
 ) {
   let charts: ChartRuntime[] = [];
   let disposed = false;
+  let pendingSource: string | undefined;
+  let pendingFrame: number | undefined;
   function report<T>(result: Result<T>): Result<T> {
-    options.onDiagnostics?.(result.ok ? [] : result.diagnostics);
+    try {
+      options.onDiagnostics?.(result.ok ? [] : result.diagnostics);
+    } catch {
+      /* A host callback cannot invalidate a transaction. */
+    }
     return result;
   }
-  return {
-    update(source: string, complete: boolean): Result<{ rendered: number }> {
+  const host = {
+    update(
+      source: string,
+      complete: boolean,
+    ): Result<{ rendered: number; pending?: true }> {
       if (disposed)
         return report(failure('DISPOSED', '', 'Markdown host is disposed.'));
+      if (options.orderedUpdates)
+        return report(
+          failure(
+            'UNSUPPORTED_CAPABILITY',
+            '/orderedUpdates',
+            'Marklang does not accept operation envelopes.',
+          ),
+        );
       if (!complete) return { ok: true, value: { rendered: charts.length } };
       if (new TextEncoder().encode(source).byteLength > 1024 * 1024)
         return report(
@@ -83,41 +104,104 @@ export function createMarklangCharts(
         return report(
           failure('TOO_MANY_CHARTS', '', 'At most 16 charts may be rendered.'),
         );
+      const budget = inspectJson({
+        documents: pending.map((item) => item.document),
+        registry: options.registry ?? {},
+      });
+      if (!budget.ok) return report(budget);
       for (const item of pending) {
-        const result = compileChart(item.document, options.registry);
+        const result = validatePendingInput(
+          item.document,
+          options,
+          options.registry,
+        );
         if (!result.ok) return report(result);
       }
-      for (const chart of charts) chart.dispose();
-      charts = [];
-      container.replaceChildren(...Array.from(stage.childNodes));
-      const errors: Diagnostic[] = [];
-      for (const item of pending) {
-        const mounted = mountChart(item.node, options.onSelect);
-        if (!mounted.ok) {
-          errors.push(...mounted.diagnostics);
-          continue;
-        }
-        const result = mounted.value.update(item.document, options.registry);
-        if (!result.ok) {
-          errors.push(...result.diagnostics);
-          mounted.value.dispose();
-          continue;
-        }
-        charts.push(mounted.value);
+      const bounds = container.getBoundingClientRect();
+      if (bounds.width === 0) {
+        pendingSource = source;
+        // A hide/show within one frame can keep the last observed size unchanged.
+        // Restart observation so the pending transaction receives an initial size.
+        sizeObserver.unobserve(container);
+        sizeObserver.observe(container);
+        return { ok: true, value: { rendered: charts.length, pending: true } };
       }
-      return errors.length
-        ? report({ ok: false, diagnostics: errors })
-        : report({ ok: true, value: { rendered: charts.length } });
+      pendingSource = undefined;
+      const style = getComputedStyle(container);
+      const contentWidth =
+        container.clientWidth -
+        parseFloat(style.paddingLeft || '0') -
+        parseFloat(style.paddingRight || '0');
+      if (bounds.width <= 0 || bounds.width > 4096)
+        return report(
+          failure(
+            'INVALID_SIZE',
+            '',
+            'Marklang requires a measurable container before a transaction.',
+          ),
+        );
+      stage.style.cssText = `position:fixed;left:-10000px;top:0;width:${contentWidth}px;visibility:hidden;pointer-events:none`;
+      stage.setAttribute('aria-hidden', 'true');
+      stage.dataset.chartnexusStaging = '';
+      document.body.append(stage);
+      const staged: ChartRuntime[] = [];
+      const rollback = (diagnostics: Diagnostic[]) => {
+        staged.forEach((chart) => chart.dispose());
+        stage.remove();
+        return report<never>({ ok: false as const, diagnostics });
+      };
+      for (const item of pending) {
+        const mounted = mountChart(item.node, options.onSelect, options);
+        if (!mounted.ok) return rollback(mounted.diagnostics);
+        staged.push(mounted.value);
+        const result = mounted.value.update(item.document, options.registry);
+        if (!result.ok) return rollback(result.diagnostics);
+      }
+      const old = charts;
+      container.replaceChildren(...Array.from(stage.childNodes));
+      stage.remove();
+      charts = staged;
+      old.forEach((chart) => chart.dispose());
+      return report({ ok: true, value: { rendered: charts.length } });
     },
     dispose() {
       if (!disposed) {
         disposed = true;
+        pendingSource = undefined;
+        sizeObserver.disconnect();
+        if (pendingFrame !== undefined) cancelAnimationFrame(pendingFrame);
+        pendingFrame = undefined;
         charts.forEach((chart) => chart.dispose());
         charts = [];
         container.replaceChildren();
       }
     },
   };
+  const sizeObserver = new ResizeObserver(() => {
+    if (
+      disposed ||
+      pendingSource === undefined ||
+      container.getBoundingClientRect().width === 0
+    )
+      return;
+    if (pendingFrame !== undefined) return;
+    // Staging changes the observed container height. Commit on the next frame
+    // so it cannot create undelivered notifications inside ResizeObserver.
+    pendingFrame = requestAnimationFrame(() => {
+      pendingFrame = undefined;
+      if (
+        disposed ||
+        pendingSource === undefined ||
+        container.getBoundingClientRect().width === 0
+      )
+        return;
+      const source = pendingSource;
+      pendingSource = undefined;
+      host.update(source, true);
+    });
+  });
+  sizeObserver.observe(container);
+  return host;
 }
 /** Use upstream serialization for a named ml-data block. */
 export function marklangDataSource(name: string, data: unknown): string {

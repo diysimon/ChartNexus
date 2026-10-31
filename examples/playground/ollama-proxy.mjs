@@ -1,4 +1,4 @@
-import { chartDocumentSchema } from '@chartnexus/schema';
+import { chartDocumentSchema, chartDocument02Schema } from '@chartnexus/schema';
 import { capabilities, compileChart } from '@chartnexus/core';
 
 const limit = 1_048_576;
@@ -61,10 +61,12 @@ export function createOllamaHandler(fetcher = fetch) {
   return async (req, res, next) => {
     if (
       req.url !== '/api/local-ollama/models' &&
-      req.url !== '/api/local-ollama/generate'
+      req.url !== '/api/local-ollama/generate' &&
+      req.url !== '/api/local-ollama/stream'
     )
       return next();
     const models = req.url.endsWith('/models');
+    const streaming = req.url.endsWith('/stream');
     if (!sameOrigin(req, !models))
       return send(res, 403, { error: 'ORIGIN_REJECTED' });
     if (req.method !== (models ? 'GET' : 'POST'))
@@ -99,7 +101,7 @@ export function createOllamaHandler(fetcher = fetch) {
         typeof input !== 'object' ||
         Array.isArray(input) ||
         Object.keys(input).some(
-          (key) => !['model', 'prompt', 'previous'].includes(key),
+          (key) => !['model', 'prompt', 'previous', 'repair'].includes(key),
         ) ||
         typeof input.model !== 'string' ||
         !/^[\w.:/-]{1,128}$/.test(input.model) ||
@@ -110,12 +112,23 @@ export function createOllamaHandler(fetcher = fetch) {
         return send(res, 400, { error: 'INVALID_REQUEST' });
       if (input.previous !== undefined && !compileChart(input.previous).ok)
         return send(res, 400, { error: 'INVALID_PREVIOUS' });
+      if (
+        input.repair !== undefined &&
+        (typeof input.repair !== 'string' || input.repair.length > 30000)
+      )
+        return send(res, 400, { error: 'INVALID_REQUEST' });
       const messages = [
-        { role: 'system', content: system },
+        {
+          role: 'system',
+          content: streaming
+            ? `Return only one ChartDocument JSON object. Use schemaVersion 0.2, mode intent. Preserve supplied values and stable id. Do not invent data, code or callbacks. SCHEMA: ${JSON.stringify(chartDocument02Schema)}`
+            : system,
+        },
         {
           role: 'user',
           content: JSON.stringify({
             request: input.prompt,
+            ...(input.repair ? { repair: input.repair } : {}),
             ...(input.previous === undefined
               ? {}
               : { previousDocument: input.previous }),
@@ -132,7 +145,7 @@ export function createOllamaHandler(fetcher = fetch) {
         body: JSON.stringify({
           model: input.model,
           messages,
-          stream: false,
+          stream: streaming,
           think: false,
           format: 'json',
           options: { temperature: 0.2, num_predict: 2048 },
@@ -142,6 +155,46 @@ export function createOllamaHandler(fetcher = fetch) {
           AbortSignal.timeout(120000),
         ]),
       });
+      if (streaming) {
+        if (!response.ok) throw new Error(`OLLAMA_HTTP_${response.status}`);
+        if (!response.body) throw new Error('EMPTY_RESPONSE');
+        res.writeHead(200, {
+          'Content-Type': 'application/x-ndjson; charset=utf-8',
+          'Cache-Control': 'no-store',
+          'X-Content-Type-Options': 'nosniff',
+        });
+        let bytes = 0;
+        const reader = response.body.getReader();
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            bytes += value.byteLength;
+            if (bytes > 4 * limit) throw new Error('RESPONSE_TOO_LARGE');
+            if (res.destroyed) {
+              controller.abort();
+              break;
+            }
+            if (!res.write(value))
+              await new Promise((resolve) => {
+                const finish = () => {
+                  res.off('drain', finish);
+                  res.off('close', finish);
+                  resolve();
+                };
+                res.once('drain', finish);
+                res.once('close', finish);
+              });
+          }
+          res.end();
+        } finally {
+          try {
+            await reader.cancel();
+          } catch {}
+          reader.releaseLock();
+        }
+        return;
+      }
       const output = await readResponse(response);
       if (typeof output.message?.content !== 'string')
         return send(res, 502, { error: 'INVALID_MODEL_RESPONSE' });
@@ -151,6 +204,10 @@ export function createOllamaHandler(fetcher = fetch) {
           typeof output.done_reason === 'string' ? output.done_reason : null,
       });
     } catch (error) {
+      if (res.headersSent) {
+        res.end(JSON.stringify({ error: 'UPSTREAM_STREAM_FAILED' }) + '\n');
+        return;
+      }
       const code = error instanceof Error ? error.message : '';
       if (code === 'REQUEST_TOO_LARGE') return send(res, 413, { error: code });
       if (code === 'INVALID_JSON') return send(res, 400, { error: code });

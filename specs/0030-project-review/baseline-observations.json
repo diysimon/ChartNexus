@@ -1,0 +1,53 @@
+{
+  "purpose": "Reproducible baseline observations; not a comprehensive audit or model benchmark",
+  "baselineCommit": "54fbf2a3f7f21a5f5d565e8aed885fe2aac2aa16",
+  "node": "v22.22.3",
+  "echarts": "6.1.0",
+  "observations": {
+    "zeroSumPie": {
+      "inputValues": [0, 0],
+      "accepted": true,
+      "stillShowZeroSum": true,
+      "nonzeroArcPaths": 2,
+      "seriesPaths": [
+        "M200 80A80 80 0 1 1 200 240L200 160Z",
+        "M200 240A80 80 0 1 1 200 80L200 160Z"
+      ]
+    },
+    "groupedLegendCollision": {
+      "names": ["value", "value"],
+      "uniqueNames": 1,
+      "seriesCount": 2
+    },
+    "missingHeatmapConfig": {
+      "structurallyValid": true,
+      "compilable": false,
+      "diagnostics": [
+        {
+          "code": "UNSUPPORTED_CAPABILITY",
+          "path": "/chart",
+          "message": "Heatmap requires two categorical axes and a color field; grouping, transforms and label/legend overrides are not supported.",
+          "severity": "error",
+          "recoverable": true
+        }
+      ]
+    },
+    "adapterDescriptions": {
+      "a2ui": {
+        "suggests01": true,
+        "hasChatProfile": true
+      },
+      "openui": {
+        "suggests01": true,
+        "hasChatProfile": true
+      }
+    },
+    "recipeManifestMissing": [
+      "chat-bar.json",
+      "combo.json",
+      "funnel.json",
+      "heatmap.json"
+    ],
+    "intentAnimation": false
+  }
+}

@@ -1,12 +1,13 @@
 import { parentPort } from 'node:worker_threads';
 import { renderSvg } from '@chartnexus/render';
 import type { ChatPresentationSettings } from '@chartnexus/core';
-import type { DataRegistry } from '@chartnexus/schema';
+import type { DataRegistry, MapRegistry } from '@chartnexus/schema';
 interface Request {
   document: unknown;
   width: number;
   height: number;
   registry: DataRegistry;
+  maps?: MapRegistry;
   chatPresentation?: ChatPresentationSettings;
 }
 parentPort?.once('message', (request: Request) => {
@@ -14,6 +15,7 @@ parentPort?.once('message', (request: Request) => {
     width: request.width,
     height: request.height,
     registry: request.registry,
+    ...(request.maps ? { maps: request.maps } : {}),
     ...(request.chatPresentation !== undefined
       ? { chatPresentation: request.chatPresentation }
       : {}),

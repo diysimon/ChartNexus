@@ -1,0 +1,48 @@
+{
+  "id": "two-regions",
+  "revision": "1",
+  "coordinateSystem": "WGS84",
+  "license": "Apache-2.0",
+  "provenance": "Project-authored synthetic rectangles; not administrative boundaries.",
+  "geoJSON": {
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "West"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [0, 0],
+              [10, 0],
+              [10, 10],
+              [0, 10],
+              [0, 0]
+            ]
+          ]
+        }
+      },
+      {
+        "type": "Feature",
+        "properties": {
+          "name": "East"
+        },
+        "geometry": {
+          "type": "Polygon",
+          "coordinates": [
+            [
+              [10, 0],
+              [20, 0],
+              [20, 10],
+              [10, 10],
+              [10, 0]
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}

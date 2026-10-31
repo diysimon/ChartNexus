@@ -6,15 +6,14 @@
     "AC16": {
       "status": "in-progress",
       "harness": "pass",
-      "liveBaseline": "running private development baseline; clean heldout acceptance requires a new family-separated corpus",
+      "liveBaseline": "Replacement pre-run-audited host-catalog corpus frozen; full 720 rounds running.",
       "evidence": [
-        "evaluation-provenance.json",
-        "evaluation-summary.json",
-        "corpus-audit.json"
+        "evaluation-provenance-v2.json",
+        "holdout-audit-v2.json"
       ]
     },
     "AC17": {
-      "status": "pass-local",
+      "status": "pass-local-and-remote",
       "packages": [
         {
           "node": "v22.22.3",
@@ -172,23 +171,183 @@
         "browser-performance-22.22.3.json",
         "browser-performance-24.22.1.json"
       ],
-      "limits": "Pinned transitive dependency/peer rehearsal on macOS arm64; installed declarations resolved with skipLibCheck; no claim for all semver resolutions or browsers."
+      "limits": "Pinned dependency/peer rehearsals on macOS arm64 and Linux x64; declarations resolved with skipLibCheck; not all semver/browser combinations.",
+      "linuxPackages": [
+        {
+          "status": "pass",
+          "node": "v22.22.3",
+          "artifacts": [
+            {
+              "name": "@chartnexus/adapter-a2ui",
+              "bytes": 7647,
+              "sha256": "0244fe65fb2cab663e2f6d8613d9f896cec811baaedf9ddf2b73dbb692ac82db",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-cosui",
+              "bytes": 10907,
+              "sha256": "238487efec3a3aefd9491e33ecb526c421e0587d2f027d93ec5ee2361668e48d",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-openui",
+              "bytes": 7445,
+              "sha256": "a0e425a8590b29de6770b1bfa2824be4d2fa1cb718759423b3a19669824c9774",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/agent",
+              "bytes": 90452,
+              "sha256": "a871237187c8c13547f4834fadc6764c5d7002747746fca4560694ddebaba13d",
+              "entries": 44
+            },
+            {
+              "name": "@chartnexus/cli",
+              "bytes": 8423,
+              "sha256": "ed6a35d76004fae87809f07150035ab6407b75645463361471d55c1860cbc4e0",
+              "entries": 12
+            },
+            {
+              "name": "@chartnexus/core",
+              "bytes": 59080,
+              "sha256": "b51c7d9cbb2590614aa4efa6a24b787d4ba51ceda59058c7940cdc5a4fc0afc2",
+              "entries": 95
+            },
+            {
+              "name": "@chartnexus/echarts",
+              "bytes": 13264,
+              "sha256": "b1470a4d544569698e3a940a7aa3d19c49a80182e10e50d68504e881290f7936",
+              "entries": 15
+            },
+            {
+              "name": "@chartnexus/mcp",
+              "bytes": 9754,
+              "sha256": "cced77c351829871f853c81c127c210dfaa64190431b8bd0be93a78332d9a083",
+              "entries": 16
+            },
+            {
+              "name": "@chartnexus/render",
+              "bytes": 6420,
+              "sha256": "7469a4d7858b596356f07a7ab702edf714ad68dd5fb19735cec97345fad35ab7",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/runtime",
+              "bytes": 31680,
+              "sha256": "aec953b602555f202b3ccf17df778ae38d460a65a0df4c13838395c69c391693",
+              "entries": 41
+            },
+            {
+              "name": "@chartnexus/schema",
+              "bytes": 20484,
+              "sha256": "630b68ec4cef39e51a143387a02d229ffd47cbce0c9b5811cdafc0ac2448cf29",
+              "entries": 23
+            }
+          ],
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "installMode": "registry-pinned-versions",
+          "browserTests": 45
+        },
+        {
+          "status": "pass",
+          "node": "v24.22.1",
+          "artifacts": [
+            {
+              "name": "@chartnexus/adapter-a2ui",
+              "bytes": 7647,
+              "sha256": "0244fe65fb2cab663e2f6d8613d9f896cec811baaedf9ddf2b73dbb692ac82db",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-cosui",
+              "bytes": 10907,
+              "sha256": "238487efec3a3aefd9491e33ecb526c421e0587d2f027d93ec5ee2361668e48d",
+              "entries": 11
+            },
+            {
+              "name": "@chartnexus/adapter-openui",
+              "bytes": 7445,
+              "sha256": "a0e425a8590b29de6770b1bfa2824be4d2fa1cb718759423b3a19669824c9774",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/agent",
+              "bytes": 90452,
+              "sha256": "a871237187c8c13547f4834fadc6764c5d7002747746fca4560694ddebaba13d",
+              "entries": 44
+            },
+            {
+              "name": "@chartnexus/cli",
+              "bytes": 8423,
+              "sha256": "ed6a35d76004fae87809f07150035ab6407b75645463361471d55c1860cbc4e0",
+              "entries": 12
+            },
+            {
+              "name": "@chartnexus/core",
+              "bytes": 59080,
+              "sha256": "b51c7d9cbb2590614aa4efa6a24b787d4ba51ceda59058c7940cdc5a4fc0afc2",
+              "entries": 95
+            },
+            {
+              "name": "@chartnexus/echarts",
+              "bytes": 13264,
+              "sha256": "b1470a4d544569698e3a940a7aa3d19c49a80182e10e50d68504e881290f7936",
+              "entries": 15
+            },
+            {
+              "name": "@chartnexus/mcp",
+              "bytes": 9754,
+              "sha256": "cced77c351829871f853c81c127c210dfaa64190431b8bd0be93a78332d9a083",
+              "entries": 16
+            },
+            {
+              "name": "@chartnexus/render",
+              "bytes": 6420,
+              "sha256": "7469a4d7858b596356f07a7ab702edf714ad68dd5fb19735cec97345fad35ab7",
+              "entries": 7
+            },
+            {
+              "name": "@chartnexus/runtime",
+              "bytes": 31680,
+              "sha256": "aec953b602555f202b3ccf17df778ae38d460a65a0df4c13838395c69c391693",
+              "entries": 41
+            },
+            {
+              "name": "@chartnexus/schema",
+              "bytes": 20484,
+              "sha256": "630b68ec4cef39e51a143387a02d229ffd47cbce0c9b5811cdafc0ac2448cf29",
+              "entries": 23
+            }
+          ],
+          "browser": "pass",
+          "nodeModulesIsolated": true,
+          "installMode": "registry-pinned-versions",
+          "browserTests": 45
+        }
+      ],
+      "remoteArtifactIdentity": "Same eleven tarball SHA256 hashes on both Linux Node jobs."
     },
     "AC18": {
-      "status": "pending-remote-ci",
+      "status": "pass-at-7345f34-final-report-pending",
       "workflow": "../../.github/workflows/ci.yml",
       "supportMatrix": "../../docs/en/support-matrix.md",
       "migration": "../../docs/en/contracts-03.md",
-      "remoteCI": "not-run for uncommitted changes",
+      "remoteCI": {
+        "sha": "7345f34355beed8d3ba65134d22660be1c0be78c",
+        "url": "https://github.com/diysimon/ChartNexus/actions/runs/41207042168",
+        "conclusion": "success"
+      },
       "publication": "not-run"
     }
   },
   "checks": {
-    "pnpmCheck": "pass: 231 tests / 31 files, 20 legacy + 10 new public reference checks, generation, formatting, lint, typecheck, 98 bilingual pairs and demo build",
+    "pnpmCheck": "pass: 248 tests / 32 files, 30 public reference checks, generation, format, lint, types, 98 bilingual pairs and demo build",
     "independentScorer": "pass: 10 public references, mutations, leakage and statistics checks",
     "runnerResume": "pass: synthetic subprocess 3 rounds / 9 attempts, idempotent resume and corpus drift rejection; prior 30-round / 90-attempt rehearsal also retained",
     "bundleBudgets": "pass: 10 fixed raw/gzip entries",
-    "finalPackageAudit": "pass: final package reporting/artifact-retention script rechecked on Node22; same 11 tarball hashes; browser not repeated in this extra audit"
+    "finalPackageAudit": "pass: final package reporting/artifact-retention script rechecked on Node22; same 11 tarball hashes; browser not repeated in this extra audit",
+    "semanticReporting": "pass: validated optional reference identity equivalence, graph/inline boundaries, invalid/duplicate keys, wrong source/revision, changed marks, failed render and error preservation"
   },
   "logs": [
     {
@@ -217,14 +376,15 @@
     }
   ],
   "nonClaims": [
-    "No commit, push, publication or upstream endorsement",
+    "No npm publication or upstream endorsement",
     "No completed 95% model acceptance",
     "No absolute cross-device SLA or complete leak proof"
   ],
   "notes": [
     "Full check first encountered three 5s CLI timeouts under simultaneous live-model load. Rerun with model client briefly suspended and smaller equivalent runner test passed without changing timeout thresholds.",
     "Final performance observations overlap a live Ollama run; timing data are not an uncontended regression gate.",
-    "Temporary model client suspension was under 90s; raw elapsed times and any errors remain in the baseline."
+    "Temporary model client suspension was under 90s; raw elapsed times and any errors remain in the baseline.",
+    "Under simultaneous model load, a three-process discovery test also exceeded5s; remaining CLI cases now invoke one subprocess each, same deadlines/assertions. Full check then passed248 tests."
   ],
-  "corpusQualification": "Private development baseline; independent heldout family audit failed. See corpus-audit.json."
+  "corpusQualification": "Replacement corpus accepted before requests against public teaching/evaluation families; same author/reviewer; see holdout-audit-v2.json."
 }

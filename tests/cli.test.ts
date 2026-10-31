@@ -16,14 +16,18 @@ function run(args: string[], input = '') {
 }
 
 describe('CLI child process', () => {
-  test('discovers capabilities/schema and returns machine-readable help', () => {
+  test('discovers capabilities', () => {
     expect(run(['capabilities']).json).toMatchObject({
       ok: true,
       value: { id: 'basic-0.1' },
     });
+  });
+  test('discovers the intent schema', () => {
     expect(run(['schema', '--mode', 'intent']).json.value.oneOf).toHaveLength(
       1,
     );
+  });
+  test('returns machine-readable help', () => {
     expect(run(['--help']).status).toBe(0);
   });
   test.each([
@@ -72,10 +76,12 @@ describe('CLI child process', () => {
   ])('selects/rejects schema arguments: $args', ({ args, expected }) => {
     expect(run(args)).toMatchObject(expected);
   });
-  test('validates file input and compiles stdin', () => {
+  test('validates file input', () => {
     expect(run(['validate', 'resources/recipes/bar.json']).json).toMatchObject({
       ok: true,
     });
+  });
+  test('compiles stdin', () => {
     const compiled = run(['compile', '-'], JSON.stringify(recipe));
     expect(compiled.status).toBe(0);
     expect(compiled.stderr).toBe('');
@@ -112,7 +118,7 @@ describe('CLI child process', () => {
       expect(run(args, input)).toMatchObject(expected);
     },
   );
-  test('renders SVG only to an explicitly requested new path and refuses overwrite', () => {
+  test('renders SVG only to an explicitly requested new path', () => {
     const directory = mkdtempSync(join(tmpdir(), 'chartnexus-cli-'));
     const output = join(directory, 'chart.svg');
     try {
@@ -127,6 +133,14 @@ describe('CLI child process', () => {
       expect(result.status).toBe(0);
       expect(result.stderr).toBe('');
       expect(readFileSync(output, 'utf8')).toContain('<svg');
+    } finally {
+      rmSync(directory, { recursive: true, force: true });
+    }
+  });
+  test('refuses to overwrite an existing output', () => {
+    const directory = mkdtempSync(join(tmpdir(), 'chartnexus-cli-'));
+    const output = join(directory, 'chart.svg');
+    try {
       writeFileSync(output, 'KEEP');
       expect(
         run(['render', 'resources/recipes/bar.json', '--output', output])

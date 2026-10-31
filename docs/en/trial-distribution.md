@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.1"
+version: "0.2"
 status: experimental
 updated: 2026-10-31
 language: en
@@ -9,57 +9,54 @@ language: en
 
 [简体中文](../zh-CN/trial-distribution.md)
 
-M4 implementation is available; **acceptance remains open** until the full frozen model run and remote CI are complete. See [SPEC-0036](../../specs/0036-trial-distribution/spec.md), [evidence](../../specs/0036-trial-distribution/verification.json) and the [support matrix](support-matrix.md). Packages remain private and unpublished.
+See [SPEC-0036](../../specs/0036-trial-distribution/spec.md), [evidence](../../specs/0036-trial-distribution/verification.json) and the [support matrix](support-matrix.md). M4 is verifying until the full frozen evaluation and pushed-revision CI complete. All eleven packages remain private and unpublished.
 
-## Independent evaluation
+## Evaluation provenance and scope
 
-**Corpus audit: not accepted as independent held-out evidence.** [Audit](../../specs/0036-trial-distribution/corpus-audit.json) found shared semantic families (all-zero pie and numeric-only scatter variants). The running 60-task set is a **private development baseline** despite its historical `split: heldout` labels. A new family-separated corpus and fresh run are required for AC16. Privacy/exclusion from resources does not establish independence.
+The first private corpus **failed family separation**: zero-share pie and numeric-scatter families overlapped teaching examples. Its interrupted development results and [rejection](../../specs/0036-trial-distribution/corpus-audit.json) remain preserved; private storage does not establish independence.
 
+The replacement [pre-run audit](../../specs/0036-trial-distribution/holdout-audit-v2.json) qualifies sixty newly authored host-catalog composition tasks against thirty public development tasks and teaching recipes. It covers exact authorized snapshots, draft decoys, withdrawn lexically-newer revisions, atomic graph retargeting, presentation-preserving edits, stale-revision diagnosis and recovery. Counts: 33 chart tasks (eleven types × three), twelve edits, nine invalid documents, six recoveries. This is held out from public teaching/evaluation families, **not** from protocol primitives, compiler tests or general model knowledge. The author and reviewer are the same local agent; no external audit or broad benchmark claim.
 
-The public development corpus contains 20 legacy tasks plus [10 new 0.3 tasks](../../resources/evaluation/development-03.json). The locally authored private corpus has 60 tasks: 33 chart tasks (11 × 3), 12 edits, nine invalid inputs and six recoveries. It is excluded from Git, packages, retrieval, training examples and MCP resources. Data are synthetic, Apache-2.0; no production or retrieved facts. Semantic families include combinations of identity, ordering, missing values, signed ranges and topology; sharing a protocol/schema is allowed. This is project-authored evaluation, not an externally audited benchmark.
+Synthetic source tables and expected marks were authored locally. Models receive only catalog metadata, prompts, prior/invalid documents and host map metadata. Registry rows and expected answers never enter requests, teaching/RAG resources, packages or MCP resources. Independent numeric/tree/edge assertions are authored from source tables; compiling reference documents checks consistency but does not generate the expected values. This specifically measures type-directed chart construction and authorized source/revision selection, not factual retrieval or unrestricted chart recommendation.
 
-The runner whitelists only requests, exact source data, prior/invalid documents and host map metadata. Expected values and assertions never enter messages. Type-directed tasks receive projected schemas; this measures instructed chart construction, not unrestricted chart recommendation. Explicitly requested types are scored as requested; the scorer can accept multiple allowed types for future choice tasks. Whole data-object hashes preserve field/row order and values, canonicalizing object-key order. Independent assertions inspect compiled values/structure and requested document options. They are not pixel comparisons or a proof of every possible semantic equivalent.
+[Run provenance](../../specs/0036-trial-distribution/evaluation-provenance-v2.json) freezes source and built-JS hashes, lockfile, prompt, corpus, local model digests and Ollama version before requests. Settings: JSON mode, thinking disabled, temperature0.2, seeds42/43/44, context32768, output2048 tokens,90-second request deadline,2MiB response limit. Four local models × sixty tasks × three repeats =720 rounds. At most two repairs use actual parser/compiler/renderer diagnostics. Oracle mismatch alone never grants a repair. This is host-orchestrated Agent-assisted generation, not autonomous MCP selection. No cloud upload or model download.
 
-Freeze model digest/quantization, Ollama version, source **and built JS** hashes, lockfile, prompt, schema projections, corpus and seeds before requests. Settings: JSON mode, thinking disabled, temperature 0.2, seeds 42/43/44, 32768 context, 2048 output tokens, 90-second request deadline, 2 MiB response limit. Three repeats per model, at most two repairs; only parser/compiler/renderer diagnostics trigger repairs. A valid but incorrect chart does not receive oracle hints or extra attempts. Diagnostics for invalid-document tasks come from the actual Agent validation tool. This is host-orchestrated Agent-assisted generation, not autonomous MCP tool selection by the model.
+## Scoring and reporting correction
 
-Report first-pass JSON/structure, compilation, source/mark fidelity, correctness, actual worker SVG hash, latency and failures separately. Summary rates use the planned denominator and explicitly expose pending tasks; incomplete rates cannot qualify a model. Wilson intervals are descriptive attempt-level intervals; repeated tasks are correlated. Proposed 95% structural/after-repair targets are evaluation criteria, not a verified service promise. Models below them stay experimental. An interrupted pre-freeze pilot was retained; no failures were removed or used to tune prompts. The corpus has been exercised by that pilot and must not be advertised as an untouched external holdout.
+The frozen strict scorer hashes source objects and compares independent compiled marks and required document fields. During the run it incorrectly rejected valid optional `keyField`: keyed marks use `{id,value}` while unkeyed marks use scalar values. The reporting-only `reference-keyfield-equivalence-v1` correction first validates/compiles the original candidate, then removes optional reference keys only when the remaining source object exactly matches the expected source hash. Original validation and actual SVG render must pass. Wrong sources/revisions, invalid/duplicate keys, changed numeric marks, required identity assertions and render errors remain failures. Inline data are not normalized.
+
+Raw strict scores, responses, SVG hashes and all failures remain immutable. Corrected scores and their deltas are reported separately, with the correction-module hash. No requests, settings, repair opportunities or model prompts changed. This post-hoc representation correction is disclosed rather than presented as a pre-registered metric. It is still not a general proof of every semantic equivalent or a pixel comparison.
+
+Reports separate first-pass JSON/structure/compilation/source/mark fidelity/correctness, after-repair counts, latency, tokens and failure categories. Planned denominators and pending counts are explicit; incomplete results cannot qualify a model. Wilson intervals are descriptive: repeats are correlated, not independent population samples. Proposed95% structural and after-repair targets do not promise production reliability. Below-target models remain experimental; completing evaluation does not make them pass.
 
 ```sh
 pnpm eval:independent:check
-pnpm eval:independent --corpus .local/m4/heldout.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-baseline-v1
-# Resume only after the original process exits, using the identical arguments:
-pnpm eval:independent --corpus .local/m4/heldout.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-baseline-v1 --resume
+pnpm eval:independent --corpus .local/m4-holdout-v2/corpus.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-holdout-v2
+# After the original process exits, append --resume using the same arguments.
+node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-holdout-v2/aggregate.json --semantic
 ```
 
-The private file exists only in the maintainer checkout. Other consumers supply an independently authored corpus; public development tasks can exercise the runner but are not held-out evidence. Raw requests/results stay under ignored `outputs/`; `freeze.json`, `summary.json`, `status.json` and per-model attempt JSONL support inspection/resume. Drift in code, prompt, corpus, model digest or Ollama/settings refuses resume. Fatal interruption preserves existing attempts. Do not run live models on every PR; no cloud endpoint, model download or scheduled evaluation is configured.
+Private corpus/raw logs stay ignored in the maintainer checkout. Other users supply independently authored corpora. `freeze.json`, `status.json`, `summary.json` and per-model JSONL support audit/resume. Changed source, corpus, prompt, model, Ollama or settings refuse resume; semantic rescoring also refuses source/corpus drift. Aggregate export excludes prompts, rows, expected values and model text. Live models are not called on every PR; no scheduled run is configured.
 
 ## Installed distributions
 
-`pnpm test:packages --offline --browser` builds, packs all 11 packages and installs file tarballs into a fresh OS temporary directory, with no ancestor workspace or package-source symlinks. Existing package-store bytes may be reused; this is installation isolation, not an empty download cache. The rehearsal pins unique transitive versions from the reviewed lockfile and uses actual peer versions. It does not certify future semver resolutions. Online installation without `--offline` is available when the cache is missing. Both Node 22.22.3 and 24.22.1 passed locally on macOS arm64, including the same tarball hashes and 45 browser tests each.
+`pnpm test:packages --browser` builds and packs all eleven packages, then installs tarballs in a fresh OS temporary directory without ancestor workspace/source symlinks. Reviewed lockfile versions are pinned; actual peer versions are exercised. CI resolves registry metadata online because a frozen workspace install may cache package bytes without all optional-platform metadata needed by a fresh consumer. `--offline` remains available for a warmed metadata/content cache. Neither mode certifies all future semver resolutions.
 
-Audits check allowed archive paths, LICENSE/NOTICE, JS/type exports, all static Agent/MCP resources, isolated import resolution, installed CLI bins, stdio MCP resource/SVG hash, SVG/map worker-relative imports, browser rendering and pinned React/San adapters. Consumer TypeScript resolves installed declarations using NodeNext with third-party `skipLibCheck`; no broad third-party type certification is implied. Consumers/logs are retained for investigation; use the printed exact temporary directory for cleanup. No registry publication occurs.
+Audits verify archive paths, LICENSE/NOTICE, JS/type exports, static resources, installed CLI, official stdio MCP negotiation/tool/resource/SVG round trip, worker-relative imports, host map assets and actual pinned GenUI adapters. Vite import checks native bundler dependencies before browser tests. TypeScript resolves installed declarations with NodeNext and third-party `skipLibCheck`. Node22.22.3/24.22.1 each passed45 installed-browser tests locally on macOS arm64; current remote status is in structured evidence. Temp consumers and failure logs remain available. No npm publication occurs.
 
-## Modules, size and performance
+## Modules and performance
 
-The shared bridge explicitly registers ten ECharts series modules (combo composes bar+line), SVG renderer, supported components, label layout and ARIA. Both browser and workers use the same profile. The installed regression caught a missing ARIA registration for zero-share pie; it is fixed. This internal profile preserves the four-type native mode; it does not expose arbitrary ECharts plugins.
+The shared bridge registers ten ECharts series modules (combo composes bar+line), SVG renderer, components, label layout and ARIA. Installed testing caught and fixed missing ARIA for zero-share pies. Native mode retains its four-type restriction; arbitrary plugins are not exposed.
 
-[Byte budgets](../../resources/performance-budgets.json) freeze measured minified ESM all-export bundles plus 10% headroom. `includePeers:false` externalizes **all third-party dependencies**, including Ajv; true bundles dependencies/host SDKs. Runtime is approximately 35.4 kB gzip with dependencies external, 362.3 kB bundled. These are SDK measurements, not the multipage demo. The demo can still warn about large SDK chunks.
+[Budgets](../../resources/performance-budgets.json) freeze measured all-export minified ESM raw/gzip bytes plus10% headroom. `includePeers:false` externalizes all third-party dependencies including Ajv; true includes host SDKs/dependencies. Runtime is about35.4kB gzip external and362.3kB bundled. These are SDK measurements, not demo sizes.
 
 ```sh
 pnpm benchmark
 node --expose-gc scripts/benchmark.mjs --compare /absolute/path/to/prior-baseline.json
 ```
 
-`pnpm benchmark` enforces deterministic byte budgets, records compile/SVG median/p95, post-GC heap observations and boundary cases: 100/1000/10000 rows, radar 6×8, tree 1000 nodes, Sankey 200 nodes/1000 links, map 1000 regions, native 50 series/50000 points. Browser tests record 10 post-warmup mount/render, update and disposal samples for each row count and assert no retained instance/SVG/accessibility DOM. Heap deltas do not prove absence of leaks. Use an otherwise idle same machine/runtime for optional 20% p95 comparison; CPU/model names alone do not certify equivalent load. No absolute cross-device SLA is asserted. Missing byte budgets fail the gate; timing comparisons are opt-in because shared CI hardware is noisy.
+Benchmarks enforce byte budgets and record compile/SVG median/p95 and post-GC heap at100/1000/10000 rows, radar6×8, tree1000 nodes, Sankey200 nodes/1000 links, map1000 regions, native50 series/50000 points. Browser lifecycle testing records ten samples after two warmups and asserts disposed instance/SVG/accessibility DOM cleanup. Heap observations do not prove zero leaks. Timing under simultaneous model load is observational. Optional20% p95 comparison requires an otherwise idle identical machine/runtime; there is no cross-device SLA or hard timing gate on shared CI.
 
 ## CI and migration
 
-Required CI aggregates independent verify, browser and Node22/24 package jobs. Failures preserve package/performance/browser artifacts. The workflow is implemented locally; **no remote run of the uncommitted changes exists**. A successful old commit does not satisfy this gate. [0.3 migration](contracts-03.md) remains explicit via `migrateIntentTo03`; native stays on 0.1 and type-irrelevant fields fail rather than being discarded. No user-data migration or release is performed by M4. Keep 0029 and M4 open until final model results and the authorized pushed revision pass CI.
-
-## Aggregate report
-
-```sh
-node scripts/report-independent-evaluation.mjs outputs/m4-baseline-v1 specs/0036-trial-distribution/evaluation-summary.json
-```
-
-This command exports only aggregate metrics, failure categories and provenance. It can run during evaluation; generated timestamps and pending counts identify incomplete snapshots. Review final failures before accepting any model.
+Required CI aggregates verify, browser and Node22/24 package jobs; failed traces/screenshots and package/performance reports are retained. Actual pushed-revision runs, including failures and fixes, are linked in [M4 tasks](../../specs/0036-trial-distribution/tasks.md). Old-revision success cannot certify later edits. [0.3 migration](contracts-03.md) is explicit via `migrateIntentTo03`; native remains0.1 and type-irrelevant fields fail. M4 does not migrate user data or publish packages.

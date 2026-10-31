@@ -1,6 +1,6 @@
 ---
 doc_id: development
-version: "0.1"
+version: "0.2"
 status: experimental
 updated: 2026-10-31
 language: zh-CN
@@ -115,7 +115,7 @@ MCP 调用 `validate_chart` 时传入 `nativeValidation: "strict-basic-0.1"`；�
 
 ### 按版本发现 Schema
 
-MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2" | "0.3"` 和 `mode`；0.3 还可用 `chartType` 获取分支投影。默认仍为 0.1；0.2/0.3 仅支持 intent，若同时请求 `mode: "echarts"` 会返回 `UNSUPPORTED_CAPABILITY`。CLI 可使用 `pnpm cli schema --schema-version 0.3 --chart-type bar`。获取 Schema 不代表预留的 0.3 渲染器已经支持。
+MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2" | "0.3"` 和 `mode`；0.3 还可用 `chartType` 获取分支投影。默认仍为 0.1；0.2/0.3 仅支持 intent，若同时请求 `mode: "echarts"` 会返回 `UNSUPPORTED_CAPABILITY`。CLI 可使用 `pnpm cli schema --schema-version 0.3 --chart-type bar`。可用分支与渲染限制见支持矩阵。
 
 ### 0.2 柱线组合与漏斗图
 
@@ -145,4 +145,4 @@ Recipe 副本、发现和检索从 [manifest](../../resources/recipes/manifest.j
 
 ## M4 验证命令
 
-`pnpm test:packages --offline --browser` 在隔离消费者验证 11 个 tarball；`pnpm benchmark` 执行体积预算并记录性能；`pnpm eval:independent:check` 检查独立评分器。完整真实评测仅手动、本机运行，可能耗时数小时，见[试用/分发](trial-distribution.md)和[支持矩阵](support-matrix.md)。Node 22.22.3 与 24.22.1 安装已本地验证，远端 CI 仍待完成。
+`pnpm test:packages --browser` 在隔离消费者验证 11 个 tarball；`pnpm benchmark` 执行体积预算并记录性能；`pnpm eval:independent:check` 检查独立评分器。完整真实评测仅手动、本机运行，可能耗时数小时，见[试用/分发](trial-distribution.md)和[支持矩阵](support-matrix.md)。Node 22.22.3 与 24.22.1 安装已在本地和 Linux CI 通过。仅在具备完整元数据/内容缓存时追加 `--offline`；最终评测及精确版本 CI 状态见 M4 证据。

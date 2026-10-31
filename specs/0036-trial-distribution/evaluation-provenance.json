@@ -131,5 +131,8 @@
   "origin": "Project-authored synthetic, Apache-2.0; private corpus excluded from Git/resources/packages. Interrupted pilot retained separately; not an untouched externally audited holdout.",
   "plannedTaskRounds": 720,
   "modelBoundary": "Whitelisted requests/data/prior documents/map metadata and projected schemas. No expected assertions or answers. Repairs use actual diagnostics only.",
-  "corpusQualification": "Private development baseline; independent heldout family audit failed. See corpus-audit.json."
+  "corpusQualification": "Private development baseline; independent heldout family audit failed. See corpus-audit.json.",
+  "status": "superseded-interrupted-private-development",
+  "supersededBy": "evaluation-provenance-v2.json",
+  "qualification": "Corpus family overlap rejected; interrupted at 86/180 rounds for the first model. This historical snapshot is not final acceptance evidence."
 }

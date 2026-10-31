@@ -1,6 +1,6 @@
 ---
 doc_id: technical-design-2026-10-31
-version: "0.1"
+version: "0.2"
 status: partially-implemented
 updated: 2026-10-31
 language: en
@@ -11,7 +11,7 @@ language: en
 
 ## Status and principles
 
-This RFC is **partially implemented** following the [technical review](project-review-2026-10-31.md). M0–M3 are accepted locally: [0.3 contracts](contracts-03.md) and [chat host quality](chat-host-quality.md) describe actual APIs, evidence and limits. D07/D08 renderers and host map assets are implemented; [M3 guide](chart-expansion-03.md) freezes their actual APIs and limits. D09/D10 tooling and distribution are implemented in [M4](trial-distribution.md); complete model runs and remote CI acceptance remain pending. See the [action plan](action-plan-2026-10-31.md).
+This RFC is **partially implemented** following the [technical review](project-review-2026-10-31.md). M0–M3 are accepted locally: [0.3 contracts](contracts-03.md) and [chat host quality](chat-host-quality.md) describe actual APIs, evidence and limits. D07/D08 renderers and host map assets are implemented; [M3 guide](chart-expansion-03.md) freezes their actual APIs and limits. D09/D10 tooling and distribution are implemented in [M4](trial-distribution.md); the pushed implementation passes Linux CI, while full model evaluation and final-report acceptance remain pending. See the [action plan](action-plan-2026-10-31.md).
 
 Target basic, general, explainable chat charts: few useful options, faithful data semantics, two clean themes, five detail levels, and one core for multiple models/hosts. Do not fetch data, execute model code, implicitly sort/aggregate/convert or invent facts. Tree means **node-link tree**, not treemap. Map means **GeoJSON regional choropleth**, excluding tiles, online basemaps, tracks, 3D and geocoding. These advanced features are not delivery requirements.
 

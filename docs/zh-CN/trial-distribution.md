@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.1"
+version: "0.2"
 status: experimental
 updated: 2026-10-31
 language: zh-CN
@@ -9,57 +9,54 @@ language: zh-CN
 
 [English](../en/trial-distribution.md)
 
-M4 实现已落地；完整冻结模型评测和远端 CI 尚未结束，**验收仍未关闭**。参见 [SPEC-0036](../../specs/0036-trial-distribution/spec.zh-CN.md)、[证据](../../specs/0036-trial-distribution/verification.json)和[支持矩阵](support-matrix.md)。所有包保持 private、未发布。
+见 [SPEC-0036](../../specs/0036-trial-distribution/spec.zh-CN.md)、[证据](../../specs/0036-trial-distribution/verification.json)和[支持矩阵](support-matrix.md)。冻结评测及已推送版本 CI 全部完成前，M4 保持 verifying。全部11个包仍为私有、未发布。
 
-## 独立评测
+## 评测来源与范围
 
-**题库审核：不接受为独立留出集证据。** [复核](../../specs/0036-trial-distribution/corpus-audit.json)发现与公开样例共享语义家族（全零饼图、仅改变数值的散点变体）。当前 60 题运行应视为**私有开发基线**，即使冻结输入保留历史 `split: heldout` 标签。AC16 需要重新编写家族分离题库并全新运行；资源隔离和保密不等同于独立性。
+首版私有语料**未通过任务家族隔离审查**：零占比饼图、纯数值散点图与教学示例存在重叠。保留其中断的开发结果及[拒绝记录](../../specs/0036-trial-distribution/corpus-audit.json)；私有存储不等于独立性。
 
+替代语料的[运行前审查](../../specs/0036-trial-distribution/holdout-audit-v2.json)以30个公开开发任务和教学配方为参照，纳入60个新编写的宿主目录组合任务：精确授权快照、草稿干扰项、字典序更新但已撤销的版本、图数据原子重定向、保留样式的编辑、过期版本诊断与恢复。包含33个创建任务（11类×3）、12个编辑、9个非法文档、6个恢复。这些家族与公开教学/评测隔离，**不声称**与协议基本能力、编译器测试或模型常识隔离。作者和审查者为同一本地 Agent，不属于外部审计或通用基准。
 
-公开开发集包含原 20 题及[新增 10 题 0.3 样例](../../resources/evaluation/development-03.json)。本机独立编写的私有集共 60 题：33 图表题（11×3）、12 编辑题、9 无效输入题、6 恢复题；不进入 Git、包、检索、训练示例或 MCP 资源。数据均为 Apache-2.0 合成数据，无生产数据或事实检索。按身份、排序、缺失值、正负范围和拓扑等语义组合划分任务家族，允许共享协议/Schema。这是项目自建评测，不是外部审核基准。
+合成数据表及期望图形值均本地编写。模型仅获得目录元数据、请求、前序/非法文档及宿主地图元数据。注册表行数据和标准答案不进入请求、教学/RAG资源、包或 MCP 资源。数值、树节点与边断言从原始数据独立编写；编译参考文档仅检查一致性，不用于生成期望值。该评测衡量指定图表类型下的构建与授权数据源/版本选择，不衡量事实检索或开放式图表推荐。
 
-运行器只白名单传入请求、原始数据、此前/无效文档和宿主地图元信息；预期数值和断言不进入消息。指定图表类型的任务使用投影 Schema，测量按要求构造图表的能力，不代表任意图表推荐。显式指定类型按要求评分；评分器也支持未来选择题的多个可接受类型。完整 data 对象摘要保留字段/行顺序和原值，仅规范化对象键顺序。独立断言核对编译数值/结构及指定选项，不等同于像素比较或所有语义等价形式的证明。
+[运行来源](../../specs/0036-trial-distribution/evaluation-provenance-v2.json)在请求前冻结源码、构建 JS、锁文件、提示词、语料、本地模型摘要及 Ollama 版本。配置：JSON模式、关闭 thinking、温度0.2、种子42/43/44、上下文32768、输出2048 token、请求90秒、响应上限2MiB。4个模型×60任务×3轮，共720轮。最多两次修复只使用实际解析器/编译器/渲染器诊断；单纯与标准答案不符不增加修复机会。属于宿主编排的 Agent 辅助生成，不是模型自主选择 MCP 工具。无云端上传或模型下载。
 
-请求前冻结模型摘要/量化、Ollama 版本、源码与**构建 JS** 摘要、锁文件、提示词、Schema 投影、题库和随机种子。设置为 JSON 模式、关闭 thinking、温度 0.2、种子 42/43/44、上下文 32768、输出上限 2048 token、请求期限 90 秒、响应上限 2 MiB。各模型重复三轮，至多修复两次，只由解析/编译/渲染诊断触发修复；合法但答错的图不会获得标准答案提示或额外机会。无效文档题的反馈来自真实 Agent 校验工具。这是宿主编排的 Agent 辅助生成，不是模型自主选择 MCP 工具。
+## 评分及报告修正
 
-分别记录首次 JSON/结构、编译、源数据/图形值保真、正确性、真实 worker SVG 摘要、耗时和失败。汇总以计划总量为分母，显式列出 pending；未完成比例不能用于模型准入。Wilson 区间仅为任务轮次的描述性统计，重复任务具有相关性。拟定的 95% 结构/修复后正确率是评估标准，不是已验证服务承诺；未达标模型保持实验状态。冻结前中断试运行已保留，没有删除失败或据此调优提示词；该题库已经试用，不能宣传为未经接触的外部留出集。
+冻结的严格评分器比较数据源对象哈希、独立编写的编译后图形值以及要求的文档字段。运行中发现其误判合法可选 `keyField`：带键图形使用 `{id,value}`，不带键时使用标量。报告阶段的 `reference-keyfield-equivalence-v1` 修正先验证和编译原始候选，仅在移除引用数据的可选键后与期望数据源哈希完全相同时，进行等价比较。原始校验与实际 SVG 渲染必须成功。错误数据源/版本、非法或重复键、数值改变、任务要求的身份断言及渲染错误仍然失败；不归一化内联数据。
+
+原始严格评分、响应、SVG哈希和全部失败均保留。单独报告修正分数、差值与修正模块哈希。请求、设置、修复机会和模型提示词均未改变。明确披露这是事后修正的表示形式误判，不伪装为预注册指标，也不声称覆盖全部语义等价情况或像素一致性。
+
+报告分别记录首轮 JSON/结构/编译/源数据及图形保真/正确性、修复后数量、延迟、token和失败类别。明确计划分母与未完成数，未完成结果不能用于模型准入。Wilson区间仅为描述统计，多次重复相关，并非独立总体抽样。结构及修复后95%的建议目标不承诺生产可靠性；未达标模型保持实验性，完成评测不代表达标。
 
 ```sh
 pnpm eval:independent:check
-pnpm eval:independent --corpus .local/m4/heldout.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-baseline-v1
-# 原进程退出后，使用完全相同的参数恢复：
-pnpm eval:independent --corpus .local/m4/heldout.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-baseline-v1 --resume
+pnpm eval:independent --corpus .local/m4-holdout-v2/corpus.json --models qwen3.5:9b,mistral:latest,qwen3.5:27b,goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest --output outputs/m4-holdout-v2
+# 原进程退出后，使用完全相同的参数追加 --resume。
+node scripts/report-independent-evaluation.mjs outputs/m4-holdout-v2 outputs/m4-holdout-v2/aggregate.json --semantic
 ```
 
-私有题库只存在于维护者本地；其他消费者需自行编写独立题库。公开开发题可测试工具，但不构成留出证据。原始请求/结果保存在忽略的 `outputs/`；`freeze.json`、`summary.json`、`status.json` 和各模型逐次 JSONL 支持检查/续跑。代码、提示词、题库、模型摘要、Ollama 或设置变化会拒绝恢复；异常中断保留已写入记录。CI 不逐 PR 运行真实模型；没有配置云端接口、模型下载或定时任务。
+私有语料和原始日志保留在维护者本地并被 Git 忽略，其他用户需独立编写语料。`freeze.json`、`status.json`、`summary.json`和各模型 JSONL 支持审计与续跑。源码、语料、提示词、模型、Ollama或设置漂移会拒绝续跑；语义重评分也拒绝源码/语料漂移。聚合导出不含请求、行数据、期望值及模型文本。PR不自动运行真实模型，也未配置定时任务。
 
-## 安装产物
+## 安装包验证
 
-`pnpm test:packages --offline --browser` 构建并打包 11 个包，在全新系统临时目录通过 file tarball 安装，父目录不依赖工作区，也不链接包源码。可复用依赖缓存字节；这是安装隔离，不是空下载缓存。演练从审核后的锁文件固定唯一传递版本并使用实际 peer 版本，不保证未来 semver 解析组合。缺少缓存时可去掉 `--offline` 联网安装。Node 22.22.3 与 24.22.1 已在 macOS arm64 本地通过，同组 tarball 摘要一致，各通过 45 项浏览器测试。
+`pnpm test:packages --browser`构建并打包11个包，在新的系统临时目录安装 tarball，不含祖先工作区或源码软链接。固定经审核的锁文件版本，验证实际 peer 版本。CI在线解析注册表元数据，因为冻结工作区安装可能仅缓存包内容，缺少新消费者解析可选平台依赖所需的元数据；已有完整内容/元数据缓存时可用`--offline`。两种方式均不证明所有未来 semver 解析组合。
 
-审计允许的归档路径、LICENSE/NOTICE、JS/类型 exports、全部静态 Agent/MCP 资源、隔离导入解析、CLI bin、stdio MCP 资源/SVG 摘要、SVG/地图 worker 相对路径、浏览器渲染及固定 React/San 适配器。消费者以 NodeNext 解析安装声明，第三方使用 `skipLibCheck`，不代表全面第三方类型认证。保留临时消费者和日志便于排查，清理时使用脚本打印的精确目录。不会发布到注册表。
+审计归档路径、LICENSE/NOTICE、JS/类型导出、静态资源、安装后的CLI、官方stdio MCP客户端协商/工具/资源/SVG往返、worker相对导入、宿主地图资产和实际固定版本GenUI适配器。浏览器运行前先导入Vite检查原生依赖。TypeScript通过NodeNext及第三方`skipLibCheck`解析已安装声明。macOS arm64下Node22.22.3/24.22.1各通过45项安装后浏览器测试；当前远端状态见结构化证据。保留临时消费者和失败日志，不执行npm发布。
 
-## 模块、体积与性能
+## 模块与性能
 
-共享桥显式注册 10 个 ECharts 系列模块（combo 组合 bar+line）、SVG renderer、支持的组件、标签布局和 ARIA；浏览器与 worker 使用同一组合。安装回归发现全零饼图遗漏 ARIA 注册，已修复。内部组合保持原四类 native 支持，不开放任意插件。
+共享桥接注册10个ECharts系列模块（组合图使用柱/线）、SVG渲染器、组件、标签布局及ARIA。安装测试曾发现并修复零占比饼图缺少ARIA注册。原生模式仍限制为4类图表，不开放任意插件。
 
-[字节预算](../../resources/performance-budgets.json)以实测压缩 ESM 全导出构建加 10% 余量冻结。`includePeers:false` 将 **全部第三方依赖** 外置，包括 Ajv；true 则包含依赖/宿主 SDK。运行时 gzip 约 35.4 kB（依赖外置）/362.3 kB（打入依赖）。这是 SDK 测量，不是多页 demo；demo 仍可能提示大块体积。
+[预算](../../resources/performance-budgets.json)冻结全导出压缩ESM的原始/gzip字节基线并预留10%。`includePeers:false`外置包括Ajv在内的全部第三方依赖，true包含宿主SDK及依赖。runtime外置依赖时gzip约35.4kB，打入依赖约362.3kB；这是SDK体积，不是demo体积。
 
 ```sh
 pnpm benchmark
 node --expose-gc scripts/benchmark.mjs --compare /absolute/path/to/prior-baseline.json
 ```
 
-`pnpm benchmark` 强制字节预算并记录编译/SVG median/p95、GC 后堆观察及边界：100/1000/10000 行、雷达 6×8、树 1000 节点、桑基 200 节点/1000 边、地图 1000 区域、native 50 系列/50000 点。浏览器每档记录 10 次预热后挂载渲染、更新、销毁，断言没有残留实例/SVG/无障碍 DOM。堆差值不能证明绝无泄漏。可选 p95 20% 比较需使用空闲的同机器/运行时；CPU 名称相同不保证负载相同，不承诺跨设备绝对 SLA。预算缺失即失败；共享 CI 存在噪声，所以耗时比对按需开启。
+基准强制字节预算，记录编译/SVG中位数、p95及GC后堆内存：100/1000/10000行、雷达6×8、树1000节点、桑基200节点/1000边、地图1000区域、原生50系列/50000点。浏览器预热两次后记录10个生命周期样本，断言实例/SVG/可访问性DOM清理。堆内存观察不证明零泄漏；并行模型负载下的耗时仅供观察。同机同运行时且空闲时可启用20% p95对比，共享CI不设硬耗时门禁，也无跨设备SLA。
 
 ## CI 与迁移
 
-必需 CI 汇总 verify、browser、Node22/24 安装三个独立门禁，失败保留安装/性能/浏览器产物。工作流已本地实现，**未提交改动不存在对应远端运行**；旧提交通过不能替代本次验收。[0.3 迁移](contracts-03.md)仍通过 `migrateIntentTo03` 显式执行；native 保持 0.1，不适用字段报错而非丢弃。M4 不迁移用户数据或发布。在完整模型结果及授权推送版本通过 CI 前，0029 与 M4 保持未关闭。
-
-## Aggregate report
-
-```sh
-node scripts/report-independent-evaluation.mjs outputs/m4-baseline-v1 specs/0036-trial-distribution/evaluation-summary.json
-```
-
-此命令仅导出统计、失败分类和来源，可在评测中运行；生成时间与 pending 数量标识未完成快照。模型准入必须先审查最终失败。
+required聚合verify、browser和Node22/24安装包任务；保留失败轨迹/截图及包/性能报告。[M4任务](../../specs/0036-trial-distribution/tasks.zh-CN.md)记录实际推送版本的运行、失败与修复，旧版本成功不能证明后续修改。[0.3迁移](contracts-03.md)通过`migrateIntentTo03`显式执行；原生仍为0.1，不适用当前图表的字段直接拒绝。M4不自动迁移用户数据或发布包。

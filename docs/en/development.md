@@ -1,6 +1,6 @@
 ---
 doc_id: development
-version: "0.1"
+version: "0.2"
 status: experimental
 updated: 2026-10-31
 language: en
@@ -115,7 +115,7 @@ Line x may use `type: "temporal", temporalKind: "instant"`, with values like `20
 
 ### Version-aware schema discovery
 
-MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2" | "0.3"` and `mode`; 0.3 also accepts `chartType` for a projected branch. Defaults remain 0.1; 0.2/0.3 accept only intent, and requesting either with `mode: "echarts"` fails with `UNSUPPORTED_CAPABILITY`. In CLI use `pnpm cli schema --schema-version 0.3 --chart-type bar`. Discovery does not make reserved 0.3 renderers available.
+MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2" | "0.3"` and `mode`; 0.3 also accepts `chartType` for a projected branch. Defaults remain 0.1; 0.2/0.3 accept only intent, and requesting either with `mode: "echarts"` fails with `UNSUPPORTED_CAPABILITY`. In CLI use `pnpm cli schema --schema-version 0.3 --chart-type bar`. Available branches and rendering limits are listed in the support matrix.
 
 ### Combo and funnel charts in 0.2
 
@@ -145,4 +145,4 @@ See [0.3 contracts and migration](contracts-03.md) and [chat host quality/suppor
 
 ## M4 verification commands
 
-`pnpm test:packages --offline --browser` verifies all eleven tarballs in an isolated consumer. `pnpm benchmark` enforces bundle budgets and records performance; `pnpm eval:independent:check` checks the independent scorer. Full live evaluation is opt-in, local-only and may take hours; see [trial/distribution](trial-distribution.md) and the [support matrix](support-matrix.md). Node 22.22.3 and 24.22.1 installations are locally verified; remote CI remains open.
+`pnpm test:packages --browser` verifies all eleven tarballs in an isolated consumer. `pnpm benchmark` enforces bundle budgets and records performance; `pnpm eval:independent:check` checks the independent scorer. Full live evaluation is opt-in, local-only and may take hours; see [trial/distribution](trial-distribution.md) and the [support matrix](support-matrix.md). Node 22.22.3 and 24.22.1 installations pass locally and in Linux CI. Use `--offline` only with a warmed metadata/content cache; final evaluation and exact-revision CI status are in M4 evidence.

@@ -1,6 +1,6 @@
 ---
 doc_id: action-plan-2026-10-31
-version: "0.1"
+version: "0.2"
 status: implementing
 updated: 2026-10-31
 language: zh-CN
@@ -48,9 +48,9 @@ language: zh-CN
 | A13 | tree 的 ID/parent 表、环检查、展开状态及导出 | A09/A12 | AC13：孤儿/环/多根/深度超限拒绝；重复 label 可用；折叠不删数据；节点选择身份稳定；完整/概览导出明确 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
 | A14 | sankey 的 nodes/links、拓扑/权值/身份 | A09/A13 | AC14：有向环、自环、未知端点、负值、重复边拒绝；零边表格保留；不推断守恒；节点/边事件及 SVG 正确 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
 | A15 | map 可信 registry、GeoJSON 限制、区域映射与 worker | A04/A07/A09/A14 | AC15：自制两区域 Browser/SVG 一致；缺资源/版本错误/未知区/重复区拒绝；多版本不串图；不联网；注册容量和 worker 预算可测 | done — [evidence](../../specs/0035-chart-expansion/tasks.zh-CN.md) |
-| A16 | 分离 dev/heldout、按任务族评分、真实模型/Agent 基线 | 骨架在 M1；最终依赖 A11–A15 | AC16：隐藏答案不在模型资源；初次/修复结果分离；输入数据 hash 与渲染数值核对；失败保留；版本与设置冻结 | 运行器已实现；私有基线运行中，仍需独立留出题库 |
-| A17 | 全包 pack/install、模块体积与性能；package manifests、scripts | 可早探测；最终依赖 A11–A15 | AC17：Node22/24 干净安装不依赖 workspace，public exports/worker/CLI/MCP/adapter 可运行；资源/许可齐全；典型/边界性能报告 | 本地通过，见 SPEC-0036 |
-| A18 | CI 门禁、迁移说明、支持矩阵、文档与演示收口 | A16/A17 | AC18：每项 supported 可链接到版本及证据；CI 必需任务实际通过；新文档/资源生成一致；无已知未处置 P1 后才进入 beta 候选 | 门禁/文档已实现，远端 CI 待验证 |
+| A16 | 分离 dev/heldout、按任务族评分、真实模型/Agent 基线 | 骨架在 M1；最终依赖 A11–A15 | AC16：隐藏答案不在模型资源；初次/修复结果分离；输入数据 hash 与渲染数值核对；失败保留；版本与设置冻结 | 经审查的替代留出集运行中；旧开发语料独立性被拒绝 |
+| A17 | 全包 pack/install、模块体积与性能；package manifests、scripts | 可早探测；最终依赖 A11–A15 | AC17：Node22/24 干净安装不依赖 workspace，public exports/worker/CLI/MCP/adapter 可运行；资源/许可齐全；典型/边界性能报告 | 本地和Linux CI通过，见SPEC-0036 |
+| A18 | CI 门禁、迁移说明、支持矩阵、文档与演示收口 | A16/A17 | AC18：每项 supported 可链接到版本及证据；CI 必需任务实际通过；新文档/资源生成一致；无已知未处置 P1 后才进入 beta 候选 | 远端CI在7345f34通过，最终报告版本待复验 |
 
 A04 的三种数据族是“普通表（含层级父子字段）”“nodes/links 图数据”“普通表加可信地图资产引用”，不是三套任意 JSON 引擎。A13/A14/A15 顺序是风险控制，不意味着必须互相复用不适合的数据语义。
 
@@ -95,6 +95,4 @@ A04 的三种数据族是“普通表（含层级父子字段）”“nodes/link
 
 ## M4 检查点
 
-A01–A15 保持本地验收。A17 已通过 Node22/24 的 11 包隔离安装，各 45 项安装后浏览器测试，并记录 SDK/边界性能。A16 已冻结 60 题并正在完整运行本地模型；A18 门禁和支持/迁移文档已实现，但未提交代码无法获得对应远端 CI 证据。见 [M4 任务/证据](../../specs/0036-trial-distribution/tasks.zh-CN.md)。M4 与 0029 总表保持未关闭，不自动提交、推送或发布。
-
-当前题库家族分离未通过审核，见[题库复核](../../specs/0036-trial-distribution/corpus-audit.json)；即使本次私有开发运行完成，A16 仍未关闭。
+A01–A15保持本地验收。A17已通过本地和Linux CI的Node22/24隔离安装，各45项浏览器测试；A18实现通过提交7345f34的全部远端门禁。A16旧语料的家族隔离失败已保留记录，替代宿主目录语料在模型请求前完成[审查](../../specs/0036-trial-distribution/holdout-audit-v2.json)，正在执行4模型×3轮，共720轮。详见[M4任务/证据](../../specs/0036-trial-distribution/tasks.zh-CN.md)。用户已授权提交及SSH推送；最终评测和报告版本CI完成前，M4及0029仍未关闭，不进行npm发布。

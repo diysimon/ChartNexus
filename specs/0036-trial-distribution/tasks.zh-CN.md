@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.2"
+version: "0.3"
 status: verifying
 updated: 2026-10-31
 language: zh-CN
@@ -9,36 +9,26 @@ language: zh-CN
 
 [English](tasks.md)
 
-M4 当前为 **verifying，尚未 done**。实现和本地分发门禁已完成；完整模型评测和远端 CI 验收仍未关闭。以[结构化证据](verification.json)和[支持矩阵](../../docs/zh-CN/support-matrix.md)为准。
+冻结评测全部结束且最终修改通过远端CI前，M4保持verifying。[结构化证据](verification.json)及[支持矩阵](../../docs/zh-CN/support-matrix.md)区分安装包、宿主、模型与CI的结果。
 
 | AC | 结果 | 证据 |
 | --- | --- | --- |
-| AC16 | 工具通过，完整真实运行进行中 | 30 公开开发题 / 60 私有题；四模型各三轮，共计划 720 任务轮次。[来源冻结](evaluation-provenance.json)、[汇总快照](evaluation-summary.json)。数据/图形保真、有界真实诊断修复、原始失败、SVG 摘要、续跑和漂移防护。不声称最终成功率。 |
-| AC17 | 本地通过 | 同组 11 个 tarball 在 Node22.22.3 与24.22.1 隔离消费者安装，各 45 项浏览器测试。exports/类型/资源/许可证、CLI/官方 MCP/worker/地图及固定真实 GenUI SDK 宿主通过。[SDK/性能](performance.json)、浏览器 [22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json)。 |
-| AC18 | 实现通过，远端 not-run | 独立 verify/browser/Node22+24 与 required 汇总、失败产物、支持/迁移文档已实现；未提交改动没有对应远端执行证据。 |
+| AC16 | 工具与评分器检查通过；替代语料真实运行中 | [运行前审查](holdout-audit-v2.json)、[冻结来源](evaluation-provenance-v2.json)；60任务×4模型×3轮；私有注册表与独立编写的图形值，保留原始响应/失败。 |
+| AC17 | 本地及Linux CI通过 | 11个隔离tarball，Node22.22.3/24.22.1各45项安装后浏览器测试；导出/类型/CLI/官方MCP/worker/地图/宿主SDK/资源/许可。[性能](performance.json)，浏览器[22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json)。 |
+| AC18 | 已推送实现通过远端CI；最终报告版本待复验 | [CI41207042168](https://github.com/diysimon/ChartNexus/actions/runs/41207042168)，提交7345f34：verify、browser、两项packages及required全部通过。 |
 
-## 改动与排查
+## 实现与回归发现
 
-共享 ECharts 模块组合替代全包导入。安装后的浏览器测试发现全零饼图缺少 ARIA 注册，已修复并通过完整安装回归。所有包包含生成的 LICENSE/NOTICE。pnpm11 的消费者 overrides 放在 pnpm-workspace.yaml；初次在线解析尝试拉取更新的传递补丁，最终可复现演练固定审核锁文件版本、复用内容缓存，包解析仍与工作区隔离。
+共享ECharts模块配置替代整包导入。安装后的浏览器测试发现零占比饼图缺少ARIA注册，已在验收前修复。全部包生成LICENSE/NOTICE。消费者通过overrides固定经审核的锁文件版本，只解析tarball和安装后的依赖，不链接工作区源码。
 
-初始模型试运行及一次运行器启动失败均保留在忽略的 outputs，不计为最终基线。冻结版本仅基于解析/编译/渲染失败修复，标准答案不匹配本身不会增加重试。合成子进程测试覆盖真实运行器执行、至多两次修复、重复轮次计数、恢复不重复记录及题库漂移拒绝。四个本机模型均纳入运行；未完成轮次不能验收。公开汇总不包含私有提示词、源数据、预期数值或模型原始输出。
+提交1eb69c6的[首轮远端CI](https://github.com/diysimon/ChartNexus/actions/runs/41206228999)暴露三项问题：包含七次子进程的CLI用例超过5秒、强制点击SVG图例失败、离线消费者缺少Rolldown Linux依赖。拆分CLI用例但不延长超时，采用Playwright普通点击的稳定性/命中检查，保留失败轨迹和截图，并在线解析固定版本消费者元数据、提前验证Vite导入。下一轮完整远端CI中相关检查全部通过。已有完整元数据/内容缓存时仍可离线运行，没有删断言或增加重试。
 
-## 剩余验收
+## 评测资格
 
-1. 等完整本地运行结束（中断后使用完全一致的冻结版本恢复），生成汇总，审查失败并标注各模型实验状态；不能针对该题库调优后称作新的留出集。
-2. 授权提交/推送后，要求对应版本远端 verify/browser/package 和 required 通过，不能用旧版本证据替代。
-3. beta 前处理新发现的 P1。包保持 private，M4 与 0029 总表继续未关闭。
+原[语料审查](corpus-audit.json)因家族重叠拒绝独立性；中断开发结果的[来源](evaluation-provenance.json)/[快照](evaluation-summary.json)保留为已替代记录，不是留出验收证据。替代语料在模型调用前完成审查与冻结，以30个公开任务和教学配方为参照，隔离宿主目录组合家族；不声称与编译器测试、协议基本能力或模型常识隔离。作者/审查者为同一本地Agent。
 
-复现方式和私有运行路径见[指南](../../docs/zh-CN/trial-distribution.md)。原始日志/临时消费者本地保留，没有提交、推送或发布。
+冻结评分器因图形表示变化误判合法的可选引用`keyField`。独立且经过测试的报告修正保留严格分数与原始渲染，先验证原始键再归一化，仍拒绝错误源/版本、重复键、数值变化、任务要求的身份字段及渲染失败。披露两种评分及修正来源，不改原始记录、提示词、修复机会或冻结运行器源码。见[指南](../../docs/zh-CN/trial-distribution.md)。
 
-## Final local checks
+## 正在执行的验收
 
-`pnpm check` 通过 31 文件的 231 项测试、20 旧版+10 新版公开样例自检、生成/格式/静态检查/类型检查、98 对双语文档及 demo 构建。初次在同时运行真实模型时，3 项 CLI 测试超过既有 5 秒期限；短暂挂起模型客户端并缩小运行器测试的重复题库遍历后，相同期限下通过。最终运行器测试覆盖 3 轮/9 次无效尝试，早期 30 轮/90 次演练也保留。没有放宽超时阈值。性能耗时与模型负载重叠，仅为观察值。
-
-## Corpus audit correction
-
-[题库复核](corpus-audit.json)发现部分语义家族与公开样例重叠，因此不接受当前集为独立留出证据。当前运行仍是有用的私有开发基线，保留所有失败；AC16 除完成/审查当前结果外，还需重新建立家族分离的题库并全新评测。冻结标签仅作为历史来源，不代表验收。
-
-## 远端 CI 排查
-
-首次 SSH 推送（`1eb69c6`）触发 [CI 41206228999](https://github.com/diysimon/ChartNexus/actions/runs/41206228999)：单元测试230/231、浏览器44/45通过，隔离消费者缺少 Rolldown 的 Linux 原生依赖。将包含七次子进程的 CLI 用例拆为独立计时的用例，不延长超时；图例点击采用 Playwright 稳定性与命中检查，取消 force，并保留失败轨迹与截图。冻结工作区的内容缓存并不保证新消费者离线解析所需的注册表元数据齐备；远端消费者改为在线解析经审核的固定版本，且先验证 Vite 导入。已有完整缓存的本地离线演练仍保留。须由后续 CI 验证修复，不豁免失败。
+完成720轮，审查失败，导出不含私有数据的聚合结果，并依据建议95%目标记录各模型的实验性状态。随后提交最终证据/文档、通过SSH推送，并验证该精确版本的required CI。包保持私有，不授权也未执行npm发布。

@@ -159,7 +159,7 @@
     },
     {
       "id": "development",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/development.md",
       "zh-CN": "docs/zh-CN/development.md"
@@ -544,14 +544,14 @@
     },
     {
       "id": "technical-design-2026-10-31",
-      "version": "0.1",
+      "version": "0.2",
       "status": "partially-implemented",
       "en": "docs/en/technical-design-2026-10-31.md",
       "zh-CN": "docs/zh-CN/technical-design-2026-10-31.md"
     },
     {
       "id": "action-plan-2026-10-31",
-      "version": "0.1",
+      "version": "0.2",
       "status": "implementing",
       "en": "docs/en/action-plan-2026-10-31.md",
       "zh-CN": "docs/zh-CN/action-plan-2026-10-31.md"
@@ -670,21 +670,21 @@
     },
     {
       "id": "spec-0036-tasks",
-      "version": "0.2",
+      "version": "0.3",
       "status": "verifying",
       "en": "specs/0036-trial-distribution/tasks.md",
       "zh-CN": "specs/0036-trial-distribution/tasks.zh-CN.md"
     },
     {
       "id": "trial-distribution",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/trial-distribution.md",
       "zh-CN": "docs/zh-CN/trial-distribution.md"
     },
     {
       "id": "support-matrix",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/support-matrix.md",
       "zh-CN": "docs/zh-CN/support-matrix.md"

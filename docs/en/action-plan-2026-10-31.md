@@ -1,6 +1,6 @@
 ---
 doc_id: action-plan-2026-10-31
-version: "0.1"
+version: "0.2"
 status: implementing
 updated: 2026-10-31
 language: en
@@ -48,9 +48,9 @@ Total provisional effort: 28–43 working days without parallel agents; font/map
 | A13 | Tree parent table, cycle checks, expansion state/export | A09/A12 | AC13: reject orphan/cycle/multiple roots/depth excess; duplicate labels valid; collapsing retains data; stable node events; explicit full/overview export | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
 | A14 | Sankey nodes/links, topology/weights/identity | A09/A13 | AC14: reject cycles/self-links/missing endpoints/negatives/duplicate edges; zero links retained in table; no assumed conservation; correct node/edge events and SVG | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
 | A15 | Map registry, GeoJSON limits, region matching and worker support | A04/A07/A09/A14 | AC15: authored two-region browser/SVG equivalence; reject missing/mismatched assets and unknown/duplicate regions; no version collisions/network; measurable capacity/worker budgets | done — [evidence](../../specs/0035-chart-expansion/tasks.md) |
-| A16 | Separate dev/heldout, family-aware scoring, real model/Agent baseline | Harness in M1; final after A11–A15 | AC16: no held-out answers in model resources; initial/repair results separate; data hashes/rendered values checked; failures retained; versions/settings frozen | implemented; private baseline running; clean holdout corpus still required |
-| A17 | All-package pack/install, bundle/performance | Early probes; final after A11–A15 | AC17: Node22/24 installs without workspace links; exports/worker/CLI/MCP/adapters work; resources/licenses included; typical/boundary performance report | local pass; see SPEC-0036 |
-| A18 | CI, migrations, matrix, docs and demos | A16/A17 | AC18: supported cells link versions/evidence; required CI actually passes; generated docs/resources agree; no unresolved P1 before beta candidate | gates/docs implemented; remote CI pending |
+| A16 | Separate dev/heldout, family-aware scoring, real model/Agent baseline | Harness in M1; final after A11–A15 | AC16: no held-out answers in model resources; initial/repair results separate; data hashes/rendered values checked; failures retained; versions/settings frozen | audited replacement holdout running; old development corpus rejected |
+| A17 | All-package pack/install, bundle/performance | Early probes; final after A11–A15 | AC17: Node22/24 installs without workspace links; exports/worker/CLI/MCP/adapters work; resources/licenses included; typical/boundary performance report | local and Linux CI pass; see SPEC-0036 |
+| A18 | CI, migrations, matrix, docs and demos | A16/A17 | AC18: supported cells link versions/evidence; required CI actually passes; generated docs/resources agree; no unresolved P1 before beta candidate | remote CI passes at7345f34; final report revision pending |
 
 The three data families in A04 are ordinary tables (including parent-key trees), nodes/links graphs, and ordinary tables plus trusted map references, not three arbitrary JSON engines. A13–A15 ordering controls risk; it does not imply inappropriate semantic reuse.
 
@@ -95,6 +95,4 @@ These are proposed change boundaries, not existing PRs or publication instructio
 
 ## M4 checkpoint
 
-A01–A15 remain locally accepted. A17 now passes local Node22/24 eleven-package isolated installs, 45 installed-browser tests per runtime and recorded SDK/boundary performance. A16 has a frozen 60-task corpus and full local runs in progress; A18 gates and support/migration docs are implemented, but remote CI cannot verify uncommitted changes. See [M4 tasks/evidence](../../specs/0036-trial-distribution/tasks.md). M4 and umbrella 0029 remain open; no automatic commit, push or release.
-
-Current corpus family separation failed audit; see [corpus audit](../../specs/0036-trial-distribution/corpus-audit.json). A16 remains open even when this private development run completes.
+A01–A15 remain locally accepted. A17 passes local and Linux CI Node22/24 isolated installs, each45 browser tests; A18 implementation passes all remote gates at7345f34. The rejected original family audit remains preserved. Replacement host-catalog families were [audited](../../specs/0036-trial-distribution/holdout-audit-v2.json) before requests;4 models ×3 repeats,720 rounds are running. See [M4 tasks/evidence](../../specs/0036-trial-distribution/tasks.md). The user authorized commits and SSH pushes. M4 and0029 stay open until final evaluation and report-revision CI complete; no npm publication.

@@ -1,5 +1,5 @@
 {
-  "status": "in-progress",
+  "status": "superseded-interrupted-private-development",
   "generated": "2026-10-31T13:33:37.834Z",
   "mode": "local-ollama",
   "freezeHash": "4f8716238c24f7e69613ab75cb39c73ead2076b616b75960fc784a339f544d0b",
@@ -1388,5 +1388,7 @@
     }
   ],
   "acceptance": "No acceptance decision from an incomplete run.",
-  "confidenceNote": "Descriptive attempt-level Wilson intervals; repeats are correlated. Pending tasks are explicit. Private prompts, data, expected answers and model text are excluded."
+  "confidenceNote": "Descriptive attempt-level Wilson intervals; repeats are correlated. Pending tasks are explicit. Private prompts, data, expected answers and model text are excluded.",
+  "supersededBy": "evaluation-provenance-v2.json",
+  "qualification": "Corpus family overlap rejected; interrupted at 86/180 rounds for the first model. This historical snapshot is not final acceptance evidence."
 }

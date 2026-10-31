@@ -1,6 +1,6 @@
 ---
 doc_id: technical-design-2026-10-31
-version: "0.1"
+version: "0.2"
 status: partially-implemented
 updated: 2026-10-31
 language: zh-CN
@@ -11,7 +11,7 @@ language: zh-CN
 
 ## 状态与设计原则
 
-这是[技术审视](project-review-2026-10-31.md)后**部分已实现**的 RFC。M0–M3 已通过本地验收；实际 API、证据和限制见 [0.3 契约](contracts-03.md)及[聊天宿主质量](chat-host-quality.md)。D07/D08 渲染器与宿主地图资产已实现，[M3 指南](chart-expansion-03.md)冻结实际接口和限制；D09/D10 工具与分发已在 [M4](trial-distribution.md) 实现；完整模型运行和远端 CI 验收仍待完成。执行顺序见[行动计划](action-plan-2026-10-31.md)。
+这是[技术审视](project-review-2026-10-31.md)后**部分已实现**的 RFC。M0–M3 已通过本地验收；实际 API、证据和限制见 [0.3 契约](contracts-03.md)及[聊天宿主质量](chat-host-quality.md)。D07/D08 渲染器与宿主地图资产已实现，[M3 指南](chart-expansion-03.md)冻结实际接口和限制；D09/D10 工具与分发已在 [M4](trial-distribution.md) 实现；已推送实现通过Linux CI，完整模型评测及最终报告验收仍待完成。执行顺序见[行动计划](action-plan-2026-10-31.md)。
 
 目标是基础、通用、可解释的聊天图表：少量有用配置、可信数据语义、两套简洁主题、五档展现、多个模型与宿主共用一个核心。维持不联网、不执行模型代码、不隐式排序/聚合/转换、不臆造数据。树图指 **tree 节点连线树**，不包含 treemap；地图指 **GeoJSON 区域着色图**，不包含瓦片、在线底图、轨迹、3D 或地理编码。以上高级方向不作为此次交付条件。
 

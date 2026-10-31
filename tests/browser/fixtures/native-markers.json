@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "0.1",
+  "id": "native-markers",
+  "mode": "echarts",
+  "option": {
+    "xAxis": {
+      "type": "category",
+      "data": ["A", "B", "C"]
+    },
+    "yAxis": {
+      "type": "value",
+      "min": 0,
+      "max": 10
+    },
+    "series": [
+      {
+        "type": "bar",
+        "data": [2, 6, 4],
+        "markLine": {
+          "data": [
+            {
+              "yAxis": 5.75
+            }
+          ]
+        },
+        "markPoint": {
+          "data": [
+            {
+              "coord": ["B", 7.25],
+              "value": "Marker point"
+            }
+          ]
+        },
+        "markArea": {
+          "data": [
+            [
+              {
+                "name": "Marker area",
+                "xAxis": "A"
+              },
+              {
+                "xAxis": "B"
+              }
+            ]
+          ]
+        }
+      }
+    ]
+  }
+}

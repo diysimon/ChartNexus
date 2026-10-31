@@ -22,6 +22,9 @@ import {
   VisualMapComponent,
   RadarComponent,
   GeoComponent,
+  MarkLineComponent,
+  MarkPointComponent,
+  MarkAreaComponent,
 } from 'echarts/components';
 import { LabelLayout } from 'echarts/features';
 import { SVGRenderer } from 'echarts/renderers';
@@ -45,6 +48,9 @@ engine.use([
   VisualMapComponent,
   RadarComponent,
   GeoComponent,
+  MarkLineComponent,
+  MarkPointComponent,
+  MarkAreaComponent,
   LabelLayout,
   SVGRenderer,
 ]);

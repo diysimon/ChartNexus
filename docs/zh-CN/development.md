@@ -81,7 +81,7 @@ OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效�
 
 ### 实验性 0.2 intent 子集
 
-独立的 0.2 Schema 在 0.1 intent 数据语义之上支持：柱状图 `chart.orientation: "horizontal"`、折线图 `chart.area: true`、饼图 `chart.donut: true`，以及 `presentation.theme` 的 `{ "id": "light" | "dark", "version": "1" }`。主题编译为 JSON option，不加载外部资源；不声称无障碍合规。`migrateIntent01To02` 显式转换 Schema 合法的 0.1 intent 文档且不修改输入，原生模式迁移会被拒绝。`validateChart` 检查结构，`compileChart` 进一步检查支持的组合和数据语义。原有 0.1 行为保持不变。时间点、0.2 原生模式和任意主题覆盖尚未实现。默认 `get_chart_schema` 工具仍返回 0.1；0.2 请读取 `chartnexus://schema/chart-document/0.2`。参见[预览](../../examples/playground/core-02.html)。
+独立的 0.2 Schema 在 0.1 intent 数据语义之上支持：柱状图 `chart.orientation: "horizontal"`、折线图 `chart.area: true`、饼图 `chart.donut: true`，以及 `presentation.theme` 的 `{ "id": "light" | "dark", "version": "1" }`。主题编译为 JSON option，不加载外部资源；不声称无障碍合规。`migrateIntent01To02` 显式转换 Schema 合法的 0.1 intent 文档且不修改输入，原生模式迁移会被拒绝。`validateChart` 检查结构，`compileChart` 进一步检查支持的组合和数据语义。原有 0.1 行为保持不变。0.2 原生模式和任意主题覆盖尚未实现。`get_chart_schema` 工具默认返回 0.1；0.2 可传入 `schemaVersion: "0.2"` 或读取 `chartnexus://schema/chart-document/0.2`。参见[预览](../../examples/playground/core-02.html)。
 
 ### 0.2 显式排序
 
@@ -91,7 +91,7 @@ OpenUI 流式期间适配器推迟更新，文档无效时保留上一张有效�
 
 柱状、折线和散点图可设置 `chart.encoding.y.unit`，例如 `{ "kind": "currency", "code": "USD" }`、`{ "kind": "unit", "label": "kg" }` 或 `{ "kind": "percent", "scale": "percent" | "ratio" }`。货币代码只检查三个大写 ASCII 字母，不核验货币注册表。`percent` 的 25 表示 25%；`ratio` 的 0.25 表示 25%。编译器只标注数值轴，不换算数值，也不将 ratio 格式化成百分数。饼图单位当前拒绝。
 
-仅折线图可将 x 设置为 `{ "field": "day", "type": "temporal", "temporalKind": "date" }`，数据必须为 1000–9999 年有效公历 `YYYY-MM-DD`。渲染坐标使用 UTC 零点和 ECharts `useUTC`，保留日历日期，不猜测本地时区。系列默认不自动排序，可显式指定排序。不支持日期时间、带偏移的时刻、本地时间、其他历法或时区。参见[日期 Spec](../../specs/0018-temporal-date/spec.zh-CN.md)和[单位 Spec](../../specs/0017-quantity-units/spec.zh-CN.md)。
+仅折线图可将 x 设置为 `{ "field": "day", "type": "temporal", "temporalKind": "date" }`，数据必须为 1000–9999 年有效公历 `YYYY-MM-DD`。渲染坐标使用 UTC 零点和 ECharts `useUTC`，保留日历日期，不猜测本地时区。系列默认不自动排序，可显式指定排序。下文说明带偏移时间点的支持范围；不支持本地时间、其他历法或命名时区。参见[日期 Spec](../../specs/0018-temporal-date/spec.zh-CN.md)和[单位 Spec](../../specs/0017-quantity-units/spec.zh-CN.md)。
 
 ### 0.2 显式聚合
 
@@ -108,3 +108,17 @@ MCP 调用 `validate_chart` 时传入 `nativeValidation: "strict-basic-0.1"`；�
 ### 0.2 数据标签与图例
 
 可设置 `presentation.dataLabels: { "show": true | false }`，以及 `presentation.legend: { "show": true | false, "position": "top" | "bottom" }`；两个对象都要求 `show`，省略则保持现有默认值。标签使用对应图表类型的 ECharts 默认内容，不执行 formatter 或百分比换算。顶部图例为直角坐标图留出空间；实际布局仍取决于数据、图表尺寸与字体。选择明暗主题时，显式开启的标签使用主题前景色。这不代表所有场景都可读或符合无障碍要求，也不支持自定义格式或图例状态保持。
+
+### 0.2 显式时间点
+
+折线图 x 可使用 `type: "temporal", temporalKind: "instant"`，例如 `2024-03-01T08:00:00+08:00` 或 `2024-03-01T00:00:00Z`。必须给出完整时间和明确偏移；偏移不超过 ±14:00，小数秒为 1–3 位。未知偏移 `-00:00`、闰秒、无效日期、本地日期时间及数值时间戳会被拒绝。图表以 UTC 坐标和 UTC 显示，不猜测本机时区。显式按分类排序时比较实际时间，而非字符串；未排序时保留输入顺序。同图内不同字符串指向相同时间点时（包括跨分组）会被拒绝，以避免静默合并。保留原始输入和来源行映射；不支持指定命名展示时区。见 [Spec](../../specs/0022-explicit-instants/spec.zh-CN.md)。
+
+### 按版本发现 Schema
+
+MCP `get_chart_schema` 支持可选 `schemaVersion: "0.1" | "0.2"` 和 `mode`。默认仍为 0.1；0.2 目前仅支持 intent，若同时请求 `mode: "echarts"` 会返回 `UNSUPPORTED_CAPABILITY`。CLI 可使用 `pnpm cli schema --schema-version 0.2 --mode intent`。获取 Schema 不代表 0.2 已支持原生模式。
+
+### 0.2 柱线组合与漏斗图
+
+`chart.type: "combo"` 用同一分类 x 和数据行创建 `encoding.y` 的柱状系列及 `chart.secondary.field` 的折线系列。共享轴（默认或 `secondary.axis: "shared"`）要求两个指标声明相同单位或都不声明；不声明时由宿主确认量纲相容。显式指定 `secondary.axis: "right"` 时，两个指标均须声明单位，允许不同单位但不换算数值。双轴可能因刻度不同夸大关系，需要谨慎解读。当前不支持系列分组、聚合、按值排序、时间 x、横向或面积变体。参见[组合图示例](../../resources/recipes/combo.json)。
+
+`chart.type: "funnel"` 使用分类 x 和非负数值 y；除非显式使用受支持的排序，否则保留输入顺序。不推断转化率或隐式排序。不支持分组、单位、环形/面积/横向变体。参见[漏斗图示例](../../resources/recipes/funnel.json)。两种 profile 均为实验性，渲染成功不代表选图或视觉质量已验证。

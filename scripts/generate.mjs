@@ -46,6 +46,8 @@ if (process.argv.includes('--check')) {
 // Package copies are derived from repository resources, never maintained twice.
 for (const relative of [
   'recipes/bar.json',
+  'recipes/combo.json',
+  'recipes/funnel.json',
   'recipes/unknown-field.json',
   'diagnostics.json',
   'evaluation/tasks.json',
@@ -68,6 +70,20 @@ for (const relative of [
 
 // A compact, versioned retrieval inventory references canonical source bytes.
 const entries = [
+  [
+    'combo-recipe-0.2',
+    'en',
+    'Synthetic single-axis bar-line combo',
+    'resources/recipes/combo.json',
+    'chartnexus://recipes/combo/0.2',
+  ],
+  [
+    'funnel-recipe-0.2',
+    'en',
+    'Synthetic ordered funnel chart',
+    'resources/recipes/funnel.json',
+    'chartnexus://recipes/funnel/0.2',
+  ],
   [
     'native-strict-schema',
     'en',

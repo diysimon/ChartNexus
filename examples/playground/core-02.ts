@@ -144,4 +144,95 @@ document.querySelector('#labels')!.addEventListener('click', () => {
     ? `VALID ${result.value.revision}`
     : JSON.stringify(result.diagnostics);
 });
+document.querySelector('#instant')!.addEventListener('click', () => {
+  const result = runtime.update({
+    ...base,
+    data: {
+      kind: 'inline',
+      fields: ['time', 'value'],
+      rows: [
+        { time: '2024-03-01T08:00:00+08:00', value: 25 },
+        { time: '2024-03-01T02:30:00+03:00', value: 50 },
+      ],
+    },
+    chart: {
+      type: 'line',
+      sort: { by: 'category', order: 'ascending', nulls: 'last' },
+      encoding: {
+        x: { field: 'time', type: 'temporal', temporalKind: 'instant' },
+        y: { field: 'value', type: 'quantitative' },
+      },
+    },
+  });
+  status.textContent = result.ok
+    ? `VALID ${result.value.revision}`
+    : JSON.stringify(result.diagnostics);
+});
+document.querySelector('#combo')!.addEventListener('click', () => {
+  const result = runtime.update({
+    ...base,
+    data: {
+      kind: 'inline',
+      fields: ['month', 'sales', 'cost'],
+      rows: [
+        { month: 'Jan', sales: 120, cost: 90 },
+        { month: 'Feb', sales: 180, cost: 130 },
+        { month: 'Mar', sales: 150, cost: 110 },
+      ],
+    },
+    chart: {
+      type: 'combo',
+      title: 'Sales and cost',
+      encoding: {
+        x: { field: 'month', type: 'ordinal' },
+        y: {
+          field: 'sales',
+          type: 'quantitative',
+          unit: { kind: 'currency', code: 'USD' },
+        },
+      },
+      secondary: { field: 'cost', unit: { kind: 'currency', code: 'USD' } },
+    },
+    presentation: { legend: { show: true }, dataLabels: { show: true } },
+  });
+  status.textContent = result.ok
+    ? `VALID ${result.value.revision}`
+    : JSON.stringify(result.diagnostics);
+});
+document
+  .querySelector('#funnel')!
+  .addEventListener('click', () => show({ type: 'funnel' }, 'light'));
+document.querySelector('#dual')!.addEventListener('click', () => {
+  const result = runtime.update({
+    ...base,
+    data: {
+      kind: 'inline',
+      fields: ['month', 'sales', 'growth'],
+      rows: [
+        { month: 'Jan', sales: 120, growth: 0.2 },
+        { month: 'Feb', sales: 180, growth: 0.25 },
+      ],
+    },
+    chart: {
+      type: 'combo',
+      encoding: {
+        x: { field: 'month', type: 'ordinal' },
+        y: {
+          field: 'sales',
+          type: 'quantitative',
+          unit: { kind: 'currency', code: 'USD' },
+        },
+      },
+      secondary: {
+        field: 'growth',
+        axis: 'right',
+        unit: { kind: 'percent', scale: 'ratio' },
+      },
+    },
+    presentation: { legend: { show: true } },
+  });
+  status.textContent = result.ok
+    ? `VALID ${result.value.revision}`
+    : JSON.stringify(result.diagnostics);
+});
 show({ type: 'bar', orientation: 'horizontal' }, 'light');

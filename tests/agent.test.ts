@@ -32,6 +32,64 @@ describe('agent tools', () => {
     ).toEqual(recipe);
     expect(readStaticResource('file:///etc/passwd')).toBeUndefined();
   });
+  test('discovers explicitly versioned schemas without mutating canonical resources', async () => {
+    const service = createAgentService();
+    const defaultSchema = await service.execute('get_chart_schema');
+    expect(defaultSchema).toMatchObject({
+      ok: true,
+      value: { $id: 'https://chartnexus.dev/schemas/chart-document/0.1' },
+    });
+    for (const args of [
+      { schemaVersion: '0.2' },
+      { schemaVersion: '0.2', mode: 'intent' },
+    ]) {
+      const result = await service.execute('get_chart_schema', args);
+      expect(result).toMatchObject({
+        ok: true,
+        value: {
+          $id: 'https://chartnexus.dev/schemas/chart-document/0.2',
+          properties: { schemaVersion: { const: '0.2' } },
+        },
+      });
+      if (
+        result.ok &&
+        typeof result.value === 'object' &&
+        result.value !== null &&
+        '$id' in result.value
+      )
+        result.value.$id = 'modified';
+    }
+    expect(
+      await service.execute('get_chart_schema', { schemaVersion: '0.2' }),
+    ).toMatchObject({
+      ok: true,
+      value: { $id: 'https://chartnexus.dev/schemas/chart-document/0.2' },
+    });
+    expect(
+      await service.execute('get_chart_schema', {
+        schemaVersion: '0.2',
+        mode: 'echarts',
+      }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY', path: '/mode' }],
+    });
+    expect(
+      await service.execute('get_chart_schema', { schemaVersion: '0.3' }),
+    ).toMatchObject({
+      ok: false,
+      diagnostics: [{ code: 'INVALID_ARGUMENTS' }],
+    });
+    expect(
+      await service.execute('get_chart_schema', {
+        schemaVersion: '0.1',
+        mode: 'echarts',
+      }),
+    ).toMatchObject({
+      ok: true,
+      value: { oneOf: [{ properties: { mode: { const: 'echarts' } } }] },
+    });
+  });
   test('validates semantic errors and returns compact validation', async () => {
     const service = createAgentService();
     expect(

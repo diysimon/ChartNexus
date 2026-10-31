@@ -20,14 +20,18 @@ Start with [bar example](../../resources/recipes/bar.json), [field-error example
 
 For ordered browser-host updates, the host captures `baseRevision` before asynchronous generation and supplies a unique `operationId`; do not invent revisions. A `REVISION_CONFLICT` requires obtaining the current revision and resolving the stale work before retrying. A changed payload needs a new operation ID. The optional A2UI, OpenUI and COSUI JSON host profiles use the same ChartNexus operation contract; they are not protocol-native guarantees. See the [GenUI host guide](genui-integrations.md).
 
-An experimental intent-only 0.2 profile is discoverable via `chartnexus://capabilities/basic-0.2` and `chartnexus://schema/chart-document/0.2`. The `get_chart_schema` tool still returns 0.1; read the 0.2 resource explicitly. Native 0.1 validation is guarded and partial, and the validation result reports `guarded-native-partial`.
+An experimental intent-only 0.2 profile is discoverable via `chartnexus://capabilities/basic-0.2` and `chartnexus://schema/chart-document/0.2`. The `get_chart_schema` tool defaults to 0.1; pass `schemaVersion: "0.2"` to retrieve the 0.2 intent schema. Native 0.1 validation is guarded and partial, and the validation result reports `guarded-native-partial`.
 
 For experimental 0.2 bar, line or pie sorting, explicitly set `chart.sort` with `by` (`category` or `value`), `order` (`ascending` or `descending`) and `nulls` (`first` or `last`). Never sort grouped charts by value: the current profile rejects this ambiguous request; aggregation must be resolved upstream. Category order uses UTF-16 code-unit comparison, not locale.
 
-For 0.2 dates use line x `type: temporal`, `temporalKind: date` and valid `YYYY-MM-DD` strings; timestamps and timezone inference are unsupported. Declare y units explicitly; percent scale `percent` and `ratio` describe original values and never trigger conversion. Read the 0.2 schema and capabilities before generating.
+For 0.2 dates use line x `type: temporal`, `temporalKind: date` and valid `YYYY-MM-DD` strings; offset-bearing instants are supported separately, without timezone inference. Declare y units explicitly; percent scale `percent` and `ratio` describe original values and never trigger conversion. Read the 0.2 schema and capabilities before generating.
 
 For 0.2 bar, line and pie, aggregate repeated categories only when the user explicitly requests it: set `chart.aggregate.op` to `sum`, `mean`, or `count`. Count is non-null numeric y count, not total row count; sum/mean ignore null. Do not invent grouping, units, or treat an aggregate as one source row.
 
 For native ECharts input, default validation is partial. When the host requests the small strict subset, read `chartnexus://schema/native-strict-basic/0.1` and call `validate_chart` with `nativeValidation: "strict-basic-0.1"`. Do not claim strict validation of arbitrary ECharts options or silently retry a failure in the partial profile.
 
 For experimental 0.2 intent charts, use `presentation.dataLabels.show` and `presentation.legend.show` with optional legend `position` (`top` or `bottom`). Label content is the ECharts default for that chart type; do not invent formatters or imply automatic percentage conversion.
+
+For 0.2 line time instants use `temporalKind: "instant"` and full ISO strings with `Z` or an explicit numeric offset. Do not omit offsets or invent one. Category sorting compares actual instants; different strings for the same instant are rejected. Display is UTC.
+
+For 0.2 intent, retrieve `chartnexus://recipes/combo/0.2` and `chartnexus://recipes/funnel/0.2` for supported combination and funnel examples. A combo uses a bar and line with distinct fields; shared axes require matching units or both unspecified, while an explicitly requested right axis requires units on both. Never infer conversion rates for funnels or silently convert values.

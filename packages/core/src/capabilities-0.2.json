@@ -2,7 +2,7 @@
   "id": "basic-0.2",
   "schemaVersion": "0.2",
   "status": "experimental",
-  "charts": ["bar", "line", "pie", "scatter"],
+  "charts": ["bar", "line", "pie", "scatter", "combo", "funnel"],
   "modes": ["intent"],
   "variants": {
     "bar": ["horizontal"],
@@ -29,7 +29,7 @@
     "dimension": 4096
   },
   "sorting": {
-    "charts": ["bar", "line", "pie"],
+    "charts": ["bar", "line", "pie", "funnel"],
     "by": ["category", "value"],
     "orders": ["ascending", "descending"],
     "nulls": ["first", "last"],
@@ -44,14 +44,17 @@
   },
   "temporal": {
     "charts": ["line"],
-    "kinds": ["date"],
-    "format": "YYYY-MM-DD",
+    "kinds": ["date", "instant"],
+    "dateFormat": "YYYY-MM-DD",
+    "instantFormat": "YYYY-MM-DDTHH:mm:ss[.SSS]Z or ±HH:mm",
     "years": "1000-9999",
-    "coordinate": "UTC midnight",
-    "timestamps": false
+    "coordinate": "UTC",
+    "displayTimezone": "UTC",
+    "namedTimezones": false,
+    "numericTimestamps": false
   },
   "aggregation": {
-    "charts": ["bar", "line", "pie"],
+    "charts": ["bar", "line", "pie", "funnel"],
     "operations": ["sum", "mean", "count"],
     "count": "non-null numeric y",
     "allNull": {
@@ -71,5 +74,19 @@
       "show": true,
       "positions": ["top", "bottom"]
     }
+  },
+  "combo": {
+    "series": ["bar", "line"],
+    "axes": ["shared", "right"],
+    "x": "ordinal",
+    "grouping": false,
+    "aggregation": false,
+    "units": "shared requires identical or both absent; right requires explicit units for both"
+  },
+  "funnel": {
+    "x": "ordinal",
+    "y": "nonnegative",
+    "order": "input unless explicitly sorted",
+    "conversionRate": "not inferred"
   }
 }

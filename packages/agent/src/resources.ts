@@ -9,6 +9,8 @@ import {
   nativeStrictBasicSchema,
 } from '@chartnexus/schema';
 import recipe from './recipes/bar.json' with { type: 'json' };
+import comboRecipe from './recipes/combo.json' with { type: 'json' };
+import funnelRecipe from './recipes/funnel.json' with { type: 'json' };
 import invalidRecipe from './recipes/unknown-field.json' with { type: 'json' };
 import diagnostics from './diagnostics.json' with { type: 'json' };
 import modelIndex from './model-index.json' with { type: 'json' };
@@ -18,6 +20,18 @@ import modelEntryEn from './model-entry-en.json' with { type: 'json' };
 import modelEntryZh from './model-entry-zh-CN.json' with { type: 'json' };
 
 export const resources = [
+  {
+    uri: 'chartnexus://recipes/combo/0.2',
+    name: 'Synthetic single-axis combo',
+    mimeType: 'application/json',
+    value: comboRecipe,
+  },
+  {
+    uri: 'chartnexus://recipes/funnel/0.2',
+    name: 'Synthetic funnel',
+    mimeType: 'application/json',
+    value: funnelRecipe,
+  },
   {
     uri: 'chartnexus://capabilities/native-strict-basic-0.1',
     name: 'Strict native subset capabilities',

@@ -342,6 +342,49 @@ export function migrateIntent01To02(input: unknown): Result<ChartDocument02> {
   return { ok: true, value: { ...result.value, schemaVersion: '0.2' } };
 }
 
+/** Parse a bounded, explicitly zoned instant or calendar date without local timezone inference. */
+function temporalMilliseconds(
+  value: string,
+  kind: 'date' | 'instant',
+): number | undefined {
+  const match =
+    kind === 'date'
+      ? /^([1-9]\d{3})-(\d{2})-(\d{2})$/.exec(value)
+      : /^([1-9]\d{3})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?(Z|[+-]\d{2}:\d{2})$/.exec(
+          value,
+        );
+  if (!match) return undefined;
+  const year = Number(match[1]),
+    month = Number(match[2]),
+    day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  )
+    return undefined;
+  if (kind === 'date') return date.getTime();
+  const hours = Number(match[4]),
+    minutes = Number(match[5]),
+    seconds = Number(match[6]);
+  if (hours > 23 || minutes > 59 || seconds > 59) return undefined;
+  const fraction = Number((match[7] ?? '').padEnd(3, '0'));
+  const zone = match[8]!;
+  let offset = 0;
+  if (zone === '-00:00') return undefined;
+  if (zone !== 'Z') {
+    const oh = Number(zone.slice(1, 3)),
+      om = Number(zone.slice(4, 6));
+    if (oh > 14 || om > 59 || (oh === 14 && om !== 0)) return undefined;
+    offset = (oh * 60 + om) * (zone[0] === '+' ? 1 : -1);
+  }
+  return (
+    Date.UTC(year, month - 1, day, hours, minutes, seconds, fraction) -
+    offset * 60_000
+  );
+}
+
 /** Dispatch by version; 0.1 retains its established behavior. */
 export function compileChart(
   input: unknown,
@@ -363,6 +406,143 @@ export function compileChart(
       })),
     };
   const doc = safe.value;
+  if (doc.chart.type === 'funnel') {
+    if (
+      doc.chart.donut !== undefined ||
+      doc.chart.area !== undefined ||
+      doc.chart.orientation !== undefined ||
+      doc.chart.stack !== undefined ||
+      doc.chart.secondary !== undefined
+    )
+      return failure(
+        'UNSUPPORTED_CAPABILITY',
+        '/chart',
+        'Funnel does not support these chart variants.',
+      );
+    const result = compileChart(
+      { ...doc, chart: { ...doc.chart, type: 'pie' } },
+      registry,
+    );
+    if (!result.ok) return result;
+    if (Array.isArray(result.value.option.series))
+      result.value.option.series = result.value.option.series.map((series) =>
+        record(series) ? { ...series, type: 'funnel', sort: 'none' } : series,
+      );
+    return result;
+  }
+  if (doc.chart.type === 'combo') {
+    const { secondary, ...rest } = doc.chart;
+    if (
+      !secondary ||
+      secondary.field === rest.encoding.y.field ||
+      rest.encoding.x.type !== 'ordinal' ||
+      rest.encoding.series ||
+      rest.aggregate ||
+      rest.stack !== undefined ||
+      rest.orientation !== undefined ||
+      rest.area !== undefined ||
+      rest.donut !== undefined ||
+      (rest.sort && rest.sort.by !== 'category')
+    )
+      return failure(
+        'UNSUPPORTED_CAPABILITY',
+        '/chart',
+        'Combo requires distinct bar and line fields, ordinal categories and no grouping, aggregation, stack, variants or value sort.',
+      );
+    const firstUnit = rest.encoding.y.unit;
+    const secondUnit = secondary.unit;
+    const unitKey = (unit: typeof firstUnit) =>
+      !unit
+        ? ''
+        : unit.kind === 'currency'
+          ? `currency:${unit.code}`
+          : unit.kind === 'percent'
+            ? `percent:${unit.scale}`
+            : `unit:${unit.label}`;
+    const dualAxis = secondary.axis === 'right';
+    if (
+      (!dualAxis && unitKey(firstUnit) !== unitKey(secondUnit)) ||
+      (dualAxis && (!firstUnit || !secondUnit))
+    )
+      return failure(
+        'INVALID_ENCODING',
+        '/chart/secondary/unit',
+        'Shared axis requires equal units or both omitted; right axis requires explicit units for both measures.',
+      );
+    const primary = compileChart(
+      { ...doc, chart: { ...rest, type: 'bar' } },
+      registry,
+    );
+    if (!primary.ok) return primary;
+    const second = compileChart(
+      {
+        ...doc,
+        chart: {
+          ...rest,
+          type: 'line',
+          encoding: {
+            ...rest.encoding,
+            y: {
+              field: secondary.field,
+              type: 'quantitative',
+              ...(secondUnit ? { unit: secondUnit } : {}),
+            },
+          },
+        },
+      },
+      registry,
+    );
+    if (!second.ok) return second;
+    const primarySeries = primary.value.option.series;
+    const secondarySeries = second.value.option.series;
+    if (!Array.isArray(primarySeries) || !Array.isArray(secondarySeries))
+      return failure(
+        'INVALID_DATA',
+        '/chart',
+        'Combination chart requires valid series.',
+      );
+    primary.value.option.series = [
+      ...primarySeries.map((item) =>
+        record(item) ? { ...item, id: 'series:combo:bar' } : item,
+      ),
+      ...secondarySeries.map((item) =>
+        record(item)
+          ? {
+              ...item,
+              id: 'series:combo:line',
+              ...(dualAxis ? { yAxisIndex: 1 } : {}),
+            }
+          : item,
+      ),
+    ];
+    const axis = primary.value.option.yAxis;
+    if (dualAxis) {
+      const rightAxis = second.value.option.yAxis;
+      if (!record(axis) || !record(rightAxis))
+        return failure(
+          'INVALID_DATA',
+          '/chart/secondary',
+          'Combination chart requires two value axes.',
+        );
+      primary.value.option.yAxis = [axis, { ...rightAxis, position: 'right' }];
+      if (record(primary.value.option.grid))
+        primary.value.option.grid = { ...primary.value.option.grid, right: 72 };
+    } else if (record(axis) && typeof axis.name === 'string') {
+      const suffix = axis.name.slice(rest.encoding.y.field.length);
+      axis.name = `${rest.encoding.y.field} / ${secondary.field}${suffix}`;
+    }
+    primary.value.rowIndices = [
+      ...primary.value.rowIndices,
+      ...second.value.rowIndices,
+    ];
+    return primary;
+  }
+  if (doc.chart.secondary !== undefined)
+    return failure(
+      'UNSUPPORTED_CAPABILITY',
+      '/chart/secondary',
+      'Secondary measures are available only for combo charts.',
+    );
   const {
     orientation,
     area,
@@ -370,19 +550,22 @@ export function compileChart(
     sort,
     aggregate,
     encoding,
+    secondary: _secondary,
     ...chartOptions
   } = doc.chart;
+  void _secondary;
   const { unit, ...y } = encoding.y;
   const { temporalKind, ...x } = encoding.x;
   const temporal = x.type === 'temporal';
   if (
-    (temporal && (temporalKind !== 'date' || chartOptions.type !== 'line')) ||
+    (temporal &&
+      (temporalKind === undefined || chartOptions.type !== 'line')) ||
     (!temporal && temporalKind !== undefined)
   )
     return failure(
       'UNSUPPORTED_CAPABILITY',
       '/chart/encoding/x',
-      'Temporal date encoding is supported only for line charts and requires temporalKind date.',
+      'Temporal encoding is supported only for line charts and requires an explicit temporalKind.',
     );
   const chart = {
     ...chartOptions,
@@ -548,6 +731,41 @@ export function compileChart(
   const result = compileChart01(oldDoc, registry);
   if (!result.ok) return result;
   const option = result.value.option;
+  const temporalValues = new Map<string, number>();
+  if (temporal) {
+    const axis = option.xAxis;
+    if (!record(axis) || !Array.isArray(axis.data))
+      return failure(
+        'INVALID_DATA',
+        '/chart/encoding/x',
+        'A temporal axis is required.',
+      );
+    const seen = new Map<number, string>();
+    for (const value of axis.data) {
+      if (typeof value !== 'string')
+        return failure(
+          'INVALID_DATA',
+          '/chart/encoding/x',
+          'Temporal values must be strings.',
+        );
+      const timestamp = temporalMilliseconds(value, temporalKind!);
+      if (timestamp === undefined)
+        return failure(
+          'INVALID_DATA',
+          '/chart/encoding/x',
+          'Invalid or unsupported date or offset-bearing instant.',
+        );
+      const previous = seen.get(timestamp);
+      if (previous !== undefined && previous !== value)
+        return failure(
+          'AMBIGUOUS_DATA',
+          '/chart/encoding/x',
+          'Different temporal values represent the same instant.',
+        );
+      seen.set(timestamp, value);
+      temporalValues.set(value, timestamp);
+    }
+  }
   if (sort) {
     if (
       chart.type === 'scatter' ||
@@ -591,8 +809,18 @@ export function compileChart(
         'Sort values must have a consistent supported type.',
       );
     entries.sort((a, b) => {
-      const left = sort.by === 'category' ? a.category : a.value;
-      const right = sort.by === 'category' ? b.category : b.value;
+      const left =
+        sort.by === 'category'
+          ? temporal && typeof a.category === 'string'
+            ? temporalValues.get(a.category)
+            : a.category
+          : a.value;
+      const right =
+        sort.by === 'category'
+          ? temporal && typeof b.category === 'string'
+            ? temporalValues.get(b.category)
+            : b.category
+          : b.value;
       if (left === null || right === null) {
         if (left === right) return a.index - b.index;
         return (left === null ? -1 : 1) * (sort.nulls === 'first' ? 1 : -1);
@@ -649,33 +877,9 @@ export function compileChart(
         '/chart/encoding/x',
         'A date axis is required.',
       );
-    const times: number[] = [];
-    for (const date of axis.data) {
-      if (typeof date !== 'string' || !/^[1-9]\d{3}-\d{2}-\d{2}$/.test(date))
-        return failure(
-          'INVALID_DATA',
-          '/chart/encoding/x',
-          'Dates must use YYYY-MM-DD, years 1000–9999.',
-        );
-      const [year, month, day] = date.split('-').map(Number) as [
-        number,
-        number,
-        number,
-      ];
-      const timestamp = Date.UTC(year, month - 1, day);
-      const utc = new Date(timestamp);
-      if (
-        utc.getUTCFullYear() !== year ||
-        utc.getUTCMonth() !== month - 1 ||
-        utc.getUTCDate() !== day
-      )
-        return failure(
-          'INVALID_DATA',
-          '/chart/encoding/x',
-          'Invalid Gregorian calendar date.',
-        );
-      times.push(timestamp);
-    }
+    const times = axis.data.map((date) =>
+      typeof date === 'string' ? temporalValues.get(date)! : NaN,
+    );
     option.xAxis = {
       type: 'time',
       name: chart.encoding.x.field,

@@ -81,7 +81,7 @@ Run `pnpm dev:ollama` and visit `http://127.0.0.1:5180/ollama.html`; see [usage 
 
 ### Experimental 0.2 intent subset
 
-The separate 0.2 schema supports 0.1 intent data semantics plus `chart.orientation: "horizontal"` for bars, `chart.area: true` for lines, `chart.donut: true` for pies, and `presentation.theme` with `{ "id": "light" | "dark", "version": "1" }`. Themes are compiled into JSON options and do not load external assets. No accessibility claim is made. `migrateIntent01To02` explicitly converts schema-valid 0.1 intent documents without mutation; native migration is rejected. `validateChart` checks structure, while `compileChart` also checks supported combinations and data semantics. Existing 0.1 input behavior is unchanged. Timestamp instants, 0.2 native mode and arbitrary theme overrides are not implemented. The default `get_chart_schema` tool remains 0.1; retrieve `chartnexus://schema/chart-document/0.2` for 0.2. See [preview](../../examples/playground/core-02.html).
+The separate 0.2 schema supports 0.1 intent data semantics plus `chart.orientation: "horizontal"` for bars, `chart.area: true` for lines, `chart.donut: true` for pies, and `presentation.theme` with `{ "id": "light" | "dark", "version": "1" }`. Themes are compiled into JSON options and do not load external assets. No accessibility claim is made. `migrateIntent01To02` explicitly converts schema-valid 0.1 intent documents without mutation; native migration is rejected. `validateChart` checks structure, while `compileChart` also checks supported combinations and data semantics. Existing 0.1 input behavior is unchanged. 0.2 native mode and arbitrary theme overrides are not implemented. The `get_chart_schema` tool defaults to 0.1; pass `schemaVersion: "0.2"` or retrieve `chartnexus://schema/chart-document/0.2` for 0.2. See [preview](../../examples/playground/core-02.html).
 
 ### Explicit sorting in 0.2
 
@@ -91,7 +91,7 @@ Set `chart.sort` to `{ "by": "category" | "value", "order": "ascending" | "desce
 
 Bar, line and scatter may set `chart.encoding.y.unit` to `{ "kind": "currency", "code": "USD" }`, `{ "kind": "unit", "label": "kg" }`, or `{ "kind": "percent", "scale": "percent" | "ratio" }`. Codes are checked only for three uppercase ASCII letters, not against a currency registry. A `percent` value of 25 denotes 25%; a `ratio` value of 0.25 denotes 25%. The compiler adds an axis label and never converts values or formats ratios as percentages. Pie units are rejected.
 
-For line charts only, x may be `{ "field": "day", "type": "temporal", "temporalKind": "date" }` with valid Gregorian `YYYY-MM-DD` dates in years 1000–9999. Render coordinates use UTC midnight and ECharts `useUTC`, preserving calendar dates without guessing a local timezone. No automatic sort is applied to series; explicit sorting is available. Date-times, offset-bearing instants, local times, other calendars and timezones are not supported. See [date spec](../../specs/0018-temporal-date/spec.md) and [unit spec](../../specs/0017-quantity-units/spec.md).
+For line charts only, x may be `{ "field": "day", "type": "temporal", "temporalKind": "date" }` with valid Gregorian `YYYY-MM-DD` dates in years 1000–9999. Render coordinates use UTC midnight and ECharts `useUTC`, preserving calendar dates without guessing a local timezone. No automatic sort is applied to series; explicit sorting is available. Offset-bearing instants are supported as described below; local times, other calendars and named timezones are not supported. See [date spec](../../specs/0018-temporal-date/spec.md) and [unit spec](../../specs/0017-quantity-units/spec.md).
 
 ### Explicit aggregation in 0.2
 
@@ -108,3 +108,17 @@ In MCP call `validate_chart` with `nativeValidation: "strict-basic-0.1"`; succes
 ### Data labels and legend in 0.2
 
 Set `presentation.dataLabels: { "show": true | false }` and optionally `presentation.legend: { "show": true | false, "position": "top" | "bottom" }`. Both objects require `show`; omit them to preserve existing defaults. Labels use ECharts default content for the chart type, without a formatter or percentage conversion. A top legend reserves space in cartesian charts; exact layout depends on data, chart size and font. When a light or dark theme is selected, explicitly enabled labels use its foreground color. This does not promise universal legibility, accessibility, custom formatting, or legend state preservation.
+
+### Explicit instants in 0.2
+
+Line x may use `type: "temporal", temporalKind: "instant"`, with values like `2024-03-01T08:00:00+08:00` or `2024-03-01T00:00:00Z`. A full time and explicit offset are required; offsets are limited to ±14:00 and fractions to 1–3 digits. `-00:00`, leap seconds, invalid dates, local datetimes and numeric timestamps are rejected. The chart uses UTC coordinates and UTC display, without guessing local timezone. Explicit category sorting compares instants, not their strings; without sorting, input order remains. Different strings denoting the same instant within one chart are rejected, including across groups, to prevent silent merging. Original input and source row mapping are retained; named display timezones are not supported. See [spec](../../specs/0022-explicit-instants/spec.md).
+
+### Version-aware schema discovery
+
+MCP `get_chart_schema` accepts optional `schemaVersion: "0.1" | "0.2"` and `mode`. Defaults remain 0.1; 0.2 currently accepts only intent, and requesting 0.2 with `mode: "echarts"` fails with `UNSUPPORTED_CAPABILITY`. In CLI use `pnpm cli schema --schema-version 0.2 --mode intent`. This discovers the schema; it does not make 0.2 native mode available.
+
+### Combo and funnel charts in 0.2
+
+`chart.type: "combo"` creates a bar for `encoding.y` and a line for `chart.secondary.field` from the same categorical x and source rows. With a shared axis (default or `secondary.axis: "shared"`), declare the same unit for both measures or omit both; hosts must ensure omitted units are compatible. An explicitly requested `secondary.axis: "right"` requires units for both measures, permits different units and does not convert values. Interpret dual axes carefully; different scales can exaggerate relationships. Grouped series, aggregation, value sorting, temporal x and horizontal/area variants are not supported. See the [combo recipe](../../resources/recipes/combo.json).
+
+`chart.type: "funnel"` takes categorical x and nonnegative numeric y; it keeps input order unless an explicit supported sort is requested. No conversion rates or implicit ordering are inferred. Grouping, unit and donut/area/horizontal variants are not supported. See the [funnel recipe](../../resources/recipes/funnel.json). Both profiles are experimental; successful rendering does not prove chart selection or visual quality.

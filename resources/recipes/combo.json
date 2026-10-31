@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "0.2",
+  "id": "sales",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["month", "sales", "cost"],
+    "rows": [
+      {
+        "month": "Jan",
+        "sales": 120,
+        "cost": 90
+      },
+      {
+        "month": "Feb",
+        "sales": 180,
+        "cost": 130
+      },
+      {
+        "month": "Mar",
+        "sales": 150,
+        "cost": 110
+      }
+    ]
+  },
+  "chart": {
+    "type": "combo",
+    "title": "Sales and cost",
+    "encoding": {
+      "x": {
+        "field": "month",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "sales",
+        "type": "quantitative",
+        "unit": {
+          "kind": "currency",
+          "code": "USD"
+        }
+      }
+    },
+    "secondary": {
+      "field": "cost",
+      "unit": {
+        "kind": "currency",
+        "code": "USD"
+      }
+    }
+  },
+  "presentation": {
+    "legend": {
+      "show": true
+    }
+  }
+}

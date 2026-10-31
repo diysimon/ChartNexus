@@ -26,6 +26,27 @@ describe('CLI child process', () => {
     );
     expect(run(['--help']).status).toBe(0);
   });
+  test('selects schema versions explicitly and rejects incompatible modes', () => {
+    expect(run(['schema']).json.value.$id).toBe(
+      'https://chartnexus.dev/schemas/chart-document/0.1',
+    );
+    expect(
+      run(['schema', '--schema-version', '0.2', '--mode', 'intent']).json.value
+        .$id,
+    ).toBe('https://chartnexus.dev/schemas/chart-document/0.2');
+    expect(
+      run(['schema', '--schema-version', '0.2', '--mode', 'echarts']),
+    ).toMatchObject({
+      status: 1,
+      json: { ok: false, diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }] },
+    });
+    expect(run(['schema', '--schema-version', '0.3']).status).toBe(2);
+    expect(run(['capabilities', '--schema-version', '0.2']).status).toBe(2);
+    expect(
+      run(['schema', '--schema-version', '0.1', '--schema-version', '0.2'])
+        .status,
+    ).toBe(2);
+  });
   test('validates file input and compiles stdin', () => {
     expect(run(['validate', 'resources/recipes/bar.json']).json).toMatchObject({
       ok: true,

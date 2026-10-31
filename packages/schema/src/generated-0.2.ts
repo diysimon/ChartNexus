@@ -28,12 +28,12 @@ export interface ChartDocument02 {
         revision: string;
       };
   chart: {
-    type: 'bar' | 'line' | 'pie' | 'scatter';
+    type: 'bar' | 'line' | 'pie' | 'scatter' | 'combo' | 'funnel';
     encoding: {
       x: {
         field: string;
         type: 'ordinal' | 'quantitative' | 'temporal';
-        temporalKind?: 'date';
+        temporalKind?: 'date' | 'instant';
       };
       y: {
         field: string;
@@ -68,6 +68,23 @@ export interface ChartDocument02 {
     };
     aggregate?: {
       op: 'sum' | 'mean' | 'count';
+    };
+    secondary?: {
+      field: string;
+      unit?:
+        | {
+            kind: 'currency';
+            code: string;
+          }
+        | {
+            kind: 'percent';
+            scale: 'percent' | 'ratio';
+          }
+        | {
+            kind: 'unit';
+            label: string;
+          };
+      axis?: 'shared' | 'right';
     };
   };
   presentation?: {

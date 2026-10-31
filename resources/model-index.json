@@ -5,6 +5,32 @@
   "license": "Apache-2.0",
   "entries": [
     {
+      "id": "combo-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic single-axis bar-line combo",
+      "summary": "Synthetic single-axis bar-line combo",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/combo.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/combo/0.2",
+      "contentHash": "sha256:5d42f0b9d98d16d3b0ec56be6db8231444cda25082777f6204e09691b8b86b61"
+    },
+    {
+      "id": "funnel-recipe-0.2",
+      "language": "en",
+      "title": "Synthetic ordered funnel chart",
+      "summary": "Synthetic ordered funnel chart",
+      "capabilityIds": ["basic-0.2"],
+      "schemaVersion": "0.2",
+      "source": "resources/recipes/funnel.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/funnel/0.2",
+      "contentHash": "sha256:7804ba5c3180457ceb063b2290201f6247ade37ab4bfab652811c5d12873eb46"
+    },
+    {
       "id": "native-strict-schema",
       "language": "en",
       "title": "Strict native option subset schema",
@@ -41,7 +67,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://schema/chart-document/0.2",
-      "contentHash": "sha256:49fe9b23bc0e0be545755699532cb1837921002a16462578b6ff42f7e7c27654"
+      "contentHash": "sha256:e71c0e98038594544b5f53c03b999d610d8994114f921147caf4aa0d29360103"
     },
     {
       "id": "capabilities-0.2",
@@ -54,7 +80,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://capabilities/basic-0.2",
-      "contentHash": "sha256:fb6f4e751d8e045cc416af508d0e8a5f9bc4de25d70e188e7646c80a64721cb4"
+      "contentHash": "sha256:671cd402e27f7e91f5bef69370d9b94caa2f4f9d4a00273ad8aa88166baece33"
     },
     {
       "id": "chart-document",
@@ -132,7 +158,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/en/0.1",
-      "contentHash": "sha256:75304a39ad8e6350475e3ee756b9cee12dfe25536a3ec73eed5d234fc8d39598"
+      "contentHash": "sha256:3d716664d6f7398445350bb93820f2f0917b658cdaae37e59a1cd4a86f6d63d6"
     },
     {
       "id": "model-entry",
@@ -145,7 +171,7 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://resources/model-entry/zh-CN/0.1",
-      "contentHash": "sha256:4d0007e46f3a65882f038668e1aac75e786a7f4c71341c4dd86c13e0f4dd386f"
+      "contentHash": "sha256:c9217ccaf2dce8ddd561f53575e8b2fb0475c1070fa9b5be462db4680c2a9c40"
     },
     {
       "id": "evaluation-baseline",

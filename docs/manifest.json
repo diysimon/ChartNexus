@@ -471,6 +471,41 @@
       "status": "implemented",
       "en": "specs/0021-labels-legend/spec.md",
       "zh-CN": "specs/0021-labels-legend/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0022-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0022-explicit-instants/spec.md",
+      "zh-CN": "specs/0022-explicit-instants/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0023-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0023-schema-discovery/spec.md",
+      "zh-CN": "specs/0023-schema-discovery/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0024-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0024-combo-chart/spec.md",
+      "zh-CN": "specs/0024-combo-chart/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0025-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0025-funnel/spec.md",
+      "zh-CN": "specs/0025-funnel/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0026-spec",
+      "version": "0.1",
+      "status": "implemented",
+      "en": "specs/0026-dual-axis/spec.md",
+      "zh-CN": "specs/0026-dual-axis/spec.zh-CN.md"
     }
   ]
 }

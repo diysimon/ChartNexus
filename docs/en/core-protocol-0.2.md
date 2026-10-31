@@ -10,7 +10,7 @@ language: en
 
 This is a **design proposal**, not an implemented schema or final standard; names and examples require review before implementation. The [capability and task review](core-capability-review.md) supplies evidence. It does not authorize breaking the existing 0.1 implementation or claim that any UI protocol adopts these fields.
 
-**Implementation update:** A limited experimental 0.2 intent subset now exists for horizontal bars, area lines, donut pies and versioned light/dark presets. The remainder of this document is still a proposal; native 0.2, restricted calendar-date, unit, sorting and explicit aggregation subsets are implemented; timestamp instants remain unimplemented. See [development](development.md).
+**Implementation update:** A limited experimental 0.2 intent subset now exists for horizontal bars, area lines, donut pies and versioned light/dark presets. The remainder of this document is still a proposal; native 0.2, restricted calendar-date, unit, sorting and explicit aggregation subsets are implemented; explicit offset-bearing instants are implemented; named timezones remain unimplemented. See [development](development.md).
 
 A separate opt-in `native-strict-basic-0.1` validation subset is implemented; default 0.1 native compilation remains partially guarded. See [development](development.md).
 

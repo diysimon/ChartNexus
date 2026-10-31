@@ -53,7 +53,7 @@ export async function runCli(
       send({
         commands: Object.keys(commands),
         usage:
-          'chartnexus <command> [file|-] [--mode intent|echarts] [--width N --height N] [--output path]',
+          'chartnexus <command> [file|-] [--mode intent|echarts] [--schema-version 0.1|0.2] [--width N --height N] [--output path]',
         exitCodes: { success: 0, invalidInput: 1, usageOrIo: 2 },
       });
       return 0;
@@ -78,7 +78,13 @@ export async function runCli(
       if (!flag) continue;
       if (flag.startsWith('--')) {
         if (
-          !['--mode', '--width', '--height', '--output'].includes(flag) ||
+          ![
+            '--mode',
+            '--schema-version',
+            '--width',
+            '--height',
+            '--output',
+          ].includes(flag) ||
           seen.has(flag)
         )
           throw new CliError('USAGE', 2, 'Unknown or repeated option.');
@@ -94,6 +100,14 @@ export async function runCli(
               '--mode applies to schema and must be intent or echarts.',
             );
           args.mode = value;
+        } else if (flag === '--schema-version') {
+          if (command !== 'schema' || !['0.1', '0.2'].includes(value))
+            throw new CliError(
+              'USAGE',
+              2,
+              '--schema-version applies to schema and must be 0.1 or 0.2.',
+            );
+          args.schemaVersion = value;
         } else {
           if (command !== 'render')
             throw new CliError(

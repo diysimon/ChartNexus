@@ -11,12 +11,16 @@
   },
   {
     "name": "get_chart_schema",
-    "description": "Read the canonical chart schema, optionally narrowed to one input mode.",
+    "description": "Read ChartDocument 0.1 or experimental 0.2 schema; optionally choose an input mode.",
     "inputSchema": {
       "type": "object",
       "properties": {
         "mode": {
           "enum": ["intent", "echarts"]
+        },
+        "schemaVersion": {
+          "enum": ["0.1", "0.2"],
+          "description": "Defaults to 0.1. Version 0.2 currently supports intent only."
         }
       },
       "additionalProperties": false,

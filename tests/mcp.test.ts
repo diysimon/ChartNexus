@@ -41,7 +41,29 @@ describe('real MCP stdio connection', () => {
           })
         ).structuredContent,
       ).toMatchObject({ ok: true });
-      expect((await client.listResources()).resources).toHaveLength(14);
+      expect(
+        (
+          await client.callTool({
+            name: 'get_chart_schema',
+            arguments: { schemaVersion: '0.2', mode: 'intent' },
+          })
+        ).structuredContent,
+      ).toMatchObject({
+        ok: true,
+        value: { $id: 'https://chartnexus.dev/schemas/chart-document/0.2' },
+      });
+      expect(
+        await client.callTool({
+          name: 'get_chart_schema',
+          arguments: { schemaVersion: '0.2', mode: 'echarts' },
+        }),
+      ).toMatchObject({
+        isError: true,
+        structuredContent: {
+          diagnostics: [{ code: 'UNSUPPORTED_CAPABILITY' }],
+        },
+      });
+      expect((await client.listResources()).resources).toHaveLength(16);
       const index = await client.readResource({
         uri: 'chartnexus://resources/index/0.1',
       });
@@ -63,7 +85,7 @@ describe('real MCP stdio connection', () => {
         .trimEnd()
         .split('\n')
         .map((line: string) => JSON.parse(line));
-      expect(records).toHaveLength(14);
+      expect(records).toHaveLength(16);
       expect(
         records.find(
           (item: { id: string }) => item.id === 'native-strict-schema',
@@ -85,7 +107,9 @@ describe('real MCP stdio connection', () => {
       if (!cap || !('text' in cap))
         throw new Error('Expected 0.2 capabilities.');
       expect(JSON.parse(cap.text)).toMatchObject({
-        temporal: { kinds: ['date'] },
+        combo: { axes: ['shared', 'right'] },
+        funnel: { conversionRate: 'not inferred' },
+        temporal: { kinds: ['date', 'instant'] },
         units: { kinds: ['currency', 'percent', 'unit'] },
         presentation: {
           dataLabels: { show: true },
@@ -103,6 +127,23 @@ describe('real MCP stdio connection', () => {
         contentHash: expect.stringMatching(/^sha256:/),
         body: expect.stringContaining('模型与 Agent 入口'),
       });
+      for (const uri of [
+        'chartnexus://recipes/combo/0.2',
+        'chartnexus://recipes/funnel/0.2',
+      ]) {
+        const recipeResource = await client.readResource({ uri });
+        const value = recipeResource.contents[0];
+        if (!value || !('text' in value))
+          throw new Error('Expected recipe text.');
+        const result = await client.callTool({
+          name: 'validate_chart',
+          arguments: { document: JSON.parse(value.text) },
+        });
+        expect(result.structuredContent).toMatchObject({
+          ok: true,
+          value: { profile: 'basic-0.2' },
+        });
+      }
       const tasks = await client.readResource({
         uri: 'chartnexus://evaluation/tasks/0.1',
       });
@@ -233,7 +274,7 @@ describe('real MCP stdio connection', () => {
           sha256: createHash('sha256').update(first.text).digest('hex'),
         },
       });
-      expect((await client.listResources()).resources).toHaveLength(15);
+      expect((await client.listResources()).resources).toHaveLength(17);
       await expect(
         client.readResource({ uri: 'file:///etc/passwd' }),
       ).rejects.toThrow();

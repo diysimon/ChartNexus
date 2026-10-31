@@ -20,14 +20,18 @@ ChartNexus 将受限的 JSON 图表文档编译为 Apache ECharts。先读取 `c
 
 对于浏览器宿主的顺序更新，宿主须在异步生成前捕获 `baseRevision` 并提供唯一 `operationId`；不要编造版本。遇到 `REVISION_CONFLICT` 时须获取当前版本并处理过期任务后再重试。内容改变时需要新的操作 ID。可选的 A2UI、OpenUI 和 COSUI JSON 宿主 profile 使用相同的 ChartNexus 操作契约；这不是协议原生保证。详见 [GenUI 宿主指南](genui-integrations.md)。
 
-实验性、仅 intent 的 0.2 profile 可通过 `chartnexus://capabilities/basic-0.2` 和 `chartnexus://schema/chart-document/0.2` 发现。`get_chart_schema` 工具仍返回 0.1；需要显式读取 0.2 资源。原生 0.1 仅进行受控的部分校验，校验结果标记为 `guarded-native-partial`。
+实验性、仅 intent 的 0.2 profile 可通过 `chartnexus://capabilities/basic-0.2` 和 `chartnexus://schema/chart-document/0.2` 发现。`get_chart_schema` 工具默认返回 0.1；传入 `schemaVersion: "0.2"` 可获取 0.2 intent Schema。原生 0.1 仅进行受控的部分校验，校验结果标记为 `guarded-native-partial`。
 
 实验性 0.2 柱状、折线或饼图排序须显式设置 `chart.sort`，包含 `by`（`category` 或 `value`）、`order`（`ascending` 或 `descending`）和 `nulls`（`first` 或 `last`）。不要对分组图按数值排序：当前 profile 会拒绝此歧义请求，需在上游明确处理聚合。分类使用 UTF-16 代码单元顺序，而非语言环境排序。
 
-0.2 日期使用折线图 x 的 `type: temporal`、`temporalKind: date` 和有效 `YYYY-MM-DD` 字符串；不支持时间戳或推断时区。y 单位须显式声明；百分比 `percent` 与 `ratio` 描述原值，不触发换算。生成前读取 0.2 Schema 和能力清单。
+0.2 日期使用折线图 x 的 `type: temporal`、`temporalKind: date` 和有效 `YYYY-MM-DD` 字符串；带偏移时间点单独支持，不推断时区。y 单位须显式声明；百分比 `percent` 与 `ratio` 描述原值，不触发换算。生成前读取 0.2 Schema 和能力清单。
 
 0.2 柱状、折线或饼图只有在用户明确要求时才可通过 `chart.aggregate.op` 设置 `sum`、`mean` 或 `count` 聚合重复分类。count 是非 null 数值 y 的数量，不是总行数；sum/mean 忽略 null。不要编造分组、单位，也不要把聚合结果当作单个原始行。
 
 原生 ECharts 输入默认只做部分校验。当宿主要求有限的严格子集时，先读取 `chartnexus://schema/native-strict-basic/0.1`，再调用 `validate_chart` 并传入 `nativeValidation: "strict-basic-0.1"`。不要声称任意 ECharts option 均通过严格校验，也不要在失败后静默改用部分校验。
 
 实验性 0.2 intent 可通过 `presentation.dataLabels.show` 和 `presentation.legend.show` 控制标签及图例，图例可选 `position`（`top` 或 `bottom`）。标签内容采用该图表类型的 ECharts 默认值，不要编造 formatter 或暗示百分比自动换算。
+
+0.2 折线图时间点使用 `temporalKind: "instant"`，输入完整的带 `Z` 或数字偏移的 ISO 字符串。不要省略或编造偏移。分类排序按实际时间比较，同一时间点的不同字符串会被拒绝；显示为 UTC。
+
+0.2 intent 可读取 `chartnexus://recipes/combo/0.2` 与 `chartnexus://recipes/funnel/0.2` 了解受支持的组合图和漏斗图。组合图使用两个不同字段，默认共享轴要求单位相同或均不声明；显式右轴要求双方均声明单位。不要为漏斗图推断转化率，也不要静默换算数值。

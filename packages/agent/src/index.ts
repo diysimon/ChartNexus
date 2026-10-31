@@ -10,6 +10,7 @@ import {
 } from '@chartnexus/core';
 import {
   chartDocumentSchema,
+  chartDocument02Schema,
   failure,
   type DataRegistry,
   type Result,
@@ -91,7 +92,16 @@ export function createAgentService(
             },
           },
         };
-      if (name === 'get_chart_schema')
+      if (name === 'get_chart_schema') {
+        if (input.schemaVersion === '0.2') {
+          if (input.mode === 'echarts')
+            return failure(
+              'UNSUPPORTED_CAPABILITY',
+              '/mode',
+              'ChartDocument 0.2 supports intent only.',
+            );
+          return { ok: true, value: structuredClone(chartDocument02Schema) };
+        }
         return {
           ok: true,
           value: getChartSchema(
@@ -100,6 +110,7 @@ export function createAgentService(
               : undefined,
           ),
         };
+      }
       if (name === 'render_chart') {
         const width = typeof input.width === 'number' ? input.width : 800;
         const height = typeof input.height === 'number' ? input.height : 480;

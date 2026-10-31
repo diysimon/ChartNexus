@@ -66,3 +66,6 @@ Opt-in OpenUI and COSUI JSON host profiles now use the session controller and ha
 
 ## Core review checkpoint (2026-10-31)
 The [capability review](core-capability-review.md) records 28 representative tasks and evidence levels. The [0.2 proposal](core-protocol-0.2.md) is partially implemented as an experimental intent subset. Prioritize native validation boundaries and data semantics before expanding chart types and themes.
+
+## Chart capability checkpoint (2026-10-31)
+Experimental 0.2 now includes bar-line combinations with explicit shared/right axes and a funnel subset. Model evaluation, heatmap/radar, theme accessibility, state retention and distribution checks remain incomplete.

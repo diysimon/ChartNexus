@@ -50,7 +50,7 @@ node packages/cli/dist/main.js render resources/recipes/bar.json --width 800 --h
 | 工具 | 参数 | 成功结果 |
 | --- | --- | --- |
 | list_capabilities | 无 | 图表/profile 与 Agent 运行限制 |
-| get_chart_schema | 可选 mode: intent/echarts | 完整 Schema 或有独立 ID 的模式子集 |
+| get_chart_schema | 可选 schemaVersion: 0.1/0.2 和 mode: intent/echarts | 对应版本的 Schema；0.2 仅支持 intent |
 | validate_chart | document | 精简的结构与语义校验结果 |
 | compile_chart | document | ECharts RenderPlan |
 | render_chart | document，可选 width/height | 临时 SVG 元数据与 resource_link |

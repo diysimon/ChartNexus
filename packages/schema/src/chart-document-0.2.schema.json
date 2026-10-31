@@ -87,7 +87,7 @@
       "additionalProperties": false,
       "properties": {
         "type": {
-          "enum": ["bar", "line", "pie", "scatter"]
+          "enum": ["bar", "line", "pie", "scatter", "combo", "funnel"]
         },
         "encoding": {
           "type": "object",
@@ -106,7 +106,7 @@
                   "enum": ["ordinal", "quantitative", "temporal"]
                 },
                 "temporalKind": {
-                  "const": "date"
+                  "enum": ["date", "instant"]
                 }
               },
               "required": ["field", "type"]
@@ -228,6 +228,67 @@
             }
           },
           "required": ["op"]
+        },
+        "secondary": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "field": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "unit": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "currency"
+                    },
+                    "code": {
+                      "type": "string",
+                      "pattern": "^[A-Z]{3}$"
+                    }
+                  },
+                  "required": ["kind", "code"]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "percent"
+                    },
+                    "scale": {
+                      "enum": ["percent", "ratio"]
+                    }
+                  },
+                  "required": ["kind", "scale"]
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "const": "unit"
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 32
+                    }
+                  },
+                  "required": ["kind", "label"]
+                }
+              ]
+            },
+            "axis": {
+              "enum": ["shared", "right"]
+            }
+          },
+          "required": ["field"]
         }
       },
       "required": ["type", "encoding"]

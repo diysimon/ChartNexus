@@ -1,8 +1,8 @@
 ---
 doc_id: contracts-03
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 [Other language](../en/contracts-03.md)
@@ -27,6 +27,6 @@ MCP：`get_chart_schema({schemaVersion:"0.3",chartType:"bar"})`；CLI：`pnpm cl
 
 core 已拆分版本校验、数据表解析、旧版编译、显式变换、时间解析、组合/漏斗/热力处理及展示。分发入口不依赖 DOM、网络或模型 SDK。为确保数值等价，保留旧 0.2 内部已有的图表复用；四种 M3 类型使用独立编译器。
 
-M0 源数据/option/行索引 golden 夹具及已有聚合、时间、单位、失败测试保护拆分。`scripts/evaluation-harness.mjs` 将模型可见提示词与预期数据哈希/渲染值分离，记录首次及最多两次修复结果，并要求模型、设置和编译器来源。合成测试仅验证框架，不是独立模型成绩。实际私有评测集不得进入 resources/retrieval；最终 A16 仍属于 M4。
+M0 源数据/option/行索引 golden 夹具及已有聚合、时间、单位、失败测试保护拆分。`scripts/evaluation-harness.mjs` 将模型可见提示词与预期数据哈希/渲染值分离，记录首次及最多两次修复结果，并要求模型、设置和编译器来源。合成测试仅验证框架，不是独立模型成绩。实际私有评测集不得进入 resources/retrieval；后续已完成的有范围评测见[M4证据](trial-distribution.md)。
 
 见 [M1 spec](../../specs/0033-contracts-core/spec.zh-CN.md) 与 [任务](../../specs/0033-contracts-core/tasks.zh-CN.md)。

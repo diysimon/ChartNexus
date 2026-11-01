@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.6"
+version: "0.7"
 status: experimental
 updated: 2026-11-01
 language: en
@@ -10,6 +10,8 @@ language: en
 [简体中文](../zh-CN/trial-distribution.md)
 
 See [SPEC-0036](../../specs/0036-trial-distribution/spec.md), [evidence](../../specs/0036-trial-distribution/verification.json) and the [support matrix](support-matrix.md). M4 engineering/evaluation is complete with linked remote CI evidence; model quality remains experimental. All eleven packages remain private and unpublished.
+
+> Current product boundary: the model targets recorded below describe this historical experiment, not an SDK release gate. The host owns model invocation and factual data; SDK acceptance concerns its documented contracts, faithful rendering and operational behavior. See [responsibilities](product-boundary.md).
 
 ## Evaluation provenance and scope
 
@@ -86,4 +88,4 @@ The model run used the original frozen engine. Only the two recorded engine sour
 | `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
 | `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
 
-All four models remain experimental because after-repair correctness is below the proposed 95% target. Qwen3.5:27b meets the separate first-pass structural target (175/180). The reporting-only optional-key correction retains strict scores. The diagnostic subset's JSON Pointer ambiguity, zero-shot schema-only prompting, same-author review and host-catalog scope limit interpretation; see [guide](../../docs/en/trial-distribution.md). This is neither a beta release nor a universal model ranking. Private corpora and raw responses remain ignored; no npm publication occurred.
+In this specific experiment all four results fell below the proposed 95% after-repair target; Qwen3.5:27b met the separate first-pass structural target (175/180). These figures neither qualify a model nor gate an SDK release. The reporting-only optional-key correction retains strict scores. The diagnostic subset's JSON Pointer ambiguity, zero-shot schema-only prompting, same-author review and host-catalog scope limit interpretation; see [guide](../../docs/en/trial-distribution.md). This is neither a beta release nor a universal model ranking. Private corpora and raw responses remain ignored; no npm publication occurred.

@@ -1,6 +1,6 @@
 ---
 doc_id: trial-distribution
-version: "0.6"
+version: "0.7"
 status: experimental
 updated: 2026-11-01
 language: zh-CN
@@ -10,6 +10,8 @@ language: zh-CN
 [English](../en/trial-distribution.md)
 
 见 [SPEC-0036](../../specs/0036-trial-distribution/spec.zh-CN.md)、[证据](../../specs/0036-trial-distribution/verification.json)和[支持矩阵](support-matrix.md)。M4工程/评测已完成并有对应远端CI证据；模型质量仍为实验状态。全部11个包仍为私有、未发布。
+
+> 当前产品边界：下文模型目标只描述当时的实验，不是 SDK 发布门槛。模型调用和数据事实由宿主负责；SDK 验收关注已声明契约、忠实渲染与运行行为。见[责任划分](product-boundary.md)。
 
 ## 评测来源与范围
 
@@ -86,4 +88,4 @@ required聚合verify、browser和Node22/24安装包任务；保留失败轨迹/�
 | `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
 | `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
 
-四个模型的修复后正确率均未达到建议95%目标，继续保持实验状态；Qwen3.5:27b的首次结构合格率为175/180，达到独立的结构目标。报告层可选键修正保留严格原分。诊断子集的JSON Pointer提示歧义、零样本仅Schema提示、同一作者审查及宿主目录题目范围均限制结果解释，见[指南](../../docs/zh-CN/trial-distribution.md)。这不是beta发布，也不是通用模型排名。私有题库与原始响应保持忽略，未发布npm。
+在这一具体实验中，四个结果的修复后正确率均未达到建议95%目标；Qwen3.5:27b的首次结构合格率为175/180，达到独立的结构目标。这些数字既不授予模型资格，也不是SDK发布门槛。报告层可选键修正保留严格原分。诊断子集的JSON Pointer提示歧义、零样本仅Schema提示、同一作者审查及宿主目录题目范围均限制结果解释，见[指南](../../docs/zh-CN/trial-distribution.md)。这不是beta发布，也不是通用模型排名。私有题库与原始响应保持忽略，未发布npm。

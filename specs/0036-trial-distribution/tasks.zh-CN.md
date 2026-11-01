@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.5"
+version: "0.6"
 status: done
 updated: 2026-11-01
 language: zh-CN
@@ -16,6 +16,8 @@ M4工程及评测已完成；所有profile保持实验状态，包未发布。�
 | AC16 | 完成720/720轮；四模型各三次重复，保留全部失败 | [聚合](evaluation-summary-v2.json)、[完整性审核](evaluation-integrity-v2.json)、[来源](evaluation-provenance-v2.json)、[运行前范围审核](holdout-audit-v2.json) |
 | AC17 | 通过：11个隔离tarball，Node22/24本地及Linux CI，每个消费者46项浏览器测试 | [性能](performance.json)、浏览器[22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json)、结构化包证据 |
 | AC18 | verify/browser/两个package任务/required全部通过 | [远端CI](https://github.com/diysimon/ChartNexus/actions/runs/41230226310)，提交`2261351`；最终文档提交在交付时单独核验 |
+
+> 边界澄清：以下结果描述当时的评测设置。模型调用和事实准确性由宿主负责，95% 实验目标不是 SDK 发布门槛。见[产品责任边界](../../docs/zh-CN/product-boundary.md)。
 
 ## 实现与回归发现
 
@@ -44,4 +46,4 @@ M4工程及评测已完成；所有profile保持实验状态，包未发布。�
 | `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
 | `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
 
-四个模型的修复后正确率均未达到建议95%目标，继续保持实验状态；Qwen3.5:27b的首次结构合格率为175/180，达到独立的结构目标。报告层可选键修正保留严格原分。诊断子集的JSON Pointer提示歧义、零样本仅Schema提示、同一作者审查及宿主目录题目范围均限制结果解释，见[指南](../../docs/zh-CN/trial-distribution.md)。这不是beta发布，也不是通用模型排名。私有题库与原始响应保持忽略，未发布npm。
+在这一具体实验中，四个结果的修复后正确率均未达到建议95%目标；Qwen3.5:27b的首次结构合格率为175/180，达到独立的结构目标。这些数字既不授予模型资格，也不是SDK发布门槛。报告层可选键修正保留严格原分。诊断子集的JSON Pointer提示歧义、零样本仅Schema提示、同一作者审查及宿主目录题目范围均限制结果解释，见[指南](../../docs/zh-CN/trial-distribution.md)。这不是beta发布，也不是通用模型排名。私有题库与原始响应保持忽略，未发布npm。

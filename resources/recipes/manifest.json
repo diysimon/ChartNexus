@@ -242,6 +242,96 @@
         "expectedCode": "INVALID_MAP_DATA"
       },
       "hostRequirement": "Register authored two-regions@1 map asset before compilation/rendering."
+    },
+    {
+      "id": "line-03",
+      "resourceId": "line-recipe-0.3",
+      "path": "line-03.json",
+      "title": "Synthetic 0.3 line chart",
+      "uri": "chartnexus://recipes/line/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "line",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/y/type",
+        "value": "ordinal",
+        "expectedCode": "INVALID_SCHEMA"
+      }
+    },
+    {
+      "id": "pie-03",
+      "resourceId": "pie-recipe-0.3",
+      "path": "pie-03.json",
+      "title": "Synthetic 0.3 pie chart",
+      "uri": "chartnexus://recipes/pie/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "pie",
+      "expected": "success",
+      "negative": {
+        "path": "/data/rows/0/revenue",
+        "value": -1,
+        "expectedCode": "INVALID_DATA"
+      }
+    },
+    {
+      "id": "scatter-03",
+      "resourceId": "scatter-recipe-0.3",
+      "path": "scatter-03.json",
+      "title": "Synthetic 0.3 scatter chart",
+      "uri": "chartnexus://recipes/scatter/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "scatter",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/type",
+        "value": "ordinal",
+        "expectedCode": "INVALID_SCHEMA"
+      }
+    },
+    {
+      "id": "combo-03",
+      "resourceId": "combo-recipe-0.3",
+      "path": "combo-03.json",
+      "title": "Synthetic 0.3 combo chart",
+      "uri": "chartnexus://recipes/combo/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "combo",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "funnel-03",
+      "resourceId": "funnel-recipe-0.3",
+      "path": "funnel-03.json",
+      "title": "Synthetic 0.3 funnel chart",
+      "uri": "chartnexus://recipes/funnel/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "funnel",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/encoding/x/field",
+        "value": "missing",
+        "expectedCode": "UNKNOWN_FIELD"
+      }
+    },
+    {
+      "id": "heatmap-03",
+      "resourceId": "heatmap-recipe-0.3",
+      "path": "heatmap-03.json",
+      "title": "Synthetic 0.3 heatmap chart",
+      "uri": "chartnexus://recipes/heatmap/0.3",
+      "schemaVersion": "0.3",
+      "chartType": "heatmap",
+      "expected": "success",
+      "negative": {
+        "path": "/chart/heatmap/max",
+        "value": 0,
+        "expectedCode": "INVALID_DATA"
+      }
     }
   ]
 }

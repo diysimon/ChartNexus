@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0029-spec
-version: "0.2"
+version: "0.3"
 status: done
 updated: 2026-11-01
 language: en
@@ -57,3 +57,5 @@ A12–A15 are complete with [M3 evidence](../0035-chart-expansion/tasks.md). All
 ## Final acceptance / 2026-11-01
 
 Earlier checkpoints describe their historical state. M0–M4 and A01–A18 are complete; this table and [M4 final evidence](../0036-trial-distribution/tasks.md) are current: 720 real local model rounds, eleven isolated Node22/24 packages, 251 unit/integration tests, 46 browser tests per suite and remote CI. Missing native marker modules were restored and every originally successful evaluation render was replayed. Model correctness remains below the proposed95% target and experimental; plan completion is not production qualification, all-model/host certification or npm publication.
+
+Current responsibility boundary: model invocation and factual accuracy are not SDK acceptance gates; original evaluation figures remain historical evidence. See [product boundary](../../docs/en/product-boundary.md).

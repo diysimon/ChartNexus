@@ -1,8 +1,8 @@
 ---
 doc_id: chart-expansion-03
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 # Four bounded chart types in 0.3
@@ -59,4 +59,4 @@ The [authored rectangles](../../examples/maps/two-regions.json) are Apache-2.0 s
 
 Run `pnpm dev` and open `/expansion.html` to switch chart/theme/detail/width, edit complete JSON, inspect full data and click marks. Existing upstream demos accept `?m3=radar|tree|sankey|map` for the same authored fixtures. [Radar](../../resources/recipes/radar-03.json), [tree](../../resources/recipes/tree-03.json), [Sankey](../../resources/recipes/sankey-03.json) and map recipes, negative mutations, capability limits, diagnostics and MCP/RAG copies are generated from canonical resources.
 
-See [SPEC-0035](../../specs/0035-chart-expansion/spec.md) and [acceptance evidence](../../specs/0035-chart-expansion/tasks.md). Local compiler/browser/SVG/worker and pinned upstream SDK checks are distinct from real-model success. M4 held-out evaluation, all-package clean installs, performance baselines, remote CI and publication remain open. No universal protocol/model or broad accessibility certification is claimed.
+See [SPEC-0035](../../specs/0035-chart-expansion/spec.md) and [acceptance evidence](../../specs/0035-chart-expansion/tasks.md). Local compiler/browser/SVG/worker and pinned upstream SDK checks are distinct from real-model success. M4 scoped evaluation, all-package clean installs, performance baselines and remote CI are recorded in [M4 evidence](trial-distribution.md); npm publication has not occurred. No universal protocol/model or broad accessibility certification is claimed.

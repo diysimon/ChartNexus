@@ -1,8 +1,8 @@
 ---
 doc_id: genui-integrations
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 
@@ -14,11 +14,16 @@ language: en
 
 | Profile | Tested dependencies | Host | Entry point |
 | --- | --- | --- | --- |
+| OpenUI Lang | `@openuidev/react-lang` 1.0.2, React 19.2.4, Zod 4.3.6 | React Renderer | `@chartnexus/adapter-openui` |
 | COSUI JSON | `@cosui/cosmic-dynamic-ui` 1.0.0, `san` 3.15.5 | `UIJSON.compile` | `@chartnexus/adapter-cosui` |
 | COSUI Markdown | `marklang` 1.0.1 | Marklang `renderToElement` | `@chartnexus/adapter-cosui/marklang` |
 | A2UI v0.9 | `@a2ui/react` 0.9.1, `@a2ui/web_core` 0.9.2, React 19.2.4, Zod 3.25.76 | official MessageProcessor and React Surface | `@chartnexus/adapter-a2ui` |
 
 The A2UI package versions are SDK versions; the message protocol is v0.9. OpenUI still uses Zod 4.3.6 and remains separately tested. These are experimental local workspace packages, not npm releases. All chart inputs are validated by the existing core with its limits and profile.
+
+## OpenUI Lang
+
+Register `createOpenUIChart(options)` in `createLibrary({ components: [chart], root: 'ChartNexusChart' })`, then pass the library to the upstream React `Renderer`. The component takes a JSON-encoded ChartDocument string. [The complete runnable host](../../examples/playground/openui.ts) shows the required OpenUI program, escaping, diagnostics, selection, streaming and lifecycle. Start it with `pnpm dev`, open `/openui.html`, and use the buttons to switch examples or provoke an error. OpenUI owns program parsing; the host must preserve its last committed response during streaming and remount when the chart ID changes. This is the tested OpenUI Lang profile, not standard A2UI.
 
 ## COSUI JSON
 
@@ -54,7 +59,7 @@ The data model value is a **JSON string**, not JavaScript. For example, serializ
 
 ## Evidence and limits
 
-Local `pnpm check` and `pnpm test:browser` cover actual Dynamic UI, Marklang, and A2UI React hosts plus OpenUI regression. Examples cover intent/native modes, replacement, invalid input, recovery, selection and disposal; Marklang also tests incomplete input and duplicate/missing references; A2UI tests incomplete JSON. No real model, streaming transport, SSR/hydration, published package, clean external install, mobile device or other protocol/SDK version is verified. The existing 1.26 MB ECharts shared JS chunk dominates the demo build; host-specific chunks are separate. The Dynamic UI source repository has Apache-2.0 source headers, but the installed package declares ISC; clarify distribution notices before release.
+Local `pnpm check` and `pnpm test:browser` cover actual Dynamic UI, Marklang, and A2UI React hosts plus OpenUI regression. Examples cover intent/native modes, replacement, invalid input, recovery, selection and disposal; Marklang also tests incomplete input and duplicate/missing references; A2UI tests incomplete JSON. The pinned host tests and clean external package rehearsals are recorded in [support matrix](support-matrix.md); they do not prove real model-generated protocol programs, remote streaming transport, SSR/hydration, publication, mobile devices or other SDK versions. Bundle measurements are in [M4 evidence](trial-distribution.md). The Dynamic UI source repository has Apache-2.0 source headers, but the installed package declares ISC; clarify distribution notices before release.
 
 ### Optional ordered A2UI profile
 

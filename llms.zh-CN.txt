@@ -1,0 +1,23 @@
+# ChartNexus
+
+> 面向模型生成图表文档的实验性 Apache ECharts 基础设施。宿主决定何时调用图表，并负责数据事实与授权。ChartNexus 校验并忠实渲染受支持的输入，不执行模型代码或虚构事实。
+
+## 从这里开始
+
+- [Agent 接入与检索](docs/zh-CN/agent-guide.md)：发现顺序、宿主策略、MCP 资源、0.3 配方 URI 和提示词模板。
+- [产品责任边界](docs/zh-CN/product-boundary.md)：职责、安全及生产限制。
+- [图表目录](docs/zh-CN/chart-catalog.md)：11 种 0.3 图表及示例链接。
+- [开发者快速接入](docs/zh-CN/getting-started.md)：可运行的浏览器示例与接入步骤。
+- [GenUI 集成](docs/zh-CN/genui-integrations.md)：固定版本的 OpenUI、A2UI 与 COSUI profile。
+- [English index](llms.txt)。
+
+## 契约与资源
+
+- [0.3 Schema](packages/schema/src/chart-document-0.3.schema.json)：实验性 intent，11 个按图表类型区分的分支。
+- [0.3 能力](packages/core/src/capabilities-0.3.json)：实际选项和限制；地图需要宿主资产。
+- [配方清单](resources/recipes/manifest.json)：合成示例、版本、反例和 MCP URI。
+- [模型资源索引](resources/model-index.json)与[检索 JSONL](resources/model-retrieval.jsonl)：语言、能力 ID、来源、许可证、哈希与正文。
+- [0.3 合成输入／输出样例](resources/model-examples.jsonl)：11 类图表 × 中英文，含明确输入、来源哈希和宿主前置条件。MCP：`chartnexus://resources/examples/0.1`。
+- MCP stdio 资源：`chartnexus://resources/index/0.1`、`chartnexus://resources/retrieval/0.1`、`chartnexus://schema/chart-document/0.3` 和 `chartnexus://recipes/manifest/0.1`。确认宿主权限并显式选择 Schema 版本；`get_chart_schema` 默认返回 0.1。
+
+包是私有的，尚未发布。示例为合成数据，不是事实答案。将此文件放到网站地址需要另行部署；文件存在不代表模型一定会发现或学习它。

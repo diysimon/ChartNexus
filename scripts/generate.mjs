@@ -141,7 +141,122 @@ for (const relative of [
 }
 
 // A compact, versioned retrieval inventory references canonical source bytes.
+// These synthetic pairs teach document serialization; the supplied chart
+// specification is explicit, so they do not claim chart-choice or fact accuracy.
+const modelExamples = [];
+for (const entry of recipeManifest.examples.filter(
+  (item) => item.schemaVersion === '0.3' && item.expected === 'success',
+)) {
+  const source = `resources/recipes/${entry.path}`;
+  const bytes = await readFile(new URL(`../${source}`, import.meta.url));
+  const document = JSON.parse(bytes.toString('utf8'));
+  for (const language of ['en', 'zh-CN']) {
+    modelExamples.push({
+      id: `${entry.id}-${language}`,
+      language,
+      schemaVersion: '0.3',
+      chartType: entry.chartType,
+      license: 'Apache-2.0',
+      provenance: {
+        kind: 'project-authored-synthetic',
+        source,
+        sourceHash: `sha256:${createHash('sha256').update(bytes).digest('hex')}`,
+      },
+      hostRequirement: entry.hostRequirement ?? null,
+      input: {
+        request:
+          language === 'en'
+            ? `Create a complete 0.3 ${entry.chartType} document from the supplied synthetic data and explicit chart specification. Preserve the values.`
+            : `使用给定的合成数据和明确图表配置生成完整的 0.3 ${entry.chartType} 文档，保持数值不变。`,
+        id: document.id,
+        data: document.data,
+        chart: document.chart,
+        ...(document.presentation
+          ? { presentation: document.presentation }
+          : {}),
+      },
+      output: document,
+    });
+  }
+}
+const examplesJsonl =
+  modelExamples.map((entry) => JSON.stringify(entry)).join('\n') + '\n';
+for (const [target, content] of [
+  ['../resources/model-examples.jsonl', examplesJsonl],
+  [
+    '../packages/agent/src/model-examples.json',
+    JSON.stringify({ text: examplesJsonl }, null, 2) + '\n',
+  ],
+]) {
+  const file = new URL(target, import.meta.url);
+  if (process.argv.includes('--check')) {
+    if ((await readFile(file, 'utf8')) !== content)
+      throw new Error(`Model example drift: ${target}`);
+  } else await writeFile(file, content);
+}
+
 const entries = [
+  [
+    'model-examples-0.3',
+    'mul',
+    'Bilingual synthetic ChartDocument example pairs',
+    'resources/model-examples.jsonl',
+    'chartnexus://resources/examples/0.1',
+    '0.3',
+    '2026-11-01',
+  ],
+  [
+    'llms-entry',
+    'en',
+    'AI and agent index',
+    'llms.txt',
+    null,
+    '0.3',
+    '2026-11-01',
+  ],
+  [
+    'llms-entry',
+    'zh-CN',
+    'AI 与 Agent 索引',
+    'llms.zh-CN.txt',
+    null,
+    '0.3',
+    '2026-11-01',
+  ],
+  ...['en', 'zh-CN'].flatMap((language) =>
+    [
+      [
+        'product-boundary',
+        language === 'en' ? 'Product responsibilities' : '产品责任边界',
+      ],
+      [
+        'chart-catalog',
+        language === 'en' ? 'Chart capability catalog' : '图表能力目录',
+      ],
+      [
+        'agent-guide',
+        language === 'en'
+          ? 'Agent integration and retrieval'
+          : 'Agent 接入与检索',
+      ],
+      [
+        'getting-started',
+        language === 'en' ? 'Developer quick start' : '开发者快速接入',
+      ],
+      [
+        'genui-integrations',
+        language === 'en' ? 'GenUI host integration' : 'GenUI 宿主接入',
+      ],
+    ].map(([id, title]) => [
+      id,
+      language,
+      title,
+      `docs/${language}/${id}.md`,
+      null,
+      '0.3',
+      '2026-11-01',
+    ]),
+  ),
   ...['en', 'zh-CN'].flatMap((language) => [
     [
       'chart-expansion-0.3',
@@ -268,6 +383,7 @@ const entries = [
     'Model and agent entry',
     'docs/en/model-entry.md',
     'chartnexus://resources/model-entry/en/0.1',
+    '0.3',
   ],
   [
     'model-entry',
@@ -275,6 +391,7 @@ const entries = [
     '模型与 Agent 入口',
     'docs/zh-CN/model-entry.md',
     'chartnexus://resources/model-entry/zh-CN/0.1',
+    '0.3',
   ],
   [
     'evaluation-baseline',
@@ -306,26 +423,48 @@ const index = {
   entries: [],
 };
 const retrieval = [];
-for (const [id, language, title, sourcePath, uri, explicitVersion] of entries) {
+for (const [
+  id,
+  language,
+  title,
+  sourcePath,
+  uri,
+  explicitVersion,
+  updatedAt,
+] of entries) {
   const content = await readFile(new URL(`../${sourcePath}`, import.meta.url));
+  const documentDate = sourcePath.endsWith('.md')
+    ? /^updated:\s*(\d{4}-\d{2}-\d{2})$/m.exec(content.toString('utf8'))?.[1]
+    : undefined;
   const metadata = {
     id,
     language,
     title,
     summary: title,
     capabilityIds: [
-      id.startsWith('native-strict-')
-        ? 'native-strict-basic-0.1'
-        : explicitVersion === '0.3'
-          ? 'basic-0.3'
-          : explicitVersion === '0.2' || id.endsWith('-0.2')
-            ? 'basic-0.2'
-            : 'basic-0.1',
-    ],
+      'model-entry',
+      'llms-entry',
+      'product-boundary',
+      'agent-guide',
+      'getting-started',
+      'genui-integrations',
+    ].includes(id)
+      ? ['basic-0.1', 'basic-0.2', 'basic-0.3']
+      : id === 'chat-presentation-0.2'
+        ? ['basic-0.2', 'basic-0.3']
+        : [
+            id.startsWith('native-strict-')
+              ? 'native-strict-basic-0.1'
+              : explicitVersion === '0.3'
+                ? 'basic-0.3'
+                : explicitVersion === '0.2' || id.endsWith('-0.2')
+                  ? 'basic-0.2'
+                  : 'basic-0.1',
+          ],
     schemaVersion: explicitVersion ?? (id.endsWith('-0.2') ? '0.2' : '0.1'),
     source: sourcePath,
     license: 'Apache-2.0',
-    updatedAt: '2026-10-31',
+    updatedAt: updatedAt ?? documentDate ?? '2026-10-31',
     uri,
     contentHash: `sha256:${createHash('sha256').update(content).digest('hex')}`,
   };

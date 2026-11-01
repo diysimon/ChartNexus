@@ -1,8 +1,8 @@
 ---
 doc_id: chat-presentation
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 # 聊天展示 profile
@@ -14,4 +14,4 @@ language: zh-CN
 
 核心调用者可在 settings 中传 width/height/target，runtime 与 SVG 使用实际或请求尺寸。布局回退、主题对比度条件、键盘源数据/渲染值访问、SVG metadata、生命周期和固定宿主矩阵见 [聊天宿主质量](chat-host-quality.md)。`adjustments` 保留旧 REQUIRED_LEGEND/LABEL_DENSITY_LIMIT 映射，结构化 `plan.notices` 另外说明布局回退与密度约束。runtime 回调报告诊断，调用者也可单独检查编译计划。
 
-不声称自动识别宿主背景、任意主题、缩放能力、移动端认证或全面无障碍认证。真实本地 Ollama 结果仅为合成冒烟检查，不是模型排名，更广泛的独立评测仍待完成。
+不声称自动识别宿主背景、任意主题、缩放能力、移动端认证或全面无障碍认证。本地模型冒烟检查和后续有范围的[评测](trial-distribution.md)属于不同证据；模型调用和事实准确性由宿主负责，不是 SDK 发布门槛。

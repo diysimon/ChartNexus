@@ -1,8 +1,8 @@
 ---
 doc_id: project-charter
-version: "0.1"
+version: "0.2"
 status: implementation-baseline
-updated: 2026-10-29
+updated: 2026-11-01
 language: en
 ---
 
@@ -27,6 +27,10 @@ Its purpose is to make ECharts easier to use and chart generation, editing, and 
 4. Return structured diagnostics; never manufacture success by dropping fields, changing values, or executing model code.
 5. SDK, CLI, MCP, and UI adapters share one core that runs without model credentials.
 6. Ship documentation, examples, schemas, capability manifests, evaluations, and implementation together.
+
+## Responsibility boundary (current)
+
+ChartNexus owns versioned contracts, correct handling and rendering of supported supplied input, diagnostics, bounded adapters and usable resources. The host owns whether to request/invoke a chart, data truth, authorization, model selection and service operations. Model usability experiments inform resource improvements; model selection rates and factual correctness are not SDK release gates. Preserve supplied values, units, nulls and explicit transformations. Details: [product boundary](product-boundary.md). The following version scope sections are historical planning, not current release claims.
 
 ## v0.1 alpha scope
 - Native JSON option input with declared capability boundaries.

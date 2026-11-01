@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "0.3",
+  "id": "orders",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["day", "region", "orders"],
+    "rows": [
+      {
+        "day": "Mon",
+        "region": "East",
+        "orders": 4
+      },
+      {
+        "day": "Tue",
+        "region": "West",
+        "orders": null
+      },
+      {
+        "day": "Tue",
+        "region": "East",
+        "orders": 0
+      },
+      {
+        "day": "Mon",
+        "region": "West",
+        "orders": 10
+      }
+    ]
+  },
+  "chart": {
+    "type": "heatmap",
+    "title": "Orders",
+    "encoding": {
+      "x": {
+        "field": "day",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "region",
+        "type": "ordinal"
+      }
+    },
+    "heatmap": {
+      "field": "orders",
+      "min": 0,
+      "max": 10
+    }
+  }
+}

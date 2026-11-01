@@ -1,8 +1,8 @@
 ---
 doc_id: model-entry
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 
@@ -12,7 +12,7 @@ language: en
 
 ChartNexus compiles constrained JSON chart documents to Apache ECharts. For new 0.3 intent generation, discover `chartnexus://capabilities/basic-0.3`, then `chartnexus://schema/chart-document/0.3` and `chartnexus://recipes/manifest/0.1`. Follow the host profile: chat accepts only 0.2/0.3 intent; non-chat also accepts 0.1 intent/native. The inventory `chartnexus://resources/index/0.1` and JSONL corpus `chartnexus://resources/retrieval/0.1` expose canonical sources and hashes; hashes identify source bytes, not necessarily serialized MCP responses.
 
-Choose `mode: intent` for supported bar, line, pie, scatter, combo, funnel or heatmap charts in 0.2. Use 0.1 `mode: echarts` only in a non-chat host that enables native input. Never invent fields or capabilities, execute callbacks, fetch URLs, aggregate implicitly, or treat null as zero. Native validation is partial.
+Choose `mode: intent`: 0.2 supports bar, line, pie, scatter, combo, funnel and heatmap; 0.3 also supports radar, tree, sankey and host-registered map. Use 0.1 `mode: echarts` only in a non-chat host that enables native input. Never invent fields or capabilities, execute callbacks, fetch URLs, aggregate implicitly, or treat null as zero. Native validation is partial.
 
 Use `validate_chart` for structural and semantic validation. On failure, inspect diagnostic code and path, retrieve a repair example, revise the document, and validate again. `compile_chart` yields an ECharts plan; `render_chart` returns a session-local static SVG resource. Interactivity belongs to a browser host. Data references require a host-supplied registry and revision; never invent accessible datasets.
 
@@ -41,6 +41,10 @@ For 0.2 categorical heatmaps, read `chartnexus://recipes/heatmap/0.2`. Supply di
 The host may enable the 0.2 chat profile through `chatPresentation`; a user-requested detail level can be expressed as `presentation.detailLevel` (`minimal`, `simple`, `standard`, `detailed`, `comprehensive`). Host theme, background and level settings take precedence. Without host opt-in the document level does not change rendering. Never remove required legend or alter data for visual simplicity. See [chat profile](chat-presentation.md).
 
 For 0.2 chat charts, read `chartnexus://recipes/chat-bar/0.2` for a valid row-based example and `chartnexus://recipes/funnel/0.2` for a different chart type. Use the user's actual rows and values; examples are not task answers. Theme version is the string `"1"`; omit optional transforms unless requested.
+
+## Responsibilities and focused retrieval
+
+The host decides whether to invoke a chart and owns factual accuracy and data authorization. ChartNexus validates and faithfully renders supported input, reports diagnostics and supplies bounded compatibility; it does not invent facts or guarantee model tool selection. Read [responsibility boundary](product-boundary.md), [chart catalog](chart-catalog.md), and [agent integration and retrieval guide](agent-guide.md). These bilingual documents are present in `chartnexus://resources/retrieval/0.1`; entries with `uri: null` are retrieval records, not separate MCP resources. Use actual host policy and the matching schema version.
 
 ## Input contract and semantic notices
 

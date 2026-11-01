@@ -15,6 +15,7 @@ import {
 import diagnostics from './diagnostics.json' with { type: 'json' };
 import modelIndex from './model-index.json' with { type: 'json' };
 import retrieval from './model-retrieval.json' with { type: 'json' };
+import modelExamples from './model-examples.json' with { type: 'json' };
 import evaluationTasks from './evaluation/tasks.json' with { type: 'json' };
 import modelEntryEn from './model-entry-en.json' with { type: 'json' };
 import modelEntryZh from './model-entry-zh-CN.json' with { type: 'json' };
@@ -68,6 +69,12 @@ export const resources = [
     name: 'Model retrieval corpus JSONL',
     mimeType: 'application/x-ndjson',
     value: retrieval.text,
+  },
+  {
+    uri: 'chartnexus://resources/examples/0.1',
+    name: 'Bilingual synthetic ChartDocument 0.3 example pairs',
+    mimeType: 'application/x-ndjson',
+    value: modelExamples.text,
   },
   {
     uri: 'chartnexus://evaluation/tasks/0.1',

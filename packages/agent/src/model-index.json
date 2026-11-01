@@ -5,6 +5,175 @@
   "license": "Apache-2.0",
   "entries": [
     {
+      "id": "model-examples-0.3",
+      "language": "mul",
+      "title": "Bilingual synthetic ChartDocument example pairs",
+      "summary": "Bilingual synthetic ChartDocument example pairs",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/model-examples.jsonl",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": "chartnexus://resources/examples/0.1",
+      "contentHash": "sha256:79ff1b722ffd080c45b9a72636fb97cabf4794bdbdccd2873a6da58c5e5bc693"
+    },
+    {
+      "id": "llms-entry",
+      "language": "en",
+      "title": "AI and agent index",
+      "summary": "AI and agent index",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "llms.txt",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:8cbca2770df05291a2900058377e76cc2892b375e46527214ad8dd8010ce7ec3"
+    },
+    {
+      "id": "llms-entry",
+      "language": "zh-CN",
+      "title": "AI 与 Agent 索引",
+      "summary": "AI 与 Agent 索引",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "llms.zh-CN.txt",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:550ce34cb2f1c424b49c204d6050b67d2d30b65986bcdcf8d1acbc83c701726e"
+    },
+    {
+      "id": "product-boundary",
+      "language": "en",
+      "title": "Product responsibilities",
+      "summary": "Product responsibilities",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/product-boundary.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:f7d45b08cdc62a9235fb831e721923821a3cc49e44c8deb9be44904bc09ffa80"
+    },
+    {
+      "id": "chart-catalog",
+      "language": "en",
+      "title": "Chart capability catalog",
+      "summary": "Chart capability catalog",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/chart-catalog.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:e35450989b05569363c7762c46a3bdad611196cad7866f15b50768936f523c6d"
+    },
+    {
+      "id": "agent-guide",
+      "language": "en",
+      "title": "Agent integration and retrieval",
+      "summary": "Agent integration and retrieval",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/agent-guide.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:522715d2b5d01c57f992120d74f96ca377f553bfd71524e52928231a6015cc96"
+    },
+    {
+      "id": "getting-started",
+      "language": "en",
+      "title": "Developer quick start",
+      "summary": "Developer quick start",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/getting-started.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:f95f1e5c3cfdf508ec0902db77ab6154e9f22bc683efb359fd39e647bd41d205"
+    },
+    {
+      "id": "genui-integrations",
+      "language": "en",
+      "title": "GenUI host integration",
+      "summary": "GenUI host integration",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/en/genui-integrations.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:eb5f207c5fb6d60a0347723ea9ec52e13a783c56a5a77362b030cc5db907c014"
+    },
+    {
+      "id": "product-boundary",
+      "language": "zh-CN",
+      "title": "产品责任边界",
+      "summary": "产品责任边界",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/product-boundary.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:b5230910f2d471404593e76e8bc33c694aa490f589893b79cd7866416937c436"
+    },
+    {
+      "id": "chart-catalog",
+      "language": "zh-CN",
+      "title": "图表能力目录",
+      "summary": "图表能力目录",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/chart-catalog.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:1d4bead99cb7e64368362a3ff6447d5dd6b2a48b28fd8c2a6257fb4af59f0472"
+    },
+    {
+      "id": "agent-guide",
+      "language": "zh-CN",
+      "title": "Agent 接入与检索",
+      "summary": "Agent 接入与检索",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/agent-guide.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:8be6722617915cd2dcaf2144daa9506670e19ec1aac77a54a98485aabbb51599"
+    },
+    {
+      "id": "getting-started",
+      "language": "zh-CN",
+      "title": "开发者快速接入",
+      "summary": "开发者快速接入",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/getting-started.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:5fc225cfb16ce3dea7adec472c7324871fa714b4f118792118f4e9f9bfe737e8"
+    },
+    {
+      "id": "genui-integrations",
+      "language": "zh-CN",
+      "title": "GenUI 宿主接入",
+      "summary": "GenUI 宿主接入",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "docs/zh-CN/genui-integrations.md",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-11-01",
+      "uri": null,
+      "contentHash": "sha256:f834bc2da9fe2e8ec1816ccc072bfaf9e85bfdf0df8e50f9339208b611decb30"
+    },
+    {
       "id": "chart-expansion-0.3",
       "language": "en",
       "title": "Four bounded 0.3 chart types and trusted map assets",
@@ -13,9 +182,9 @@
       "schemaVersion": "0.3",
       "source": "docs/en/chart-expansion-03.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:a2c8de7d0ce41c01dd629929a7e8442e2016840a45d55e8c9074634356ff2bce"
+      "contentHash": "sha256:d983ea9a3b17801563815dea3c2ac49d6d8e49d71cc91a8ee2988500034075cb"
     },
     {
       "id": "contracts-0.3",
@@ -26,9 +195,9 @@
       "schemaVersion": "0.3",
       "source": "docs/en/contracts-03.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:ca37caf387a413b16689c50fed9642e5ef8bc9d0e447d117bbc04332ffb47cb9"
+      "contentHash": "sha256:511ded26785a9770b1a4b638aa4a8b21d82b937fb6ea8ba1aa47e7c1ddcf1e7b"
     },
     {
       "id": "chat-host-quality-0.3",
@@ -52,9 +221,9 @@
       "schemaVersion": "0.3",
       "source": "docs/zh-CN/chart-expansion-03.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:8cb7c776f1e0fd52c9894a0be7389acd13cb894c432f00c6ea82b4e1e6390e38"
+      "contentHash": "sha256:a5a4d1349e0d31f926420ff7b803ac8f2f3654955a4f42f8655964c0923c8fba"
     },
     {
       "id": "contracts-0.3",
@@ -65,9 +234,9 @@
       "schemaVersion": "0.3",
       "source": "docs/zh-CN/contracts-03.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:f73d177ea0cb78e54c9cb94b3905e2247d6136f2d32ca90bb797f858021359ac"
+      "contentHash": "sha256:5e5bc05070cb447a4520de5a0dc584f0fe2333b775230006f39596e1c93d0e2c"
     },
     {
       "id": "chat-host-quality-0.3",
@@ -317,6 +486,84 @@
       "contentHash": "sha256:1d118a02010bce08597d4d4a81d3fc08b68b95762fe0ad67c68a9c5453eebc1a"
     },
     {
+      "id": "line-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 line chart",
+      "summary": "Synthetic 0.3 line chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/line-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/line/0.3",
+      "contentHash": "sha256:8a6126dd7bf1861a9e0758a0791b66ddaaf6059e97431c5a93f7819ff9338ea3"
+    },
+    {
+      "id": "pie-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 pie chart",
+      "summary": "Synthetic 0.3 pie chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/pie-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/pie/0.3",
+      "contentHash": "sha256:b690219ae2200777d314a50336417d307fffeb3cf639f26023358e5e9656e41a"
+    },
+    {
+      "id": "scatter-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 scatter chart",
+      "summary": "Synthetic 0.3 scatter chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/scatter-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/scatter/0.3",
+      "contentHash": "sha256:6c80b29bffd7823e5f1bfe54c29e9de1a7b92bb54336727fa673f92b574808e4"
+    },
+    {
+      "id": "combo-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 combo chart",
+      "summary": "Synthetic 0.3 combo chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/combo-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/combo/0.3",
+      "contentHash": "sha256:80c6b4236c81ffd41dfe374f3865c9357cc9130f1012957c342c5c124335b291"
+    },
+    {
+      "id": "funnel-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 funnel chart",
+      "summary": "Synthetic 0.3 funnel chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/funnel-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/funnel/0.3",
+      "contentHash": "sha256:7e4c07e93d8d58b8bba31dde8a1dadae47328c1256c43ef85aec878ef248eced"
+    },
+    {
+      "id": "heatmap-recipe-0.3",
+      "language": "en",
+      "title": "Synthetic 0.3 heatmap chart",
+      "summary": "Synthetic 0.3 heatmap chart",
+      "capabilityIds": ["basic-0.3"],
+      "schemaVersion": "0.3",
+      "source": "resources/recipes/heatmap-03.json",
+      "license": "Apache-2.0",
+      "updatedAt": "2026-10-31",
+      "uri": "chartnexus://recipes/heatmap/0.3",
+      "contentHash": "sha256:95d113676c8dcb572346e4f716fd5d33761832391701929b36d1ff75f2ecced1"
+    },
+    {
       "id": "recipe-manifest",
       "language": "en",
       "title": "Synthetic development recipe inventory",
@@ -327,33 +574,33 @@
       "license": "Apache-2.0",
       "updatedAt": "2026-10-31",
       "uri": "chartnexus://recipes/manifest/0.1",
-      "contentHash": "sha256:bb30ddeec78962bb27ef4c78f7ed1b4eaa631691a8417cf8eebae5ff7bfa6fd8"
+      "contentHash": "sha256:2238d329d31cc1a06ceb2d14828e677dde07419363beb24f4f3010bffb85e51a"
     },
     {
       "id": "chat-presentation-0.2",
       "language": "en",
       "title": "Chat presentation profile",
       "summary": "Chat presentation profile",
-      "capabilityIds": ["basic-0.2"],
+      "capabilityIds": ["basic-0.2", "basic-0.3"],
       "schemaVersion": "0.2",
       "source": "docs/en/chat-presentation.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:b1a41a119f4033c498950f1f314a97a459887ebe6b3248372737663a2b5e0f6d"
+      "contentHash": "sha256:74e12f363dfbc7550a825f0d528f662c7ef0b36050ed6582adc9940ca66d32d5"
     },
     {
       "id": "chat-presentation-0.2",
       "language": "zh-CN",
       "title": "聊天展示 profile",
       "summary": "聊天展示 profile",
-      "capabilityIds": ["basic-0.2"],
+      "capabilityIds": ["basic-0.2", "basic-0.3"],
       "schemaVersion": "0.2",
       "source": "docs/zh-CN/chat-presentation.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": null,
-      "contentHash": "sha256:da424b5099f6ff6ed0b6b2d703ca4d2d67b2f5cf9e4826f895fb02694c8d4231"
+      "contentHash": "sha256:47deae703c01c21c4a2e0eb981f07c86864ae265737ca597ae92b84377b541c3"
     },
     {
       "id": "native-strict-schema",
@@ -451,26 +698,26 @@
       "language": "en",
       "title": "Model and agent entry",
       "summary": "Model and agent entry",
-      "capabilityIds": ["basic-0.1"],
-      "schemaVersion": "0.1",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
       "source": "docs/en/model-entry.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": "chartnexus://resources/model-entry/en/0.1",
-      "contentHash": "sha256:c0f04b9ac7d93f73142aa3c3de25bfb988a1a787c3d10dba35a18db35d36e082"
+      "contentHash": "sha256:f39b8276755780a46040e08bff1282682ab6d94d49c432c525ebbe3aa224a915"
     },
     {
       "id": "model-entry",
       "language": "zh-CN",
       "title": "模型与 Agent 入口",
       "summary": "模型与 Agent 入口",
-      "capabilityIds": ["basic-0.1"],
-      "schemaVersion": "0.1",
+      "capabilityIds": ["basic-0.1", "basic-0.2", "basic-0.3"],
+      "schemaVersion": "0.3",
       "source": "docs/zh-CN/model-entry.md",
       "license": "Apache-2.0",
-      "updatedAt": "2026-10-31",
+      "updatedAt": "2026-11-01",
       "uri": "chartnexus://resources/model-entry/zh-CN/0.1",
-      "contentHash": "sha256:7ff16b4f0a7a978aac7cd19f6adbe3f5c9c47568536106a3245574c0d1288f42"
+      "contentHash": "sha256:f5e8cd93b9c44366b713cde78e1bbfce94ce784f6497719a967aa78bdd2c2281"
     },
     {
       "id": "evaluation-baseline",

@@ -5,7 +5,7 @@
   "documents": [
     {
       "id": "project-charter",
-      "version": "0.1",
+      "version": "0.2",
       "status": "implementation-baseline",
       "zh-CN": "docs/zh-CN/project-charter.md",
       "en": "docs/en/project-charter.md"
@@ -54,7 +54,7 @@
     },
     {
       "id": "testing-evaluation",
-      "version": "0.1",
+      "version": "0.2",
       "status": "implementation-baseline",
       "zh-CN": "docs/zh-CN/testing-evaluation.md",
       "en": "docs/en/testing-evaluation.md"
@@ -131,7 +131,7 @@
     },
     {
       "id": "readme",
-      "version": "0.2",
+      "version": "0.3",
       "status": "experimental",
       "zh-CN": "README.zh-CN.md",
       "en": "README.md"
@@ -292,7 +292,7 @@
     },
     {
       "id": "genui-integrations",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/genui-integrations.md",
       "zh-CN": "docs/zh-CN/genui-integrations.md"
@@ -313,7 +313,7 @@
     },
     {
       "id": "model-entry",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/model-entry.md",
       "zh-CN": "docs/zh-CN/model-entry.md"
@@ -523,14 +523,14 @@
     },
     {
       "id": "chat-presentation",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/chat-presentation.md",
       "zh-CN": "docs/zh-CN/chat-presentation.md"
     },
     {
       "id": "spec-0029-spec",
-      "version": "0.2",
+      "version": "0.3",
       "status": "done",
       "en": "specs/0029-quality-expansion/spec.md",
       "zh-CN": "specs/0029-quality-expansion/spec.zh-CN.md"
@@ -551,7 +551,7 @@
     },
     {
       "id": "action-plan-2026-10-31",
-      "version": "0.3",
+      "version": "0.4",
       "status": "done",
       "en": "docs/en/action-plan-2026-10-31.md",
       "zh-CN": "docs/zh-CN/action-plan-2026-10-31.md"
@@ -600,7 +600,7 @@
     },
     {
       "id": "contracts-03",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/contracts-03.md",
       "zh-CN": "docs/zh-CN/contracts-03.md"
@@ -656,7 +656,7 @@
     },
     {
       "id": "chart-expansion-03",
-      "version": "0.1",
+      "version": "0.2",
       "status": "experimental",
       "en": "docs/en/chart-expansion-03.md",
       "zh-CN": "docs/zh-CN/chart-expansion-03.md"
@@ -670,24 +670,66 @@
     },
     {
       "id": "spec-0036-tasks",
-      "version": "0.5",
+      "version": "0.6",
       "status": "done",
       "en": "specs/0036-trial-distribution/tasks.md",
       "zh-CN": "specs/0036-trial-distribution/tasks.zh-CN.md"
     },
     {
       "id": "trial-distribution",
-      "version": "0.6",
+      "version": "0.7",
       "status": "experimental",
       "en": "docs/en/trial-distribution.md",
       "zh-CN": "docs/zh-CN/trial-distribution.md"
     },
     {
       "id": "support-matrix",
-      "version": "0.3",
+      "version": "0.4",
       "status": "experimental",
       "en": "docs/en/support-matrix.md",
       "zh-CN": "docs/zh-CN/support-matrix.md"
+    },
+    {
+      "id": "product-boundary",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/product-boundary.md",
+      "zh-CN": "docs/zh-CN/product-boundary.md"
+    },
+    {
+      "id": "chart-catalog",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/chart-catalog.md",
+      "zh-CN": "docs/zh-CN/chart-catalog.md"
+    },
+    {
+      "id": "agent-guide",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/agent-guide.md",
+      "zh-CN": "docs/zh-CN/agent-guide.md"
+    },
+    {
+      "id": "getting-started",
+      "version": "0.1",
+      "status": "experimental",
+      "en": "docs/en/getting-started.md",
+      "zh-CN": "docs/zh-CN/getting-started.md"
+    },
+    {
+      "id": "spec-0037-spec",
+      "version": "0.2",
+      "status": "done",
+      "en": "specs/0037-developer-agent-resources/spec.md",
+      "zh-CN": "specs/0037-developer-agent-resources/spec.zh-CN.md"
+    },
+    {
+      "id": "spec-0037-tasks",
+      "version": "0.2",
+      "status": "done",
+      "en": "specs/0037-developer-agent-resources/tasks.md",
+      "zh-CN": "specs/0037-developer-agent-resources/tasks.zh-CN.md"
     }
   ]
 }

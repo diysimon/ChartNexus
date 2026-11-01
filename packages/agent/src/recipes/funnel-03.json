@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "0.3",
+  "id": "funnel",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["stage", "users"],
+    "rows": [
+      {
+        "stage": "Visit",
+        "users": 1000
+      },
+      {
+        "stage": "Sign up",
+        "users": 350
+      },
+      {
+        "stage": "Purchase",
+        "users": 90
+      }
+    ]
+  },
+  "chart": {
+    "type": "funnel",
+    "title": "Conversion stages",
+    "encoding": {
+      "x": {
+        "field": "stage",
+        "type": "ordinal"
+      },
+      "y": {
+        "field": "users",
+        "type": "quantitative"
+      }
+    }
+  }
+}

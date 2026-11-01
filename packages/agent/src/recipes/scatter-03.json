@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "0.3",
+  "id": "sales",
+  "mode": "intent",
+  "data": {
+    "kind": "inline",
+    "fields": ["month", "revenue"],
+    "rows": [
+      {
+        "month": 1,
+        "revenue": 120
+      },
+      {
+        "month": 2,
+        "revenue": 180
+      },
+      {
+        "month": 3,
+        "revenue": 150
+      }
+    ]
+  },
+  "chart": {
+    "type": "scatter",
+    "title": "Monthly sales",
+    "encoding": {
+      "x": {
+        "field": "month",
+        "type": "quantitative"
+      },
+      "y": {
+        "field": "revenue",
+        "type": "quantitative"
+      }
+    }
+  }
+}

@@ -1,8 +1,8 @@
 ---
 doc_id: contracts-03
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 [Other language](../zh-CN/contracts-03.md)
@@ -27,6 +27,6 @@ Optional `data.keyField` names a declared field containing unique nonempty strin
 
 Core now separates version validation, data-table resolution, legacy compilation, explicit transforms, temporal parsing, combo/funnel/heatmap handlers and presentation. The dispatcher exposes versions without importing DOM/network/model SDKs. Existing chart reuse inside the legacy 0.2 implementation is preserved for numeric equivalence; the four M3 types use independent compilers.
 
-M0 source/option/row-index golden fixtures and existing aggregation, temporal, unit and failure tests guard extraction. `scripts/evaluation-harness.mjs` separates model-visible prompts from expected source hashes/rendered values, records initial versus at-most-two-repair outcomes and requires model/settings/compiler provenance. Its synthetic tests are harness tests, not held-out model results. Actual private suites must stay out of resources/retrieval; final A16 remains M4 work.
+M0 source/option/row-index golden fixtures and existing aggregation, temporal, unit and failure tests guard extraction. `scripts/evaluation-harness.mjs` separates model-visible prompts from expected source hashes/rendered values, records initial versus at-most-two-repair outcomes and requires model/settings/compiler provenance. Its synthetic tests are harness tests, not held-out model results. Actual private suites must stay out of resources/retrieval; [M4 evidence](trial-distribution.md) records the later completed scoped run.
 
 See [M1 spec](../../specs/0033-contracts-core/spec.md) and [tasks](../../specs/0033-contracts-core/tasks.md).

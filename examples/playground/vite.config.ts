@@ -5,6 +5,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        quickstart: resolve(import.meta.dirname, 'quickstart.html'),
         performance: resolve(import.meta.dirname, 'performance.html'),
         expansion: resolve(import.meta.dirname, 'expansion.html'),
         quality: resolve(import.meta.dirname, 'quality.html'),

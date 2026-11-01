@@ -1,8 +1,8 @@
 ---
 doc_id: genui-integrations
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 
@@ -14,11 +14,16 @@ language: zh-CN
 
 | Profile | 测试依赖 | 宿主 | 入口 |
 | --- | --- | --- | --- |
+| OpenUI Lang | `@openuidev/react-lang` 1.0.2、React 19.2.4、Zod 4.3.6 | React Renderer | `@chartnexus/adapter-openui` |
 | COSUI JSON | `@cosui/cosmic-dynamic-ui` 1.0.0、`san` 3.15.5 | `UIJSON.compile` | `@chartnexus/adapter-cosui` |
 | COSUI Markdown | `marklang` 1.0.1 | Marklang `renderToElement` | `@chartnexus/adapter-cosui/marklang` |
 | A2UI v0.9 | `@a2ui/react` 0.9.1、`@a2ui/web_core` 0.9.2、React 19.2.4、Zod 3.25.76 | 官方 MessageProcessor 和 React Surface | `@chartnexus/adapter-a2ui` |
 
 A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.3.6，并单独回归测试。这些是本地实验性工作区包，不代表 npm 发布。所有图表输入均由现有 core 校验，受其能力 profile 和资源上限约束。
+
+## OpenUI Lang
+
+在 `createLibrary({ components: [chart], root: 'ChartNexusChart' })` 中注册 `createOpenUIChart(options)`，再把 library 传给上游 React `Renderer`。组件接收 JSON 编码的 ChartDocument 字符串。[完整可运行宿主](../../examples/playground/openui.ts)展示 OpenUI 程序、转义、诊断、选择、流式和生命周期。运行 `pnpm dev` 后打开 `/openui.html`，使用页面按钮切换示例或触发错误。OpenUI 负责解析程序；流式期间宿主应保留上次提交的响应，图表 ID 改变时重新挂载。这是已测试的 OpenUI Lang profile，不等于标准 A2UI。
 
 ## COSUI JSON
 
@@ -54,7 +59,7 @@ A2UI 包版本是 SDK 版本，消息协议为 v0.9。OpenUI 继续使用 Zod 4.
 
 ## 证据与限制
 
-本地 `pnpm check`、`pnpm test:browser` 覆盖真实 Dynamic UI、Marklang、A2UI React 宿主和 OpenUI 回归。示例验证 intent/原生模式、替换、无效输入、恢复、选择和释放；Marklang 另测不完整输入及重复/缺失引用，A2UI 另测不完整 JSON。更广泛的真实模型、远端流式传输、SSR/水合、发布包、干净外部安装、移动设备或其他协议/SDK 版本均未验证。演示构建中 ECharts 共享 JS chunk 约 1.26 MB，占主要体积；宿主代码分块独立。Dynamic UI 源码仓库标记 Apache-2.0，但安装包元数据标记 ISC，发布前需厘清分发声明。
+本地 `pnpm check`、`pnpm test:browser` 覆盖真实 Dynamic UI、Marklang、A2UI React 宿主和 OpenUI 回归。示例验证 intent/原生模式、替换、无效输入、恢复、选择和释放；Marklang 另测不完整输入及重复/缺失引用，A2UI 另测不完整 JSON。固定宿主测试及干净外部安装的证据见[支持矩阵](support-matrix.md)，不能证明真实模型生成的协议程序、远端流式传输、SSR/水合、发布、移动设备或其他 SDK 版本。体积实测见[M4证据](trial-distribution.md)。Dynamic UI 源码仓库标记 Apache-2.0，但安装包元数据标记 ISC，发布前需厘清分发声明。
 
 ### 可选的 A2UI 顺序更新 profile
 

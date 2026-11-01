@@ -1,6 +1,6 @@
 ---
 doc_id: readme
-version: "0.2"
+version: "0.3"
 status: experimental
 updated: 2026-11-01
 language: en
@@ -15,6 +15,14 @@ ChartNexus is experimental Apache ECharts infrastructure for language models and
 The 0.3 intent profile includes bar, line, pie, scatter, combo, funnel, heatmap, radar, tree, Sankey and host-registered maps. Light/dark themes, transparent chat backgrounds and five detail levels are available. The retained guarded native0.1 profile supports a restricted ECharts option subset. OpenUI Lang, A2UI v0.9, COSUI JSON and COSUI Marklang have pinned real-host tests; support is profile/version-specific.
 
 All eleven packages remain private and unpublished. Model quality, installed packages and UI hosts have separate evidence; see the [support matrix](docs/en/support-matrix.md), [contracts/migration](docs/en/contracts-03.md), and [evaluation/distribution guide](docs/en/trial-distribution.md). Model-independent architecture does not establish every-model success.
+
+## Start here
+
+- [Quick start: run and embed](docs/en/getting-started.md)
+- [Chart, theme and example catalog](docs/en/chart-catalog.md)
+- [Model, agent, MCP and retrieval guide](docs/en/agent-guide.md)
+- [Product responsibility boundary](docs/en/product-boundary.md)
+- [AI text index](llms.txt)
 
 ## Local preview
 

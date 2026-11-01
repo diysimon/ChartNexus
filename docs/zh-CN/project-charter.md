@@ -1,8 +1,8 @@
 ---
 doc_id: project-charter
-version: "0.1"
+version: "0.2"
 status: implementation-baseline
-updated: 2026-10-29
+updated: 2026-11-01
 language: zh-CN
 ---
 
@@ -27,6 +27,10 @@ ChartNexus 是面向大模型、Agent 和生成式 UI 的 Apache ECharts 图表�
 4. 失败应有结构化诊断；不得通过丢字段、改数值或执行模型代码来伪造成功。
 5. SDK、CLI、MCP、UI 适配器复用同一核心；核心无模型凭证也可运行。
 6. 文档、示例、Schema、能力清单、评测与实现共同交付。
+
+## 责任边界（当前）
+
+ChartNexus 负责版本化契约、受支持输入的正确处理和渲染、诊断、有界适配器与可用资源。宿主负责是否请求或调用图表、数据事实和授权、模型选择及服务运营。模型易用性实验用于改进资源；模型选择率和事实正确率不是 SDK 发布门槛。保留输入数值、单位、空值及明确声明的转换。详见[产品边界](product-boundary.md)。以下版本范围是历史规划，不代表当前发布状态。
 
 ## v0.1 alpha 范围
 - JSON 原生 option 入口及已声明的能力边界。

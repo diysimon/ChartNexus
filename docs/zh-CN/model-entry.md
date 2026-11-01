@@ -1,8 +1,8 @@
 ---
 doc_id: model-entry
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 
@@ -12,7 +12,7 @@ language: zh-CN
 
 ChartNexus 将受约束的 JSON 图表文档编译为 Apache ECharts。新生成的 0.3 意图图表优先发现 `chartnexus://capabilities/basic-0.3`、`chartnexus://schema/chart-document/0.3` 和 `chartnexus://recipes/manifest/0.1`。遵循宿主 profile：聊天仅接受 0.2/0.3 intent；非聊天也接受 0.1 intent/native。资源清单 `chartnexus://resources/index/0.1` 与 JSONL 语料 `chartnexus://resources/retrieval/0.1` 提供规范源与哈希；哈希对应源文件字节，不一定对应 MCP 序列化响应。
 
-0.2 的 `mode: intent` 支持柱状、折线、饼图、散点、组合、漏斗和热力图。仅在接受 native 的非聊天宿主中使用 0.1 `mode: echarts`。不得虚构字段或能力、执行回调、拉取 URL、隐式聚合或将 null 当作零。原生配置验证仍是部分验证。
+0.2 的 `mode: intent` 支持柱状、折线、饼图、散点、组合、漏斗和热力图；0.3 还支持雷达、树、桑基及宿主注册地图。仅在接受 native 的非聊天宿主中使用 0.1 `mode: echarts`。不得虚构字段或能力、执行回调、拉取 URL、隐式聚合或将 null 当作零。原生配置验证仍是部分验证。
 
 使用 `validate_chart` 做结构和语义校验；失败后查看诊断码及路径、读取修复示例、修改文档并重新校验。`compile_chart` 返回 ECharts 计划；`render_chart` 返回会话内静态 SVG 资源。交互由浏览器宿主提供。数据引用依赖宿主提供的可信 registry 和 revision，不要编造可访问的数据集。
 
@@ -41,6 +41,10 @@ ChartNexus 将受约束的 JSON 图表文档编译为 Apache ECharts。新生成
 宿主可通过 `chatPresentation` 启用 0.2 聊天展示 profile；用户要求的详略可写入 `presentation.detailLevel`（`minimal`、`simple`、`standard`、`detailed`、`comprehensive`）。宿主的主题、背景和档位设置优先；未启用 profile 时文档档位不改变渲染。不要为了简洁删减必要图例或数据。详见[聊天展示](chat-presentation.md)。
 
 0.2 聊天图表可先读取 `chartnexus://recipes/chat-bar/0.2` 了解正确的逐行数据结构，再读取 `chartnexus://recipes/funnel/0.2` 了解另一种图表。使用用户实际数据和数值，示例不是任务答案。主题版本是字符串 `"1"`；用户未要求时不要添加可选变换。
+
+## 责任与针对性检索
+
+宿主决定是否调用图表，负责事实准确性和数据授权；ChartNexus 校验并忠实渲染支持的输入、报告诊断并提供有界兼容，不虚构事实或保证模型选择工具。见[责任边界](product-boundary.md)、[图表目录](chart-catalog.md)和 [Agent 接入与检索指南](agent-guide.md)。这些双语文档可从 `chartnexus://resources/retrieval/0.1` 读取；`uri: null` 表示检索条目，不是独立 MCP 资源。生成时以宿主实际策略和匹配版本 Schema 为准。
 
 ## 输入契约与语义提示
 

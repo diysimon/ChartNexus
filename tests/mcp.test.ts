@@ -82,6 +82,13 @@ describe('real MCP stdio connection', () => {
       const retrieval = await client.readResource({
         uri: 'chartnexus://resources/retrieval/0.1',
       });
+      const examples = await client.readResource({
+        uri: 'chartnexus://resources/examples/0.1',
+      });
+      const examplesText = examples.contents[0];
+      if (!examplesText || !('text' in examplesText))
+        throw new Error('Expected synthetic example pairs.');
+      expect(examplesText.text.trim().split('\n')).toHaveLength(22);
       const retrievalText = retrieval.contents[0];
       if (!retrievalText || !('text' in retrievalText))
         throw new Error('Expected retrieval JSONL text.');
@@ -95,6 +102,23 @@ describe('real MCP stdio connection', () => {
           item.language,
         ]),
       ).toEqual(modelIndex.entries.map((item) => [item.id, item.language]));
+      for (const language of ['en', 'zh-CN']) {
+        for (const id of [
+          'product-boundary',
+          'chart-catalog',
+          'agent-guide',
+          'getting-started',
+          'genui-integrations',
+          'llms-entry',
+        ]) {
+          expect(
+            records.find(
+              (item: { id: string; language: string }) =>
+                item.id === id && item.language === language,
+            ),
+          ).toMatchObject({ body: expect.any(String), schemaVersion: '0.3' });
+        }
+      }
       expect(
         records.find(
           (item: { id: string }) => item.id === 'native-strict-schema',
@@ -132,7 +156,7 @@ describe('real MCP stdio connection', () => {
             item.id === 'model-entry' && item.language === 'zh-CN',
         ),
       ).toMatchObject({
-        schemaVersion: '0.1',
+        schemaVersion: '0.3',
         license: 'Apache-2.0',
         contentHash: expect.stringMatching(/^sha256:/),
         body: expect.stringContaining('模型与 Agent 入口'),
@@ -142,6 +166,12 @@ describe('real MCP stdio connection', () => {
         'chartnexus://recipes/funnel/0.2',
         'chartnexus://recipes/heatmap/0.2',
         'chartnexus://recipes/chat-bar/0.2',
+        'chartnexus://recipes/line/0.3',
+        'chartnexus://recipes/pie/0.3',
+        'chartnexus://recipes/scatter/0.3',
+        'chartnexus://recipes/combo/0.3',
+        'chartnexus://recipes/funnel/0.3',
+        'chartnexus://recipes/heatmap/0.3',
       ]) {
         const recipeResource = await client.readResource({ uri });
         const value = recipeResource.contents[0];
@@ -153,7 +183,7 @@ describe('real MCP stdio connection', () => {
         });
         expect(result.structuredContent).toMatchObject({
           ok: true,
-          value: { profile: 'basic-0.2' },
+          value: { profile: uri.endsWith('/0.3') ? 'basic-0.3' : 'basic-0.2' },
         });
       }
       const tasks = await client.readResource({

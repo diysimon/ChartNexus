@@ -1,8 +1,8 @@
 ---
 doc_id: chat-presentation
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: en
 ---
 # Chat presentation profile
@@ -14,4 +14,4 @@ Host theme/background/detail settings take precedence over document preferences.
 
 Core callers may supply width/height/target in settings; runtime and SVG use actual/requested dimensions. Layout fallback, token contrast conditions, keyboard source/rendered tables, SVG metadata, lifecycle and the pinned host matrix are detailed in [chat host quality](chat-host-quality.md). `adjustments` retains the old REQUIRED_LEGEND/LABEL_DENSITY_LIMIT mapping; structured `plan.notices` additionally describes layout fallback and density constraints. Runtime callbacks expose diagnostics, while callers can inspect plans separately.
 
-No automatic host-background detection, arbitrary themes, zoom capability, mobile certification or general accessibility certification is claimed. The true local Ollama result is a synthetic smoke check, not model ranking; broader held-out evaluation remains open.
+No automatic host-background detection, arbitrary themes, zoom capability, mobile certification or general accessibility certification is claimed. The local model smoke case and later scoped [evaluation](trial-distribution.md) are separate evidence; model invocation and factual accuracy are host responsibilities, not SDK release gates.

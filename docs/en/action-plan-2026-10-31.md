@@ -1,6 +1,6 @@
 ---
 doc_id: action-plan-2026-10-31
-version: "0.3"
+version: "0.4"
 status: done
 updated: 2026-11-01
 language: en
@@ -9,9 +9,11 @@ language: en
 
 [简体中文](../zh-CN/action-plan-2026-10-31.md)
 
+> Boundary clarification: the model thresholds below are historical experiment targets, not SDK acceptance or release gates. Invocation and factual accuracy belong to the host. See [product boundary](product-boundary.md).
+
 ## Scope, status and execution
 
-Based on the [review](project-review-2026-10-31.md) and [design RFC](technical-design-2026-10-31.md), this covers the nine quality areas plus radar, node-link tree, Sankey and map. **M0–M4 (A01–A18) engineering and evaluation acceptance is complete; models remain experimental**. The review baseline was 147 tests and 18 browser tests; M0 passed 176 tests and 21 browser tests. M1/M2 passed 207 unit/integration tests and 33 browser tests, plus one real local Ollama streaming/cancellation smoke case. M3 passes 230 unit/integration and 44 browser tests; it does not add real-model benchmark results. The [review spec](../../specs/0030-project-review/spec.md) accepts review artifacts only; [0029](../../specs/0029-quality-expansion/spec.md) is the completed scope umbrella.
+Based on the [review](project-review-2026-10-31.md) and [design RFC](technical-design-2026-10-31.md), this covers the nine quality areas plus radar, node-link tree, Sankey and map. **M0–M4 (A01–A18) engineering and evaluation acceptance is complete; project packages remain experimental**. The review baseline was 147 tests and 18 browser tests; M0 passed 176 tests and 21 browser tests. M1/M2 passed 207 unit/integration tests and 33 browser tests, plus one real local Ollama streaming/cancellation smoke case. M3 passes 230 unit/integration and 44 browser tests; it does not add real-model benchmark results. The [review spec](../../specs/0030-project-review/spec.md) accepts review artifacts only; [0029](../../specs/0029-quality-expansion/spec.md) is the completed scope umbrella.
 
 Execute reviewable vertical units: spec/AC → code and resources → targeted tests → relevant full gates → evidence update. Resolve routine choices using the RFC; record breaking contracts through versioning/RFC rules. Keep a local preview working. Do not automatically commit, push, publish or create external issues.
 

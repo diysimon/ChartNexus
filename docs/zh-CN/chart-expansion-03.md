@@ -1,8 +1,8 @@
 ---
 doc_id: chart-expansion-03
-version: "0.1"
+version: "0.2"
 status: experimental
-updated: 2026-10-31
+updated: 2026-11-01
 language: zh-CN
 ---
 # 0.3 的四类有界图表
@@ -57,4 +57,4 @@ renderSvg、createAgentService、OpenUI/A2UI/COSUI/Marklang 适配器也接收�
 
 运行 `pnpm dev` 后打开 `/expansion.html`，可切换图表/主题/档位/宽度、编辑完整 JSON、查看完整数据和点击图元。已有上游宿主演示也接受 `?m3=radar|tree|sankey|map` 加载同一组自制样例。[雷达](../../resources/recipes/radar-03.json)、[树](../../resources/recipes/tree-03.json)、[桑基](../../resources/recipes/sankey-03.json)和地图 recipe、负例变更、能力限制、诊断和 MCP/RAG 副本由规范资源生成。
 
-见 [SPEC-0035](../../specs/0035-chart-expansion/spec.zh-CN.md)及[验收证据](../../specs/0035-chart-expansion/tasks.zh-CN.md)。本地编译/浏览器/SVG/worker/固定上游 SDK 验证不等于真实模型成功率。M4 隐藏集评测、全包干净安装、性能基线、远端 CI 和发布仍待完成，不声称所有协议/模型兼容或全面无障碍认证。
+见 [SPEC-0035](../../specs/0035-chart-expansion/spec.zh-CN.md)及[验收证据](../../specs/0035-chart-expansion/tasks.zh-CN.md)。本地编译/浏览器/SVG/worker/固定上游 SDK 验证不等于真实模型成功率。M4 有范围的评测、全包干净安装、性能基线和远端 CI 已记录在[M4证据](trial-distribution.md)中；尚未发布 npm，不声称所有协议/模型兼容或全面无障碍认证。

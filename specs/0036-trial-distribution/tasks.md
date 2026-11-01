@@ -1,6 +1,6 @@
 ---
 doc_id: spec-0036-tasks
-version: "0.5"
+version: "0.6"
 status: done
 updated: 2026-11-01
 language: en
@@ -16,6 +16,8 @@ M4 engineering and evaluation are complete; all profiles remain experimental and
 | AC16 | Complete: 720/720 rounds; four models, three repeats; failures retained | [Aggregate](evaluation-summary-v2.json), [integrity audit](evaluation-integrity-v2.json), [provenance](evaluation-provenance-v2.json), [pre-run scope audit](holdout-audit-v2.json) |
 | AC17 | Pass: eleven isolated tarballs, Node22/24 locally and on Linux CI; 46 browser tests per consumer | [Performance](performance.json), browser [22](browser-performance-22.22.3.json)/[24](browser-performance-24.22.1.json), structured package evidence |
 | AC18 | Pass: verify/browser/both package jobs/required | [Remote CI](https://github.com/diysimon/ChartNexus/actions/runs/41230226310) at `2261351`; final documentation commit checked separately at delivery |
+
+> Boundary clarification: these results describe a historical evaluation setup. Model invocation and factual accuracy belong to the host; the 95% experimental target is not an SDK release gate. See [product responsibilities](../../docs/en/product-boundary.md).
 
 ## Implementation and regression findings
 
@@ -44,4 +46,4 @@ The model run used the original frozen engine. Only the two recorded engine sour
 | `qwen3.5:27b` | 175/180 (97.2%) | 111/180 (61.7%) | 122/180 (67.8%) | 26/180 |
 | `goonsai/qwen2.5-3B-goonsai-nsfw-100k:latest` | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 (0.0%) | 0/180 |
 
-All four models remain experimental because after-repair correctness is below the proposed 95% target. Qwen3.5:27b meets the separate first-pass structural target (175/180). The reporting-only optional-key correction retains strict scores. The diagnostic subset's JSON Pointer ambiguity, zero-shot schema-only prompting, same-author review and host-catalog scope limit interpretation; see [guide](../../docs/en/trial-distribution.md). This is neither a beta release nor a universal model ranking. Private corpora and raw responses remain ignored; no npm publication occurred.
+In this specific experiment all four results fell below the proposed 95% after-repair target; Qwen3.5:27b met the separate first-pass structural target (175/180). These figures neither qualify a model nor gate an SDK release. The reporting-only optional-key correction retains strict scores. The diagnostic subset's JSON Pointer ambiguity, zero-shot schema-only prompting, same-author review and host-catalog scope limit interpretation; see [guide](../../docs/en/trial-distribution.md). This is neither a beta release nor a universal model ranking. Private corpora and raw responses remain ignored; no npm publication occurred.

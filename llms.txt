@@ -1,0 +1,23 @@
+# ChartNexus
+
+> Experimental Apache ECharts infrastructure for model-generated chart documents. The host decides when to invoke a chart and is responsible for data truth and authorization. ChartNexus validates and renders supported input faithfully; it does not execute model code or invent facts.
+
+## Start here
+
+- [Agent integration and retrieval](docs/en/agent-guide.md): discovery order, host policy, MCP resources, 0.3 recipe URIs and prompt template.
+- [Product responsibility boundary](docs/en/product-boundary.md): ownership, safety and production limitations.
+- [Chart catalog](docs/en/chart-catalog.md): all eleven 0.3 types and example links.
+- [Developer quick start](docs/en/getting-started.md): runnable browser example and integration steps.
+- [GenUI integrations](docs/en/genui-integrations.md): pinned OpenUI, A2UI and COSUI profiles.
+- [Chinese index](llms.zh-CN.txt).
+
+## Contracts and resources
+
+- [0.3 schema](packages/schema/src/chart-document-0.3.schema.json): experimental intent, eleven type-specific branches.
+- [0.3 capabilities](packages/core/src/capabilities-0.3.json): actual options and limits; maps require host-owned assets.
+- [Recipe manifest](resources/recipes/manifest.json): synthetic examples, versions, negative cases and MCP URIs.
+- [Model resource index](resources/model-index.json) and [retrieval JSONL](resources/model-retrieval.jsonl): language, capability IDs, sources, license, hashes and full bodies.
+- [Synthetic 0.3 input/output examples](resources/model-examples.jsonl): 11 types × two languages; explicit inputs, source hashes and host prerequisites. MCP: `chartnexus://resources/examples/0.1`.
+- MCP stdio resources: `chartnexus://resources/index/0.1`, `chartnexus://resources/retrieval/0.1`, `chartnexus://schema/chart-document/0.3` and `chartnexus://recipes/manifest/0.1`. Inspect host permissions and explicitly select the schema version; `get_chart_schema` defaults to 0.1.
+
+Packages are private and unpublished. Examples are synthetic, not factual answers. Hosting this file at a website URL requires separate deployment; file presence does not guarantee any model will discover or learn it.

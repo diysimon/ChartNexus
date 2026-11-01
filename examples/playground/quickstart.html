@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ChartNexus · Quick start</title>
+    <style>
+      body {
+        max-width: 780px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        font:
+          16px/1.5 system-ui,
+          sans-serif;
+        color: #172033;
+      }
+      #chart {
+        width: 100%;
+        height: 320px;
+      }
+      textarea {
+        box-sizing: border-box;
+        width: 100%;
+        height: 18rem;
+        font: 13px/1.5 monospace;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      button {
+        padding: 0.5rem 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ChartNexus · 快速接入 / Quick start</h1>
+    <p>
+      编辑完整 JSON 后更新图表。无效输入保留上一张图。 / Edit complete JSON and
+      update; invalid input retains the last chart.
+    </p>
+    <div id="chart"></div>
+    <label for="source">ChartDocument JSON</label>
+    <textarea id="source" spellcheck="false"></textarea>
+    <p><button id="update" type="button">更新图表 / Update</button></p>
+    <pre id="status" aria-live="polite"></pre>
+    <script type="module" src="./quickstart.ts"></script>
+  </body>
+</html>

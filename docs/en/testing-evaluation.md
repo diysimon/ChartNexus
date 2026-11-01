@@ -1,8 +1,8 @@
 ---
 doc_id: testing-evaluation
-version: "0.1"
+version: "0.2"
 status: implementation-baseline
-updated: 2026-10-29
+updated: 2026-11-01
 language: en
 ---
 
@@ -34,7 +34,7 @@ Declare repair limits and budgets before execution. Separate format repair from 
 
 ## Metrics
 First-pass structural validity, end-to-end task success, bounded-retry repair, field/value fidelity, multi-turn correctness, event correctness, tokens, cost, and latency. Distinguish structural validity, compilation, rendering, and semantic correctness.
-Establish baselines before setting model-success gates; never present invented percentages as achieved results. Offline trace replay is not live-model evaluation.
+Model usability experiments may measure these metrics to improve documentation and integration. Model invocation and factual accuracy belong to the host and are not SDK acceptance or release gates. Never present invented percentages as achieved results; offline trace replay is not live-model evaluation.
 
 ## Performance and resources
 Use public synthetic data at typical small and near-limit sizes. Measure compilation, initial rendering, updates, and resources after disposal separately. Record hardware, browser, size, chart type, and p50/p95. P0 sets limits and baselines; exceeding a budget must produce diagnostics or explicit degradation, never silent sampling that changes meaning.

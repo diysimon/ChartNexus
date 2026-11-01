@@ -1,6 +1,6 @@
 ---
 doc_id: support-matrix
-version: "0.3"
+version: "0.4"
 status: experimental
 updated: 2026-11-01
 language: en
@@ -24,7 +24,7 @@ Status is dimension-specific. All profiles are experimental, all 11 packages pri
 | COSUI JSON | cosmic-dynamic-ui 1.0.0 / San 3.15.5 | [Actual host tests](../../tests/browser/cosui.spec.ts), expansion host tests |
 | COSUI Marklang | Marklang 1.0.1 | [Actual host tests](../../tests/browser/marklang.spec.ts); whole-document reset semantics |
 | Agent / MCP | SDK 1.32.2, stdio | Installed official-client negotiation/tool/resource/SVG round trip; remote/desktop MCP not-run |
-| Local models | Ollama0.40.6, four frozen digests | 720/720 rounds; all below proposed95% after-repair correctness; experimental; [results](../../specs/0036-trial-distribution/evaluation-summary-v2.json) |
+| Local models | Ollama0.40.6, four frozen digests | 720/720 rounds; all below proposed95% after-repair correctness in this setup; not an SDK release gate; [results](../../specs/0036-trial-distribution/evaluation-summary-v2.json) |
 | CI / release | Separate required jobs | [CI](https://github.com/diysimon/ChartNexus/actions/runs/41230226310) passes at`2261351`; final documentation commit checked at delivery; no npm publication |
 
 Installed host tests cover representative existing charts plus each of radar/tree/Sankey/map in all four pinned hosts. This is not an exhaustive Cartesian product of every option × host × chart. Source/compiled-value tests and SVG tests cover deterministic semantics separately. Memory/latency figures are local observations, not cross-device guarantees. For repeatable commands and evidence boundaries see [trial/distribution guide](trial-distribution.md).

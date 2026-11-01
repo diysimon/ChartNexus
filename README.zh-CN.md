@@ -1,6 +1,6 @@
 ---
 doc_id: readme
-version: "0.2"
+version: "0.3"
 status: experimental
 updated: 2026-11-01
 language: zh-CN
@@ -15,6 +15,14 @@ ChartNexus是面向大模型与Agent的实验性Apache ECharts图表基础设施
 0.3 intent包含柱状、折线、饼图、散点、组合、漏斗、热力、雷达、树、桑基及宿主注册地图。支持明暗主题、聊天透明背景和五档信息密度。保留的guarded native0.1支持受限制的ECharts option子集。OpenUI Lang、A2UI v0.9、COSUI JSON和COSUI Marklang均有固定版本真实宿主测试，支持范围按profile/版本区分。
 
 全部11个包保持私有、未发布。模型质量、安装包和UI宿主分别记录证据，见[支持矩阵](docs/zh-CN/support-matrix.md)、[契约与迁移](docs/zh-CN/contracts-03.md)及[评测与分发指南](docs/zh-CN/trial-distribution.md)。模型无关架构不代表所有模型都能成功生成。
+
+## 从这里开始
+
+- [快速接入：从零运行并嵌入](docs/zh-CN/getting-started.md)
+- [图表、主题和可运行示例](docs/zh-CN/chart-catalog.md)
+- [模型、Agent、MCP 和检索资料](docs/zh-CN/agent-guide.md)
+- [产品责任边界](docs/zh-CN/product-boundary.md)
+- [AI 文本索引](llms.zh-CN.txt)
 
 ## 本地预览
 

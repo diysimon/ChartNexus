@@ -1,6 +1,6 @@
 ---
 doc_id: support-matrix
-version: "0.3"
+version: "0.4"
 status: experimental
 updated: 2026-11-01
 language: zh-CN
@@ -24,7 +24,7 @@ language: zh-CN
 | COSUI JSON | cosmic-dynamic-ui 1.0.0 / San 3.15.5 | [真实宿主测试](../../tests/browser/cosui.spec.ts)及扩充宿主测试 |
 | COSUI Marklang | Marklang 1.0.1 | [真实宿主测试](../../tests/browser/marklang.spec.ts)，整文档重置语义 |
 | Agent / MCP | SDK 1.32.2，stdio | 安装后的官方客户端协商/工具/资源/SVG 往返通过；远端/桌面 MCP not-run |
-| 本地模型 | Ollama 0.40.6，四个冻结摘要 | 已完成720/720轮；修复后正确率均低于建议95%目标，保持实验状态；[结果](../../specs/0036-trial-distribution/evaluation-summary-v2.json) |
+| 本地模型 | Ollama 0.40.6，四个冻结摘要 | 已完成720/720轮；本次设置的修复后正确率均低于建议95%目标，不作为SDK发布门槛；[结果](../../specs/0036-trial-distribution/evaluation-summary-v2.json) |
 | CI / 发布 | 拆分的必需任务 | [CI](https://github.com/diysimon/ChartNexus/actions/runs/41230226310)在`2261351`通过；最终文档提交交付时核验，未发布npm |
 
 安装后的宿主测试覆盖代表性既有图表，以及四种真实宿主中的雷达/树/桑基/地图；不是所有选项×宿主×图表的完整笛卡尔积。源数据/编译数值和 SVG 分别验证确定性语义。内存/延迟是本机观察，不是跨设备保证。复现命令和证据边界见[试用/分发指南](trial-distribution.md)。

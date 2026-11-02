@@ -2,15 +2,17 @@
 doc_id: readme
 version: "0.3"
 status: experimental
-updated: 2026-11-01
+updated: 2026-11-02
 language: en
 ---
 
-# ChartNexus
+# GenUI for Apache ECharts
 
 [简体中文](README.zh-CN.md)
 
-ChartNexus is experimental Apache ECharts infrastructure for language models and agents: versioned JSON chart contracts, validation, browser/SVG rendering, GenUI adapters, CLI/MCP tools and resources for RAG or training workflows. It is an independent project; compatibility does not imply upstream endorsement.
+GenUI for Apache ECharts (formerly ChartNexus) is experimental infrastructure for language models and agents: versioned JSON chart contracts, validation, browser/SVG rendering, GenUI adapters, CLI/MCP tools and resources for RAG or training workflows. It is an independent project; compatibility does not imply upstream endorsement.
+
+The existing `@chartnexus/*` workspace package names, CLI commands and `chartnexus://` MCP resource identifiers remain unchanged for compatibility. They do not indicate npm publication or ownership of an npm scope.
 
 The 0.3 intent profile includes bar, line, pie, scatter, combo, funnel, heatmap, radar, tree, Sankey and host-registered maps. Light/dark themes, transparent chat backgrounds and five detail levels are available. The retained guarded native0.1 profile supports a restricted ECharts option subset. OpenUI Lang, A2UI v0.9, COSUI JSON and COSUI Marklang have pinned real-host tests; support is profile/version-specific.
 
@@ -38,7 +40,7 @@ pnpm dev:ollama
 
 The default preview is `http://127.0.0.1:5173/`; host demos include `/openui.html`, `/a2ui.html`, `/cosui.html` and `/marklang.html`. The Ollama page is `http://127.0.0.1:5180/ollama.html` and requires a running local Ollama service with an installed model. See the [development guide](docs/en/development.md) for browser/package checks and limits.
 
-Repository: [diysimon/ChartNexus](https://github.com/diysimon/ChartNexus). License: [Apache-2.0](LICENSE).
+Repository: [diysimon/genui-for-echarts](https://github.com/diysimon/genui-for-echarts). License: [Apache-2.0](LICENSE).
 
 ## Reading order
 Read the charter and architecture, then initialization, spec execution, coding standards, and pipelines. Read [agent guidance](AGENTS.md) before implementation.

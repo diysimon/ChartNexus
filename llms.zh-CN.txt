@@ -1,6 +1,6 @@
-# ChartNexus
+# GenUI for Apache ECharts（原名 ChartNexus）
 
-> 面向模型生成图表文档的实验性 Apache ECharts 基础设施。宿主决定何时调用图表，并负责数据事实与授权。ChartNexus 校验并忠实渲染受支持的输入，不执行模型代码或虚构事实。
+> 面向模型生成图表文档的实验性 Apache ECharts 基础设施。宿主决定何时调用图表，并负责数据事实与授权。项目校验并忠实渲染受支持的输入，不执行模型代码或虚构事实。现有 `@chartnexus/*` 包名及 `chartnexus://` MCP 标识保持不变。
 
 ## 从这里开始
 
